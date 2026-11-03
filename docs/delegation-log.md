@@ -12,3 +12,6 @@ Takeaway so far: Qwen follows structure well but drifts from the spec (allocatio
 
 Lessons: passing tests ≠ correct. Review every worker diff for memory safety, and turn each review finding into a test before sending it back.
 | 4a | `gdn.c`: conv step, l2norm, gates, delta-rule recurrence | 3 | 1: numerically right on the first try, but an unused variable broke -Werror and it left long "thinking aloud" comments. 2: **ignored the review** and kept the variable. 3: complied once the exact line was quoted | 128 s + 57 s + 51 s | PASS, 16 checks |
+| 4b | `gdn_layer.c`: full Gated DeltaNet layer (projections → conv → norm → gates → recurrence → gated norm → out) | 2 | 1: lost track of buffers. z/a/b written inside qkv at wrong offsets, conv in/out aliased, k at v's offset, recurrence missing Hk. 2: fixed all five from a line-by-line review | 78 s + 50 s | PASS on real 35B weights, layers 0 and 34, rel err ~2e-6 vs MLX |
+
+Lead wrote: `loader.c` (real-checkpoint glue), every spec, test and MLX reference.

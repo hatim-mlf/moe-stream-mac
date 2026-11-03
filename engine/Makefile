@@ -25,10 +25,18 @@ build/real_matvec: src/qmat.c src/io/k3_st.c tests/real_matvec.c
 	$(CC) $(IO_CFLAGS) src/qmat.c src/io/k3_st.c tests/real_matvec.c -o $@ -lm
 
 MODEL ?= $(HOME)/models/Qwen3.6-35B-A3B-4bit
+CORE = src/qmat.c src/ops.c src/gdn.c src/loader.c src/io/k3_st.c
+build/test_gdn_layer: $(CORE) src/gdn_layer.c tests/test_gdn_layer.c include/gdn_layer.h
+	@mkdir -p build
+	$(CC) $(IO_CFLAGS) -Werror $(CORE) src/gdn_layer.c tests/test_gdn_layer.c -o $@ -lm
+
+test-layer: build/test_gdn_layer
+	../.venv/bin/python tests/gdn_layer_ref.py $(MODEL) 0 6 build/gdn_l0.bin
+	./build/test_gdn_layer $(MODEL) 0 build/gdn_l0.bin
 test-real: build/real_matvec
 	../.venv/bin/python tests/check_real.py $(MODEL)
 
 clean:
 	rm -rf build
 
-.PHONY: test test-real clean
+.PHONY: test test-real test-layer clean

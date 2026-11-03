@@ -1,0 +1,12 @@
+{
+  "seconds": 78.0,
+  "usage": {
+    "prompt_tokens": 1552,
+    "completion_tokens": 735,
+    "total_tokens": 2287,
+    "prompt_tokens_details": {
+      "cached_tokens": 35
+    }
+  },
+  "output": "engine/src/gdn_layer.c"
+}
