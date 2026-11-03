@@ -26,7 +26,8 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--base-url", default="http://127.0.0.1:8080/v1")
     parser.add_argument("--name", required=True, help="label: <engine>-<model>-<quant>")
-    parser.add_argument("--model", default="default", help="model field sent to the server")
+    parser.add_argument("--model", default="default_model",
+                        help="model field sent to the server (mlx_lm.server maps default_model to its --model)")
     parser.add_argument("--max-tokens", type=int, default=256)
     parser.add_argument("--repeats", type=int, default=3)
     parser.add_argument("--sizes", type=int, nargs="*", default=list(PROMPT_WORDS))
@@ -41,6 +42,8 @@ def stream_once(base_url: str, model: str, prompt: str, max_tokens: int) -> dict
         "temperature": 0,
         "stream": True,
         "stream_options": {"include_usage": True},
+        # Thinking off: measure answer speed, not a variable-length reasoning preamble.
+        "chat_template_kwargs": {"enable_thinking": False},
     }
     request = urllib.request.Request(
         f"{base_url}/chat/completions",
@@ -60,7 +63,7 @@ def stream_once(base_url: str, model: str, prompt: str, max_tokens: int) -> dict
             usage = event.get("usage") or usage
             for choice in event.get("choices", []):
                 delta = choice.get("delta", {})
-                if delta.get("content") or delta.get("reasoning_content"):
+                if delta.get("content") or delta.get("reasoning") or delta.get("reasoning_content"):
                     chunks += 1
                     if first_token_at is None:
                         first_token_at = time.perf_counter()

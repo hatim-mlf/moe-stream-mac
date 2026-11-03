@@ -1,7 +1,7 @@
 """MCP server that lets Claude Code delegate work to a local model behind an OpenAI-compatible API.
 
 Register:  claude mcp add local-llm -- python /abs/path/scripts/local/mcp_bridge.py
-Env:       LOCAL_LLM_URL (default http://127.0.0.1:8080/v1), LOCAL_LLM_MODEL (default "default"),
+Env:       LOCAL_LLM_URL (default http://127.0.0.1:8080/v1), LOCAL_LLM_MODEL (default "default_model", which mlx_lm.server maps to its --model),
            LOCAL_LLM_LOG (default results/delegations.jsonl, gitignored)
 Requires:  pip install mcp
 """
@@ -20,7 +20,7 @@ except ImportError:  # mcp 1.x
 
 ROOT = Path(__file__).resolve().parents[2]
 BASE_URL = os.environ.get("LOCAL_LLM_URL", "http://127.0.0.1:8080/v1")
-MODEL = os.environ.get("LOCAL_LLM_MODEL", "default")
+MODEL = os.environ.get("LOCAL_LLM_MODEL", "default_model")
 LOG_PATH = Path(os.environ.get("LOCAL_LLM_LOG", ROOT / "results" / "delegations.jsonl"))
 MAX_FILE_BYTES = 200_000
 
@@ -29,7 +29,11 @@ mcp = FastMCP("local-llm")
 
 def _chat(prompt: str, system: str, max_tokens: int, tool: str) -> str:
     messages = ([{"role": "system", "content": system}] if system else []) + [{"role": "user", "content": prompt}]
-    body = {"model": MODEL, "messages": messages, "max_tokens": max_tokens, "temperature": 0.2}
+    body = {
+        "model": MODEL, "messages": messages, "max_tokens": max_tokens, "temperature": 0.2,
+        # Delegated tasks are mechanical: skip thinking so the whole budget goes to the answer.
+        "chat_template_kwargs": {"enable_thinking": False},
+    }
     request = urllib.request.Request(
         f"{BASE_URL}/chat/completions",
         data=json.dumps(body).encode(),
