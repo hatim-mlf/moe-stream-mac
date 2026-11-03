@@ -1,0 +1,3 @@
+engine/src/io/k3_st.{c,h}, engine/src/io/k3_portable_io.h and engine/third_party/json.h are copied from
+kimi-k3-in-c (https://github.com/FareedKhan-dev/kimi-k3-in-c, commit 81bb6c2), Apache License 2.0
+(see LICENSE-kimi-k3-in-c). Modifications: added the U32 dtype (K3_DT_U32) for MLX packed weights; raised the max tensor rank from 4 to 8.
