@@ -10,3 +10,4 @@ k3trunk/
 .env
 results/litellm.log
 config/.litellm_key
+engine/build/
