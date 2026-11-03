@@ -10,6 +10,15 @@ Goal: verify the C2C (Cache-to-Cache) paper's claims and decide whether it fits 
 - Report numbers with CIs and next to the paper's numbers. Write "did not reproduce" plainly if that's the result.
 - Cloud sessions have no GPU and may block Hugging Face downloads. Phase 0 can run on CPU; Phases 1–2 need a CUDA box.
 
+## Sync (local Mac ↔ GitHub ↔ cloud sessions)
+
+Everything goes through `main` on GitHub. The local Mac auto-syncs every 5 minutes (`scripts/sync.sh` via launchd).
+
+- **Start of a session:** `git pull --rebase origin main`.
+- **During work:** commit small and often, using conventional messages.
+- **End of a session, or after each finished step:** `git pull --rebase origin main && git push origin HEAD:main`. If pushing to `main` is refused, push your branch and open a PR to `main`, then say so.
+- Never force-push `main`.
+
 ## Commands
 
 - Setup: `bash scripts/setup.sh && source .venv/bin/activate`
