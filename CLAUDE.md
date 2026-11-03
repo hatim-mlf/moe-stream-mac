@@ -1,14 +1,15 @@
 # kimi-k3-c-engine
 
-Goal: reproduce running Kimi K3 (2.78T MoE) on the pure-C CPU engine `kimi-k3-in-c`, measure it against its claims, and decide whether it's useful to us. Read `README.md`, then `docs/plan.md`, before doing anything.
+Goal: port the pure-C CPU engine `kimi-k3-in-c` so it runs ~70B-class 8-bit models: `Qwen3.6-35B-A3B-FP8` (dev) and then `Qwen3.5-122B-A10B-FP8` (main). Benchmark it against llama.cpp Q8_0 on CPU. Read `README.md`, then `docs/plan.md`, before doing anything.
 
 ## Rules
 
-- Upstream code lives in `third_party/kimi-k3-in-c` (gitignored, pinned by `UPSTREAM_SHA` in `scripts/setup.sh`). Don't edit it. Put wrappers, benchmarks and notes in this repo.
-- Never commit model weights, trunks, `HF_TOKEN` or raw logs. Every run writes `results/<UTC timestamp>-<name>/metrics.json` with SHA, machine, preset, prompt, `--gen` and command.
-- Don't start the 1.56 TB download without explicit approval from the user and confirmed ~1.7 TB of free fast disk.
-- Report numbers next to upstream's. Write "did not reproduce" plainly when that's the result.
-- Cloud sessions can build and run `make test`. They can't hold the checkpoint.
+- `third_party/` (upstream engine, llama.cpp) is read-only and gitignored. Our code goes in `engine/` (C99) and `tools/` (Python reference). Keep upstream's Apache-2.0 notice on copied files.
+- Every new kernel or layer gets a fixture-gated test against the Python reference **before** it's used on real weights. Stay as strict as upstream: refuse unknown configs, and never substitute defaults.
+- No model download larger than 1 GB without explicit approval from the user. The Mac has ~252 GB free, so keep one big model on disk at a time.
+- Never commit weights, GGUF files, `HF_TOKEN` or raw logs. Results go in `results/<UTC timestamp>-<name>/metrics.json`.
+- Report numbers next to the llama.cpp baseline, and say plainly when we're slower.
+- Cloud sessions: Phases 1–2 (tiny random-init models) are fine there. Phase 3 runs on the Mac.
 
 ## Sync (local Mac ↔ GitHub ↔ cloud sessions)
 
@@ -21,5 +22,5 @@ Everything goes through `main` on GitHub. The local Mac auto-syncs every 5 minut
 
 ## Commands
 
-- Build + weightless tests: `bash scripts/setup.sh`
-- Upstream binary: `third_party/kimi-k3-in-c/bin/k3 <model> --trunk <trunk> --preset laptop --tok <model> --prompt "..." --gen 8 --incremental`
+- Upstream engine build + tests: `bash scripts/setup.sh` (macOS needs `brew install libomp`)
+- Baseline: `bash scripts/setup-baseline.sh`, then `third_party/llama.cpp/build/bin/llama-bench -m <gguf>`

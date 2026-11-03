@@ -1,39 +1,40 @@
-# Plan
+# Plan: port the C engine to Qwen 3.5/3.6 MoE (8-bit)
 
-Upstream is pinned in `scripts/setup.sh` (`UPSTREAM_SHA`). Every result folder records the SHA, machine (CPU, cores, RAM, disk model), preset, prompt, `--gen` count and the full command.
+Every result folder records the engine commit, model + revision, machine, prompt, token count and the full command.
 
-## Phase 0: Build + weightless tests (cloud session or Mac, minutes)
+## Phase 0: Ground truth (done on Mac, see `results/`)
 
-- `bash scripts/setup.sh`, which runs `make -j && make test`.
-- Pass: `ALL WEIGHTLESS TESTS PASSED` on both Linux (cloud) and macOS arm64 (NEON).
-- Also read the code: the 7 C files, the expert-streaming design, the MXFP4 kernels. Write notes in `docs/notes.md`.
+- Upstream engine builds and passes its weightless tests on M1 Max.
+- Build the llama.cpp CPU baseline (`scripts/setup-baseline.sh`).
 
-## Phase 1: Hardware decision (no download yet)
+## Phase 1: Fork and reference (cloud session OK, no big downloads)
 
-Choose one:
+- Copy the reusable upstream files into `engine/`, keeping the Apache-2.0 notice and adding a NOTICE that credits upstream. Reusable files: safetensors reader, streaming/mmap loader, expert cache, ops, sampler, CLI.
+- Write `tools/qwen_ref.py`, a tiny NumPy reference of the `qwen3_5_moe` forward pass, checked against HF `transformers` on a **randomly initialised tiny config** (2–4 layers, few experts). Then generate fixtures the same way upstream does (`tests/fixtures`).
+- Pass: reference logits match `transformers` to within 1e-4.
 
-| Option | Cost | Notes |
-|---|---|---|
-| Mac M1 Max + external 2 TB NVMe (Thunderbolt) | ~€150–250 one-off | 32 GB RAM means roughly the 32 GB row (~24 s/token upstream). USB/TB disk speed dominates |
-| Rented CPU server, ≥2 TB NVMe, 128 GB+ RAM | hourly; delete after | Closest to the upstream 5.6 s/token row. Download time (1.56 TB) is billed too |
+## Phase 2: Implement the new pieces in C, one gated test each
 
-Gate: don't start the 1.56 TB download until the disk is in place and Phase 0 passes.
+1. FP8 e4m3 dequant matmul with 128×128 block scales (NEON + scalar fallback).
+2. Gated DeltaNet layer: short conv1d, per-head decay (`A_log`, `dt_bias`), delta-rule recurrence, gated RMSNorm output.
+3. Gated GQA full attention: q/k norm, RoPE, KV cache.
+4. MoE: softmax top-k router, renormalisation, shared expert with sigmoid gate.
+5. Config reader for `qwen3_5_moe` that refuses anything it doesn't fully understand (keep upstream's strictness).
+6. Tokenizer: start with Python pre-tokenisation (`--ids`), and port BPE to C later.
 
-## Phase 2: Download, pack, first tokens
+Pass: tiny-model fixtures match the reference exactly (teacher forcing, greedy, incremental decode), just like upstream's gates.
 
-- `export HF_TOKEN=...` (environment only, never committed), then `./scripts/download-model.sh <dir>`, which is resumable.
-- The verify step must print `RESULT : byte-exact match`. Treat any `FAIL` as a stop, because partial downloads produce wrong tokens silently.
-- `./scripts/pack-trunk.sh <model> <trunk>`.
-- Run the upstream demo prompts ("The capital of France is", "def fibonacci(n):") with `--gen 8` and `--gen 28`.
+## Phase 3: Real models on the Mac (approval needed before each download)
 
-## Phase 3: Measure
+Disk has ~252 GB free, so download one model at a time and delete it after measuring.
 
-- K1: peak RSS per preset (`laptop`, then larger ones that fit).
-- K2: s/token, as the mean of 3 runs after a warm-up, with disk read throughput logged.
-- K3: `diff` the generated text across presets. It must be byte-identical.
-- Compare with the hosted K3 API: latency and cost per 1K output tokens.
+1. `Qwen3.6-35B-A3B-FP8` (37 GB): first real tokens, then compare with `transformers` on 5 prompts (top-1 agreement), and with llama.cpp Q8_0.
+2. `Qwen3.5-122B-A10B-FP8` (127 GB): the 70B-class target. It's bigger than RAM, so disk streaming and the expert cache do the work.
+
+Measure tokens/s (prefill and decode, mean of 3 after warm-up), peak RSS and disk read throughput, for **our engine vs llama.cpp Q8_0 CPU-only** on the same prompts.
 
 ## Go/no-go
 
-- **Keep going** (chat mode, longer prompts, an agent experiment) if K1–K3 reproduce and s/token is tolerable for offline or batch use.
-- **Stop** if the claims don't reproduce, or if the measurements confirm it's only a curiosity for us. Record the findings and archive the repo.
+- **Win**: on the 122B model with 32 GB RAM, our engine is faster or uses less memory than llama.cpp, or runs where llama.cpp can't. If so, keep going (chat mode, dense 27B, upstream PR or a standalone release).
+- **Learned-only**: correct but slower than llama.cpp. Write up the findings and stop.
+- **Stop early**: Phase 2 kernels don't match the reference after reasonable effort.

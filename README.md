@@ -1,35 +1,42 @@
 # kimi-k3-c-engine
 
-Hands-on test of running **Kimi K3** (Moonshot AI, 2.78T-parameter MoE) on a pure-C CPU inference engine: [FareedKhan-dev/kimi-k3-in-c](https://github.com/FareedKhan-dev/kimi-k3-in-c) (C99, no BLAS/framework/GPU, Apache-2.0, not affiliated with Moonshot).
+Use the pure-C CPU engine from [FareedKhan-dev/kimi-k3-in-c](https://github.com/FareedKhan-dev/kimi-k3-in-c) (C99, no BLAS/framework/GPU, Apache-2.0) to run **~70B-class 8-bit open models** on an ordinary machine, starting with this Mac (M1 Max, 32 GB RAM).
 
-## Claims to verify
+## Why it's a port, not a config change
 
-| # | Claim (upstream README) | How we check |
+The engine is hard-wired to Kimi K3. It refuses any other `config.json` on purpose. But Qwen 3.5, 3.6 and 3.8 use the **same kind of hybrid design** as K3, which makes a port realistic:
+
+| | Kimi K3 (engine today) | Qwen3.5/3.6 MoE (target) |
 |---|---|---|
-| K1 | Runs in 8.24 GB peak RSS (`--preset laptop`) | `PEAK RSS` line + `/usr/bin/time -l` |
-| K2 | ~26.5 s/token at 8 GB, ~5.6 s/token at 128 GB+ (124 cores, fast NVMe) | s/token on our hardware, same prompts |
-| K3 | Output is byte-identical across memory presets | diff generations across presets |
-| K4 | Weightless test suite proves the engine matches its reference | `make test` |
+| Linear-attention layers | KDA (Kimi Delta Attention) | Gated DeltaNet (same delta-rule family) |
+| Full-attention layers | Gated MLA, every ~4th layer | Gated GQA + RoPE, every 4th layer |
+| FFN | MoE, sigmoid router, 896 experts top-16 | MoE, softmax router, 256 experts top-8 + gated shared expert |
+| Weights | MXFP4 experts | official FP8 e4m3, 128×128 block scales |
+| Tokenizer | tiktoken | BPE (`tokenizer.json`) |
 
-## Is it useful to us?
+Reusable as-is: safetensors reader, disk streaming/mmap, expert cache, sampler, CLI, and the "match a Python reference bit-for-bit" test method.
 
-Likely as a **learning and benchmarking exercise, not a production path**. At 5–30 s per token, one short answer takes minutes, and the hosted K3 API is faster and cheaper. The value is in understanding MoE expert streaming, quantisation (MXFP4) and memory/disk trade-offs, plus having a fully offline frontier model if that's ever required.
+## Target models (there's no Qwen 3.8 70B)
 
-## Hardware reality
+| Role | Model | 8-bit size | Active / token | Why |
+|---|---|---|---|---|
+| Dev target | `Qwen/Qwen3.6-35B-A3B-FP8` | 37 GB | ~3B | Smallest of the family, fast iteration, same `qwen3_5_moe` code path |
+| **Main target (70B-class)** | `Qwen/Qwen3.5-122B-A10B-FP8` | 127 GB | ~10B | 4× RAM, which is exactly the case the engine's disk streaming exists for |
+| Optional dense | `Qwen/Qwen3.8-27B-FP8` | 31 GB | 27B | Same attention layers, dense FFN. Nearly free once the MoE port works |
 
-- Disk: **~1.7 TB free** (1.56 TB checkpoint + 109 GB packed trunk), ideally fast NVMe.
-- This Mac (M1 Max, 32 GB, ~252 GB free) can build and run `make test`, but needs an external ≥2 TB NVMe SSD for the real model.
-- Cloud sessions: fine for building, tests and code reading. They can't hold the checkpoint.
+Baseline: [llama.cpp](https://github.com/ggml-org/llama.cpp) already supports these (`qwen35`, `qwen35moe`) in C/C++. Our engine has to be compared against it at Q8_0 on CPU.
 
 ## Layout
 
 ```
-docs/plan.md               phased plan + go/no-go criteria
-scripts/setup.sh           clones upstream at a pinned commit, builds, runs weightless tests
-scripts/sync.sh            two-way sync of main with GitHub
+docs/plan.md                 phased plan + go/no-go
+scripts/setup.sh             upstream engine at pinned SHA: build + weightless tests
+scripts/setup-baseline.sh    llama.cpp at pinned tag, CPU-only build
+scripts/sync.sh              two-way sync of main with GitHub
 scripts/install-autosync.sh  launchd job running sync.sh every 5 min (macOS)
-results/                   one folder per run (metrics committed, raw logs ignored)
-third_party/kimi-k3-in-c   upstream code (gitignored, created by setup.sh)
+engine/                      our port (created in Phase 1)
+results/                     one folder per run (metrics committed, raw logs ignored)
+third_party/                 upstream engine + llama.cpp (gitignored)
 ```
 
 ## Sync
@@ -39,5 +46,6 @@ third_party/kimi-k3-in-c   upstream code (gitignored, created by setup.sh)
 ## Quick start
 
 ```bash
-bash scripts/setup.sh   # clone pinned upstream, make -j, make test (no weights, no network after clone)
+bash scripts/setup.sh            # macOS: brew install libomp first
+bash scripts/setup-baseline.sh   # needs cmake
 ```
