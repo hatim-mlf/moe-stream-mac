@@ -2,10 +2,12 @@
 
   python tools/fetch_model.py mlx-community/Qwen3.5-122B-A10B-8bit [~/models]
 
-Each file is fetched with `curl -C -` into <dir>/<name>.part, retried until complete, checked against
+Up to FETCH_PARALLEL (default 4) files download at once. Each file is fetched with `curl -C -` into <dir>/<name>.part, retried until complete, checked against
 its published SHA-256 (LFS files) or size, then renamed. Re-running skips files that are already done.
 """
 import hashlib
+import os
+from concurrent.futures import ThreadPoolExecutor, as_completed
 import json
 import subprocess
 import sys
@@ -16,6 +18,7 @@ from pathlib import Path
 HF = "https://huggingface.co"
 RETRY_DELAY_S = 10
 HASH_CHUNK = 16 * 1024 * 1024
+PARALLEL = int(os.environ.get("FETCH_PARALLEL", "4"))  # files downloaded at once
 
 
 def list_files(repo: str) -> list[dict]:
@@ -64,10 +67,13 @@ def main() -> None:
     total = sum(f["size"] for f in files)
     print(f"{repo}: {len(files)} files, {total / 1e9:.1f} GB -> {out_dir}", flush=True)
     done = 0
-    for meta in files:
-        fetch(repo, meta, out_dir)
-        done += meta["size"]
-        print(f"{time.strftime('%T')} ok {meta['path']} ({done / total:.0%} of total)", flush=True)
+    with ThreadPoolExecutor(max_workers=PARALLEL) as pool:
+        futures = {pool.submit(fetch, repo, meta, out_dir): meta for meta in files}
+        for future in as_completed(futures):
+            meta = futures[future]
+            future.result()  # re-raise a checksum failure
+            done += meta["size"]
+            print(f"{time.strftime('%T')} ok {meta['path']} ({done / total:.0%} of total)", flush=True)
     print("verifying all checksums...", flush=True)
     bad = [m["path"] for m in files if not is_valid(out_dir / m["path"], m)]
     if bad:
