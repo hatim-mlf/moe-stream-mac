@@ -39,4 +39,12 @@ test-real: build/real_matvec
 clean:
 	rm -rf build
 
-.PHONY: test test-real test-layer clean
+build/test_attn_layer: $(CORE) src/attn_layer.c tests/test_attn_layer.c include/attn_layer.h
+	@mkdir -p build
+	$(CC) $(IO_CFLAGS) -Werror $(CORE) src/attn_layer.c tests/test_attn_layer.c -o $@ -lm
+
+test-attn: build/test_attn_layer
+	../.venv/bin/python tests/attn_layer_ref.py $(MODEL) 3 7 build/attn_l3.bin
+	./build/test_attn_layer $(MODEL) 3 build/attn_l3.bin
+
+.PHONY: test test-real test-layer test-attn clean

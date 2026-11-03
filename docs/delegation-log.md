@@ -15,3 +15,6 @@ Lessons: passing tests ≠ correct. Review every worker diff for memory safety, 
 | 4b | `gdn_layer.c`: full Gated DeltaNet layer (projections → conv → norm → gates → recurrence → gated norm → out) | 2 | 1: lost track of buffers. z/a/b written inside qkv at wrong offsets, conv in/out aliased, k at v's offset, recurrence missing Hk. 2: fixed all five from a line-by-line review | 78 s + 50 s | PASS on real 35B weights, layers 0 and 34, rel err ~2e-6 vs MLX |
 
 Lead wrote: `loader.c` (real-checkpoint glue), every spec, test and MLX reference.
+| 5 | `attn_layer.c`: gated GQA + partial RoPE + KV cache | 4 + lead cleanup | 1: **lead's fault**: a header edit silently failed, so Qwen got an inconsistent spec. 2: math right but two dead, broken helpers left in. 3: refactor into helpers failed (22-param helper, name clashes, wrong counter). 4: lead supplied a skeleton with fixed signatures and Qwen filled the bodies; correct. Lead removed 2 unused variables | 175 s + 68 s + 80 s + 87 s | PASS on real weights, layers 3 and 39, rel err ~1e-6 vs MLX |
+
+Lessons: (a) chain spec edits with `&&` and print the result before delegating; (b) for multi-function code, the lead fixes the structure (skeleton + signatures) and Qwen fills the bodies: it writes math well but restructures badly; (c) always delete stale binaries before re-testing.
