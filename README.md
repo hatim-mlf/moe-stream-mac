@@ -28,6 +28,10 @@ results/               one folder per run (metrics + env info committed, raw out
 third_party/C2C        upstream code (gitignored, created by setup.sh)
 ```
 
+## Sync
+
+`main` on GitHub is the single source of truth. Cloud sessions pull at start and push to `main` when done. The local Mac runs `scripts/sync.sh` every 5 min (install with `bash scripts/install-autosync.sh`, remove with `--uninstall`, log at `~/Library/Logs/c2c-eval-sync.log`).
+
 ## Quick start
 
 ```bash
