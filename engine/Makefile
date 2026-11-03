@@ -25,7 +25,7 @@ build/real_matvec: src/qmat.c src/io/k3_st.c tests/real_matvec.c
 	$(CC) $(IO_CFLAGS) src/qmat.c src/io/k3_st.c tests/real_matvec.c -o $@ -lm
 
 MODEL ?= $(HOME)/models/Qwen3.6-35B-A3B-4bit
-CORE = src/qmat.c src/qmat_row.c src/ops.c src/gdn.c src/loader.c src/io/k3_st.c
+CORE = src/qmat.c src/qmat_row.c src/ops.c src/gdn.c src/loader.c src/expert_store.c src/io/k3_st.c
 build/test_gdn_layer: $(CORE) src/gdn_layer.c tests/test_gdn_layer.c include/gdn_layer.h
 	@mkdir -p build
 	$(CC) $(IO_CFLAGS) -Werror $(CORE) src/gdn_layer.c tests/test_gdn_layer.c -o $@ -lm
@@ -59,5 +59,13 @@ MODEL_SRC = $(CORE) src/gdn_layer.c src/attn_layer.c src/moe_layer.c src/config.
 build/test_model: $(MODEL_SRC) tests/test_model.c include/model.h
 	@mkdir -p build
 	$(CC) $(IO_CFLAGS) -Werror $(MODEL_SRC) tests/test_model.c -o $@ -lm
+build/run_model: $(MODEL_SRC) tests/run_model.c include/model.h
+	@mkdir -p build
+	$(CC) $(IO_CFLAGS) -Werror $(MODEL_SRC) tests/run_model.c -o $@ -lm
 
-.PHONY: test test-real test-layer test-attn test-moe clean
+test-model: build/run_model
+	../.venv/bin/python tests/model_check.py tokenize $(MODEL) build/prompt.i32
+	./build/run_model $(MODEL) build/prompt.i32 12 build/engine_out.bin
+	../.venv/bin/python tests/model_check.py check $(MODEL) build/engine_out.bin
+
+.PHONY: test test-real test-layer test-attn test-moe test-model clean

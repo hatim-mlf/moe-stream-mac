@@ -4,13 +4,15 @@
  */
 #ifndef MOE_LAYER_H
 #define MOE_LAYER_H
+#include "expert_store.h"
 #include "qmat.h"
 
 #define MOE_MAX_TOPK 16
 
 typedef struct {
     QMat router;          /* hidden -> E           (mlp.gate)                                 */
-    QMat gate, up, down;  /* ALL experts: [E][inter][hidden] / [E][hidden][inter]; view one with qmat_expert() */
+    ExpertTensor gate, up, down;   /* routed experts, read from disk on demand (expert_store.h) */
+    ExpertBuf gbuf, ubuf, dbuf;    /* one expert's worth of each; may be shared across layers  */
     QMat sh_gate, sh_up, sh_down;  /* shared expert: hidden -> sh_inter -> hidden          */
     QMat sh_router;       /* hidden -> 1           (mlp.shared_expert_gate)                   */
     int hidden, E, top_k, inter, sh_inter;

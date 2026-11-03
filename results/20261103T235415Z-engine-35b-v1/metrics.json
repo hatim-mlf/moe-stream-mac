@@ -1,0 +1,13 @@
+{
+  "model": "mlx-community/Qwen3.6-35B-A3B-4bit (local ~/models)",
+  "engine_commit": "e067956",
+  "machine": "Apple M1 Max, 32 GB, macOS 26.4.1; other apps open (Xcode, Safari, Codex)",
+  "engine": "C99, single thread, scalar (no SIMD/threads yet); experts pread from SSD per token, trunk in RAM",
+  "command": "engine/build/run_model <model> build/prompt.i32 12 out.bin",
+  "prompt": "The capital of Morocco is Rabat. The capital of France is",
+  "generated": " Paris. The capital of Spain is Madrid. The capital of",
+  "correctness": "24/24 positions same argmax as MLX float32; logits rel L2 1.0e-6..1.8e-6 (tests/model_check.py)",
+  "engine_speed": {"prompt_s_per_token": 2.17, "generate_s_per_token": 2.10, "generate_tok_per_s": 0.48},
+  "engine_memory": {"peak_rss_gb": 1.39, "expert_bytes_read_gb_for_24_tokens": 13.6, "note": "RSS excludes the OS file cache, which holds recently read expert pages and is evictable"},
+  "mlx_baseline": {"engine": "mlx_lm.server, GPU", "decode_tok_per_s": 48.4, "prefill_tok_per_s": 660, "resident_gb": 19, "source": "earlier runs today (ask.py stats; top during the MLX reference)"}
+}

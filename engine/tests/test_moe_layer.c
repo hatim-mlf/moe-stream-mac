@@ -10,18 +10,23 @@
 
 static int load_layer(const K3St *s, int layer, MoeWeights *w) {
     char name[320];
-    const char *parts[8] = { "gate", "switch_mlp.gate_proj", "switch_mlp.up_proj", "switch_mlp.down_proj",
-                             "shared_expert.gate_proj", "shared_expert.up_proj", "shared_expert.down_proj",
+    const char *ex[3] = { "switch_mlp.gate_proj", "switch_mlp.up_proj", "switch_mlp.down_proj" };
+    ExpertTensor *et[3] = { &w->gate, &w->up, &w->down };
+    ExpertBuf *eb[3] = { &w->gbuf, &w->ubuf, &w->dbuf };
+    for (int i = 0; i < 3; i++) {
+        snprintf(name, sizeof name, "language_model.model.layers.%d.mlp.%s", layer, ex[i]);
+        if (expert_tensor_open(et[i], s, name, GROUP) || expert_buf_alloc(eb[i], et[i])) return -1;
+    }
+    const char *parts[5] = { "gate", "shared_expert.gate_proj", "shared_expert.up_proj", "shared_expert.down_proj",
                              "shared_expert_gate" };
-    QMat *dst[8] = { &w->router, &w->gate, &w->up, &w->down, &w->sh_gate, &w->sh_up, &w->sh_down, &w->sh_router };
-    int experts = 0;
-    for (int i = 0; i < 8; i++) {
+    QMat *dst[5] = { &w->router, &w->sh_gate, &w->sh_up, &w->sh_down, &w->sh_router };
+    for (int i = 0; i < 5; i++) {
         snprintf(name, sizeof name, "language_model.model.layers.%d.mlp.%s", layer, parts[i]);
-        if (load_qmat(s, name, GROUP, dst[i], i == 1 ? &experts : NULL)) return -1;
+        if (load_qmat(s, name, GROUP, dst[i], NULL)) return -1;
     }
     /* Qwen3.6-35B-A3B text config */
-    w->hidden = 2048; w->E = experts; w->top_k = 8; w->inter = 512; w->sh_inter = 512;
-    return experts == 256 && w->gate.rows == 512 ? 0 : -1;
+    w->hidden = 2048; w->E = w->gate.E; w->top_k = 8; w->inter = 512; w->sh_inter = 512;
+    return w->E == 256 && w->gate.rows == 512 ? 0 : -1;
 }
 
 int main(int argc, char **argv) {

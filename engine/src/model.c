@@ -52,14 +52,30 @@ static int load_attn(Model *m, int l, Layer *L) {
 static int load_moe(Model *m, int l, Layer *L) {
     const ModelConfig *c = &m->cfg; MoeWeights *w = &L->moe;
     const char *f = P ".%d.mlp.%s";
-    int experts = 0;
-    if (qm(m, &w->router, NULL, f, l, "gate") || qm(m, &w->gate, &experts, f, l, "switch_mlp.gate_proj") ||
-        qm(m, &w->up, NULL, f, l, "switch_mlp.up_proj") || qm(m, &w->down, NULL, f, l, "switch_mlp.down_proj") ||
+    char name[320];
+    const char *ex[3] = { "switch_mlp.gate_proj", "switch_mlp.up_proj", "switch_mlp.down_proj" };
+    ExpertTensor *et[3] = { &w->gate, &w->up, &w->down };
+    for (int i = 0; i < 3; i++) {
+        snprintf(name, sizeof name, f, l, ex[i]);
+        if (expert_tensor_open(et[i], &m->st, name, c->group_size)) return -1;
+    }
+    if (qm(m, &w->router, NULL, f, l, "gate") ||
         qm(m, &w->sh_gate, NULL, f, l, "shared_expert.gate_proj") || qm(m, &w->sh_up, NULL, f, l, "shared_expert.up_proj") ||
         qm(m, &w->sh_down, NULL, f, l, "shared_expert.down_proj") || qm(m, &w->sh_router, NULL, f, l, "shared_expert_gate"))
         return -1;
     w->hidden = c->hidden; w->E = c->E; w->top_k = c->top_k; w->inter = c->moe_inter; w->sh_inter = c->sh_inter;
-    if (experts != c->E || w->gate.rows != c->moe_inter) { fprintf(stderr, "layer %d: expert shape mismatch\n", l); return -1; }
+    if (w->gate.E != c->E || w->gate.rows != c->moe_inter) { fprintf(stderr, "layer %d: expert shape mismatch\n", l); return -1; }
+    /* every layer has the same expert shapes: share one set of read buffers */
+    if (l == 0) {
+        if (expert_buf_alloc(&w->gbuf, &w->gate) || expert_buf_alloc(&w->ubuf, &w->up) || expert_buf_alloc(&w->dbuf, &w->down))
+            return -1;
+    } else {
+        const MoeWeights *w0 = &m->layers[0].moe;
+        if (w->gate.w_bytes != w0->gate.w_bytes || w->down.w_bytes != w0->down.w_bytes) {
+            fprintf(stderr, "layer %d: expert size differs from layer 0\n", l); return -1;
+        }
+        w->gbuf = w0->gbuf; w->ubuf = w0->ubuf; w->dbuf = w0->dbuf;
+    }
     return 0;
 }
 

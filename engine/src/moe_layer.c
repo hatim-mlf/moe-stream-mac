@@ -1,5 +1,4 @@
 #include "moe_layer.h"
-#include "loader.h"   /* qmat_expert() */
 #include "ops.h"
 #include <math.h>
 #include <string.h>
@@ -42,7 +41,9 @@ int moe_layer_step(float *out, const float *x, const MoeWeights *w, float *scrat
     if (route(w, x, &b, idx, score)) return -1;
     memset(out, 0, sizeof(float) * (size_t)w->hidden);
     for (int i = 0; i < w->top_k; i++) {
-        const QMat g = qmat_expert(&w->gate, idx[i]), u = qmat_expert(&w->up, idx[i]), d = qmat_expert(&w->down, idx[i]);
+        QMat g, u, d;
+        if (expert_tensor_read(&w->gate, idx[i], &w->gbuf, &g) || expert_tensor_read(&w->up, idx[i], &w->ubuf, &u) ||
+            expert_tensor_read(&w->down, idx[i], &w->dbuf, &d)) return -1;
         if (mlp(&g, &u, &d, x, b.ye, &b)) return -1;
         for (int j = 0; j < w->hidden; j++) out[j] += score[i] * b.ye[j];
     }
