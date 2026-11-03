@@ -1,14 +1,14 @@
-# c2c-eval
+# kimi-k3-c-engine
 
-Goal: verify the C2C (Cache-to-Cache) paper's claims and decide whether it fits our agent stack. Read `README.md`, then `docs/plan.md`, before doing anything.
+Goal: reproduce running Kimi K3 (2.78T MoE) on the pure-C CPU engine `kimi-k3-in-c`, measure it against its claims, and decide whether it's useful to us. Read `README.md`, then `docs/plan.md`, before doing anything.
 
 ## Rules
 
-- Upstream code lives in `third_party/C2C` (gitignored, pinned by `UPSTREAM_SHA` in `scripts/setup.sh`). Don't edit it. Put wrappers and evaluation glue in `scripts/`.
-- Every run writes `results/<UTC timestamp>-<name>/metrics.json` with the upstream SHA, hardware, dtype, command and seed. Commit metrics and never commit raw generations or model weights.
-- Use the same prompts, decoding settings and seed in every mode (receiver alone, sharer alone, T2T, C2C). Any comparison that breaks this is invalid.
-- Report numbers with CIs and next to the paper's numbers. Write "did not reproduce" plainly if that's the result.
-- Cloud sessions have no GPU and may block Hugging Face downloads. Phase 0 can run on CPU; Phases 1–2 need a CUDA box.
+- Upstream code lives in `third_party/kimi-k3-in-c` (gitignored, pinned by `UPSTREAM_SHA` in `scripts/setup.sh`). Don't edit it. Put wrappers, benchmarks and notes in this repo.
+- Never commit model weights, trunks, `HF_TOKEN` or raw logs. Every run writes `results/<UTC timestamp>-<name>/metrics.json` with SHA, machine, preset, prompt, `--gen` and command.
+- Don't start the 1.56 TB download without explicit approval from the user and confirmed ~1.7 TB of free fast disk.
+- Report numbers next to upstream's. Write "did not reproduce" plainly when that's the result.
+- Cloud sessions can build and run `make test`. They can't hold the checkpoint.
 
 ## Sync (local Mac ↔ GitHub ↔ cloud sessions)
 
@@ -21,6 +21,5 @@ Everything goes through `main` on GitHub. The local Mac auto-syncs every 5 minut
 
 ## Commands
 
-- Setup: `bash scripts/setup.sh && source .venv/bin/activate`
-- Smoke test: `python scripts/smoke_test.py --device cpu`
-- Upstream eval: `python third_party/C2C/script/evaluation/unified_evaluator.py --config <yaml>`
+- Build + weightless tests: `bash scripts/setup.sh`
+- Upstream binary: `third_party/kimi-k3-in-c/bin/k3 <model> --trunk <trunk> --preset laptop --tok <model> --prompt "..." --gen 8 --incremental`

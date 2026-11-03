@@ -5,4 +5,6 @@ __pycache__/
 results/**/*.jsonl
 results/**/raw/
 hf_cache/
+k3model/
+k3trunk/
 .env

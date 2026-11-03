@@ -1,43 +1,43 @@
-# c2c-eval
+# kimi-k3-c-engine
 
-Independent verification of **Cache-to-Cache (C2C)** ([paper](https://arxiv.org/abs/2510.03215), [code](https://github.com/thu-nics/C2C), ICLR'26), and a go/no-go decision on whether it can improve our multi-agent working environment.
-
-C2C lets two LLMs exchange information by projecting and fusing one model's **KV-cache** into another's, so they skip generating and re-reading intermediate text.
+Hands-on test of running **Kimi K3** (Moonshot AI, 2.78T-parameter MoE) on a pure-C CPU inference engine: [FareedKhan-dev/kimi-k3-in-c](https://github.com/FareedKhan-dev/kimi-k3-in-c) (C99, no BLAS/framework/GPU, Apache-2.0, not affiliated with Moonshot).
 
 ## Claims to verify
 
-| # | Claim (from paper / upstream README) | Baseline |
+| # | Claim (upstream README) | How we check |
 |---|---|---|
-| C1 | +8.5–10.5% accuracy | receiver model working alone |
-| C2 | +3.0–5.0% accuracy | text-to-text (T2T) communication between the same two models |
-| C3 | ~2× lower latency (upstream README says 2.0×; some summaries say 2.5×) | T2T communication |
+| K1 | Runs in 8.24 GB peak RSS (`--preset laptop`) | `PEAK RSS` line + `/usr/bin/time -l` |
+| K2 | ~26.5 s/token at 8 GB, ~5.6 s/token at 128 GB+ (124 cores, fast NVMe) | s/token on our hardware, same prompts |
+| K3 | Output is byte-identical across memory presets | diff generations across presets |
+| K4 | Weightless test suite proves the engine matches its reference | `make test` |
 
-## The fit question, answered first
+## Is it useful to us?
 
-C2C needs **open-weight models running in the same process** (raw KV-cache access) and a **trained fuser for each model pair**. It cannot be applied to API-only models such as Claude, GPT and Codex, because they don't expose their KV-cache. So for our current agent stack (Claude Code, Codex and other API agents talking through text and the shell), C2C **cannot be a drop-in replacement**.
+Likely as a **learning and benchmarking exercise, not a production path**. At 5–30 s per token, one short answer takes minutes, and the hosted K3 API is faster and cheaper. The value is in understanding MoE expert streaming, quantisation (MXFP4) and memory/disk trade-offs, plus having a fully offline frontier model if that's ever required.
 
-It becomes relevant only if we run local open models (Qwen, Llama and so on, via vLLM or transformers) as cheap sub-agents, for example a small "worker" model fed context by a larger "sharer". Phase 3 of the [plan](docs/plan.md) evaluates that.
+## Hardware reality
+
+- Disk: **~1.7 TB free** (1.56 TB checkpoint + 109 GB packed trunk), ideally fast NVMe.
+- This Mac (M1 Max, 32 GB, ~252 GB free) can build and run `make test`, but needs an external ≥2 TB NVMe SSD for the real model.
+- Cloud sessions: fine for building, tests and code reading. They can't hold the checkpoint.
 
 ## Layout
 
 ```
-docs/plan.md           phased verification plan + go/no-go criteria
-scripts/setup.sh       clones upstream C2C at a pinned commit, installs deps
-scripts/smoke_test.py  receiver-alone vs C2C on a few prompts, with timing
-results/               one folder per run (metrics + env info committed, raw outputs ignored)
-third_party/C2C        upstream code (gitignored, created by setup.sh)
+docs/plan.md               phased plan + go/no-go criteria
+scripts/setup.sh           clones upstream at a pinned commit, builds, runs weightless tests
+scripts/sync.sh            two-way sync of main with GitHub
+scripts/install-autosync.sh  launchd job running sync.sh every 5 min (macOS)
+results/                   one folder per run (metrics committed, raw logs ignored)
+third_party/kimi-k3-in-c   upstream code (gitignored, created by setup.sh)
 ```
 
 ## Sync
 
-`main` on GitHub is the single source of truth. Cloud sessions pull at start and push to `main` when done. The local Mac runs `scripts/sync.sh` every 5 min (install with `bash scripts/install-autosync.sh`, remove with `--uninstall`, log at `~/Library/Logs/c2c-eval-sync.log`).
+`main` on GitHub is the single source of truth. Cloud sessions pull at start and push to `main` when done. The local Mac runs `scripts/sync.sh` every 5 min (install with `bash scripts/install-autosync.sh`, remove with `--uninstall`, log at `~/Library/Logs/kimi-k3-c-engine-sync.log`).
 
 ## Quick start
 
 ```bash
-bash scripts/setup.sh                      # creates .venv, clones upstream at pinned SHA
-source .venv/bin/activate
-python scripts/smoke_test.py --device cpu  # Qwen3-0.6B receiver + Qwen2.5-0.5B sharer, works on CPU
+bash scripts/setup.sh   # clone pinned upstream, make -j, make test (no weights, no network after clone)
 ```
-
-For the real benchmarks (Phase 2) you need a CUDA GPU. See [docs/plan.md](docs/plan.md).
