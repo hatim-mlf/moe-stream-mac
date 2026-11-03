@@ -1,0 +1,10 @@
+{
+  "phase": 0,
+  "upstream_sha": "81bb6c23ccee2154bc35cad922588ab66494a9a9",
+  "machine": {"cpu": "Apple M1 Max", "ram_gb": 32, "os": "macOS 26.4.1", "compiler": "Apple clang version 21.0.0 (clang-2100.1.1.101)", "libomp": "23.1.4"},
+  "command": "bash scripts/setup.sh",
+  "result": "ALL WEIGHTLESS TESTS PASSED",
+  "verdict": "ENGINE MATCHES THE REFERENCE EXACTLY (gates 1, 1b, 2, 3, 3b)",
+  "not_run": ["tokenizer parity", "chat template"],
+  "not_run_reason": "tiktoken.model ships with the 1.56 TB checkpoint; rerun with make test TOK_FILES=<model dir> after Phase 2"
+}

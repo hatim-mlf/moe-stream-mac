@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Clone the upstream C engine at a pinned commit, build it, and run the weightless test suite.
-# Needs only a C99 compiler, make and OpenMP (macOS: `brew install libomp`).
+# Needs only a C99 compiler, make and OpenMP. macOS: run `brew install libomp` first.
 set -euo pipefail
 
 readonly UPSTREAM_URL="https://github.com/FareedKhan-dev/kimi-k3-in-c.git"
