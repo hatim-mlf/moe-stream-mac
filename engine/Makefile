@@ -47,4 +47,12 @@ test-attn: build/test_attn_layer
 	../.venv/bin/python tests/attn_layer_ref.py $(MODEL) 3 7 build/attn_l3.bin
 	./build/test_attn_layer $(MODEL) 3 build/attn_l3.bin
 
-.PHONY: test test-real test-layer test-attn clean
+build/test_moe_layer: $(CORE) src/moe_layer.c tests/test_moe_layer.c include/moe_layer.h
+	@mkdir -p build
+	$(CC) $(IO_CFLAGS) -Werror $(CORE) src/moe_layer.c tests/test_moe_layer.c -o $@ -lm
+
+test-moe: build/test_moe_layer
+	../.venv/bin/python tests/moe_layer_ref.py $(MODEL) 0 6 build/moe_l0.bin
+	./build/test_moe_layer $(MODEL) 0 build/moe_l0.bin
+
+.PHONY: test test-real test-layer test-attn test-moe clean
