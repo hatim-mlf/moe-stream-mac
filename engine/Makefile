@@ -11,9 +11,14 @@ build/test_ops: src/ops.c tests/test_ops.c include/ops.h
 	@mkdir -p build
 	$(CC) $(CFLAGS) src/ops.c tests/test_ops.c -o $@ -lm
 
-test: build/test_qmat build/test_ops
+build/test_gdn: src/gdn.c tests/test_gdn.c include/gdn.h
+	@mkdir -p build
+	$(CC) $(CFLAGS) src/gdn.c tests/test_gdn.c -o $@ -lm
+
+test: build/test_qmat build/test_ops build/test_gdn
 	./build/test_qmat $(FIXTURES)
 	./build/test_ops tests/fixtures
+	./build/test_gdn tests/fixtures
 
 build/real_matvec: src/qmat.c src/io/k3_st.c tests/real_matvec.c
 	@mkdir -p build

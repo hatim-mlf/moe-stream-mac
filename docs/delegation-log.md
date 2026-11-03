@@ -11,3 +11,4 @@ Takeaway so far: Qwen follows structure well but drifts from the spec (allocatio
 | 3 | `ops.c`: rmsnorm, silu·mul, sigmoid, softmax, top-k, RoPE | 3 + 1 lead fix | 1: left a dead wrong `inv_freq` line (-Werror). 2: passed the tests, but review found a top-k buffer overrun and reversed ties, so the lead strengthened the tests. 3: fixed both. Lead then found a third overrun (tie with the k-th value) and fixed it with one character after adding a test | 122 s + 72 s + 53 s | PASS, 11 checks |
 
 Lessons: passing tests ≠ correct. Review every worker diff for memory safety, and turn each review finding into a test before sending it back.
+| 4a | `gdn.c`: conv step, l2norm, gates, delta-rule recurrence | 3 | 1: numerically right on the first try, but an unused variable broke -Werror and it left long "thinking aloud" comments. 2: **ignored the review** and kept the variable. 3: complied once the exact line was quoted | 128 s + 57 s + 51 s | PASS, 16 checks |
