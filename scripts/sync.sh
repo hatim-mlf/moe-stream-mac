@@ -24,7 +24,9 @@ fi
 
 git fetch --quiet --prune origin
 
-if ! git pull --quiet --rebase --autostash origin "$BRANCH"; then
+behind="$(git rev-list --count "HEAD..origin/$BRANCH")"
+# --rebase=merges keeps local merge commits intact instead of replaying the merged branch.
+if (( behind > 0 )) && ! git pull --quiet --rebase=merges --autostash origin "$BRANCH"; then
   git rebase --abort 2>/dev/null || true
   log "CONFLICT: local and remote $BRANCH diverged, run 'git pull --rebase' and resolve"
   exit 1
