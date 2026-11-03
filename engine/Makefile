@@ -7,8 +7,13 @@ build/test_qmat: src/qmat.c tests/test_qmat.c include/qmat.h
 	@mkdir -p build
 	$(CC) $(CFLAGS) src/qmat.c tests/test_qmat.c -o $@ -lm
 
-test: build/test_qmat
+build/test_ops: src/ops.c tests/test_ops.c include/ops.h
+	@mkdir -p build
+	$(CC) $(CFLAGS) src/ops.c tests/test_ops.c -o $@ -lm
+
+test: build/test_qmat build/test_ops
 	./build/test_qmat $(FIXTURES)
+	./build/test_ops tests/fixtures
 
 build/real_matvec: src/qmat.c src/io/k3_st.c tests/real_matvec.c
 	@mkdir -p build

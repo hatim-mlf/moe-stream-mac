@@ -1,0 +1,12 @@
+{
+  "seconds": 71.5,
+  "usage": {
+    "prompt_tokens": 1839,
+    "completion_tokens": 807,
+    "total_tokens": 2646,
+    "prompt_tokens_details": {
+      "cached_tokens": 35
+    }
+  },
+  "output": "engine/src/ops.c"
+}
