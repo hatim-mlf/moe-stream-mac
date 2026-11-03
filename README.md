@@ -18,12 +18,21 @@ C2C needs **open-weight models running in the same process** (raw KV-cache acces
 
 It becomes relevant only if we run local open models (Qwen, Llama and so on, via vLLM or transformers) as cheap sub-agents, for example a small "worker" model fed context by a larger "sharer". Phase 3 of the [plan](docs/plan.md) evaluates that.
 
+## Second track: a local worker model under Claude Code
+
+Can we run an open model on an M1 Max (32 GB) at 15–20+ tok/s and have Claude Code delegate
+heavy, well-scoped work to it? See [docs/local-agent-plan.md](docs/local-agent-plan.md).
+That plan's result is also what C2C's Phase 3 needs: a local model we control.
+
 ## Layout
 
 ```
 docs/plan.md           phased verification plan + go/no-go criteria
 scripts/setup.sh       clones upstream C2C at a pinned commit, installs deps
 scripts/smoke_test.py  receiver-alone vs C2C on a few prompts, with timing
+docs/local-agent-plan.md   local worker-model plan (M1 Max, Qwen candidates, go/no-go)
+scripts/local/bench.py     prefill + decode tok/s against mlx_lm.server / llama-server
+scripts/local/mcp_bridge.py  MCP server: Claude Code delegates tasks to the local model
 results/               one folder per run (metrics + env info committed, raw outputs ignored)
 third_party/C2C        upstream code (gitignored, created by setup.sh)
 ```
