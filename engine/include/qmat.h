@@ -31,4 +31,8 @@ float bf16_to_f32(uint16_t h);
  * Returns 0 on success, -1 if bits/group_size/cols are invalid (y untouched). */
 int qmat_matvec(const QMat *m, const float *x, float *y);
 
+/* Dequantise row r into out[cols]: out[c] = q[r][c] * scale + bias (as above). Used for the
+ * quantized embedding table. Returns 0, or -1 if r is out of range or the format is invalid. */
+int qmat_row(const QMat *m, int r, float *out);
+
 #endif

@@ -19,3 +19,7 @@ Lead wrote: `loader.c` (real-checkpoint glue), every spec, test and MLX referenc
 
 Lessons: (a) chain spec edits with `&&` and print the result before delegating; (b) for multi-function code, the lead fixes the structure (skeleton + signatures) and Qwen fills the bodies: it writes math well but restructures badly; (c) always delete stale binaries before re-testing.
 | 6 | `moe_layer.c`: router softmax → top-8 → renormalise → 8 expert SwiGLU MLPs + sigmoid-gated shared expert | **1** | None. Lead gave the skeleton (signatures, buffer carving, main loop) from the start; Qwen filled 3 TODOs | 121 s | PASS on real weights, layers 0 and 27, rel err ~1e-6 vs MLX |
+| 7a | `qmat_row.c`: dequantise one embedding row | 3 | 1: `&&` inside `\|\|` without parentheses (-Werror). 2: **repeated task-1 mistakes**: invented signed 4-bit values, and word/group indexing reset every word. 3: correct once given the exact indexing loop | 123 s + 27 s + 75 s | PASS |
+| 7b | `model.c` forward pass (layer residual wiring, embedding, final norm, lm_head) in a lead skeleton | 2 | 1: checked the return value of `void op_rmsnorm`. 2: fixed. Left the lead's loader code untouched (diff-verified) | 81 s + 99 s | compiles; whole-model test pending |
+
+Lead wrote: `config.c` (strict config.json reader), `model.c` loader/reset, the whole-model MLX reference and test.

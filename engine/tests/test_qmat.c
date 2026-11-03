@@ -39,6 +39,17 @@ static int run_fixture(const char *path) {
                     if (bad++ < 3) printf("      row %d: got %.6f want %.6f\n", r, got[r], want[r]);
                 }
             }
+            /* qmat_row: dot(row r, x) must reproduce y[r] for every row */
+            float *row = malloc(sizeof(float) * cols); int row_bad = 0;
+            for (int r = 0; r < rows && row; r++) {
+                double d = 0; if (qmat_row(&m, r, row) != 0) { row_bad++; continue; }
+                for (int c = 0; c < cols; c++) d += (double)row[c] * x[c];
+                if (fabs(d - want[r]) > ABS_TOL + REL_TOL * fabsf(want[r]) * 10) row_bad++;
+            }
+            if (qmat_row(&m, rows, row) != -1 || qmat_row(&m, -1, row) != -1) row_bad++;
+            free(row);
+            if (row_bad) printf("      qmat_row: %d rows wrong or bounds not checked\n", row_bad);
+            bad += row_bad;
             failed = bad != 0;
             printf("%s  %s (%dx%d, %d-bit, g%d): max abs err %.2e, %d/%d rows off\n",
                    failed ? "FAIL" : "PASS", path, rows, cols, bits, gs, worst, bad, rows);

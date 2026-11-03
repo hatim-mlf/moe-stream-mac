@@ -1,0 +1,12 @@
+{
+  "seconds": 27.3,
+  "usage": {
+    "prompt_tokens": 1507,
+    "completion_tokens": 561,
+    "total_tokens": 2068,
+    "prompt_tokens_details": {
+      "cached_tokens": 35
+    }
+  },
+  "output": "engine/src/qmat_row.c"
+}
