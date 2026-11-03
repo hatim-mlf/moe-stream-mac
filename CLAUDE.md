@@ -1,6 +1,10 @@
 # kimi-k3-c-engine
 
-Goal: port the pure-C CPU engine `kimi-k3-in-c` so it runs ~70B-class 8-bit models: `Qwen3.6-35B-A3B-FP8` (dev) and then `Qwen3.5-122B-A10B-FP8` (main). Benchmark it against llama.cpp Q8_0 on CPU. Read `README.md`, then `docs/plan.md`, before doing anything.
+Goal: run a strong ~30B-class Qwen model locally on the M1 Max (32 GB) and let Claude Code delegate work to it. Read `README.md` first.
+
+- **Track A** (`docs/local-agent-plan.md`): MLX / llama.cpp serving at 4–6 bit, `scripts/local/bench.py`, `scripts/local/mcp_bridge.py`.
+- **Track B** (`docs/plan.md`): port the pure-C engine `kimi-k3-in-c` to `qwen3_5_moe`, so that 8-bit `Qwen3.6-35B-A3B` (38 GB, bigger than RAM) streams experts from SSD. It has to beat Track A's 8-bit numbers to be worth it.
+- There is no Qwen 3.8 30B. Use the model names in the README table, which were checked on Hugging Face.
 
 ## Rules
 

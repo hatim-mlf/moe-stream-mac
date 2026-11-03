@@ -1,40 +1,53 @@
 # kimi-k3-c-engine
 
-Use the pure-C CPU engine from [FareedKhan-dev/kimi-k3-in-c](https://github.com/FareedKhan-dev/kimi-k3-in-c) (C99, no BLAS/framework/GPU, Apache-2.0) to run **~70B-class 8-bit open models** on an ordinary machine, starting with this Mac (M1 Max, 32 GB RAM).
+Run a strong ~30B-class Qwen model locally on this Mac (M1 Max, 32 GB) and let Claude Code hand work to it. There are two tracks:
 
-## Why it's a port, not a config change
-
-The engine is hard-wired to Kimi K3. It refuses any other `config.json` on purpose. But Qwen 3.5, 3.6 and 3.8 use the **same kind of hybrid design** as K3, which makes a port realistic:
-
-| | Kimi K3 (engine today) | Qwen3.5/3.6 MoE (target) |
+| Track | What | Status |
 |---|---|---|
-| Linear-attention layers | KDA (Kimi Delta Attention) | Gated DeltaNet (same delta-rule family) |
-| Full-attention layers | Gated MLA, every ~4th layer | Gated GQA + RoPE, every 4th layer |
-| FFN | MoE, sigmoid router, 896 experts top-16 | MoE, softmax router, 256 experts top-8 + gated shared expert |
-| Weights | MXFP4 experts | official FP8 e4m3, 128×128 block scales |
-| Tokenizer | tiktoken | BPE (`tokenizer.json`) |
+| **A: Local worker** ([plan](docs/local-agent-plan.md)) | Serve Qwen with MLX or llama.cpp, benchmark it, and plug it into Claude Code through an MCP bridge | Scripts ready, needs a run on the Mac |
+| **B: C engine port** ([plan](docs/plan.md)) | Port the [kimi-k3-in-c](https://github.com/FareedKhan-dev/kimi-k3-in-c) CPU engine to Qwen MoE, so **8-bit models bigger than RAM** stream from SSD | Upstream builds and passes its tests on the Mac. Port not started |
 
-Reusable as-is: safetensors reader, disk streaming/mmap, expert cache, sampler, CLI, and the "match a Python reference bit-for-bit" test method.
+## Which model ("Qwen 3.8 30B 8-bit")
 
-## Target models (there's no Qwen 3.8 70B)
+There is no Qwen 3.8 30B. The closest real models, checked on Hugging Face on 2026-11-03:
 
-| Role | Model | 8-bit size | Active / token | Why |
-|---|---|---|---|---|
-| Dev target | `Qwen/Qwen3.6-35B-A3B-FP8` | 37 GB | ~3B | Smallest of the family, fast iteration, same `qwen3_5_moe` code path |
-| **Main target (70B-class)** | `Qwen/Qwen3.5-122B-A10B-FP8` | 127 GB | ~10B | 4× RAM, which is exactly the case the engine's disk streaming exists for |
-| Optional dense | `Qwen/Qwen3.8-27B-FP8` | 31 GB | 27B | Same attention layers, dense FFN. Nearly free once the MoE port works |
+| Model | Type | 4-bit | 6-bit | 8-bit | Fits 32 GB at 8-bit? |
+|---|---|---|---|---|---|
+| `Qwen3.6-35B-A3B` | MoE, ~3B active | 20 GB | 29 GB | 38 GB | **no** → Track B |
+| `Qwen3.8-27B` | dense | 16 GB | ~22 GB | ~29 GB | **no** (no room left for macOS) |
+| `Qwen3-Coder-30B-A3B-Instruct` | MoE, code-tuned, older | ~17 GB | ~25 GB | ~32 GB | **no** |
 
-Baseline: [llama.cpp](https://github.com/ggml-org/llama.cpp) already supports these (`qwen35`, `qwen35moe`) in C/C++. Our engine has to be compared against it at Q8_0 on CPU.
+So 8-bit doesn't fit in memory for any of them. Track A runs them at 4–6 bit, which is fast and has a small quality loss that the benchmark measures. Track B is the only way to get true 8-bit on this machine: keep the shared weights in RAM and stream the ~3B active experts from SSD.
+
+## Track A quick start (Mac)
+
+```bash
+pip install mlx-lm mcp
+mlx_lm.server --model mlx-community/Qwen3.6-35B-A3B-4bit --port 8080
+python scripts/local/bench.py --name mlx-qwen36-35b-a3b-4bit
+claude mcp add local-llm -- python ~/kimi-k3-c-engine/scripts/local/mcp_bridge.py
+```
+
+Other MLX repos that exist: `mlx-community/Qwen3.6-35B-A3B-{5bit,6bit,8bit}`, `mlx-community/Qwen3.8-27B-{4bit,8bit}`, and `mlx-community/Qwen3-Coder-30B-A3B-Instruct-{4bit,6bit}`. GGUF for llama.cpp: `unsloth/Qwen3.6-35B-A3B-GGUF`, `unsloth/Qwen3.8-27B-GGUF`.
+
+## Track B quick start
+
+```bash
+bash scripts/setup.sh            # upstream engine: build + weightless tests (macOS: brew install libomp)
+bash scripts/setup-baseline.sh   # llama.cpp CPU baseline (needs cmake)
+```
 
 ## Layout
 
 ```
-docs/plan.md                 phased plan + go/no-go
-scripts/setup.sh             upstream engine at pinned SHA: build + weightless tests
-scripts/setup-baseline.sh    llama.cpp at pinned tag, CPU-only build
+docs/local-agent-plan.md     Track A: speed arithmetic, candidates, phases, go/no-go
+docs/plan.md                 Track B: C engine port plan
+scripts/local/bench.py       prefill + decode tok/s against mlx_lm.server / llama-server
+scripts/local/mcp_bridge.py  MCP server: Claude Code delegates tasks to the local model
+scripts/setup.sh             upstream engine at pinned SHA
+scripts/setup-baseline.sh    llama.cpp at pinned tag, CPU-only
 scripts/sync.sh              two-way sync of main with GitHub
 scripts/install-autosync.sh  launchd job running sync.sh every 5 min (macOS)
-engine/                      our port (created in Phase 1)
 results/                     one folder per run (metrics committed, raw logs ignored)
 third_party/                 upstream engine + llama.cpp (gitignored)
 ```
@@ -42,10 +55,3 @@ third_party/                 upstream engine + llama.cpp (gitignored)
 ## Sync
 
 `main` on GitHub is the single source of truth. Cloud sessions pull at start and push to `main` when done. The local Mac runs `scripts/sync.sh` every 5 min (install with `bash scripts/install-autosync.sh`, remove with `--uninstall`, log at `~/Library/Logs/kimi-k3-c-engine-sync.log`).
-
-## Quick start
-
-```bash
-bash scripts/setup.sh            # macOS: brew install libomp first
-bash scripts/setup-baseline.sh   # needs cmake
-```
