@@ -1,0 +1,12 @@
+{
+  "seconds": 34.9,
+  "usage": {
+    "prompt_tokens": 1121,
+    "completion_tokens": 1274,
+    "total_tokens": 2395,
+    "prompt_tokens_details": {
+      "cached_tokens": 39
+    }
+  },
+  "output": "engine/hybrid/expert_reader.py"
+}
