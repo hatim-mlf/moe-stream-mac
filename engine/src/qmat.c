@@ -24,6 +24,8 @@ int qmat_matvec(const QMat *m, const float *x, float *y) {
     int stride_s = cols / group_size;
     uint32_t mask = (1u << bits) - 1u;
 
+    /* Rows are independent: split them across threads (OMP_NUM_THREADS). Tiny matrices stay serial. */
+    #pragma omp parallel for schedule(static) if (rows >= 64)
     for (int r = 0; r < rows; r++) {
         float sum = 0.0f;
         const uint32_t *wp = m->w + r * stride_w;

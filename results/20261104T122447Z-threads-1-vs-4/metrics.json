@@ -1,0 +1,9 @@
+{
+  "engine_commit": "112ea7f + OpenMP row-parallel qmat_matvec",
+  "machine": "Apple M1 Max (8P+2E cores), 32 GB, other apps open",
+  "change": "#pragma omp parallel for over qmat_matvec rows (rows >= 64); everything else unchanged",
+  "outputs": "1-thread and 4-thread logits bit-identical on both models (cmp)",
+  "qwen3.6-35b-a3b-4bit": {"generate_s_per_token": {"1_thread": 2.17, "4_threads": 0.75}, "speedup": 2.9, "peak_rss_gb": 1.39},
+  "qwen3.5-122b-a10b-8bit": {"generate_s_per_token": {"1_thread": 8.12, "4_threads": 3.69}, "speedup": 2.2, "peak_rss_gb": 5.50,
+     "io": "4 threads: 92.4 GB of experts read in 32.1 s = 36% of the run (2.9 GB/s, serial pread); compute is the other 64%"}
+}

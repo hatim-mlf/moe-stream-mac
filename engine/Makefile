@@ -1,19 +1,22 @@
 CC      ?= cc
-CFLAGS  ?= -O2 -std=c99 -Wall -Wextra -Werror -Iinclude
-IO_CFLAGS = -O2 -std=gnu99 -Wall -Iinclude -Isrc/io -Ithird_party
+LIBOMP  ?= /opt/homebrew/opt/libomp
+OMP     = -Xpreprocessor -fopenmp -I$(LIBOMP)/include
+OMP_LD  = -L$(LIBOMP)/lib -lomp
+CFLAGS  ?= -O2 -std=c99 -Wall -Wextra -Werror -Iinclude $(OMP)
+IO_CFLAGS = -O2 -std=gnu99 -Wall -Iinclude -Isrc/io -Ithird_party $(OMP)
 FIXTURES = $(wildcard tests/fixtures/qmat_*.bin)
 
 build/test_qmat: src/qmat.c src/qmat_row.c tests/test_qmat.c include/qmat.h
 	@mkdir -p build
-	$(CC) $(CFLAGS) src/qmat.c src/qmat_row.c tests/test_qmat.c -o $@ -lm
+	$(CC) $(CFLAGS) src/qmat.c src/qmat_row.c tests/test_qmat.c -o $@ -lm $(OMP_LD)
 
 build/test_ops: src/ops.c tests/test_ops.c include/ops.h
 	@mkdir -p build
-	$(CC) $(CFLAGS) src/ops.c tests/test_ops.c -o $@ -lm
+	$(CC) $(CFLAGS) src/ops.c tests/test_ops.c -o $@ -lm $(OMP_LD)
 
 build/test_gdn: src/gdn.c tests/test_gdn.c include/gdn.h
 	@mkdir -p build
-	$(CC) $(CFLAGS) src/gdn.c tests/test_gdn.c -o $@ -lm
+	$(CC) $(CFLAGS) src/gdn.c tests/test_gdn.c -o $@ -lm $(OMP_LD)
 
 test: build/test_qmat build/test_ops build/test_gdn
 	./build/test_qmat $(FIXTURES)
@@ -22,13 +25,13 @@ test: build/test_qmat build/test_ops build/test_gdn
 
 build/real_matvec: src/qmat.c src/io/k3_st.c tests/real_matvec.c
 	@mkdir -p build
-	$(CC) $(IO_CFLAGS) src/qmat.c src/io/k3_st.c tests/real_matvec.c -o $@ -lm
+	$(CC) $(IO_CFLAGS) src/qmat.c src/io/k3_st.c tests/real_matvec.c -o $@ -lm $(OMP_LD)
 
 MODEL ?= $(HOME)/models/Qwen3.6-35B-A3B-4bit
 CORE = src/qmat.c src/qmat_row.c src/ops.c src/gdn.c src/loader.c src/expert_store.c src/io/k3_st.c
 build/test_gdn_layer: $(CORE) src/gdn_layer.c tests/test_gdn_layer.c include/gdn_layer.h
 	@mkdir -p build
-	$(CC) $(IO_CFLAGS) -Werror $(CORE) src/gdn_layer.c tests/test_gdn_layer.c -o $@ -lm
+	$(CC) $(IO_CFLAGS) -Werror $(CORE) src/gdn_layer.c tests/test_gdn_layer.c -o $@ -lm $(OMP_LD)
 
 test-layer: build/test_gdn_layer
 	../.venv/bin/python tests/gdn_layer_ref.py $(MODEL) 0 6 build/gdn_l0.bin
@@ -41,7 +44,7 @@ clean:
 
 build/test_attn_layer: $(CORE) src/attn_layer.c tests/test_attn_layer.c include/attn_layer.h
 	@mkdir -p build
-	$(CC) $(IO_CFLAGS) -Werror $(CORE) src/attn_layer.c tests/test_attn_layer.c -o $@ -lm
+	$(CC) $(IO_CFLAGS) -Werror $(CORE) src/attn_layer.c tests/test_attn_layer.c -o $@ -lm $(OMP_LD)
 
 test-attn: build/test_attn_layer
 	../.venv/bin/python tests/attn_layer_ref.py $(MODEL) 3 7 build/attn_l3.bin
@@ -49,7 +52,7 @@ test-attn: build/test_attn_layer
 
 build/test_moe_layer: $(CORE) src/moe_layer.c tests/test_moe_layer.c include/moe_layer.h
 	@mkdir -p build
-	$(CC) $(IO_CFLAGS) -Werror $(CORE) src/moe_layer.c tests/test_moe_layer.c -o $@ -lm
+	$(CC) $(IO_CFLAGS) -Werror $(CORE) src/moe_layer.c tests/test_moe_layer.c -o $@ -lm $(OMP_LD)
 
 test-moe: build/test_moe_layer
 	../.venv/bin/python tests/moe_layer_ref.py $(MODEL) 0 6 build/moe_l0.bin
@@ -58,10 +61,10 @@ test-moe: build/test_moe_layer
 MODEL_SRC = $(CORE) src/gdn_layer.c src/attn_layer.c src/moe_layer.c src/config.c src/model.c
 build/test_model: $(MODEL_SRC) tests/test_model.c include/model.h
 	@mkdir -p build
-	$(CC) $(IO_CFLAGS) -Werror $(MODEL_SRC) tests/test_model.c -o $@ -lm
+	$(CC) $(IO_CFLAGS) -Werror $(MODEL_SRC) tests/test_model.c -o $@ -lm $(OMP_LD)
 build/run_model: $(MODEL_SRC) tests/run_model.c include/model.h
 	@mkdir -p build
-	$(CC) $(IO_CFLAGS) -Werror $(MODEL_SRC) tests/run_model.c -o $@ -lm
+	$(CC) $(IO_CFLAGS) -Werror $(MODEL_SRC) tests/run_model.c -o $@ -lm $(OMP_LD)
 
 test-model: build/run_model
 	../.venv/bin/python tests/model_check.py tokenize $(MODEL) build/prompt.i32

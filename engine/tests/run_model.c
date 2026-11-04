@@ -30,9 +30,9 @@ int main(int argc, char **argv) {
     }
     const double end = now();
     struct rusage ru; getrusage(RUSAGE_SELF, &ru);
-    fprintf(stderr, "prompt %d tok: %.2f s/tok | generate %d tok: %.2f s/tok | experts read %.1f GB | peak RSS %.2f GB\n",
+    fprintf(stderr, "prompt %d tok: %.2f s/tok | generate %d tok: %.2f s/tok | experts read %.1f GB in %.1f s (%.0f%% of run) | peak RSS %.2f GB\n",
             np, (t_gen - t_prompt) / np, ng - 1, (end - t_gen) / (ng - 1 > 0 ? ng - 1 : 1),
-            expert_bytes_read() / 1e9, ru.ru_maxrss / 1073741824.0);
+            expert_bytes_read() / 1e9, expert_read_seconds(), 100.0 * expert_read_seconds() / (end - t_prompt), ru.ru_maxrss / 1073741824.0);
     FILE *o = fopen(argv[4], "wb");
     const int32_t hdr[3] = { np, ng, V };
     if (!o || fwrite(hdr, 4, 3, o) != 3 || fwrite(ids, 4, n, o) != (size_t)n ||
