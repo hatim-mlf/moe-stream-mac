@@ -36,3 +36,6 @@ Lead wrote: `config.c` (strict config.json reader), `model.c` loader/reset, the 
 | 16 | Qwen: 12 coding prompts as JSON | 1 | ignored the requested language mix (6 Python, no Bash/Rust/TS) | 56 s | usable |
 | C3 | **Codex** `tools/topic_study.py`: leave-one-out topic hit rates | 1 | none | — | PASS |
 | C4 | **Codex** coding-model research (camofox) | 1 + 1 revision | first run blocked by a camofox version-layout bug (lead fixed); first report rejected Coder-Next on a fixable adapter detail and skipped Devstral/KAT/gpt-oss; revision requested | — | in progress |
+| 18 | Qwen: `delegate.py` sends `tools/helper_rules.md` with every task (`--no-rules` to disable) | **1** | none; exactly to spec. Lead fixed the code-block extractor (closing fence must start a line; files containing ``` were cut short) | 39 s | PASS |
+| C5 | **Codex** `tools/autofix.py` + tests: write → test → feed failures back automatically, restore on failure, `--functions` splice mode | 1 | none | — | PASS 3/3 (re-run by lead) |
+| R1 | **Replay of task 1** (qmat) with rules + autofix, no lead involvement | **1** (was 3 + 2 lead reviews on day 1) | none: no malloc, unsigned values, per-group scales | 125 s | PASS |

@@ -1,0 +1,7 @@
+PASS  validation + bf16
+PASS  tests/fixtures/qmat_256x2048_b8_g64.bin (256x2048, 8-bit, g64): max abs err 4.53e-06, 0/256 rows off
+PASS  tests/fixtures/qmat_512x2048_b4_g64.bin (512x2048, 4-bit, g64): max abs err 4.29e-06, 0/512 rows off
+PASS  tests/fixtures/qmat_64x256_b4_g64.bin (64x256, 4-bit, g64): max abs err 1.43e-06, 0/64 rows off
+PASS  tests/fixtures/qmat_64x256_b8_g64.bin (64x256, 8-bit, g64): max abs err 1.19e-06, 0/64 rows off
+PASS  tests/fixtures/qmat_96x384_b4_g32.bin (96x384, 4-bit, g32): max abs err 8.34e-07, 0/96 rows off
+ALL QMAT TESTS PASSED

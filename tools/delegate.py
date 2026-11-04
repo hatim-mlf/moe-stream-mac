@@ -16,12 +16,20 @@ ROOT = Path(__file__).resolve().parents[1]
 API = "http://127.0.0.1:8080/v1/chat/completions"
 SYSTEM = ("You are a senior software engineer (C and Python). Follow the brief exactly. Reply with ONE fenced code block "
           "containing the complete file, and nothing else.")
-CODE_BLOCK = re.compile(r"```[a-zA-Z0-9]*\n(.*?)```", re.DOTALL)
+RULES_FILE = ROOT / "tools" / "helper_rules.md"
+# The closing fence must start its own line, so code that itself contains ``` (e.g. this file) is not cut short.
+CODE_BLOCK = re.compile(r"^```[a-zA-Z0-9]*\n(.*?)\n```[ \t]*$", re.DOTALL | re.MULTILINE)
 
 
-def ask(prompt: str) -> tuple[str, dict, float]:
+def system_prompt(use_rules: bool = True) -> str:
+    if use_rules and RULES_FILE.exists():
+        return SYSTEM + "\n\n" + RULES_FILE.read_text()
+    return SYSTEM
+
+
+def ask(prompt: str, system: str = SYSTEM) -> tuple[str, dict, float]:
     body = {"model": "default_model", "max_tokens": 8192, "temperature": 0.2,
-            "messages": [{"role": "system", "content": SYSTEM}, {"role": "user", "content": prompt}],
+            "messages": [{"role": "system", "content": system}, {"role": "user", "content": prompt}],
             "chat_template_kwargs": {"enable_thinking": False}}
     req = urllib.request.Request(API, data=json.dumps(body).encode(), headers={"Content-Type": "application/json"})
     start = time.perf_counter()
@@ -35,25 +43,27 @@ def main() -> None:
     p.add_argument("brief"); p.add_argument("output")
     p.add_argument("--feedback", help="file with previous code + test output to fix")
     p.add_argument("--name", default="task")
+    p.add_argument("--no-rules", action="store_true")
     a = p.parse_args()
 
     prompt = Path(a.brief).read_text()
     if a.feedback:
         prompt += "\n\n## Your previous attempt failed\n\n" + Path(a.feedback).read_text() + \
                   "\n\nFix it. Reply with the complete corrected file."
-    reply, usage, secs = ask(prompt)
+    reply, usage, secs = ask(prompt, system_prompt(not a.no_rules))
 
     log = ROOT / "results" / "delegations" / f"{datetime.now(timezone.utc):%Y%m%dT%H%M%SZ}-{a.name}"
     log.mkdir(parents=True)
     (log / "prompt.md").write_text(prompt)
     (log / "reply.md").write_text(reply)
+    (log / "system.md").write_text(system_prompt(not a.no_rules))
     stats = {"seconds": round(secs, 1), "usage": usage, "output": a.output}
     (log / "stats.json").write_text(json.dumps(stats, indent=2))
 
     match = CODE_BLOCK.search(reply)
     if not match:
         raise SystemExit(f"no code block in reply, see {log / 'reply.md'}")
-    Path(a.output).write_text(match.group(1))
+    Path(a.output).write_text(match.group(1) + "\n")
     print(f"wrote {a.output} in {secs:.1f}s ({usage.get('completion_tokens')} tokens) - log {log}")
 
 
