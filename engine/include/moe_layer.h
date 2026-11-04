@@ -12,7 +12,8 @@
 typedef struct {
     QMat router;          /* hidden -> E           (mlp.gate)                                 */
     ExpertTensor gate, up, down;   /* routed experts, read from disk on demand (expert_store.h) */
-    ExpertBuf gbuf, ubuf, dbuf;    /* one expert's worth of each; may be shared across layers  */
+    ExpertBuf gbuf[MOE_MAX_TOPK], ubuf[MOE_MAX_TOPK], dbuf[MOE_MAX_TOPK];  /* one set per selected expert, so the
+                                   top_k experts can be read in parallel; may be shared across layers */
     QMat sh_gate, sh_up, sh_down;  /* shared expert: hidden -> sh_inter -> hidden          */
     QMat sh_router;       /* hidden -> 1           (mlp.shared_expert_gate)                   */
     int hidden, E, top_k, inter, sh_inter;

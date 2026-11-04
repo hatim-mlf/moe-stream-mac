@@ -67,14 +67,15 @@ static int load_moe(Model *m, int l, Layer *L) {
     if (w->gate.E != c->E || w->gate.rows != c->moe_inter) { fprintf(stderr, "layer %d: expert shape mismatch\n", l); return -1; }
     /* every layer has the same expert shapes: share one set of read buffers */
     if (l == 0) {
-        if (expert_buf_alloc(&w->gbuf, &w->gate) || expert_buf_alloc(&w->ubuf, &w->up) || expert_buf_alloc(&w->dbuf, &w->down))
-            return -1;
+        for (int i = 0; i < c->top_k; i++)
+            if (expert_buf_alloc(&w->gbuf[i], &w->gate) || expert_buf_alloc(&w->ubuf[i], &w->up) ||
+                expert_buf_alloc(&w->dbuf[i], &w->down)) return -1;
     } else {
         const MoeWeights *w0 = &m->layers[0].moe;
         if (w->gate.w_bytes != w0->gate.w_bytes || w->down.w_bytes != w0->down.w_bytes) {
             fprintf(stderr, "layer %d: expert size differs from layer 0\n", l); return -1;
         }
-        w->gbuf = w0->gbuf; w->ubuf = w0->ubuf; w->dbuf = w0->dbuf;
+        for (int i = 0; i < c->top_k; i++) { w->gbuf[i] = w0->gbuf[i]; w->ubuf[i] = w0->ubuf[i]; w->dbuf[i] = w0->dbuf[i]; }
     }
     return 0;
 }

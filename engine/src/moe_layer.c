@@ -2,6 +2,7 @@
 #include "ops.h"
 #include <math.h>
 #include <string.h>
+#include <time.h>
 
 typedef struct { float *logits, *probs, *h1, *h2, *h3, *ye, *gsh; } Bufs;
 
@@ -33,18 +34,39 @@ static int route(const MoeWeights *w, const float *x, const Bufs *b, int *idx, f
     return 0;
 }
 
+/* Read the gate, up and down matrices of the top_k selected experts idx[0..top_k) into their own buffers
+ * (w->gbuf[i], w->ubuf[i], w->dbuf[i]) IN PARALLEL, and return QMat views in g[i], u[i], d[i].
+ * Returns 0, or -1 if any read failed. */
+static int fetch_experts(const MoeWeights *w, const int *idx, QMat *g, QMat *u, QMat *d) {
+    int failed = 0;
+    #pragma omp parallel for schedule(dynamic, 1) reduction(|:failed)
+    for (int j = 0; j < 3 * w->top_k; ++j) {
+        int i = j / 3;
+        int which = j % 3;
+        int expert = idx[i];
+        const ExpertBuf *buf = (which == 0) ? &w->gbuf[i] : (which == 1) ? &w->ubuf[i] : &w->dbuf[i];
+        const ExpertTensor *t = (which == 0) ? &w->gate : (which == 1) ? &w->up : &w->down;
+        QMat *out = (which == 0) ? &g[i] : (which == 1) ? &u[i] : &d[i];
+        failed |= (expert_tensor_read(t, expert, buf, out) != 0);
+    }
+    return failed ? -1 : 0;
+}
+
 int moe_layer_step(float *out, const float *x, const MoeWeights *w, float *scratch) {
     if (w->top_k < 1 || w->top_k > MOE_MAX_TOPK) return -1;
     const Bufs b = carve(w, scratch);
     int idx[MOE_MAX_TOPK];
     float score[MOE_MAX_TOPK];
     if (route(w, x, &b, idx, score)) return -1;
+    QMat g[MOE_MAX_TOPK], u[MOE_MAX_TOPK], d[MOE_MAX_TOPK];
+    struct timespec t0, t1;
+    clock_gettime(CLOCK_MONOTONIC, &t0);
+    if (fetch_experts(w, idx, g, u, d)) return -1;          /* all top_k experts read from disk in parallel */
+    clock_gettime(CLOCK_MONOTONIC, &t1);
+    expert_add_read_seconds((t1.tv_sec - t0.tv_sec) + (t1.tv_nsec - t0.tv_nsec) * 1e-9);
     memset(out, 0, sizeof(float) * (size_t)w->hidden);
     for (int i = 0; i < w->top_k; i++) {
-        QMat g, u, d;
-        if (expert_tensor_read(&w->gate, idx[i], &w->gbuf, &g) || expert_tensor_read(&w->up, idx[i], &w->ubuf, &u) ||
-            expert_tensor_read(&w->down, idx[i], &w->dbuf, &d)) return -1;
-        if (mlp(&g, &u, &d, x, b.ye, &b)) return -1;
+        if (mlp(&g[i], &u[i], &d[i], x, b.ye, &b)) return -1;
         for (int j = 0; j < w->hidden; j++) out[j] += score[i] * b.ye[j];
     }
     /* Step 4: shared expert */

@@ -1,0 +1,10 @@
+{
+  "engine_commit": "93d0071 + parallel expert reads (fetch_experts, OpenMP over 3*top_k preads)",
+  "machine": "Apple M1 Max (8P+2E), 32 GB; MLX server stopped",
+  "threads": 8,
+  "correctness": "both models: 24/24 positions same argmax as float32 MLX, same generation",
+  "qwen3.6-35b-a3b-4bit": {"generate_s_per_token": 0.16, "tok_per_s": 6.2, "expert_read_s": {"serial": 4.5, "parallel": 1.4}, "peak_rss_gb": 1.40},
+  "qwen3.5-122b-a10b-8bit": {"generate_s_per_token": 0.67, "tok_per_s": 1.5, "expert_read_s": {"serial": 23.1, "parallel": 9.5},
+                             "effective_ssd_gb_per_s": 9.7, "peak_rss_gb": 5.93, "note": "+0.4 GB RSS for 8 per-expert buffer sets"},
+  "history_122b_s_per_token": {"1_thread_scalar": 8.12, "4_threads": 3.69, "8_threads": 3.14, "8_threads_neon": 1.21, "parallel_reads": 0.67}
+}

@@ -8,7 +8,6 @@
 static size_t g_bytes_read;
 static double g_read_seconds;
 
-static double now_s(void) { struct timespec t; clock_gettime(CLOCK_MONOTONIC, &t); return t.tv_sec + t.tv_nsec * 1e-9; }
 
 static const K3Tensor *find(const K3St *st, const char *base, const char *suffix, K3Dtype want) {
     char name[512];
@@ -46,21 +45,21 @@ static int pread_all(int fd, void *dst, size_t n, int64_t off) {
     while (n > 0) {
         const ssize_t got = pread(fd, p, n, (off_t)off);
         if (got <= 0) { perror("expert_store: pread"); return -1; }
-        p += got; n -= (size_t)got; off += got; g_bytes_read += (size_t)got;
+        p += got; n -= (size_t)got; off += got;
+        __atomic_fetch_add(&g_bytes_read, (size_t)got, __ATOMIC_RELAXED);   /* reads run in parallel */
     }
     return 0;
 }
 
 int expert_tensor_read(const ExpertTensor *t, int e, const ExpertBuf *buf, QMat *out) {
     if (e < 0 || e >= t->E) { fprintf(stderr, "expert_store: expert %d out of range\n", e); return -1; }
-    const double t0 = now_s();
     if (pread_all(t->st->fd[t->w->shard], buf->w, t->w_bytes, t->w->off + (int64_t)e * (int64_t)t->w_bytes) ||
         pread_all(t->st->fd[t->s->shard], buf->s, t->g_bytes, t->s->off + (int64_t)e * (int64_t)t->g_bytes) ||
         pread_all(t->st->fd[t->b->shard], buf->b, t->g_bytes, t->b->off + (int64_t)e * (int64_t)t->g_bytes)) return -1;
-    g_read_seconds += now_s() - t0;
     *out = (QMat){ buf->w, buf->s, buf->b, t->rows, t->cols, t->bits, t->group_size };
     return 0;
 }
 
 size_t expert_bytes_read(void) { return g_bytes_read; }
 double expert_read_seconds(void) { return g_read_seconds; }
+void expert_add_read_seconds(double s) { g_read_seconds += s; }   /* called once per parallel fetch, outside it */

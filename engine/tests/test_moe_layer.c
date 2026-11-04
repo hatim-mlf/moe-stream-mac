@@ -12,10 +12,11 @@ static int load_layer(const K3St *s, int layer, MoeWeights *w) {
     char name[320];
     const char *ex[3] = { "switch_mlp.gate_proj", "switch_mlp.up_proj", "switch_mlp.down_proj" };
     ExpertTensor *et[3] = { &w->gate, &w->up, &w->down };
-    ExpertBuf *eb[3] = { &w->gbuf, &w->ubuf, &w->dbuf };
+    ExpertBuf *eb[3] = { w->gbuf, w->ubuf, w->dbuf };
     for (int i = 0; i < 3; i++) {
         snprintf(name, sizeof name, "language_model.model.layers.%d.mlp.%s", layer, ex[i]);
-        if (expert_tensor_open(et[i], s, name, GROUP) || expert_buf_alloc(eb[i], et[i])) return -1;
+        if (expert_tensor_open(et[i], s, name, GROUP)) return -1;
+        for (int k = 0; k < MOE_MAX_TOPK; k++) if (expert_buf_alloc(&eb[i][k], et[i])) return -1;
     }
     const char *parts[5] = { "gate", "shared_expert.gate_proj", "shared_expert.up_proj", "shared_expert.down_proj",
                              "shared_expert_gate" };

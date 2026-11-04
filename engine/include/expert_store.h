@@ -24,7 +24,8 @@ int expert_buf_alloc(ExpertBuf *buf, const ExpertTensor *t);
 int expert_tensor_read(const ExpertTensor *t, int e, const ExpertBuf *buf, QMat *out);
 /* Total bytes pread so far (for I/O statistics). */
 size_t expert_bytes_read(void);
-/* Wall-clock seconds spent inside expert_tensor_read so far. */
+/* Wall-clock seconds spent fetching experts so far (callers report it with expert_add_read_seconds). */
 double expert_read_seconds(void);
+void expert_add_read_seconds(double seconds);
 
 #endif
