@@ -34,8 +34,8 @@ Measured on an M1 Max with 32 GB, 8 threads:
 
 | Model | Disk | Engine RAM | Reply speed | Matches MLX f32 |
 |---|---|---|---|---|
-| Qwen3.6-35B-A3B 4-bit | 20 GB | 1.9 GB | ~4–8 tok/s | yes, 24/24 tokens, rel err ~1e-6 |
-| Qwen3.5-122B-A10B 8-bit | 131 GB | 6.5 GB | ~0.8 tok/s | yes, 24/24 tokens, rel err ~2e-6 |
+| Qwen3.6-35B-A3B 4-bit | 20 GB | 1.9 GB | ~6 tok/s | yes, 24/24 tokens, rel err ~1e-6 |
+| Qwen3.5-122B-A10B 8-bit | 131 GB | 6.5 GB | ~1.5 tok/s | yes, 24/24 tokens, rel err ~2e-6 |
 
 ## Track A quick start (Mac)
 
