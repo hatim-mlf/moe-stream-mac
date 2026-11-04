@@ -1,0 +1,157 @@
+{
+  "git_head": "6f43cc8712a6a7a99d325e1db09b0377cd48a6d3",
+  "system_prompt_sha256": "dfe6835a80025ef70c8c249104854266d421d81af0ea2e701177ee751aeabc1c",
+  "heldout_task_ids": [
+    "expert-cache",
+    "gdn",
+    "ops",
+    "pinned",
+    "predictive",
+    "qgroup",
+    "qmat",
+    "qmat-row"
+  ],
+  "train_eligible": [
+    "attn-layer",
+    "expert-reader",
+    "fetch-experts",
+    "gdn-layer",
+    "model-forward",
+    "moe-layer",
+    "qchat",
+    "read-sorted"
+  ],
+  "train_task_ids": [
+    "attn-layer",
+    "fetch-experts",
+    "gdn-layer",
+    "moe-layer",
+    "qchat",
+    "read-sorted"
+  ],
+  "valid_task_ids": [
+    "expert-reader",
+    "model-forward"
+  ],
+  "natural": [
+    {
+      "task_id": "gdn-layer",
+      "split": "train",
+      "revision": "4acd7d7",
+      "path": "engine/src/gdn_layer.c",
+      "prompt_sha256": "5cdb07c2c1fb1717dd4e2830127615a8995daddd0b5fa1097af66c269137696d",
+      "accepted_sha256": "687e3e90d3f1a18e96b6ecce54ac428fed77247b8b0ace09534753d406fb19b0"
+    },
+    {
+      "task_id": "attn-layer",
+      "split": "train",
+      "revision": "dd0430b",
+      "path": "engine/src/attn_layer.c",
+      "prompt_sha256": "724577939b4a51174b5b828f0f4067b2c238b449b81fdad932b6289fd6f49fe1",
+      "accepted_sha256": "b411eebe6a28aedfb7bc8b15adb2628454a70a18ec17be16cd8d8d22b08f8583"
+    },
+    {
+      "task_id": "moe-layer",
+      "split": "train",
+      "revision": "e98c2f7",
+      "path": "engine/src/moe_layer.c",
+      "prompt_sha256": "3030bf30300dfbb714acef5afdff1a55e88f69b1949b8ee9f5b80baffa60b246",
+      "accepted_sha256": "5ca7769252ac8630da06dc9a31c6d37c3ae3e15b16b526cf55a31ec83111879c"
+    },
+    {
+      "task_id": "model-forward",
+      "split": "valid",
+      "revision": "1723786",
+      "path": "engine/src/model.c",
+      "prompt_sha256": "75284c80ac42437ab01659d3b7ee2344386875a7954a8d1edb2eda76493a617b",
+      "accepted_sha256": "814db1ca998441bd944291fcdaed551e373fd08e386ee134a25415b48140bdc9"
+    },
+    {
+      "task_id": "qchat",
+      "split": "train",
+      "revision": "93d0071",
+      "path": "engine/cli/qchat.py",
+      "prompt_sha256": "f65d2b7d7b55d01040f13c79db8bab65e9c4d78cd8de8f37fa1d01a50a15185e",
+      "accepted_sha256": "b6dd9179761e801213f556b09c3802addcd630243208737654092fc708a917d7"
+    },
+    {
+      "task_id": "fetch-experts",
+      "split": "train",
+      "revision": "5b2ec01",
+      "path": "engine/src/moe_layer.c",
+      "prompt_sha256": "c45e4b37b695f8f78d91754e1f098c13371cc43dc81b213e7fc126b5764186a5",
+      "accepted_sha256": "9772111d2e29c65fff2d6c5a05d75a4ccc88ee9d7257b43188c2b1ecc8dad61c"
+    },
+    {
+      "task_id": "expert-reader",
+      "split": "valid",
+      "revision": "144ea14",
+      "path": "engine/hybrid/expert_reader.py",
+      "prompt_sha256": "4e7e4b59f24918b54e0487caafed5b867f350d277b106c65c4ef47727e3c1216",
+      "accepted_sha256": "0595c37f00f1b427c1a0a4e979f45af4d9967abbc8f09fb268d7b865fd48c237"
+    },
+    {
+      "task_id": "read-sorted",
+      "split": "train",
+      "revision": "9a6af1e",
+      "path": "engine/hybrid/expert_reader.py",
+      "prompt_sha256": "f484201611e4138f93c5edf651d8ab50ab86c4c9c63cef17970606eefd5bf6bf",
+      "accepted_sha256": "05b8f2ce444e9240914c40bb0404844e46f2632ca4d5cc6966d1cdf382582297"
+    }
+  ],
+  "seed_validation": [
+    "seed-c-u4",
+    "seed-c-satadd",
+    "seed-py-chunks",
+    "seed-py-kv",
+    "seed-np-softmax",
+    "seed-np-mask"
+  ],
+  "seed_train": [
+    "seed-c-dot-u8",
+    "seed-c-bf16",
+    "seed-c-sigmoid",
+    "seed-c-clamp",
+    "seed-c-topk",
+    "seed-c-ring",
+    "seed-c-strided",
+    "seed-c-argmax",
+    "seed-py-unique",
+    "seed-py-intervals",
+    "seed-py-rotate",
+    "seed-py-runs",
+    "seed-py-window",
+    "seed-py-flatten",
+    "seed-py-transpose",
+    "seed-py-clamp",
+    "seed-np-row-norm",
+    "seed-np-topk",
+    "seed-np-affine",
+    "seed-np-column-sum",
+    "seed-py-partition",
+    "seed-py-split-lines"
+  ],
+  "seed_validated": 28,
+  "seed_only_train_rows": 22,
+  "seed_only_valid_rows": 6,
+  "teacher_accepted": 0,
+  "teacher_rejected": 0,
+  "probe_train_rows": 5,
+  "probe_valid_rows": 1,
+  "probe_train_task_ids": [
+    "seed-c-dot-u8",
+    "seed-c-bf16",
+    "seed-c-sigmoid",
+    "seed-c-clamp",
+    "attn-layer"
+  ],
+  "probe_valid_task_ids": [
+    "model-forward"
+  ],
+  "train_rows": 31,
+  "valid_rows": 10,
+  "preference_rows": 3,
+  "review_rows": 5,
+  "review_train_rows": 3,
+  "review_valid_rows": 2
+}

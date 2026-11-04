@@ -1,0 +1,14 @@
+{
+  "benchmark_revision": "6f43cc8712a6a7a99d325e1db09b0377cd48a6d3",
+  "system_sha256": "dfe6835a80025ef70c8c249104854266d421d81af0ea2e701177ee751aeabc1c",
+  "tasks": [
+    {"id":"qmat","target":"engine/src/qmat.c","first_attempt":"20261103T205114Z-qmat-try1","first_sha256":"93042565c516def7aa05a3c455d2198c7c01eb6093ede0d0baa73990d7720cb6","review_attempt":"20261103T205340Z-qmat-try3","review_sha256":"2624ecebfb7df49c6822391e07fd037537e8a1c69cfd9a87c278336cde7d6e7c"},
+    {"id":"ops","target":"engine/src/ops.c","first_attempt":"20261103T211754Z-ops-try1","first_sha256":"ce7b8027e0420f864cbe39fe24942a742f7570f3d0b723df0cdf29ad6831cd79","review_attempt":"20261103T212034Z-ops-try3","review_sha256":"4fddbf5e13b8e53be9152ae6d4f51bc031e8261c85ffddd13a45b8355ff2ae0b"},
+    {"id":"gdn","target":"engine/src/gdn.c","first_attempt":"20261103T214331Z-gdn-try1","first_sha256":"58ab08346b64154bc3fe60bc54ea4572a39112a695a1ee8bda28b2d22d3c3dbf","review_attempt":"20261103T214546Z-gdn-try3","review_sha256":"aab6d4e87d9e0f9c600a31c1af1f17d9fd82a430506f825834356e267fa93f8c"},
+    {"id":"qmat-row","target":"engine/src/qmat_row.c","first_attempt":"20261103T232352Z-qmat-row-try1","first_sha256":"ebeb27cf69d4b865ae750549d7258cbc16b3334abb2b362f2322f90f2f8e9c86","review_attempt":"20261103T232602Z-qmat-row-try3","review_sha256":"161b305a7b5613bed4d6245b88a7895253d2476b6c796fc4cf63cb9adc29e408"},
+    {"id":"qgroup","target":"engine/src/qgroup.c","first_attempt":"20261104T122839Z-qgroup-try1","first_sha256":"2f4fee99d088dfa5406e3a1180405056c8602a845f0580ccc8a6842ea4d60715","review_attempt":"20261104T123025Z-qgroup-try2","review_sha256":"026fa1fb3244bb8314705ace080b6e35715988b73b6517e5ea24d64208d55de4"},
+    {"id":"expert-cache","target":"engine/hybrid/expert_cache.py","first_attempt":"20261104T142353Z-expert-cache-try1","first_sha256":"1efb746ac3848ac8d753c858d8f937f4577085b5e006a46a80422e4ec09e145b","review_attempt":"20261104T142432Z-expert-cache-try2","review_sha256":"609ae0cbb617276876a24330dd9698b6ed457ebc7c7da4ec0f69bdea977f74da"},
+    {"id":"predictive","target":"engine/hybrid/predictive.py","first_attempt":"20261104T153625Z-predictive-try1","first_sha256":"001c155172a67d02cd73c549dbe4d00366f5c8efd80e167f196e1e9960cdad1a","review_attempt":"20261104T153710Z-predictive-try2","review_sha256":"112ebea4a70e6e9f3e4916a37ffb469b934d93bcc07cd8a4100639163402a801"},
+    {"id":"pinned","target":"engine/hybrid/pinned.py","first_attempt":"20261104T181100Z-pinned-try1","first_sha256":"0abcd78f3b8e404e32a61ec027c4c4a5104d27ec8970b67a0864332e6da4bfbe","review_attempt":"20261104T181311Z-pinned-try2","review_sha256":"96ec2e31931fa2c88d57449ee017c563a3d24a96f7623c1bfa57fff7020a5189"}
+  ]
+}

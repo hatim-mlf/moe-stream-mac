@@ -1,0 +1,9 @@
+{
+  "baseline_heldout_first_attempt": "2/8 (qmat, gdn pass; ops, qmat-row, qgroup, expert-cache, predictive, pinned fail) with helper_rules, temperature 0",
+  "baseline_note": "several failures are byte-identical to day-1 mistakes (popitem unpacking, ranking ignoring counts, invented NEON intrinsic): deterministic at temp 0, rules prompt alone does not fix them",
+  "lora_dry_run": {"config": "docs/finetune/lora.yaml (rank 8, last 4 layers, attention + shared expert)",
+                   "max_seq_length_10240": "OOM", "max_seq_length_4096": "OOM", "max_seq_length_2048": "OOM",
+                   "peak_memory_footprint_gb": 27.2,
+                   "cause": "training needs the whole 20 GB 4-bit model resident in GPU memory (no expert streaming in training) + training state; default GPU cap ~21 GB and ~16 GB of other apps"},
+  "decision": "local training only overnight with apps closed and iogpu.wired_limit_mb raised (user, sudo); tonight = pipeline check on seed data, real run once the ~250-task verified dataset exists"
+}
