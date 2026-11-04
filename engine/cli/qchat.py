@@ -83,11 +83,11 @@ class ContextFull(Exception):
 class HybridEngine:
     """GPU backend: MLX trunk on the GPU, experts streamed from SSD (engine/hybrid). Same interface as Engine."""
 
-    def __init__(self, model_dir: Path, ctx: int):
+    def __init__(self, model_dir: Path, ctx: int, resident_gb: float = 0.0, profile: Path | None = None):
         sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "hybrid"))
         from hybrid import HybridModel
         import mlx.core as mx
-        self._mx, self.hm, self._ctx = mx, HybridModel(model_dir), ctx
+        self._mx, self.hm, self._ctx = mx, HybridModel(model_dir, resident_gb=resident_gb, profile=profile), ctx
 
     def _run(self, tokens: list[int]) -> np.ndarray:
         if self.hm.position + len(tokens) > self._ctx:
@@ -291,6 +291,8 @@ def main() -> None:
     ap.add_argument("--ctx", type=int, default=4096, help="context length in tokens")
     ap.add_argument("--engine", choices=("gpu", "cpu"), default="gpu",
                     help="gpu: MLX trunk + streamed experts (fast prompts, bf16); cpu: the C engine (f32, exact)")
+    ap.add_argument("--resident-gb", type=float, default=0.0, help="pin hot GPU experts in unified memory")
+    ap.add_argument("--profile", type=Path, help="expert usage profile (.npy); defaults to the model name profile")
     ap.add_argument("--temp", type=float, default=0.0, help="0 = greedy (default, deterministic)")
     ap.add_argument("--think", action="store_true", help="enable thinking mode")
     ap.add_argument("--system", default="")
@@ -304,7 +306,7 @@ def main() -> None:
         raise SystemExit(f"{LIB} missing: run `make -C engine lib`")
     s = Settings(temp=a.temp, think=a.think, threads=a.threads, system=a.system, max_tokens=a.max_tokens)
     t0 = time.perf_counter()
-    engine = HybridEngine(model_dir, a.ctx) if a.engine == "gpu" else Engine(model_dir, a.ctx)
+    engine = HybridEngine(model_dir, a.ctx, a.resident_gb, a.profile) if a.engine == "gpu" else Engine(model_dir, a.ctx)
     s.threads = engine.set_threads(a.threads)
     chat = Chat(engine, load_tokenizer(model_dir), model_dir, s)
     print(f"{BOLD}{model_dir.name}{RESET} [{a.engine}] loaded in {time.perf_counter() - t0:.1f}s | {s.threads} threads | "

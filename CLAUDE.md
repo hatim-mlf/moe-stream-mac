@@ -9,6 +9,15 @@ Two engines that run Qwen 3.5/3.6 MoE models bigger than RAM by streaming expert
 - Measure with the user's normal apps open (Xcode etc.); never ask them to close apps for cleaner numbers.
 - The local Qwen MLX server takes ~20 GB: stop it before any 122B run.
 
+## Working model (rule, set by the user on 2026-11-04)
+
+- **Claude is the orchestrator:** writes specs, interfaces, tests and skeletons; reviews every diff; runs the
+  verification and measurements; decides. Claude does not write implementation code it can delegate.
+- **Implementation goes to the helpers:** the local Qwen (`tools/delegate.py`, needs `scripts/local/serve-mlx.sh`)
+  for focused, well-specified pieces; **Codex** (GPT via the codex CLI) for larger or multi-file pieces and for
+  independent review. Commit messages via `tools/qwen_commit.py`.
+- Log every delegation in `docs/delegation-log.md` (who, attempts, what went wrong).
+
 ## Rules
 
 - `third_party/` (upstream engine, llama.cpp) is read-only and gitignored. Our code goes in `engine/` (C99) and `tools/` (Python reference). Keep upstream's Apache-2.0 notice on copied files.

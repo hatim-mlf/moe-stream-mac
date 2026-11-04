@@ -30,3 +30,9 @@ Lead wrote: `config.c` (strict config.json reader), `model.c` loader/reset, the 
 | 12 | `read_sorted`: coalesce consecutive experts into big disk-ordered reads (32 MB chunks) | **1** | None; byte-identical in 12 cases, 2.4x faster than per-expert reads. Lead added the whole-layer read-ahead pipeline around it | 41 s | PASS; 122B 240-token prompt 109 s → 23 s |
 | 13 | `expert_cache.py`: LRU cache with a byte budget | 2 | 1: unpacked `popitem` as (key, nbytes). 2: fixed | 24 s + 20 s | PASS 9/9 (feature then measured as a net loss on this Mac) |
 | 14 | `predictive.py`: background read of predicted next-layer experts | 2 + lead fixes | 1: indexed read results by proj, dict rows instead of tuples, misses read one by one. 2: fixed those, but miss placeholders hid the misses and pending layers were never cleared; lead fixed both. Lead also fixed a bug in its own test | 46 s + 28 s | PASS 5/5; 92% live hit rate on the 122B |
+| 15 | `pinned.py`: choose + load the hottest experts | 2 | 1: ranking ignored the counts (sorted by layer/expert only); ids not sorted. 2: fixed | 32 s + 115 s | PASS 10/10 |
+| C1 | **Codex** `tools/expert_profile.py`: traces → usage profile | 1 | none; touched only its file | — | PASS (gates re-run by lead) |
+| C2 | **Codex** pinned-experts integration in hybrid.py / qchat / bench | 1 | clean diff; its sandbox has no Metal, so the lead ran the model gates | — | PASS (35B 24/24 identical, pinned hits > 0) |
+| 16 | Qwen: 12 coding prompts as JSON | 1 | ignored the requested language mix (6 Python, no Bash/Rust/TS) | 56 s | usable |
+| C3 | **Codex** `tools/topic_study.py`: leave-one-out topic hit rates | 1 | none | — | PASS |
+| C4 | **Codex** coding-model research (camofox) | 1 + 1 revision | first run blocked by a camofox version-layout bug (lead fixed); first report rejected Coder-Next on a fixable adapter detail and skipped Devstral/KAT/gpt-oss; revision requested | — | in progress |

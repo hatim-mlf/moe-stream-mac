@@ -1,0 +1,12 @@
+{
+  "seconds": 56.1,
+  "usage": {
+    "prompt_tokens": 256,
+    "completion_tokens": 721,
+    "total_tokens": 977,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    }
+  },
+  "output": "engine/build/coding_prompts.json"
+}

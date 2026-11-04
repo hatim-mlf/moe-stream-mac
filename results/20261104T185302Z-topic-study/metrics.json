@@ -1,0 +1,66 @@
+{
+  "coding_trace_count": 5,
+  "coding_trace_paths": [
+    "engine/build/coding/c-fix-1.trace",
+    "engine/build/coding/c-implement-1.trace",
+    "engine/build/coding/js-implement-1.trace",
+    "engine/build/coding/python-explain-1.trace",
+    "engine/build/trace122_code.bin"
+  ],
+  "non_coding_trace_paths": [
+    "engine/build/trace122.bin",
+    "engine/build/trace122_explain.bin",
+    "engine/build/trace122_chat.bin"
+  ],
+  "layers": 48,
+  "experts_per_layer": 256,
+  "top_k": 8,
+  "expert_mb": 10.0,
+  "distinct_layer_expert_pairs_all_coding": 10004,
+  "distinct_layer_expert_pairs_per_trace_mean": 6554.8,
+  "distinct_layer_expert_pairs_per_trace": [
+    7097,
+    7109,
+    6764,
+    4699,
+    7105
+  ],
+  "budgets": [
+    {
+      "budget_gb": 4.0,
+      "requested_pairs": 400,
+      "coding_loo": {
+        "mean": 0.22191103775699778,
+        "min": 0.1873566513761468,
+        "max": 0.25838372732270476
+      },
+      "mixed_set_baseline_mean": 0.04565336126496144,
+      "upper_bound_mean": 0.34420232615814017,
+      "coding_set_on_non_coding_mean": 0.06009540296891969
+    },
+    {
+      "budget_gb": 8.0,
+      "requested_pairs": 800,
+      "coding_loo": {
+        "mean": 0.32957943983643545,
+        "min": 0.2828268348623853,
+        "max": 0.37280098955470037
+      },
+      "mixed_set_baseline_mean": 0.10111235161798308,
+      "upper_bound_mean": 0.4846745127050408,
+      "coding_set_on_non_coding_mean": 0.1125983688466833
+    },
+    {
+      "budget_gb": 12.0,
+      "requested_pairs": 1200,
+      "coding_loo": {
+        "mean": 0.40582388033882727,
+        "min": 0.35431001529051986,
+        "max": 0.4528587135788895
+      },
+      "mixed_set_baseline_mean": 0.15296907403092136,
+      "upper_bound_mean": 0.580344857215059,
+      "coding_set_on_non_coding_mean": 0.16392905252634216
+    }
+  ]
+}

@@ -1,0 +1,106 @@
+{
+  "coding_trace_count": 13,
+  "coding_trace_paths": [
+    "engine/build/coding/c-fix-1.trace",
+    "engine/build/coding/c-implement-1.trace",
+    "engine/build/coding/js-implement-1.trace",
+    "engine/build/coding/python-explain-1.trace",
+    "engine/build/coding/python-fix-1.trace",
+    "engine/build/coding/python-implement-1.trace",
+    "engine/build/coding/python-optimize-1.trace",
+    "engine/build/coding/python-refactor-1.trace",
+    "engine/build/coding/python-test-1.trace",
+    "engine/build/coding/sql-design-1.trace",
+    "engine/build/coding/swift-implement-1.trace",
+    "engine/build/coding/swift-refactor-1.trace",
+    "engine/build/trace122_code.bin"
+  ],
+  "non_coding_trace_paths": [
+    "engine/build/trace122.bin",
+    "engine/build/trace122_explain.bin",
+    "engine/build/trace122_chat.bin"
+  ],
+  "layers": 48,
+  "experts_per_layer": 256,
+  "top_k": 8,
+  "expert_mb": 10.0,
+  "distinct_layer_expert_pairs_all_coding": 11088,
+  "distinct_layer_expert_pairs_per_trace_mean": 7068.461538461538,
+  "distinct_layer_expert_pairs_per_trace": [
+    7097,
+    7109,
+    6764,
+    7311,
+    7467,
+    7046,
+    6927,
+    7389,
+    6594,
+    6721,
+    7121,
+    7239,
+    7105
+  ],
+  "budgets": [
+    {
+      "budget_gb": 4.0,
+      "requested_pairs": 400,
+      "coding_loo": {
+        "mean": 0.24058434093553088,
+        "min": 0.19851948302469136,
+        "max": 0.2855902777777778
+      },
+      "mixed_set_baseline_mean": 0.04352678637482364,
+      "upper_bound_mean": 0.3307709846154988,
+      "coding_set_on_non_coding_mean": 0.05994395790655568
+    },
+    {
+      "budget_gb": 6.0,
+      "requested_pairs": 600,
+      "coding_loo": {
+        "mean": 0.2996369489572027,
+        "min": 0.2515432098765432,
+        "max": 0.34756944444444443
+      },
+      "mixed_set_baseline_mean": 0.06939842434642689,
+      "upper_bound_mean": 0.40598791168207826,
+      "coding_set_on_non_coding_mean": 0.09141386616524831
+    },
+    {
+      "budget_gb": 8.0,
+      "requested_pairs": 800,
+      "coding_loo": {
+        "mean": 0.34715898794905314,
+        "min": 0.2976466049382716,
+        "max": 0.3962549603174603
+      },
+      "mixed_set_baseline_mean": 0.09673831062006327,
+      "upper_bound_mean": 0.46607166914180603,
+      "coding_set_on_non_coding_mean": 0.11793868686187658
+    },
+    {
+      "budget_gb": 12.0,
+      "requested_pairs": 1200,
+      "coding_loo": {
+        "mean": 0.4256867692488564,
+        "min": 0.3751205632716049,
+        "max": 0.47470238095238093
+      },
+      "mixed_set_baseline_mean": 0.1501709128223751,
+      "upper_bound_mean": 0.5602924601244775,
+      "coding_set_on_non_coding_mean": 0.16750260039263545
+    },
+    {
+      "budget_gb": 16.0,
+      "requested_pairs": 1600,
+      "coding_loo": {
+        "mean": 0.48464757741159814,
+        "min": 0.4378858024691358,
+        "max": 0.5408234126984127
+      },
+      "mixed_set_baseline_mean": 0.19957368525013192,
+      "upper_bound_mean": 0.6348493674905169,
+      "coding_set_on_non_coding_mean": 0.2178945874490137
+    }
+  ]
+}

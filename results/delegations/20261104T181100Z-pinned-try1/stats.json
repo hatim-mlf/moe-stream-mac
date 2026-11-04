@@ -1,0 +1,12 @@
+{
+  "seconds": 32.3,
+  "usage": {
+    "prompt_tokens": 500,
+    "completion_tokens": 587,
+    "total_tokens": 1087,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    }
+  },
+  "output": "engine/hybrid/pinned.py"
+}

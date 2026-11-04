@@ -1,0 +1,10 @@
+{
+  "environment": "M1 Max 32 GB, real workload open (~15 GB other apps); swap grew to ~40 GB during the runs",
+  "model": "Qwen3.5-122B-A10B-8bit, hybrid GPU engine, held-out prompt (hash map collisions), 60 tokens",
+  "profile": "4 mixed-topic traces (story, code, explain, chat), 548 tokens",
+  "reply_s_per_token": {"pinned_0GB": 0.83, "pinned_8GB": 3.95, "pinned_12GB": 3.95},
+  "pinned_hit_rate": {"8GB": "18%", "12GB": "25%"},
+  "read_gb_per_token": {"0GB": 3.85, "8GB": 3.17, "12GB": 2.88},
+  "gpu_peak_gb": {"0GB": 8.8, "8GB": 16.7, "12GB": 20.7},
+  "conclusion": "Static pinned set from MIXED prompts: too few hits (experts are topic-dependent) and the extra resident memory causes swapping next to the user's apps. Default resident_gb=0. Topic-specific sets are ~3x better (see topic-study results)."
+}

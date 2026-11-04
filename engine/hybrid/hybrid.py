@@ -19,6 +19,7 @@ from mlx_lm.models.switch_layers import SwiGLU, _gather_sort, _scatter_unsort
 
 from expert_cache import ExpertCache
 from expert_reader import ExpertReader
+from pinned import PinnedExperts, select_pinned
 from predictive import PredictivePrefetcher
 
 PROJS = ("gate_proj", "up_proj", "down_proj")
@@ -34,6 +35,8 @@ class StreamStats:
         self.read_s = 0.0
         self.bytes = 0
         self.experts = 0
+        self.experts_requested = 0
+        self.pinned_hits = 0
 
 
 class LayerPrefetcher:
@@ -76,10 +79,10 @@ class StreamingSwitchGLU(nn.Module):
     """Drop-in replacement for mlx_lm SwitchGLU whose expert weights live on disk."""
 
     def __init__(self, reader: ExpertReader, layer: int, group_size: int, bits: dict, stats: StreamStats,
-                 prefetcher: LayerPrefetcher, cache: ExpertCache):
+                 prefetcher: LayerPrefetcher, cache: ExpertCache, pinned: dict):
         super().__init__()
         self._reader, self._layer, self._gs, self._bits, self._stats = reader, layer, group_size, bits, stats
-        self._prefetcher, self._cache = prefetcher, cache
+        self._prefetcher, self._cache, self._pinned = prefetcher, cache, pinned
         self._next_gate = None          # router of layer + 1, set by HybridModel (None for the last layer)
         self._predictive = None
         self._act = SwiGLU()
@@ -100,13 +103,22 @@ class StreamingSwitchGLU(nn.Module):
         return per_expert
 
     def _experts(self, experts: np.ndarray) -> dict:
-        """{expert: {proj: (w, s, b)}} for sorted ids: cache hits stay on the GPU, misses are read from disk."""
-        found = {int(e): self._cache.get((self._layer, int(e))) for e in experts}
+        """{expert: {proj: (w, s, b)}}: pinned rows, cache hits, then disk reads."""
+        found = {}
+        for expert in experts:
+            e = int(expert)
+            value = self._pinned.get((self._layer, e))
+            if value is not None:
+                found[e] = value
+                self._stats.pinned_hits += 1
+            else:
+                found[e] = self._cache.get((self._layer, e))
         missing = np.array([e for e, v in found.items() if v is None], dtype=np.int64)
         if len(missing):
             for e, v in self._read_missing(missing).items():
                 found[e] = v
-                self._cache.put((self._layer, e), v, sum(a.nbytes for t in v.values() for a in t))
+                if (self._layer, e) not in self._pinned:
+                    self._cache.put((self._layer, e), v, sum(a.nbytes for t in v.values() for a in t))
         return found
 
     def _load(self, experts: np.ndarray) -> dict:
@@ -154,6 +166,7 @@ class StreamingSwitchGLU(nn.Module):
             guess = np.argpartition(np.array(nxt.astype(mx.float32)).reshape(-1), -PREDICT_EXPERTS)[-PREDICT_EXPERTS:]
             self._predictive.request(self._layer + 1, guess)   # read layer L+1 while the GPU works on layer L
         ids = np.array(indices)                                # waits for the router (one sync per layer)
+        self._stats.experts_requested += len(np.unique(ids))
         if single:                                             # a single token (generation)
             return self._single_token(x, ids)
         if ids.shape[-2] >= PREFETCH_MIN_TOKENS:               # long batch: whole layer, already read ahead
@@ -180,21 +193,29 @@ class StreamingSwitchGLU(nn.Module):
 class HybridModel:
     """Load a qwen3_5_moe MLX checkpoint with experts streamed from disk. API mirrors the C engine."""
 
-    def __init__(self, model_dir: Path, read_threads: int = 8, cache_gb: float = 0.0, predict: bool = False):
+    def __init__(self, model_dir: Path, read_threads: int = 8, cache_gb: float = 0.0, predict: bool = False,
+                 resident_gb: float = 0.0, profile: Path | None = None):
         # predict off by default: 92% hit rate, but fresh read buffers per layer churn ~10 GB/token and macOS
         # compresses the GPU trunk (3 s/token vs 0.82). Re-enable once read buffers are reused.  # GPU cache off: it steals RAM from the macOS file cache (measured 0.81 vs 5.5 s/token)
         mx.set_cache_limit(MLX_CACHE_LIMIT_BYTES)
+        profile_path = self._resolve_profile(model_dir, profile) if resident_gb > 0 else None
+        if profile_path is not None and not profile_path.is_file():
+            raise FileNotFoundError(f"Usage profile not found: {profile_path}. Build one with tools/expert_profile.py build.")
         self.model, self.tokenizer = load(str(model_dir), lazy=True)
         self.reader = ExpertReader(model_dir, threads=read_threads)
         self.stats = StreamStats()
         self.prefetcher = LayerPrefetcher(self.reader, self.stats)
         self.expert_cache = ExpertCache(int(cache_gb * 1e9))   # hot experts stay resident in GPU memory
         self.predictive = PredictivePrefetcher(self.reader, PROJS) if predict else None
+        self.pinned = {}
+        self.pinned_bytes = 0
+        if resident_gb > 0:
+            self._load_pinned(profile_path, resident_gb)
         for i, layer in enumerate(self.model.language_model.model.layers):
             old = layer.mlp.switch_mlp
             bits = {p: getattr(old, p).bits for p in PROJS}
             layer.mlp.switch_mlp = StreamingSwitchGLU(self.reader, i, old.gate_proj.group_size, bits, self.stats,
-                                                      self.prefetcher, self.expert_cache)
+                                                      self.prefetcher, self.expert_cache, self.pinned)
             del old                                            # lazy expert arrays are dropped unread
         layers = self.model.language_model.model.layers
         for i, layer in enumerate(layers):                     # wire each layer to the next layer's router
@@ -202,6 +223,39 @@ class HybridModel:
             layer.mlp.switch_mlp._next_gate = layers[i + 1].mlp.gate if i + 1 < len(layers) else None
         mx.eval(self.model.parameters())                       # loads the trunk only
         self.reset()
+
+    @staticmethod
+    def _resolve_profile(model_dir: Path, profile: Path | None) -> Path:
+        return Path(profile).expanduser() if profile is not None else Path(__file__).parent / "profiles" / f"{model_dir.name}.npy"
+
+    def _convert_pinned_layer(self, layer: int, expert_ids: np.ndarray) -> tuple[dict, int]:
+        rows = PinnedExperts(self.reader, PROJS, {layer: expert_ids})
+        converted = {}
+        for expert_id in expert_ids:
+            e = int(expert_id)
+            per_proj = rows.get(layer, e)
+            converted[(layer, e)] = {
+                proj: (mx.array(w), mx.array(s).view(mx.bfloat16), mx.array(b).view(mx.bfloat16))
+                for proj, (w, s, b) in per_proj.items()
+            }
+        mx.eval(*(array for value in converted.values() for weights in value.values() for array in weights))
+        return converted, rows.nbytes
+
+    def _load_pinned(self, profile: Path, resident_gb: float) -> None:
+        started = time.perf_counter()
+        counts = np.load(profile, allow_pickle=False)
+        expected = (self.reader.n_layers, self.reader.num_experts(0, PROJS[0]))
+        if counts.dtype != np.int64 or counts.shape != expected:
+            raise ValueError(f"{profile}: expected int64 usage counts with shape {expected}, got {counts.dtype} {counts.shape}")
+        expert_bytes = sum(self.reader._tensor_info[(0, proj, part)]["per_expert_nbytes"]
+                           for proj in PROJS for part in ("weight", "scales", "biases"))
+        selection = select_pinned(counts, expert_bytes, int(resident_gb * 1e9))
+        for layer, expert_ids in selection.items():
+            converted, layer_bytes = self._convert_pinned_layer(layer, expert_ids)
+            self.pinned.update(converted)
+            self.pinned_bytes += layer_bytes
+            del converted
+        print(f"pinned {len(self.pinned)} experts ({self.pinned_bytes / 1e9:.1f} GB) in {time.perf_counter() - started:.1f} s")
 
     def reset(self) -> None:
         self.cache = make_prompt_cache(self.model)
