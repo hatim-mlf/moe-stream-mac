@@ -7,6 +7,8 @@ Run a strong ~30B-class Qwen model locally on this Mac (M1 Max, 32 GB) and let C
 | **A: Local worker** ([plan](docs/local-agent-plan.md)) | Serve Qwen with MLX or llama.cpp, benchmark it, and plug it into Claude Code through an MCP bridge | Scripts ready, needs a run on the Mac |
 | **B: C engine port** ([plan](docs/plan.md)) | Port the [kimi-k3-in-c](https://github.com/FareedKhan-dev/kimi-k3-in-c) CPU engine to Qwen MoE, so **8-bit models bigger than RAM** stream from SSD | Upstream builds and passes its tests on the Mac. Port not started |
 
+**Full write-up of what was tried and measured: [docs/REPORT.md](docs/REPORT.md).**
+
 ## Which model ("Qwen 3.8 30B 8-bit")
 
 There is no Qwen 3.8 30B. The closest real models, checked on Hugging Face on 2026-11-03:
