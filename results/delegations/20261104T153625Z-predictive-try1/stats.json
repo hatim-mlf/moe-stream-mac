@@ -1,0 +1,12 @@
+{
+  "seconds": 45.5,
+  "usage": {
+    "prompt_tokens": 597,
+    "completion_tokens": 649,
+    "total_tokens": 1246,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    }
+  },
+  "output": "engine/hybrid/predictive.py"
+}

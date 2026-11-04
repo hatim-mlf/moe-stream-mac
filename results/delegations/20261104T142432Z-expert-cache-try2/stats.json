@@ -1,0 +1,12 @@
+{
+  "seconds": 19.7,
+  "usage": {
+    "prompt_tokens": 750,
+    "completion_tokens": 303,
+    "total_tokens": 1053,
+    "prompt_tokens_details": {
+      "cached_tokens": 39
+    }
+  },
+  "output": "engine/hybrid/expert_cache.py"
+}

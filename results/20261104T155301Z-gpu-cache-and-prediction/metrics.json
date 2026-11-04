@@ -1,0 +1,10 @@
+{
+  "environment": "M1 Max 32 GB with ~15 GB held by other apps (Xcode, lldb, Safari, Codex, node); swap 29/30 GB used. All numbers are under this memory pressure.",
+  "gpu_expert_cache_122B_decode_s_per_token": {"0GB": 0.81, "6GB": 5.48, "10GB": 5.64},
+  "gpu_expert_cache_conclusion": "GPU memory and the macOS file cache are the same RAM; a resident expert cache evicts the file cache and triggers swapping. Default 0 GB.",
+  "copy_free_single_token_path": "122B decode 0.85 -> 0.81 s/token (1.24 tok/s), tokens unchanged",
+  "next_layer_prediction_recall_122B": {"predict_8": "83%", "predict_12": "94%", "predict_16": "97%", "live_hit_rate_12": "92%"},
+  "prediction_decode_s_per_token": {"off": 0.82, "predict_8": 1.84, "predict_12": 3.07},
+  "prediction_diagnosis": "GPU wait grows 0.39 -> 2.2 s/token; vm_stat decompressions scale with read volume (+2.3M for 8, +5.6M for 12). Fresh numpy + MLX buffers per layer (~10 GB/token churn) make macOS compress the 6.5 GB GPU trunk. Default predict=False until read buffers are reused (C engine design).",
+  "ceiling": "decode needs ~80 MB of experts per layer: ~12 ms at 6.5 GB/s raw SSD vs ~8 ms GPU work, so ~0.6 s/token is the realistic floor without free RAM for the file cache; the C engine (0.66) is near it"
+}
