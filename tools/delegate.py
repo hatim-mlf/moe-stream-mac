@@ -14,7 +14,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 API = "http://127.0.0.1:8080/v1/chat/completions"
-SYSTEM = ("You are a senior C engineer. Follow the brief exactly. Reply with ONE fenced code block "
+SYSTEM = ("You are a senior software engineer (C and Python). Follow the brief exactly. Reply with ONE fenced code block "
           "containing the complete file, and nothing else.")
 CODE_BLOCK = re.compile(r"```[a-zA-Z0-9]*\n(.*?)```", re.DOTALL)
 

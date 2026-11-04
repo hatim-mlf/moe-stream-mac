@@ -19,6 +19,24 @@ There is no Qwen 3.8 30B. The closest real models, checked on Hugging Face on 20
 
 So 8-bit doesn't fit in memory for any of them. Track A runs them at 4–6 bit, which is fast and has a small quality loss that the benchmark measures. Track B is the only way to get true 8-bit on this machine: keep the shared weights in RAM and stream the ~3B active experts from SSD.
 
+## Chat on the C engine (any Qwen3.5/3.6 MoE MLX checkpoint)
+
+```bash
+make -C engine lib                      # builds engine/build/libqengine.dylib (needs: brew install libomp)
+.venv/bin/python engine/cli/qchat.py --model ~/models/Qwen3.5-122B-A10B-8bit --threads 8
+```
+
+Options: `--threads N`, `--ctx 4096`, `--temp 0` (greedy, default), `--think`, `--system "..."`, `--max-tokens`,
+`--prompt "..."` (one answer, then exit). In-chat: `/threads N`, `/think on|off`, `/temp X`, `/system`, `/reset`,
+`/stats`, `/help`, `/exit`. Each reply ends with a stats line (prompt and reply tok/s, context used, RSS, SSD GB/token).
+
+Measured on an M1 Max with 32 GB, 8 threads:
+
+| Model | Disk | Engine RAM | Reply speed | Matches MLX f32 |
+|---|---|---|---|---|
+| Qwen3.6-35B-A3B 4-bit | 20 GB | 1.9 GB | ~4–8 tok/s | yes, 24/24 tokens, rel err ~1e-6 |
+| Qwen3.5-122B-A10B 8-bit | 131 GB | 6.5 GB | ~0.8 tok/s | yes, 24/24 tokens, rel err ~2e-6 |
+
 ## Track A quick start (Mac)
 
 ```bash

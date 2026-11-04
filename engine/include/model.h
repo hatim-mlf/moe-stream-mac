@@ -23,7 +23,7 @@ typedef struct {
     MoeWeights moe;
 } Layer;
 
-typedef struct {
+typedef struct Model {
     ModelConfig cfg;
     K3St st;
     QMat embed, lm_head;

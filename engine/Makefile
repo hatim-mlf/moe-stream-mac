@@ -76,4 +76,10 @@ test-model: build/run_model
 	./build/run_model $(MODEL) build/prompt.i32 12 build/engine_out.bin
 	../.venv/bin/python tests/model_check.py check $(MODEL) build/engine_out.bin
 
-.PHONY: test test-real test-layer test-attn test-moe test-model clean
+build/libqengine.dylib: $(MODEL_SRC) src/qengine.c include/qengine.h
+	@mkdir -p build
+	$(CC) $(IO_CFLAGS) -Werror -fPIC -dynamiclib $(MODEL_SRC) src/qengine.c -o $@ -lm $(OMP_LD)
+
+lib: build/libqengine.dylib
+
+.PHONY: test test-real test-layer test-attn test-moe test-model lib clean
