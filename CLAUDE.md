@@ -1,10 +1,13 @@
-# kimi-k3-c-engine
+# moe-stream-mac
 
-Goal: run a strong ~30B-class Qwen model locally on the M1 Max (32 GB) and let Claude Code delegate work to it. Read `README.md` first.
+Two engines that run Qwen 3.5/3.6 MoE models bigger than RAM by streaming experts from SSD: the C engine
+(`engine/src`, docs/C_ENGINE.md) and the MLX hybrid engine (`engine/hybrid`, docs/MLX_ENGINE.md), both driven by
+`engine/cli/qchat.py`. Read `README.md` and `docs/REPORT.md` first. Old plans live in `docs/history/`.
 
-- **Track A** (`docs/local-agent-plan.md`): MLX / llama.cpp serving at 4–6 bit, `scripts/local/bench.py`, `scripts/local/mcp_bridge.py`.
-- **Track B** (`docs/plan.md`): port the pure-C engine `kimi-k3-in-c` to `qwen3_5_moe`, so that 8-bit `Qwen3.6-35B-A3B` (38 GB, bigger than RAM) streams experts from SSD. It has to beat Track A's 8-bit numbers to be worth it.
-- There is no Qwen 3.8 30B. Use the model names in the README table, which were checked on Hugging Face.
+- Every math change must keep `make -C engine test` green and the whole-model check matching MLX
+  (`engine/tests/model_check.py`, `engine/hybrid/hybrid_vs_mlx.py`).
+- Measure with the user's normal apps open (Xcode etc.); never ask them to close apps for cleaner numbers.
+- The local Qwen MLX server takes ~20 GB: stop it before any 122B run.
 
 ## Rules
 

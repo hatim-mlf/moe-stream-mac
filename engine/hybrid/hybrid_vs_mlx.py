@@ -6,9 +6,14 @@ import gc, sys
 from pathlib import Path
 import numpy as np, mlx.core as mx
 from mlx_lm import load
-sys.path.insert(0, str(Path.home() / "kimi-k3-c-engine/engine/hybrid"))
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 M = Path(sys.argv[1]).expanduser() if len(sys.argv) > 1 else Path.home() / "models/Qwen3.6-35B-A3B-4bit"
-raw = open(str(Path.home() / "kimi-k3-c-engine/engine/build/long_out.bin"), "rb").read()
+REF = Path(__file__).resolve().parents[1] / "build" / "long_out.bin"
+if not REF.exists():
+    sys.exit(f"{REF} missing. Create it with the C engine first, e.g.:\n"
+             f"  .venv/bin/python engine/tests/model_check.py tokenize {M} engine/build/long.i32 \"<a ~200-token text>\"\n"
+             f"  OMP_NUM_THREADS=8 engine/build/run_model {M} engine/build/long.i32 16 engine/build/long_out.bin")
+raw = REF.read_bytes()
 np_, ng, V = np.frombuffer(raw[:12], "<i4"); n = np_ + ng
 ids = np.frombuffer(raw, "<i4", n, 12).tolist()[:-1]
 c_eng = np.frombuffer(raw, "<f4", (n - 1) * V, 12 + 4 * n).reshape(n - 1, V)

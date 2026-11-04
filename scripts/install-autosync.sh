@@ -3,9 +3,9 @@
 set -euo pipefail
 
 readonly ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-readonly LABEL="com.hatim.kimi-k3-c-engine.sync"
+readonly LABEL="com.hatim.moe-stream-mac.sync"
 readonly PLIST="$HOME/Library/LaunchAgents/$LABEL.plist"
-readonly LOG="$HOME/Library/Logs/kimi-k3-c-engine-sync.log"
+readonly LOG="$HOME/Library/Logs/moe-stream-mac-sync.log"
 readonly INTERVAL_SECONDS="${SYNC_INTERVAL_SECONDS:-300}"
 
 launchctl bootout "gui/$(id -u)/$LABEL" 2>/dev/null || true

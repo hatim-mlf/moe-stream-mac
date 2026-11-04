@@ -1,0 +1,9 @@
+# Tested versions (Python 3.14, macOS, Apple M1 Max). Use a non-Anaconda Python (e.g. Homebrew's).
+mlx==0.32.4
+mlx-lm==0.32.2
+numpy==2.5.4
+safetensors==0.8.0
+huggingface_hub==1.33.0
+# optional: local helper tools in scripts/local
+# mcp==2.3.0
+# litellm[proxy]==1.106.6

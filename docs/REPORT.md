@@ -89,7 +89,7 @@ Started at 1.26 tok/s and degraded to ~0.3 tok/s over an hour: macOS compressed/
 ## 6. How to use what exists
 
 ```bash
-cd ~/kimi-k3-c-engine
+cd ~/moe-stream-mac
 .venv/bin/python engine/cli/qchat.py --model ~/models/Qwen3.6-35B-A3B-4bit             # fast, 2.5 GB
 .venv/bin/python engine/cli/qchat.py --model ~/models/Qwen3.5-122B-A10B-8bit           # GPU hybrid
 .venv/bin/python engine/cli/qchat.py --model ~/models/Qwen3.5-122B-A10B-8bit --engine cpu  # C engine, f32
