@@ -1,0 +1,6 @@
+{
+  "machine": "Apple M1 Max (8P+2E), 32 GB; MLX server stopped",
+  "qwen3.5-122b-a10b-8bit_generate_s_per_token_by_threads": {"4": 0.98, "6": 0.80, "8": 0.67, "10": 0.76},
+  "decision": "qchat defaults to 6 threads (84% of best speed, leaves 2 P + 2 E cores free) and nice 10",
+  "long_prompt_check_35b": {"prompt_tokens": 240, "generated": 15, "positions_matching_mlx_f32": "255/255", "generate_s_per_token": 0.17, "peak_rss_gb": 1.62}
+}

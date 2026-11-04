@@ -9,6 +9,7 @@ rewound), so earlier turns are never re-processed.
 import argparse
 import ctypes
 import json
+import os
 import sys
 import time
 from dataclasses import dataclass, field
@@ -80,7 +81,7 @@ class Settings:
     top_p: float = 0.95
     top_k: int = 20
     think: bool = False
-    threads: int = 8
+    threads: int = 6
     system: str = ""
     max_tokens: int = 2048
 
@@ -144,7 +145,7 @@ def footer(t: TurnStats, eng_stats: dict) -> str:
     return (f"{DIM}[prompt {t.prompt_tokens} tok @ {prompt_rate:.1f} tok/s "
             f"| reply {t.gen_tokens} tok @ {gen_rate:.2f} tok/s "
             f"| ctx {pos}/{max_len} | RSS {rss:.1f} GB "
-            f"| SSD {expert_per_tok:.1f} GB/tok]{RESET}")
+            f"| experts read {expert_per_tok:.1f} GB/tok]{RESET}")
 
 
 def handle_command(line: str, s: Settings, chat) -> bool:
@@ -254,7 +255,9 @@ class Chat:
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--model", required=True, type=Path, help="MLX qwen3_5_moe checkpoint directory")
-    ap.add_argument("--threads", type=int, default=8)
+    ap.add_argument("--threads", type=int, default=6,
+                    help="CPU threads (default 6 of 10: ~84%% of max speed, leaves cores for your other apps)")
+    ap.add_argument("--nice", type=int, default=10, help="scheduling priority, 0-20 (default 10: other apps go first)")
     ap.add_argument("--ctx", type=int, default=4096, help="context length in tokens")
     ap.add_argument("--temp", type=float, default=0.0, help="0 = greedy (default, deterministic)")
     ap.add_argument("--think", action="store_true", help="enable thinking mode")
@@ -263,6 +266,8 @@ def main() -> None:
     ap.add_argument("--prompt", help="answer one prompt and exit (non-interactive)")
     a = ap.parse_args()
     model_dir = a.model.expanduser()
+    if a.nice:
+        os.nice(max(0, min(20, a.nice)))
     if not LIB.exists():
         raise SystemExit(f"{LIB} missing: run `make -C engine lib`")
     s = Settings(temp=a.temp, think=a.think, threads=a.threads, system=a.system, max_tokens=a.max_tokens)
@@ -271,7 +276,7 @@ def main() -> None:
     s.threads = engine.set_threads(a.threads)
     chat = Chat(engine, load_tokenizer(model_dir), model_dir, s)
     print(f"{BOLD}{model_dir.name}{RESET} loaded in {time.perf_counter() - t0:.1f}s | {s.threads} threads | "
-          f"ctx {a.ctx} | RSS {engine.stats()['peak_rss_gb']:.2f} GB | /help for commands")
+          f"ctx {a.ctx} | nice {a.nice} | RSS {engine.stats()['peak_rss_gb']:.2f} GB | /help for commands")
     prompts = [a.prompt] if a.prompt else None
     while True:
         try:

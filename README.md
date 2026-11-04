@@ -26,9 +26,9 @@ make -C engine lib                      # builds engine/build/libqengine.dylib (
 .venv/bin/python engine/cli/qchat.py --model ~/models/Qwen3.5-122B-A10B-8bit --threads 8
 ```
 
-Options: `--threads N`, `--ctx 4096`, `--temp 0` (greedy, default), `--think`, `--system "..."`, `--max-tokens`,
+Options: `--threads N` (default 6, leaves cores free), `--nice` (default 10, other apps go first), `--ctx 4096`, `--temp 0` (greedy, default), `--think`, `--system "..."`, `--max-tokens`,
 `--prompt "..."` (one answer, then exit). In-chat: `/threads N`, `/think on|off`, `/temp X`, `/system`, `/reset`,
-`/stats`, `/help`, `/exit`. Each reply ends with a stats line (prompt and reply tok/s, context used, RSS, SSD GB/token).
+`/stats`, `/help`, `/exit`. Each reply ends with a stats line (prompt and reply tok/s, context used, RSS, expert GB read per token, mostly served from the macOS file cache).
 
 Measured on an M1 Max with 32 GB, 8 threads:
 
