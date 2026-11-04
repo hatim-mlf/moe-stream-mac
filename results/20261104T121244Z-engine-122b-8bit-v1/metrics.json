@@ -1,0 +1,17 @@
+{
+  "model": "mlx-community/Qwen3.5-122B-A10B-8bit (131 GB on disk, 4x this Mac's RAM)",
+  "engine_commit": "1723786",
+  "machine": "Apple M1 Max, 32 GB RAM, macOS 26.4.1; ~15 GB held by other apps during the run",
+  "engine": "C99, single thread, scalar; trunk (attention, GDN, routers, shared experts, embed, lm_head) in RAM, 8 routed experts/layer pread from SSD per token",
+  "command": "engine/build/run_model <model> build/prompt122.i32 12 out.bin",
+  "prompt": "The capital of Morocco is Rabat. The capital of France is",
+  "generated": " Paris. The capital of Spain is Madrid. The capital of",
+  "correctness": "24/24 positions same argmax as MLX float32 (layer-at-a-time reference); logits rel L2 1.7e-6..2.8e-6",
+  "engine_speed": {"prompt_s_per_token": 8.76, "generate_s_per_token": 8.65, "generate_tok_per_s": 0.116, "load_s": 5.4},
+  "engine_memory": {"peak_rss_gb": 5.49, "experts_read_gb_per_token": 3.85,
+                    "note": "RSS excludes the OS file cache; the 131 GB of weights cannot all be cached in 32 GB, so expert reads hit the SSD"},
+  "baselines": {
+    "mlx_full_model": "cannot run: 131 GB of weights vs 32 GB RAM (not attempted, it would thrash the machine)",
+    "llama_cpp_q8_0": "not run: needs ~130 GB more disk, only ~104 GiB free"
+  }
+}

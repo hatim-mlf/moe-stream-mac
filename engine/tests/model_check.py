@@ -23,8 +23,15 @@ PROMPT = "The capital of Morocco is Rabat. The capital of France is"
 
 
 def tensors(model_dir: Path, prefix: str) -> dict:
+    """Load only the shards that hold tensors under prefix (via model.safetensors.index.json)."""
+    index = model_dir / "model.safetensors.index.json"
+    if index.exists():
+        wm = json.loads(index.read_text())["weight_map"]
+        shards = sorted({model_dir / f for k, f in wm.items() if k.startswith(prefix)})
+    else:
+        shards = sorted(model_dir.glob("*.safetensors"))
     out = {}
-    for shard in sorted(model_dir.glob("*.safetensors")):
+    for shard in shards:
         out |= {k[len(prefix):]: v for k, v in mx.load(str(shard)).items() if k.startswith(prefix)}
     return out
 
