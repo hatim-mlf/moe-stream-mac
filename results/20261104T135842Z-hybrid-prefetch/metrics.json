@@ -1,0 +1,8 @@
+{
+  "change": "disk-order coalesced reads (read_sorted, Qwen first try) + whole-layer read-ahead of layer L+1 during GPU work on layer L for batches >= 32 tokens",
+  "122B_240_token_prompt_s": {"c_engine": 197, "hybrid_v1": 109, "hybrid_prefetch": 23.2},
+  "122B_prompt_tok_per_s": 10.4, "122B_expert_read": "123 GB in 18.8 s = 6.5 GB/s (sequential)", "122B_gpu_peak_gb": 10.0,
+  "35B_prompt_tok_per_s": 18.2,
+  "correctness": "35B, 255-token sequence: hybrid logits IDENTICAL to plain MLX bf16 (rel 0.0, 255/255). Both differ from the f32 C engine the same way (median rel 6.4%, argmax 249/255): that is bf16 precision, not a bug. 122B: 183/241 positions agree with f32 C engine, generated tokens identical",
+  "note": "the C engine (f32) is more precise than MLX's default bf16; the hybrid inherits bf16"
+}

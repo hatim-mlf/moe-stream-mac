@@ -1,0 +1,12 @@
+{
+  "seconds": 41.0,
+  "usage": {
+    "prompt_tokens": 685,
+    "completion_tokens": 1163,
+    "total_tokens": 1848,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    }
+  },
+  "output": "/private/tmp/claude-501/-Users-hatim/5ad2a55e-a065-4276-a8cf-c1267ea99a1a/scratchpad/read_sorted.py"
+}
