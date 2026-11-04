@@ -1,0 +1,17 @@
+{
+  "engine": "hybrid v1: MLX GPU trunk + experts streamed from SSD (expert_reader.py), each expert read once per forward pass",
+  "machine": "Apple M1 Max 32-core GPU, 32 GB; Qwen MLX server stopped",
+  "correctness": {
+    "35B": "45/45 positions same argmax as the C engine (which matches MLX f32); 24/24 greedy tokens identical",
+    "122B": "12/12 greedy tokens identical; 23/24 prompt positions same argmax. Pos 6 is a near tie (f32 top-2 margin 0.066), flipped by bf16 GPU math",
+    "precision": "GPU runs bf16 activations: logits within 1-8% of f32 (same as MLX's own bf16 mode)"
+  },
+  "35B": {"prompt_tok_per_s": {"c_engine": 4.3, "hybrid": 17.6}, "generate_tok_per_s": {"c_engine": 6.2, "hybrid": 7.4}, "gpu_peak_gb": 1.8},
+  "122B": {
+    "prompt_240_tokens": {"c_engine_s": 197, "hybrid_s": 109, "hybrid_tok_per_s": 2.2, "hybrid_experts_read_gb": 80, "hybrid_read_gb_per_s": 1.35},
+    "generate_s_per_token": {"c_engine": 0.67, "hybrid": 0.88},
+    "hybrid_decode_breakdown_s": {"wait_for_gpu_48_syncs": 0.39, "expert_reads": 0.33, "numpy_to_mlx_copy": 0.13},
+    "gpu_peak_gb": 8.8
+  },
+  "next": "bigger contiguous reads (SSD at 1.35 GB/s is far below its limit); prefetch layer L+1 experts during prefill; avoid the numpy->mlx copy"
+}

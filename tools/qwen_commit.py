@@ -62,8 +62,10 @@ def ask_qwen(prompt: str) -> str:
 
 
 def clean(message: str) -> str:
+    """Strip fences/whitespace and force git's layout: subject, one blank line, body."""
     lines = [l.rstrip() for l in message.strip().strip("`").strip().splitlines()]
-    return "\n".join(lines).strip()
+    body = [l for l in lines[1:] if l.strip()]
+    return "\n".join([lines[0], "", *body]).strip() if lines else ""
 
 
 def main() -> None:
