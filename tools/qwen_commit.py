@@ -85,10 +85,12 @@ def main() -> None:
     prompt = PROMPT.format(types=", ".join(TYPES), note=defang(a.note), stat=defang(stat), diff=defang(diff))
     for attempt in (1, 2):
         message = clean(ask_qwen(prompt))
-        if SUBJECT.match(message.splitlines()[0] if message else ""):
+        lines = message.splitlines()
+        if lines and SUBJECT.match(lines[0]) and any(l.startswith("- ") for l in lines[1:]):
             break
-        print(f"attempt {attempt}: subject line rejected: {message.splitlines()[:1]}", file=sys.stderr)
-        prompt += "\n\nYour previous answer did not start with '<type>: <summary>'. Follow the format exactly."
+        print(f"attempt {attempt}: message rejected (subject format or no '- ' bullets): {lines[:1]}", file=sys.stderr)
+        prompt += ("\n\nYour previous answer was rejected. Start with '<type>: <summary>', then a blank line, "
+                   "then 2 to 5 lines starting with '- '.")
     else:
         raise SystemExit("Qwen did not produce a valid commit message; nothing committed")
     full = f"{message}\n\n{TRAILER}\n"

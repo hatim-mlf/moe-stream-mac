@@ -61,6 +61,11 @@ class Engine:
             raise RuntimeError("engine forward failed")
         return self.logits
 
+    def prefill(self, tokens: list[int]) -> np.ndarray:
+        for tok in tokens:
+            logits = self.forward(tok)
+        return logits
+
     def reset(self) -> None: self.lib.qe_reset(self.handle)
     def position(self) -> int: return self.lib.qe_position(self.handle)
     def max_len(self) -> int: return self.lib.qe_max_len(self.handle)
@@ -73,6 +78,33 @@ class Engine:
 
 class ContextFull(Exception):
     pass
+
+
+class HybridEngine:
+    """GPU backend: MLX trunk on the GPU, experts streamed from SSD (engine/hybrid). Same interface as Engine."""
+
+    def __init__(self, model_dir: Path, ctx: int):
+        sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "hybrid"))
+        from hybrid import HybridModel
+        import mlx.core as mx
+        self._mx, self.hm, self._ctx = mx, HybridModel(model_dir), ctx
+
+    def _run(self, tokens: list[int]) -> np.ndarray:
+        if self.hm.position + len(tokens) > self._ctx:
+            raise ContextFull()
+        return np.array(self.hm.forward(tokens))
+
+    def prefill(self, tokens: list[int]) -> np.ndarray: return self._run(tokens)
+    def forward(self, token: int) -> np.ndarray: return self._run([int(token)])
+    def reset(self) -> None: self.hm.reset()
+    def position(self) -> int: return self.hm.position
+    def max_len(self) -> int: return self._ctx
+    def set_threads(self, n: int) -> int: return n          # GPU backend: CPU threads only affect SSD reads
+    def stats(self) -> dict:
+        import resource
+        return {"peak_rss_gb": resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1e9,
+                "gpu_peak_gb": self._mx.get_peak_memory() / 1e9, "expert_gb_read": self.hm.stats.bytes / 1e9,
+                "expert_read_s": self.hm.stats.read_s, "position": self.position(), "max_len": self.max_len()}
 
 
 @dataclass
@@ -230,9 +262,7 @@ class Chat:
         ids = self._render_turn(user)
         gb0 = self.engine.stats()["expert_gb_read"]
         start = time.perf_counter()
-        logits = None
-        for tok in ids:
-            logits = self.engine.forward(tok)
+        logits = self.engine.prefill(ids)                    # GPU backend: one batch, each expert read once
         t.prompt_tokens, t.prompt_s = len(ids), time.perf_counter() - start
         printer = Printer(self.tok, self.think_open, self.think_close)
         start = time.perf_counter()
@@ -259,6 +289,8 @@ def main() -> None:
                     help="CPU threads (default 6 of 10: ~84%% of max speed, leaves cores for your other apps)")
     ap.add_argument("--nice", type=int, default=10, help="scheduling priority, 0-20 (default 10: other apps go first)")
     ap.add_argument("--ctx", type=int, default=4096, help="context length in tokens")
+    ap.add_argument("--engine", choices=("gpu", "cpu"), default="gpu",
+                    help="gpu: MLX trunk + streamed experts (fast prompts, bf16); cpu: the C engine (f32, exact)")
     ap.add_argument("--temp", type=float, default=0.0, help="0 = greedy (default, deterministic)")
     ap.add_argument("--think", action="store_true", help="enable thinking mode")
     ap.add_argument("--system", default="")
@@ -268,14 +300,14 @@ def main() -> None:
     model_dir = a.model.expanduser()
     if a.nice:
         os.nice(max(0, min(20, a.nice)))
-    if not LIB.exists():
+    if a.engine == "cpu" and not LIB.exists():
         raise SystemExit(f"{LIB} missing: run `make -C engine lib`")
     s = Settings(temp=a.temp, think=a.think, threads=a.threads, system=a.system, max_tokens=a.max_tokens)
     t0 = time.perf_counter()
-    engine = Engine(model_dir, a.ctx)
+    engine = HybridEngine(model_dir, a.ctx) if a.engine == "gpu" else Engine(model_dir, a.ctx)
     s.threads = engine.set_threads(a.threads)
     chat = Chat(engine, load_tokenizer(model_dir), model_dir, s)
-    print(f"{BOLD}{model_dir.name}{RESET} loaded in {time.perf_counter() - t0:.1f}s | {s.threads} threads | "
+    print(f"{BOLD}{model_dir.name}{RESET} [{a.engine}] loaded in {time.perf_counter() - t0:.1f}s | {s.threads} threads | "
           f"ctx {a.ctx} | nice {a.nice} | RSS {engine.stats()['peak_rss_gb']:.2f} GB | /help for commands")
     prompts = [a.prompt] if a.prompt else None
     while True:

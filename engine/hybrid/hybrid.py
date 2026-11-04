@@ -22,6 +22,8 @@ from expert_reader import ExpertReader
 PROJS = ("gate_proj", "up_proj", "down_proj")
 SORT_MIN_INDICES = 64          # same threshold as mlx_lm SwitchGLU
 PREFETCH_MIN_TOKENS = 32       # batches this long use whole layers, read ahead in disk order
+MLX_CACHE_LIMIT_BYTES = 1 << 30  # streamed expert buffers are freed every layer; MLX's default cache would hoard
+                               # them (up to most of RAM), squeezing the file cache and making the GPU swap
 
 
 class StreamStats:
@@ -121,6 +123,7 @@ class HybridModel:
     """Load a qwen3_5_moe MLX checkpoint with experts streamed from disk. API mirrors the C engine."""
 
     def __init__(self, model_dir: Path, read_threads: int = 8):
+        mx.set_cache_limit(MLX_CACHE_LIMIT_BYTES)
         self.model, self.tokenizer = load(str(model_dir), lazy=True)
         self.reader = ExpertReader(model_dir, threads=read_threads)
         self.stats = StreamStats()
