@@ -1,0 +1,12 @@
+{
+  "seconds": 58.7,
+  "usage": {
+    "prompt_tokens": 762,
+    "completion_tokens": 1446,
+    "total_tokens": 2208,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    }
+  },
+  "output": "engine/src/qgroup.c"
+}

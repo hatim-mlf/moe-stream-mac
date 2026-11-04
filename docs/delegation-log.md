@@ -23,3 +23,4 @@ Lessons: (a) chain spec edits with `&&` and print the result before delegating; 
 | 7b | `model.c` forward pass (layer residual wiring, embedding, final norm, lm_head) in a lead skeleton | 2 | 1: checked the return value of `void op_rmsnorm`. 2: fixed. Left the lead's loader code untouched (diff-verified) | 81 s + 99 s | compiles; whole-model test pending |
 
 Lead wrote: `config.c` (strict config.json reader), `model.c` loader/reset, the whole-model MLX reference and test.
+| 8 | `qgroup.c`: NEON 4/8-bit group dot product (hot loop) | 2 + lead 1-line fix | 1: wrong NEON types and wrong 4-bit lane logic (used 4 of 16 values, double-counted); scalar fallback indexed bytes by word. 2: correct once given a block-level skeleton; lead removed one unused accumulator | 59 s + 73 s | PASS 1800/1800 + whole-model match on both models; 122B 3.14 → 1.21 s/token |

@@ -1,0 +1,9 @@
+{
+  "engine_commit": "cf6ef9b + NEON qgroup_dot + per-call group sums",
+  "machine": "Apple M1 Max (8P+2E), 32 GB; MLX server stopped during the run",
+  "threads": 8,
+  "correctness": "both models: 24/24 positions same argmax as float32 MLX (model_check.py), same generation",
+  "qwen3.6-35b-a3b-4bit": {"generate_s_per_token": 0.22, "tok_per_s": 4.5, "prompt_s_per_token": 0.37, "peak_rss_gb": 1.39, "io_share": "61%"},
+  "qwen3.5-122b-a10b-8bit": {"generate_s_per_token": 1.21, "tok_per_s": 0.83, "prompt_s_per_token": 1.38, "peak_rss_gb": 5.51, "io_share": "74% (92.4 GB in 23.1 s, serial pread)"},
+  "history_122b_s_per_token": {"1_thread_scalar": 8.12, "4_threads": 3.69, "8_threads": 3.14, "8_threads_neon": 1.21}
+}

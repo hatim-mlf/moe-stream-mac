@@ -1,4 +1,7 @@
 #include "qmat.h"
+#include "qgroup.h"
+
+#define QMAT_MAX_GROUPS 4096  /* cols / group_size; 4096 x 32 = 131072 columns */
 #include <string.h>
 #include <stddef.h>
 
@@ -16,43 +19,28 @@ int qmat_matvec(const QMat *m, const float *x, float *y) {
     if (m->rows <= 0 || m->cols <= 0) return -1;
     if (m->cols % m->group_size != 0) return -1;
 
-    int cols = m->cols;
-    int rows = m->rows;
-    int bits = m->bits;
-    int group_size = m->group_size;
-    int stride_w = cols * bits / 32;
-    int stride_s = cols / group_size;
-    uint32_t mask = (1u << bits) - 1u;
+    const int cols = m->cols, rows = m->rows, bits = m->bits, gs = m->group_size;
+    const int ng = cols / gs, stride_w = cols * bits / 32, words_per_group = gs * bits / 32;
+    if (ng > QMAT_MAX_GROUPS) return -1;
+
+    /* sum_x of each group is the same for every row: compute it once. */
+    float gsum[QMAT_MAX_GROUPS];
+    for (int g = 0; g < ng; g++) {
+        float s = 0.0f;
+        for (int i = 0; i < gs; i++) s += x[g * gs + i];
+        gsum[g] = s;
+    }
 
     /* Rows are independent: split them across threads (OMP_NUM_THREADS). Tiny matrices stay serial. */
     #pragma omp parallel for schedule(static) if (rows >= 64)
     for (int r = 0; r < rows; r++) {
+        const uint32_t *wp = m->w + (size_t)r * stride_w;
+        const uint16_t *sp = m->scales + (size_t)r * ng;
+        const uint16_t *bp = m->biases + (size_t)r * ng;
         float sum = 0.0f;
-        const uint32_t *wp = m->w + r * stride_w;
-        const uint16_t *sp = m->scales + r * stride_s;
-        const uint16_t *bp = m->biases + r * stride_s;
-
-        for (int g = 0; g < cols; g += group_size) {
-            float sum_q = 0.0f;
-            float sum_x = 0.0f;
-            int remaining = group_size;
-
-            while (remaining > 0) {
-                uint32_t word = *wp++;
-                int n = remaining < 32 / bits ? remaining : 32 / bits;
-                for (int i = 0; i < n; i++) {
-                    uint32_t val = (word >> (i * bits)) & mask;
-                    sum_q += (float)val * x[g + (group_size - remaining) + i];
-                    sum_x += x[g + (group_size - remaining) + i];
-                }
-                remaining -= n;
-            }
-
-            float scale = bf16_to_f32(sp[0]);
-            float bias = bf16_to_f32(bp[0]);
-            sum += scale * sum_q + bias * sum_x;
-            sp++;
-            bp++;
+        for (int g = 0; g < ng; g++) {
+            const float sum_q = qgroup_dot(wp + g * words_per_group, x + g * gs, gs, bits);
+            sum += bf16_to_f32(sp[g]) * sum_q + bf16_to_f32(bp[g]) * gsum[g];
         }
         y[r] = sum;
     }
