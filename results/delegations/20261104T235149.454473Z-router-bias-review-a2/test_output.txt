@@ -1,0 +1,40 @@
+ok  find_moe_blocks count
+ok  find_moe_blocks order
+ok  zero bias is identity (select)
+ok  zero bias is identity (logit)
+ok  route inds layer 0 select norm=True
+ok  route weights layer 0 select norm=True
+ok  route inds layer 1 select norm=True
+ok  route weights layer 1 select norm=True
+ok  route inds layer 2 select norm=True
+ok  route weights layer 2 select norm=True
+ok  route inds layer 0 logit norm=True
+ok  route weights layer 0 logit norm=True
+ok  route inds layer 1 logit norm=True
+ok  route weights layer 1 logit norm=True
+ok  route inds layer 2 logit norm=True
+ok  route weights layer 2 logit norm=True
+ok  route inds layer 0 select norm=False
+ok  route weights layer 0 select norm=False
+ok  route inds layer 1 select norm=False
+ok  route weights layer 1 select norm=False
+ok  route inds layer 2 select norm=False
+ok  route weights layer 2 select norm=False
+ok  route inds layer 0 logit norm=False
+ok  route weights layer 0 logit norm=False
+ok  route inds layer 1 logit norm=False
+ok  route weights layer 1 logit norm=False
+ok  route inds layer 2 logit norm=False
+ok  route weights layer 2 logit norm=False
+ok  set_bias values
+ok  large bias picks only set experts
+ok  large bias picks only set experts
+ok  large bias picks only set experts
+Traceback (most recent call last):
+  File "/Users/hatim/moe-stream-mac/tools/test_router_bias.py", line 193, in <module>
+    test()
+    ~~~~^^
+  File "/Users/hatim/moe-stream-mac/tools/test_router_bias.py", line 124, in test_forward_uses_bias
+    plain = np.array(block(x))
+                     ~~~~~^^^
+TypeError: Module.__init__() takes 1 positional argument but 2 were given

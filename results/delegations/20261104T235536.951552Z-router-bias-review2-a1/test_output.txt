@@ -1,0 +1,46 @@
+ok  find_moe_blocks count
+ok  find_moe_blocks order
+ok  zero bias is identity (select)
+ok  zero bias is identity (logit)
+ok  route inds layer 0 select norm=True
+ok  route weights layer 0 select norm=True
+ok  route inds layer 1 select norm=True
+ok  route weights layer 1 select norm=True
+ok  route inds layer 2 select norm=True
+ok  route weights layer 2 select norm=True
+ok  route inds layer 0 logit norm=True
+ok  route weights layer 0 logit norm=True
+ok  route inds layer 1 logit norm=True
+ok  route weights layer 1 logit norm=True
+ok  route inds layer 2 logit norm=True
+ok  route weights layer 2 logit norm=True
+ok  route inds layer 0 select norm=False
+ok  route weights layer 0 select norm=False
+ok  route inds layer 1 select norm=False
+ok  route weights layer 1 select norm=False
+ok  route inds layer 2 select norm=False
+ok  route weights layer 2 select norm=False
+ok  route inds layer 0 logit norm=False
+ok  route weights layer 0 logit norm=False
+ok  route inds layer 1 logit norm=False
+ok  route weights layer 1 logit norm=False
+ok  route inds layer 2 logit norm=False
+ok  route weights layer 2 logit norm=False
+ok  set_bias values
+ok  large bias picks only set experts
+ok  large bias picks only set experts
+ok  large bias picks only set experts
+ok  forward output changes under strong bias
+ok  remove restores original output
+ok  coding_set shape/dtype
+ok  coding_set n per layer
+ok  coding_set picks over-used expert
+ok  random_set n per layer
+ok  random_set deterministic
+ok  invalid inputs raise ValueError
+ok  coding_set ties pick lower ids
+ok  find_moe_blocks raises when no MoE block
+ok  patched load returns original value
+ok  bias installed
+ok  bias installed once per model
+ALL PASS

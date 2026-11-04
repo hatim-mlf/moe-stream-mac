@@ -1,0 +1,14 @@
+[
+  {"id": "history-1", "prompt": "Explain in a few paragraphs why the Roman Empire split into eastern and western halves, and what the main consequences were."},
+  {"id": "cooking-1", "prompt": "Give me a recipe for a Moroccan chicken tagine with preserved lemons and olives for four people, with timings."},
+  {"id": "travel-1", "prompt": "Plan a relaxed three-day itinerary for a first visit to Lisbon in spring, with neighbourhoods, food and one day trip."},
+  {"id": "poem-1", "prompt": "Write a short poem about the sea at night, in the style of a quiet lullaby."},
+  {"id": "translate-1", "prompt": "Translate into French and then into Spanish: 'The train was late, so we walked along the river and talked about our childhood.'"},
+  {"id": "advice-1", "prompt": "My neighbour keeps parking in front of my garage. How can I bring it up politely without starting a conflict?"},
+  {"id": "science-1", "prompt": "Explain to a curious twelve-year-old why the sky is blue and why sunsets are red."},
+  {"id": "health-1", "prompt": "What are sensible habits for better sleep? Give practical advice for someone who works late."},
+  {"id": "story-1", "prompt": "Write the opening paragraph of a mystery novel set in a lighthouse during a storm."},
+  {"id": "economics-1", "prompt": "Summarise the main arguments for and against a universal basic income in plain language."},
+  {"id": "email-1", "prompt": "Draft a friendly email to a colleague thanking them for covering my shifts last week and offering to return the favour."},
+  {"id": "philosophy-1", "prompt": "What is the ship of Theseus paradox, and what are two common answers to it?"}
+]

@@ -1,0 +1,9 @@
+ok  chat_ids
+ok  rejects non-list
+ok  rejects missing prompt
+ok  rejects bad id
+ok  rejects duplicate id
+one 20 tokens
+two 20 tokens
+ok  main writes .i32 files
+ALL PASS

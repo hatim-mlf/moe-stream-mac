@@ -1,0 +1,77 @@
+{
+  "benchmark_revision": "6f43cc8712a6a7a99d325e1db09b0377cd48a6d3",
+  "split": "heldout",
+  "model": "default_model",
+  "adapter": "base",
+  "attempt_cap": 3,
+  "endpoint": "http://127.0.0.1:8080/v1/chat/completions",
+  "temperature": 0,
+  "max_tokens": 8192,
+  "review_notes": false,
+  "results": [
+    {
+      "task_id": "qmat",
+      "passed": true,
+      "first_pass": true,
+      "attempts": 1,
+      "attempt_score": 1,
+      "output_tail": "PASS  validation + bf16\nPASS  /var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-eval-45voulv_/engine/tests/fixtures/qmat_256x2048_b8_g64.bin (256x2048, 8-bit, g64): max abs err 4.53e-06, 0/256 rows off\nPASS  /var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-eval-45voulv_/engine/tests/fixtures/qmat_512x2048_b4_g64.bin (512x2048, 4-bit, g64): max abs err 4.29e-06, 0/512 rows off\nPASS  /var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-eval-45voulv_/engine/tests/fixtures/qmat_64x256_b4_g64.bin (64x256, 4-bit, g64): max abs err 1.43e-06, 0/64 rows off\nPASS  /var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-eval-45voulv_/engine/tests/fixtures/qmat_64x256_b8_g64.bin (64x256, 8-bit, g64): max abs err 1.19e-06, 0/64 rows off\nPASS  /var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-eval-45voulv_/engine/tests/fixtures/qmat_96x384_b4_g32.bin (96x384, 4-bit, g32): max abs err 8.34e-07, 0/96 rows off\nALL QMAT TESTS PASSED\n"
+    },
+    {
+      "task_id": "ops",
+      "passed": false,
+      "first_pass": false,
+      "attempts": 3,
+      "attempt_score": 4,
+      "output_tail": "PASS  rmsnorm    max err 9.54e-07 (0/2048 off)\nPASS  silu_mul   max err 9.54e-07 (0/512 off)\nPASS  sigmoid    max err 5.96e-08 (0/512 off)\nPASS  softmax    max err 1.19e-07 (0/256 off)\nFAIL  topk       max err 1.83e+09 (8/8 off)\nFAIL  topk-edge  ties + no write past k (got -7 -7 -7 -7, guard -7)\nFAIL  topk-tie-k boundary tie (got -7 -7, guard -7)\nPASS  rope_p0    max err 0.00e+00 (0/1024 off)\nPASS  rope_p7    max err 0.00e+00 (0/1024 off)\nPASS  rope_p3001 max err 0.00e+00 (0/1024 off)\nOPS TESTS FAILED\n"
+    },
+    {
+      "task_id": "gdn",
+      "passed": true,
+      "first_pass": true,
+      "attempts": 1,
+      "attempt_score": 1,
+      "output_tail": "PASS  conv t0        max err 1.19e-07 (0/64 off)\nPASS  conv t1        max err 2.38e-07 (0/64 off)\nPASS  conv t2        max err 1.19e-07 (0/64 off)\nPASS  conv t3        max err 2.38e-07 (0/64 off)\nPASS  conv t4        max err 2.38e-07 (0/64 off)\nPASS  conv t5        max err 4.77e-07 (0/64 off)\nPASS  l2norm q       max err 3.73e-09 (0/512 off)\nPASS  l2norm k       max err 2.98e-08 (0/512 off)\nPASS  gates g        max err 2.98e-07 (0/32 off)\nPASS  gates beta     max err 5.96e-08 (0/32 off)\nPASS  recur t0       max err 0.00e+00 (0/32 off)\nPASS  recur t1       max err 5.96e-08 (0/32 off)\nPASS  recur t2       max err 8.94e-08 (0/32 off)\nPASS  recur t3       max err 5.96e-08 (0/32 off)\nPASS  recur t4       max err 1.19e-07 (0/32 off)\nPASS  recur state    max err 1.19e-07 (0/512 off)\nALL GDN TESTS PASSED\n"
+    },
+    {
+      "task_id": "qmat-row",
+      "passed": false,
+      "first_pass": false,
+      "attempts": 3,
+      "attempt_score": 4,
+      "output_tail": "cc -O2 -std=c99 -Wall -Wextra -Werror -Iinclude -Xpreprocessor -fopenmp -I/opt/homebrew/opt/libomp/include src/qmat.c src/qmat_row.c src/qgroup.c tests/test_qmat.c -o build/test_qmat -lm -L/opt/homebrew/opt/libomp/lib -lomp\nsrc/qmat_row.c:5:14: error: use of undeclared identifier 'NULL'\n    5 |     if (m == NULL || out == NULL || m->bits != 4 && m->bits != 8) return -1;\n      |              ^~~~\nsrc/qmat_row.c:5:29: error: use of undeclared identifier 'NULL'\n    5 |     if (m == NULL || out == NULL || m->bits != 4 && m->bits != 8) return -1;\n      |                             ^~~~\n2 errors generated.\nmake: *** [build/test_qmat] Error 1\n"
+    },
+    {
+      "task_id": "qgroup",
+      "passed": false,
+      "first_pass": false,
+      "attempts": 3,
+      "attempt_score": 4,
+      "output_tail": "cc -O2 -std=c99 -Wall -Wextra -Werror -Iinclude -Xpreprocessor -fopenmp -I/opt/homebrew/opt/libomp/include src/qgroup.c tests/test_qgroup.c -o build/test_qgroup -lm -L/opt/homebrew/opt/libomp/lib -lomp\nsrc/qgroup.c:29:20: error: initializing 'uint16x4_t' (vector of 4 'uint16_t' values) with an expression of incompatible type 'uint16x8_t' (vector of 8 'uint16_t' values)\n   29 |         uint16x4_t lo_even_u16 = vmovl_u8(lo_low);\n      |                    ^             ~~~~~~~~~~~~~~~~\nsrc/qgroup.c:33:20: error: initializing 'uint16x4_t' (vector of 4 'uint16_t' values) with an expression of incompatible type 'uint16x8_t' (vector of 8 'uint16_t' values)\n   33 |         uint16x4_t lo_odd_u16 = vmovl_u8(lo_high);\n      |                    ^            ~~~~~~~~~~~~~~~~~\nsrc/qgroup.c:37:20: error: initializing 'uint16x4_t' (vector of 4 'uint16_t' values) with an expression of incompatible type 'uint16x8_t' (vector of 8 'uint16_t' values)\n   37 |         uint16x4_t hi_even_u16 = vmovl_u8(hi_low);\n      |                    ^             ~~~~~~~~~~~~~~~~\nsrc/qgroup.c:41:20: error: initializing 'uint16x4_t' (vector of 4 'uint16_t' values) with an expression of incompatible type 'uint16x8_t' (vector of 8 'uint16_t' values)\n   41 |         uint16x4_t hi_odd_u16 = vmovl_u8(hi_high);\n      |                    ^            ~~~~~~~~~~~~~~~~~\nsrc/qgroup.c:77:20: error: initializing 'uint16x4_t' (vector of 4 'uint16_t' values) with an expression of incompatible type 'uint16x8_t' (vector of 8 'uint16_t' values)\n   77 |         uint16x4_t lo0_u16 = vmovl_u8(v0_low);\n      |                    ^         ~~~~~~~~~~~~~~~~\nsrc/qgroup.c:81:20: error: initializing 'uint16x4_t' (vector of 4 'uint16_t' values) with an expression of incompatible type 'uint16x8_t' (vector of 8 'uint16_t' values)\n   81 |         uint16x4_t hi0_u16 = vmovl_u8(v0_high);\n      |                    ^         ~~~~~~~~~~~~~~~~~\nsrc/qgroup.c:85:20: error: initializing 'uint16x4_t' (vector of 4 'uint16_t' values) with an expression of incompatible type 'uint16x8_t' (vector of 8 'uint16_t' values)\n   85 |         uint16x4_t lo1_u16 = vmovl_u8(v1_low);\n      |                    ^         ~~~~~~~~~~~~~~~~\nsrc/qgroup.c:89:20: error: initializing 'uint16x4_t' (vector of 4 'uint16_t' values) with an expression of incompatible type 'uint16x8_t' (vector of 8 'uint16_t' values)\n   89 |         uint16x4_t hi1_u16 = vmovl_u8(v1_high);\n      |                    ^         ~~~~~~~~~~~~~~~~~\n8 errors generated.\nmake: *** [build/test_qgroup] Error 1\n"
+    },
+    {
+      "task_id": "expert-cache",
+      "passed": false,
+      "first_pass": false,
+      "attempts": 3,
+      "attempt_score": 4,
+      "output_tail": "PASS  empty miss\nPASS  hit returns value\nTraceback (most recent call last):\n  File \"/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-eval-hdiw9k6_/engine/hybrid/test_expert_cache.py\", line 18, in <module>\n    c.put((0, 3), \"c\", 40)                       # over budget: evict LRU, which is (0,2) since (0,1) was just used\n    ~~~~~^^^^^^^^^^^^^^^^^\n  File \"/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-eval-hdiw9k6_/engine/hybrid/expert_cache.py\", line 29, in put\n    self.bytes_used -= evicted_nbytes\nTypeError: unsupported operand type(s) for -=: 'int' and 'tuple'\n"
+    },
+    {
+      "task_id": "predictive",
+      "passed": false,
+      "first_pass": false,
+      "attempts": 3,
+      "attempt_score": 4,
+      "output_tail": "Traceback (most recent call last):\n  File \"/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-eval-rjd2w9_v/ft_predictive_check.py\", line 12, in <module>\n    got = pf.take(4, np.array([3, 4]))\n  File \"/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-eval-rjd2w9_v/engine/hybrid/predictive.py\", line 49, in take\n    result[expert_id] = {proj: (arrs[0][idx], arrs[1][idx], arrs[2][idx]) for proj, arrs in data.items()}\n                                ~~~~~~~^^^^^\nIndexError: index 1 is out of bounds for axis 0 with size 1\n"
+    },
+    {
+      "task_id": "pinned",
+      "passed": true,
+      "first_pass": false,
+      "attempts": 2,
+      "attempt_score": 2,
+      "output_tail": "PASS  budget respected (3 experts of 100 B in 350 B)\nPASS  hottest chosen, ties -> lower layer first\nPASS  ids sorted per layer, int64 arrays\nPASS  zero-count experts never pinned\nPASS  zero budget pins nothing\nPASS  large budget pins every used expert\nALL PINNED TESTS PASSED\n"
+    }
+  ]
+}

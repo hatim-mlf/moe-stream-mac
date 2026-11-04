@@ -1,0 +1,16 @@
+ok  chat_ids
+ok  rejects non-list
+ok  rejects missing prompt
+ok  rejects bad id
+ok  rejects duplicate id
+Traceback (most recent call last):
+  File "/Users/hatim/moe-stream-mac/tools/test_route_prompts.py", line 57, in <module>
+    main()
+    ~~~~^^
+  File "/Users/hatim/moe-stream-mac/tools/test_route_prompts.py", line 47, in main
+    code = rp.main(["--model", str(MODEL), "--prompts", str(tmp / "p.json"), "--out", str(tmp / "out"),
+                    "--system-file", str(tmp / "sys.txt")])
+  File "/Users/hatim/moe-stream-mac/tools/route_prompts.py", line 71, in main
+    arr.tofile(str(out_path))
+    ^^^^^^^^^^
+AttributeError: 'mlx.core.array' object has no attribute 'tofile'
