@@ -1,0 +1,9 @@
+{
+  "model": "Qwen3.5-122B-A10B-8bit, 21-token story prompt + 199 generated tokens, routing trace (QE_TRACE)",
+  "expert_size_mb": 10.0, "all_experts_gb": 123,
+  "distinct_experts_used": "7962 of 12288 (65%)",
+  "hot_set_coverage": {"top5pct_6.2GB": "42%", "top10pct_12.3GB": "57%", "top20pct_24.6GB": "75%"},
+  "lru_hit_rate": {"4GB": "37%", "8GB": "45%", "12GB": "54%", "16GB": "60%"},
+  "conclusion": "macOS file cache already provides ~LRU hits (reads run at 9.7 GB/s, above raw SSD). An in-process cache mainly saves a memcpy; worth it only as a pinned hot set for robustness under memory pressure.",
+  "memory_contention": "With the 20 GB MLX (Qwen) server running, the 122B slowed from 0.67 to 2.36 s/token (paging). Stop the server before 122B runs."
+}

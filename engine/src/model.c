@@ -64,6 +64,7 @@ static int load_moe(Model *m, int l, Layer *L) {
         qm(m, &w->sh_down, NULL, f, l, "shared_expert.down_proj") || qm(m, &w->sh_router, NULL, f, l, "shared_expert_gate"))
         return -1;
     w->hidden = c->hidden; w->E = c->E; w->top_k = c->top_k; w->inter = c->moe_inter; w->sh_inter = c->sh_inter;
+    w->layer = l;
     if (w->gate.E != c->E || w->gate.rows != c->moe_inter) { fprintf(stderr, "layer %d: expert shape mismatch\n", l); return -1; }
     /* every layer has the same expert shapes: share one set of read buffers */
     if (l == 0) {

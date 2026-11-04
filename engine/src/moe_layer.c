@@ -1,6 +1,8 @@
 #include "moe_layer.h"
 #include "ops.h"
 #include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <time.h>
 
@@ -52,12 +54,22 @@ static int fetch_experts(const MoeWeights *w, const int *idx, QMat *g, QMat *u, 
     return failed ? -1 : 0;
 }
 
+/* Optional routing trace: if QE_TRACE is set, append int32 [layer, idx[0..top_k)] per call. */
+static void trace_route(const MoeWeights *w, const int *idx) {
+    static FILE *f; static int checked;
+    if (!checked) { const char *p = getenv("QE_TRACE"); f = p ? fopen(p, "ab") : NULL; checked = 1; }
+    if (!f) return;
+    const int32_t layer = w->layer;
+    fwrite(&layer, 4, 1, f); fwrite(idx, sizeof(int), (size_t)w->top_k, f); fflush(f);
+}
+
 int moe_layer_step(float *out, const float *x, const MoeWeights *w, float *scratch) {
     if (w->top_k < 1 || w->top_k > MOE_MAX_TOPK) return -1;
     const Bufs b = carve(w, scratch);
     int idx[MOE_MAX_TOPK];
     float score[MOE_MAX_TOPK];
     if (route(w, x, &b, idx, score)) return -1;
+    trace_route(w, idx);
     QMat g[MOE_MAX_TOPK], u[MOE_MAX_TOPK], d[MOE_MAX_TOPK];
     struct timespec t0, t1;
     clock_gettime(CLOCK_MONOTONIC, &t0);

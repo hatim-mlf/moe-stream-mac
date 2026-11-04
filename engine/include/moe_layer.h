@@ -17,6 +17,7 @@ typedef struct {
     QMat sh_gate, sh_up, sh_down;  /* shared expert: hidden -> sh_inter -> hidden          */
     QMat sh_router;       /* hidden -> 1           (mlp.shared_expert_gate)                   */
     int hidden, E, top_k, inter, sh_inter;
+    int layer;            /* for the optional routing trace (env QE_TRACE=<file>) */
 } MoeWeights;
 
 /* Scratch layout: logits [E] | probs [E] | h1 [max(inter, sh_inter)] | h2 [same] | h3 [same] | ye [hidden] | gsh [1] */
