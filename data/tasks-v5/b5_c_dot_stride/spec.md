@@ -1,0 +1,1 @@
+Implement `float dot_stride_f32(const float *a, size_t stride_a, const float *b, size_t stride_b, size_t n)`. Return the left-to-right float sum of `a[i*stride_a]*b[i*stride_b]`. For n=0 return 0 and allow null pointers. For n>0, pointers are valid and both strides are positive. No allocation.

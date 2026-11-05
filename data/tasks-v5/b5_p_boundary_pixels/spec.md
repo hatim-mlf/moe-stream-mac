@@ -1,0 +1,1 @@
+Implement `boundary_pixels_4(mask)`. Require a 2-D boolean array or raise ValueError. Return a new boolean array of the same shape. A true input pixel is a boundary pixel if any of its four orthogonal neighbors is false or outside the array. False input pixels remain false. Empty dimensions are valid; do not mutate input.

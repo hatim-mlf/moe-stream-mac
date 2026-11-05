@@ -1,0 +1,1 @@
+Implement `int ascii_casecmp(const char *a, const char *b)`. Compare NUL-terminated strings using ASCII-only case folding of A-Z to a-z. Return -1, 0, or 1 according to the first differing folded byte (bytes are compared unsigned). Inputs are nonnull. Do not use locale-dependent character functions.

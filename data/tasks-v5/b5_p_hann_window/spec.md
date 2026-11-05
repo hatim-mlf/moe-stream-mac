@@ -1,0 +1,1 @@
+Implement `hann_window(length, periodic=False)`. Length must be an integer >=0 excluding bool; periodic must be bool, else raise ValueError. Return a float64 vector. For symmetric windows use `0.5-0.5*cos(2*pi*n/(length-1))`; length 1 returns `[1]`. For periodic windows use denominator `length`; length 0 returns empty and length 1 returns `[0]`.

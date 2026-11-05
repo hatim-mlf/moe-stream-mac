@@ -1,0 +1,1 @@
+Fill `wrap_to_range(values, low, high)`. Convert values to finite float64; low/high must be finite scalars with high>low, otherwise raise ValueError. Map each value into the half-open interval `[low,high)` by periodic wrapping. Preserve shape, return a new array, and do not mutate input. Return a complete Python function.

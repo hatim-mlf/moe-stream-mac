@@ -1,0 +1,1 @@
+Implement `size_t compact_even_u8(uint8_t *values, size_t n)`. Stable-compact the even-valued bytes into the beginning of the same array and return their count. For n=0 return 0 and allow a null pointer. No allocation.

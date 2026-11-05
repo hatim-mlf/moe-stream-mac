@@ -1,0 +1,11 @@
+{
+  "id": "b5_r_p_threshold_indices",
+  "language": "python",
+  "category": "python_review",
+  "kind": "review",
+  "source": "codex-batch5",
+  "previous_attempt": "previous_attempt.py",
+  "review_notes": [
+    "Keep the signature. Validate that scores are finite and one-dimensional and threshold is a finite scalar. Select only values strictly greater than threshold, preserving input order. Return int64 indices."
+  ]
+}

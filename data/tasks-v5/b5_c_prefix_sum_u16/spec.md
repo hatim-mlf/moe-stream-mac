@@ -1,0 +1,1 @@
+Implement `void prefix_sum_u16_mod(const uint16_t *src, uint16_t *dst, size_t n)`. Set `dst[i]` to the sum of `src[0..i]` modulo 65536. Exact in-place operation is supported. For n=0 access nothing and allow null pointers. No allocation.

@@ -1,0 +1,1 @@
+Fill the TODO in `int16_t clamp_i16_value(int16_t value, int16_t lower, int16_t upper)`. Assume `lower<=upper`. Return lower if value is smaller, upper if larger, otherwise value. Return the complete C function.

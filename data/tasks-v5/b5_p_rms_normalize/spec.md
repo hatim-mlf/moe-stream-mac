@@ -1,0 +1,1 @@
+Implement `normalize_by_rms(x, axis=-1, eps=0.0)`. Convert x to finite float64 with rank at least one. Axis is an integer excluding bool and must be valid. Epsilon must be a finite nonnegative scalar. Divide by `sqrt(mean(x*x, axis, keepdims=True)+eps)`; a zero denominator yields zeros. Return float64 with the input shape; do not mutate input.

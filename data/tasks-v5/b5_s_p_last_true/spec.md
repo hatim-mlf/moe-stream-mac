@@ -1,0 +1,1 @@
+Fill `last_true_index(mask)`. Convert with `numpy.asarray`; require a one-dimensional boolean array or raise ValueError. Return the last index containing true as a Python int, or -1 if none. Do not mutate input. Return a complete Python function.

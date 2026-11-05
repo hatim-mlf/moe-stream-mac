@@ -1,0 +1,1 @@
+Implement `rowwise_argmin(x)`. Convert to finite float64 2-D and require at least one column, else raise ValueError. Return an int64 vector containing the first minimum column index for each row. Zero rows are valid and return shape `(0,)`. Do not mutate input.

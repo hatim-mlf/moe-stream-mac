@@ -1,0 +1,1 @@
+Implement `int quantize_sqrt_u8(float x, uint8_t *out)`. Require finite `x` in [0,1] and nonnull output. Store `floor(sqrt(x)*255+0.5)`, the nearest integer with half values rounded upward. Return 0 on success or -1 on invalid input; preserve output on failure. No allocation.

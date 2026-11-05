@@ -1,0 +1,1 @@
+Implement `minmax_scale_columns(x)`. Convert to finite float64 2-D. Scale each column to [0,1] using its minimum and maximum. A constant column becomes all zeros. Empty row or column dimensions are valid. Return float64 with the same shape and do not mutate input.

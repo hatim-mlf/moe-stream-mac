@@ -1,0 +1,1 @@
+Fill `cumulative_product(values)`. Convert to finite float64 1-D or raise ValueError. Return a float64 array where each element is the product of the prefix ending there. Empty input returns empty float64. Do not mutate input. Return a complete Python function.

@@ -1,0 +1,11 @@
+{
+  "id": "b5_r_c_parse_octal",
+  "language": "c",
+  "category": "c_review",
+  "kind": "review",
+  "source": "codex-batch5",
+  "previous_attempt": "previous_attempt.c",
+  "review_notes": [
+    "Keep the function signature. Reject every character outside ASCII 0..7 before accumulating its digit. Reject a leading zero unless the entire input is exactly `0`. Keep the output unchanged for every rejected input."
+  ]
+}

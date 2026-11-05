@@ -1,0 +1,1 @@
+Fill the TODO in `size_t count_transitions_i32(const int32_t *values, size_t n)`. Count adjacent pairs with unequal values. For n<2 return 0 and allow null; otherwise values is valid. No allocation. Return the complete C function.

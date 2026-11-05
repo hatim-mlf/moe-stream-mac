@@ -1,0 +1,1 @@
+Implement `rgb_to_hsv_unit(rgb)`. Convert to finite float64 and require the last dimension to have length 3 with every channel in [0,1]. Return HSV values in the same shape: hue in [0,1), saturation in [0,1], and value in [0,1]. For achromatic colors set hue and saturation to zero. Do not mutate input.

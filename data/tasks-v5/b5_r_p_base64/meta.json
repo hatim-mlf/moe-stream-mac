@@ -1,0 +1,11 @@
+{
+  "id": "b5_r_p_base64",
+  "language": "python",
+  "category": "python_review",
+  "kind": "review",
+  "review_notes": [
+    "Keep the function signature. Require ASCII text and strict base64 validation so whitespace and punctuation are rejected. Check canonical padding by re-encoding the decoded bytes and comparing with the original text. Raise ValueError for every invalid input."
+  ],
+  "previous_attempt": "previous_attempt.py",
+  "source": "codex-batch5"
+}

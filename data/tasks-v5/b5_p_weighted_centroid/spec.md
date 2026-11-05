@@ -1,0 +1,1 @@
+Implement `weighted_centroid_2d(weights)`. Convert weights to finite float64 2-D; require nonnegative entries and positive total weight, else raise ValueError. Return `(row, column)` weighted mean coordinates as Python floats, using zero-based indices. Do not mutate input.

@@ -1,0 +1,1 @@
+Implement `int copy_matrix_row_f32(const float *matrix, size_t rows, size_t cols, size_t row, float *out, size_t cap)`. Copy the selected row from a row-major matrix. Require row<rows, cap>=cols, and nonnull matrix/out when cols>0. Return 0 or -1; on failure do not modify out. Zero columns are valid when row<rows. No allocation.

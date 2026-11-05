@@ -1,0 +1,1 @@
+Implement `void fir_causal_f32(const float *x, size_t n, const float *taps, size_t k, float *out)`. For each t in [0,n), compute the float left-to-right sum of `x[t-j]*taps[j]` for `j=0..min(t,k-1)`. If k=0, write zeros. For n=0 access nothing. When accessed, pointers are valid, and out is disjoint from inputs. No allocation.

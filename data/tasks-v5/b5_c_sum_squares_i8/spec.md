@@ -1,0 +1,1 @@
+Implement `uint64_t sum_squares_i8(const int8_t *x, size_t n)`. Return the sum of each signed byte squared, using a wide unsigned accumulator. For n=0 return 0 and allow null. Assume the sum fits uint64. No allocation.

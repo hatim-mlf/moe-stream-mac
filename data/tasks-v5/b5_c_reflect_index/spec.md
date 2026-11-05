@@ -1,0 +1,1 @@
+Implement `size_t reflect_index(ptrdiff_t index, size_t length)`. `length` is in [1, PTRDIFF_MAX/2]. Use endpoint-repeating reflection: the sequence around a length-4 array is ..., 1,0,0,1,2,3,3,2,1,0,0,1, ... . Return the mapped index for any ptrdiff_t input. No allocation.

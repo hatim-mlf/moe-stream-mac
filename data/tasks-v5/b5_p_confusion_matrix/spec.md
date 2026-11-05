@@ -1,0 +1,1 @@
+Implement `confusion_matrix_counts(truth, predicted, classes)`. Convert labels to 1-D integer arrays (bool arrays are invalid), require equal lengths and integer `classes>0` excluding bool, and require every label in `[0,classes)`. Return an int64 matrix where rows are true labels and columns are predicted labels. Empty label arrays are valid.

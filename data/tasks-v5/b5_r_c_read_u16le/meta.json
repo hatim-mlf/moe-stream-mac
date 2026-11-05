@@ -1,0 +1,11 @@
+{
+  "id": "b5_r_c_read_u16le",
+  "language": "c",
+  "category": "c_review",
+  "kind": "review",
+  "source": "codex-batch5",
+  "previous_attempt": "previous_attempt.c",
+  "review_notes": [
+    "Keep the signature and existing null/bounds checks. Decode the first byte as the least-significant byte and the second as the most-significant byte. Assign to out only after both bytes have been read."
+  ]
+}

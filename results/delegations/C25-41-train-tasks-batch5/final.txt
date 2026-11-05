@@ -1,0 +1,105 @@
+## Created
+
+Added [data/tasks-v5](/Users/hatim/moe-stream-mac/data/tasks-v5) with 50 tasks and 267 files. The batch contains 18 C99 implementations, 18 Python/NumPy implementations, 8 skeleton tasks, and 6 review tasks. It has 53 mutants; every reference passed and every mutant was rejected by the tests.
+
+All 50 spec-and-solution pairs are under 2,000 characters; the largest is 1,257. Exact ID, function-name, and held-out-manifest token checks found no collisions.
+
+## Category counts
+
+| Category | Count |
+|---|---:|
+| C99 kernels/utilities | 18 |
+| Python/NumPy utilities | 18 |
+| C skeletons | 4 |
+| Python skeletons | 4 |
+| C review tasks | 3 |
+| Python review tasks | 3 |
+| **Total** | **50** |
+
+## Gate outputs
+
+For `ft_tasks_check`, `PASS` in the mutant column means the mutant failed its tests, as required.
+
+```text
+task_id	kind	chars	reference	mutants
+b5_c_align_up_size	implement	550	PASS	1.c:PASS,2.c:PASS
+b5_c_ascii_casecmp	implement	552	PASS	1.c:PASS
+b5_c_compact_even_u8	implement	376	PASS	1.c:PASS
+b5_c_dot_stride	implement	457	PASS	1.c:PASS
+b5_c_fir_causal	implement	536	PASS	1.c:PASS
+b5_c_gelu_tanh	implement	344	PASS	1.c:PASS
+b5_c_min_positive	implement	527	PASS	1.c:PASS
+b5_c_pack_s4_pairs	implement	1091	PASS	1.c:PASS
+b5_c_prefix_sum_u16	implement	416	PASS	1.c:PASS
+b5_c_quant_sqrt	implement	486	PASS	1.c:PASS
+b5_c_reflect_index	implement	452	PASS	1.c:PASS
+b5_c_route_slot	implement	1124	PASS	1.c:PASS
+b5_c_sat_add_i24	implement	367	PASS	1.c:PASS
+b5_c_sat_lshift	implement	476	PASS	1.c:PASS,2.c:PASS
+b5_c_scatter_add	implement	600	PASS	1.c:PASS
+b5_c_sigmoid	implement	335	PASS	1.c:PASS
+b5_c_sum_squares_i8	implement	391	PASS	1.c:PASS
+b5_c_tiny_deque	implement	1259	PASS	1.c:PASS
+b5_p_boundary_pixels	implement	667	PASS	1.py:PASS
+b5_p_clip_global_norm	implement	902	PASS	1.py:PASS
+b5_p_confusion_matrix	implement	1095	PASS	1.py:PASS
+b5_p_cumulative_logsumexp	implement	634	PASS	1.py:PASS
+b5_p_extract_patches	implement	1064	PASS	1.py:PASS
+b5_p_fill_nearest	implement	845	PASS	1.py:PASS
+b5_p_hann_window	implement	826	PASS	1.py:PASS
+b5_p_mask_bbox	implement	522	PASS	1.py:PASS
+b5_p_minmax_columns	implement	616	PASS	1.py:PASS
+b5_p_percentile_ranks	implement	590	PASS	1.py:PASS
+b5_p_reflect_pad_1d	implement	784	PASS	1.py:PASS
+b5_p_rgb_hsv	implement	848	PASS	1.py:PASS
+b5_p_rms_normalize	implement	906	PASS	1.py:PASS
+b5_p_row_l1_normalize	implement	483	PASS	1.py:PASS
+b5_p_rowwise_argmin	implement	470	PASS	1.py:PASS
+b5_p_sliding_windows	implement	885	PASS	1.py:PASS
+b5_p_solve_lower	implement	878	PASS	1.py:PASS
+b5_p_weighted_centroid	implement	670	PASS	1.py:PASS
+b5_r_c_copy_row	review	557	PASS	1.c:PASS
+b5_r_c_parse_octal	review	600	PASS	1.c:PASS
+b5_r_c_read_u16le	review	507	PASS	1.c:PASS
+b5_r_p_base64	review	639	PASS	1.py:PASS,2.py:PASS
+b5_r_p_readonly_copy	review	381	PASS	1.py:PASS
+b5_r_p_threshold_indices	review	602	PASS	1.py:PASS
+b5_s_c_byte_swap	skeleton	359	PASS	1.c:PASS
+b5_s_c_clamp_i16	skeleton	370	PASS	1.c:PASS
+b5_s_c_sum_range	skeleton	569	PASS	1.c:PASS
+b5_s_c_transitions	skeleton	389	PASS	1.c:PASS
+b5_s_p_cumulative_product	skeleton	461	PASS	1.py:PASS
+b5_s_p_last_true	skeleton	443	PASS	1.py:PASS
+b5_s_p_nonblank_lines	skeleton	343	PASS	1.py:PASS
+b5_s_p_wrap_range	skeleton	678	PASS	1.py:PASS
+checked 50 task(s); violations=0
+```
+
+```text
+leak check passed: 66 heldout-v2 ids/public names absent outside suite
+wrote 45 train and 5 valid rows to /tmp/ft-b5-check
+{
+  "sha256": {
+    "train.jsonl": "7cd6c5b9d46eec0840fa37ca6c16d5d76c6c59040e7f6d0ac96a7203b087e157",
+    "valid.jsonl": "453ba3a49cf3b310e55b8d6e1f3f89365cdbf1f7fc8c53c80a5bf75277004e9d"
+  },
+  "train_ids": 45,
+  "valid_ids": 5
+}
+```
+
+```text
+leak check passed: 66 heldout-v2 ids/public names absent outside suite
+```
+
+## Hardest tasks
+
+- `b5_c_tiny_deque`: multiple front/back operations, wraparound, and failure-state preservation.
+- `b5_c_route_slot`: strict name grammar, canonical decimal parsing, overflow checks, and transactional outputs.
+- `b5_c_pack_s4_pairs`: signed nibble encoding, ordering, capacity checks, and no partial writes on failure.
+- `b5_p_extract_patches`: patch ordering and output shape across two independent strides.
+- `b5_p_fill_nearest`: NaN replacement, edge cases, and left-side tie-breaking.
+
+## Prompt construction
+
+No guess was needed. `ft_eval` uses the heldout-v2 `spec.md` text directly (or `review.md` for review mode); it does not separately append skeleton code. The batch checker and converter append a fenced skeleton, or a fenced previous attempt plus review-note bullets. C fixtures compile with the specified C99 warning flags; Python fixtures import `candidate.py`. Code extraction requires one fenced code block occupying the complete response.

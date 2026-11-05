@@ -1,0 +1,1 @@
+Implement `bbox_from_mask(mask)`. Require a 2-D boolean NumPy array or raise ValueError. Return `(row_start, col_start, row_stop, col_stop)` as Python ints for the smallest half-open rectangle containing all true entries. Return None when no entry is true. Do not mutate input.

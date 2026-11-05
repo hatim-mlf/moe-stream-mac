@@ -1,0 +1,1 @@
+Implement `int32_t sat_add_i24(int32_t a, int32_t b)`. Add the inputs and clamp the result to the signed 24-bit range [-8388608, 8388607]. Use an intermediate that cannot overflow for int32 inputs. No allocation.

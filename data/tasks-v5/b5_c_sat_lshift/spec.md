@@ -1,0 +1,1 @@
+Implement `int32_t sat_lshift_i32(int32_t value, unsigned shift)`. The caller guarantees `shift` is in [0,31]. Multiply value by `2^shift` using a wide intermediate, then saturate to int32 range. No allocation.

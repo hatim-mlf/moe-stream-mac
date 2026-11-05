@@ -1,0 +1,1 @@
+Implement `int align_up_size(size_t value, size_t alignment, size_t *out)`. Store the smallest multiple of positive `alignment` that is >= value. Return 0 on success; return -1 for null output, zero alignment, or size_t overflow. Preserve `*out` on failure. Alignment need not be a power of two.

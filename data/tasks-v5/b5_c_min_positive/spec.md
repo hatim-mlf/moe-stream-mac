@@ -1,0 +1,1 @@
+Implement `int min_positive_f32(const float *x, size_t n, float *out)`. Store the smallest value strictly greater than zero. Inputs are finite. Return 0 on success; return -1 for null output, null x when n>0, or no positive value, preserving `*out` on failure. For n=0, x may be null.

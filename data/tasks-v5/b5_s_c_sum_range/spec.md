@@ -1,0 +1,1 @@
+Fill the TODO in `int sum_u8_range(const uint8_t *src, size_t n, size_t start, size_t stop, uint64_t *out)`. Sum the half-open range `[start,stop)`. Require `start<=stop<=n`, nonnull out, and nonnull src when the range is nonempty. Return 0 or -1; on failure preserve `*out`. No allocation. Return the complete C function.

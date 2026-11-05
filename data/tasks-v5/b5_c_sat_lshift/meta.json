@@ -1,0 +1,7 @@
+{
+  "id": "b5_c_sat_lshift",
+  "language": "c",
+  "category": "c99_kernel",
+  "kind": "implement",
+  "source": "codex-batch5"
+}

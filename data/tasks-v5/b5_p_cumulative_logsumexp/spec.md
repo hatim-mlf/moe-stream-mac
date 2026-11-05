@@ -1,0 +1,1 @@
+Implement `cumulative_logsumexp(values)`. Convert to finite float64 1-D or raise ValueError. Return a float64 vector where element i is `log(sum(exp(values[:i+1])))`, computed stably. Empty input returns empty float64. Do not mutate input.

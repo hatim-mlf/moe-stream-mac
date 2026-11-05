@@ -1,0 +1,11 @@
+{
+  "id": "b5_r_c_copy_row",
+  "language": "c",
+  "category": "c_review",
+  "kind": "review",
+  "source": "codex-batch5",
+  "previous_attempt": "previous_attempt.c",
+  "review_notes": [
+    "Keep the signature. Reject row equal to rows as well as larger row indices. Perform all argument and capacity checks before writing any output element."
+  ]
+}

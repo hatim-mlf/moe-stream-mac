@@ -1,0 +1,1 @@
+Implement `reflect_pad_1d(values, left, right)`. Convert with `numpy.asarray`; require a numeric 1-D array and nonnegative integer pad widths excluding bool. Use endpoint-repeating reflection (the same extension as NumPy mode `symmetric`). If input is empty, only zero padding is valid. Return an independent array with input dtype; do not mutate input.

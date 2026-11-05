@@ -1,0 +1,7 @@
+{
+  "id": "b5_p_cumulative_logsumexp",
+  "language": "python",
+  "category": "python_numpy",
+  "kind": "implement",
+  "source": "codex-batch5"
+}

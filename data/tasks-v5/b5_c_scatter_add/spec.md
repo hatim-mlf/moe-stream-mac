@@ -1,0 +1,1 @@
+Implement `int scatter_add_f32(float *dst, size_t n, const size_t *indices, const float *values, size_t k)`. Add `values[j]` to `dst[indices[j]]` in input order; duplicate indices accumulate. Return 0 on success or -1 for required null pointers or any index >= n. Validate all indices before changing dst. For k=0 no index/value access is needed. No allocation.

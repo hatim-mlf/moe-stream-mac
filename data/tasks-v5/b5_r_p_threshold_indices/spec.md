@@ -1,0 +1,1 @@
+Implement `indices_above_threshold(scores, threshold)`. Convert scores to finite float64 1-D and require a finite scalar threshold; invalid inputs raise ValueError. Return int64 indices in input order for scores strictly greater than threshold. Do not mutate input.

@@ -1,0 +1,1 @@
+Implement `row_l1_normalize(x)`. Convert to float64; require a finite 2-D array or raise ValueError. Divide each row by the sum of its absolute values. A zero row stays zero. Return float64 with the same shape and do not mutate input.

@@ -1,0 +1,1 @@
+Implement `fill_nearest_1d(values)`. Convert to float64 1-D. Values may be finite or NaN; infinities and other shapes raise ValueError. Replace each NaN with the nearest original finite value; distance ties choose the earlier index. Require at least one finite value unless input is empty. Return a new float64 array and do not mutate input.

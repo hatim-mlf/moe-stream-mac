@@ -1,0 +1,11 @@
+{
+  "id": "b5_r_p_readonly_copy",
+  "language": "python",
+  "category": "python_review",
+  "kind": "review",
+  "source": "codex-batch5",
+  "previous_attempt": "previous_attempt.py",
+  "review_notes": [
+    "Keep the function signature. Always allocate independent C-contiguous storage, including when the input is already contiguous. Set the returned copy read-only; leave the input writeable. Preserve dtype and shape."
+  ]
+}

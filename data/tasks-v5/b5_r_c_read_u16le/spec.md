@@ -1,0 +1,1 @@
+Implement `int read_u16le_at(const uint8_t *data, size_t len, size_t offset, uint16_t *out)`. Read two bytes in little-endian order at offset. Return 0 on success or -1 for null pointers or an out-of-bounds range; preserve `*out` on failure. Check bounds without overflowing. No allocation.

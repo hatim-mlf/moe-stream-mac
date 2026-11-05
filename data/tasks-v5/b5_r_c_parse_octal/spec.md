@@ -1,0 +1,1 @@
+Implement `int parse_octal_u16(const char *text, uint16_t *out)`. Accept canonical unsigned octal digits: exactly `0`, or a first digit 1..7 followed by zero or more digits 0..7. Reject values above 65535. Return 0 on success or -1 for null pointers or invalid text; preserve `*out` on failure. No allocation.

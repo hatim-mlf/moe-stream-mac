@@ -1,0 +1,1 @@
+Implement `readonly_c_copy(array)`. Convert with `numpy.asarray`, preserving dtype and shape. Return an independent C-contiguous copy whose writeable flag is false. The input must remain writable and unchanged. No rank restriction.

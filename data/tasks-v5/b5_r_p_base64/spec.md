@@ -1,0 +1,1 @@
+Implement `decode_base64_ascii(text)`. Accept canonical padded RFC 4648 base64 as an ASCII string with no whitespace; the empty string is valid. Return decoded bytes. Reject non-ASCII, invalid alphabet or padding, and noncanonical encodings with ValueError.
