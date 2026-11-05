@@ -1,0 +1,20 @@
+{
+ "purpose": "can heldout-v2 resolve the fine-tune differences? (advisor check, 2026-11-05)",
+ "base_greedy_reproducibility": {
+  "stored": 0.333,
+  "today": 0.333,
+  "same_task_outcomes": true
+ },
+ "samples5_t06_seed7": {
+  "base": 0.32,
+  "v5_configA_step128": 0.147,
+  "delta": -0.173,
+  "paired_ci95": [
+   -0.273,
+   -0.08
+  ],
+  "n_tasks": 30,
+  "samples": 5
+ },
+ "conclusion": "greedy 1-sample hid a significant drop: SFT on Codex reference solutions makes Qwen worse; next method = RFT on Qwen's own passing samples"
+}

@@ -1,0 +1,1667 @@
+{
+  "benchmark_revision": "f36dc85b0ac3e23e0f8f2abab1ff90a0663668b7a58a1fc49cf9e338c326ff33",
+  "split": "heldout-v2",
+  "suite": "heldout-v2",
+  "model": "default_model",
+  "adapter": "base",
+  "attempt_cap": 1,
+  "endpoint": "http://127.0.0.1:8080/v1/chat/completions",
+  "temperature": 0.6,
+  "seed": 7,
+  "samples": 5,
+  "max_tokens": 8192,
+  "review_notes": false,
+  "results": [
+    {
+      "task_id": "c_axis_record",
+      "samples": [
+        {
+          "task_id": "c_axis_record",
+          "sample_index": 0,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "build failed:\nIn file included from tests/test_c_axis_record.c:6:\ntests/../candidate.c:5:10: fatal error: 'candidate.h' file not found\n    5 | #include \"candidate.h\"\n      |          ^~~~~~~~~~~~~\n1 error generated.\n"
+        },
+        {
+          "task_id": "c_axis_record",
+          "sample_index": 1,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "build failed:\nIn file included from tests/test_c_axis_record.c:6:\ntests/../candidate.c:8:35: error: unused parameter 'text' [-Werror,-Wunused-parameter]\n    8 | int parse_axis_record(const char *text,int *axis,int *start,int *end){\n      |                                   ^\ntests/../candidate.c:8:45: error: unused parameter 'axis' [-Werror,-Wunused-parameter]\n    8 | int parse_axis_record(const char *text,int *axis,int *start,int *end){\n      |                                             ^\ntests/../candidate.c:8:55: error: unused parameter 'start' [-Werror,-Wunused-parameter]\n    8 | int parse_axis_record(const char *text,int *axis,int *start,int *end){\n      |                                                       ^\ntests/../candidate.c:8:66: error: unused parameter 'end' [-Werror,-Wunused-parameter]\n    8 | int parse_axis_record(const char *text,int *axis,int *start,int *end){\n      |                                                                  ^\n4 errors generated.\n"
+        },
+        {
+          "task_id": "c_axis_record",
+          "sample_index": 2,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "build failed:\nIn file included from tests/test_c_axis_record.c:6:\ntests/../candidate.c:2:35: error: unused parameter 'text' [-Werror,-Wunused-parameter]\n    2 | int parse_axis_record(const char *text,int *axis,int *start,int *end) { return 0; }\n      |                                   ^\ntests/../candidate.c:2:45: error: unused parameter 'axis' [-Werror,-Wunused-parameter]\n    2 | int parse_axis_record(const char *text,int *axis,int *start,int *end) { return 0; }\n      |                                             ^\ntests/../candidate.c:2:55: error: unused parameter 'start' [-Werror,-Wunused-parameter]\n    2 | int parse_axis_record(const char *text,int *axis,int *start,int *end) { return 0; }\n      |                                                       ^\ntests/../candidate.c:2:66: error: unused parameter 'end' [-Werror,-Wunused-parameter]\n    2 | int parse_axis_record(const char *text,int *axis,int *start,int *end) { return 0; }\n      |                                                                  ^\n4 errors generated.\n"
+        },
+        {
+          "task_id": "c_axis_record",
+          "sample_index": 3,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "build failed:\nIn file included from tests/test_c_axis_record.c:6:\ntests/../candidate.c:1:10: fatal error: 'candidate.h' file not found\n    1 | #include \"candidate.h\"\n      |          ^~~~~~~~~~~~~\n1 error generated.\n"
+        },
+        {
+          "task_id": "c_axis_record",
+          "sample_index": 4,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "case valid-basic index 0 expected 0 got -2\n"
+        }
+      ],
+      "first_pass": 0.0,
+      "passed": 0.0,
+      "attempts": 1.0,
+      "attempt_score": 2.0,
+      "output_tail": "case valid-basic index 0 expected 0 got -2\n"
+    },
+    {
+      "task_id": "c_bits3_decode",
+      "samples": [
+        {
+          "task_id": "c_bits3_decode",
+          "sample_index": 0,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "build failed:\nIn file included from tests/test_c_bits3_decode.c:13:\ntests/../candidate.c:15:10: error: unused variable 'byte_idx' [-Werror,-Wunused-variable]\n   15 |                 size_t byte_idx;\n      |                        ^~~~~~~~\ntests/../candidate.c:16:10: error: unused variable 'bit_off' [-Werror,-Wunused-variable]\n   16 |                 size_t bit_off;\n      |                        ^~~~~~~\ntests/../candidate.c:18:10: error: unused variable 'bits_avail' [-Werror,-Wunused-variable]\n   18 |                 size_t bits_avail;\n      |                        ^~~~~~~~~~\ntests/../candidate.c:19:10: error: unused variable 'bits_to_take' [-Werror,-Wunused-variable]\n   19 |                 size_t bits_to_take;\n      |                        ^~~~~~~~~~~~\ntests/../candidate.c:20:10: error: unused variable 'shift' [-Werror,-Wunused-variable]\n   20 |                 size_t shift;\n      |                        ^~~~~\ntests/../candidate.c:6:11: error: variable 'bits' set but not used [-Werror,-Wunused-but-set-variable]\n    6 |         uint64_t bits;\n      |                  ^\ntests/../candidate.c:7:9: error: unused variable 'bits_needed' [-Werror,-Wunused-variable]\n    7 |         size_t bits_needed;\n      |                ^~~~~~~~~~~\n7 errors generated.\n"
+        },
+        {
+          "task_id": "c_bits3_decode",
+          "sample_index": 1,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "build failed:\nIn file included from tests/test_c_bits3_decode.c:13:\ntests/../candidate.c:12:32: error: unexpected type name 'size_t': expected expression\n   12 |     required_bytes=(size_t)((3*size_t(count)+7u)/8u);\n      |                                ^\n1 error generated.\n"
+        },
+        {
+          "task_id": "c_bits3_decode",
+          "sample_index": 2,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": ""
+        },
+        {
+          "task_id": "c_bits3_decode",
+          "sample_index": 3,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "case count-arithmetic-overflow index 0 expected -1 got 0\n"
+        },
+        {
+          "task_id": "c_bits3_decode",
+          "sample_index": 4,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "case cross-byte-values index 0 expected 0 got -1\n"
+        }
+      ],
+      "first_pass": 0.0,
+      "passed": 0.0,
+      "attempts": 1.0,
+      "attempt_score": 2.0,
+      "output_tail": "case cross-byte-values index 0 expected 0 got -1\n"
+    },
+    {
+      "task_id": "c_echo_ring",
+      "samples": [
+        {
+          "task_id": "c_echo_ring",
+          "sample_index": 0,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "build failed:\nIn file included from tests/test_c_echo_ring.c:12:\ntests/../candidate.c:5:21: error: unknown type name 'TraceRing'\n    5 | int trail_ring_init(TraceRing *r,int32_t *capacity);\n      |                     ^\ntests/../candidate.c:6:21: error: unknown type name 'TraceRing'\n    6 | int trail_ring_push(TraceRing *r,int value);\n      |                     ^\ntests/../candidate.c:7:26: error: unknown type name 'TraceRing'\n    7 | int trail_ring_get(const TraceRing *r,size_t age,int *out);\n      |                          ^\ntests/test_c_echo_ring.c:31:9: error: use of undeclared identifier 'TraceRing'\n   31 |         TraceRing       r;\n      |         ^~~~~~~~~\ntests/test_c_echo_ring.c:34:60: error: use of undeclared identifier 'r'\n   34 |         ICASE(\"init-null-storage\", 0, -1, trail_ring_init(&r, NULL, 3));\n      |                                                            ^\ntests/test_c_echo_ring.c:35:61: error: use of undeclared identifier 'r'\n   35 |         ICASE(\"init-zero-capacity\", 0, -1, trail_ring_init(&r, storage, 0));\n      |                                                             ^\ntests/test_c_echo_ring.c:36:54: error: use of undeclared identifier 'r'\n   36 |         ICASE(\"init-success\", 0, 0, trail_ring_init(&r, storage, 3));\n      |                                                      ^\ntests/test_c_echo_ring.c:37:40: error: use of undeclared identifier 'r'\n   37 |         ICASE(\"init-empty-size\", 0, 0, r.size);\n      |                                        ^\ntests/test_c_echo_ring.c:38:55: error: use of undeclared identifier 'r'\n   38 |         ICASE(\"empty-get-age\", 0, -1, trail_ring_get(&r, 0, &out));\n      |                                                       ^\ntests/test_c_echo_ring.c:41:57: error: use of undeclared identifier 'r'\n   41 |         ICASE(\"get-null-output\", 0, -1, trail_ring_get(&r, 0, NULL));\n      |                                                         ^\ntests/test_c_echo_ring.c:43:54: error: use of undeclared identifier 'r'\n   43 |         ICASE(\"push-success\", 0, 0, trail_ring_push(&r, 10));\n      |                                                      ^\ntests/test_c_echo_ring.c:44:54: error: use of undeclared identifier 'r'\n   44 |         ICASE(\"push-success\", 1, 0, trail_ring_push(&r, 20));\n      |                                                      ^\ntests/test_c_echo_ring.c:45:54: error: use of undeclared identifier 'r'\n   45 |         ICASE(\"push-success\", 2, 0, trail_ring_push(&r, 30));\n      |                                                      ^\ntests/test_c_echo_ring.c:46:51: error: use of undeclared identifier 'r'\n   46 |         ICASE(\"push-wrap\", 3, 0, trail_ring_push(&r, 40));\n      |                                                   ^\ntests/test_c_echo_ring.c:47:51: error: use of undeclared identifier 'r'\n   47 |         ICASE(\"get-newest\", 0, 0, trail_ring_get(&r, 0, &out));\n      |                                                   ^\ntests/test_c_echo_ring.c:49:51: error: use of undeclared identifier 'r'\n   49 |         ICASE(\"get-oldest\", 0, 0, trail_ring_get(&r, 2, &out));\n      |                                                   ^\ntests/test_c_echo_ring.c:52:57: error: use of undeclared identifier 'r'\n   52 |         ICASE(\"unavailable-age\", 0, -1, trail_ring_get(&r, 3, &out));\n      |                                                         ^\ntests/test_c_echo_ring.c:54:9: error: use of undeclared identifier 'TraceRing'\n   54 |         TraceRing       bad = r;\n      |         ^~~~~~~~~\ntests/test_c_echo_ring.c:55:9: error: use of undeclared identifier 'bad'\n   55 |         bad.data = NULL;\n      |         ^~~\nfatal error: too many errors emitted, stopping now [-ferror-limit=]\n20 errors generated.\n"
+        },
+        {
+          "task_id": "c_echo_ring",
+          "sample_index": 1,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "case get-newest index 1 expected 40 got 30\n"
+        },
+        {
+          "task_id": "c_echo_ring",
+          "sample_index": 2,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "build failed:\nIn file included from tests/test_c_echo_ring.c:12:\ntests/../candidate.c:2:21: error: unknown type name 'TraceRing'\n    2 | int trail_ring_init(TraceRing *r,int *storage,size_t capacity){if(!r||!storage||!capacity)return-1;r->data=storage;r->capacity=capacity;r->size=0;r->next=0;return 0;}int trail_ring_push(TraceRing *r,int value){if(!r||!r->data)return-1;r->data[r->next]=value;r->next=(r->next+1)%r->capacity;if(r->size<r->capacity)r->size++;return 0;}int trail_ring_get(const TraceRing *r,size_t age,int*out){if(!r||!r->data||!out)return-1;if(age>=r->size)return-1;size_t idx=(r->next+(r->capacity-1)-(age))%r->capacity;*out=r->data[idx];return 0;}\n      |                     ^\ntests/../candidate.c:2:187: error: unknown type name 'TraceRing'\n    2 | int trail_ring_init(TraceRing *r,int *storage,size_t capacity){if(!r||!storage||!capacity)return-1;r->data=storage;r->capacity=capacity;r->size=0;r->next=0;return 0;}int trail_ring_push(TraceRing *r,int value){if(!r||!r->data)return-1;r->data[r->next]=value;r->next=(r->next+1)%r->capacity;if(r->size<r->capacity)r->size++;return 0;}int trail_ring_get(const TraceRing *r,size_t age,int*out){if(!r||!r->data||!out)return-1;if(age>=r->size)return-1;size_t idx=(r->next+(r->capacity-1)-(age))%r->capacity;*out=r->data[idx];return 0;}\n      |                                                                                                                                                                                           ^\ntests/../candidate.c:2:359: error: unknown type name 'TraceRing'\n    2 | int trail_ring_init(TraceRing *r,int *storage,size_t capacity){if(!r||!storage||!capacity)return-1;r->data=storage;r->capacity=capacity;r->size=0;r->next=0;return 0;}int trail_ring_push(TraceRing *r,int value){if(!r||!r->data)return-1;r->data[r->next]=value;r->next=(r->next+1)%r->capacity;if(r->size<r->capacity)r->size++;return 0;}int trail_ring_get(const TraceRing *r,size_t age,int*out){if(!r||!r->data||!out)return-1;if(age>=r->size)return-1;size_t idx=(r->next+(r->capacity-1)-(age))%r->capacity;*out=r->data[idx];return 0;}\n      |                                                                                                                                                                                                                                                                                                                                                                       ^\ntests/test_c_echo_ring.c:31:9: error: use of undeclared identifier 'TraceRing'\n   31 |         TraceRing       r;\n      |         ^~~~~~~~~\ntests/test_c_echo_ring.c:34:60: error: use of undeclared identifier 'r'\n   34 |         ICASE(\"init-null-storage\", 0, -1, trail_ring_init(&r, NULL, 3));\n      |                                                            ^\ntests/test_c_echo_ring.c:35:61: error: use of undeclared identifier 'r'\n   35 |         ICASE(\"init-zero-capacity\", 0, -1, trail_ring_init(&r, storage, 0));\n      |                                                             ^\ntests/test_c_echo_ring.c:36:54: error: use of undeclared identifier 'r'\n   36 |         ICASE(\"init-success\", 0, 0, trail_ring_init(&r, storage, 3));\n      |                                                      ^\ntests/test_c_echo_ring.c:37:40: error: use of undeclared identifier 'r'\n   37 |         ICASE(\"init-empty-size\", 0, 0, r.size);\n      |                                        ^\ntests/test_c_echo_ring.c:38:55: error: use of undeclared identifier 'r'\n   38 |         ICASE(\"empty-get-age\", 0, -1, trail_ring_get(&r, 0, &out));\n      |                                                       ^\ntests/test_c_echo_ring.c:41:57: error: use of undeclared identifier 'r'\n   41 |         ICASE(\"get-null-output\", 0, -1, trail_ring_get(&r, 0, NULL));\n      |                                                         ^\ntests/test_c_echo_ring.c:43:54: error: use of undeclared identifier 'r'\n   43 |         ICASE(\"push-success\", 0, 0, trail_ring_push(&r, 10));\n      |                                                      ^\ntests/test_c_echo_ring.c:44:54: error: use of undeclared identifier 'r'\n   44 |         ICASE(\"push-success\", 1, 0, trail_ring_push(&r, 20));\n      |                                                      ^\ntests/test_c_echo_ring.c:45:54: error: use of undeclared identifier 'r'\n   45 |         ICASE(\"push-success\", 2, 0, trail_ring_push(&r, 30));\n      |                                                      ^\ntests/test_c_echo_ring.c:46:51: error: use of undeclared identifier 'r'\n   46 |         ICASE(\"push-wrap\", 3, 0, trail_ring_push(&r, 40));\n      |                                                   ^\ntests/test_c_echo_ring.c:47:51: error: use of undeclared identifier 'r'\n   47 |         ICASE(\"get-newest\", 0, 0, trail_ring_get(&r, 0, &out));\n      |                                                   ^\ntests/test_c_echo_ring.c:49:51: error: use of undeclared identifier 'r'\n   49 |         ICASE(\"get-oldest\", 0, 0, trail_ring_get(&r, 2, &out));\n      |                                                   ^\ntests/test_c_echo_ring.c:52:57: error: use of undeclared identifier 'r'\n   52 |         ICASE(\"unavailable-age\", 0, -1, trail_ring_get(&r, 3, &out));\n      |                                                         ^\ntests/test_c_echo_ring.c:54:9: error: use of undeclared identifier 'TraceRing'\n   54 |         TraceRing       bad = r;\n      |         ^~~~~~~~~\ntests/test_c_echo_ring.c:55:9: error: use of undeclared identifier 'bad'\n   55 |         bad.data = NULL;\n      |         ^~~\nfatal error: too many errors emitted, stopping now [-ferror-limit=]\n20 errors generated.\n"
+        },
+        {
+          "task_id": "c_echo_ring",
+          "sample_index": 3,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "build failed:\nIn file included from tests/test_c_echo_ring.c:12:\ntests/../candidate.c:5:40: error: type specifier missing, defaults to 'int'; ISO C99 and later do not support implicit int [-Wimplicit-int]\n    5 | int trail_ring_init(TraceRing *r,int*p,sz) {\n      |                                        ^\n      |                                        int\ntests/../candidate.c:6:13: error: use of undeclared identifier 'cap'\n    6 | if(!r||!p||!cap)return -1;\n      |             ^~~\ntests/../candidate.c:7:18: error: use of undeclared identifier 'cap'\n    7 | *r=(TraceRing){p,cap,0,cap};\n      |                  ^~~\ntests/../candidate.c:7:24: error: use of undeclared identifier 'cap'\n    7 | *r=(TraceRing){p,cap,0,cap};\n      |                        ^~~\ntests/../candidate.c:5:40: error: unused parameter 'sz' [-Werror,-Wunused-parameter]\n    5 | int trail_ring_init(TraceRing *r,int*p,sz) {\n      |                                        ^\ntests/../candidate.c:9:33: error: type specifier missing, defaults to 'int'; ISO C99 and later do not support implicit int [-Wimplicit-int]\n    9 | int trail_ring_push(TraceRing*r,intv){\n      |                                 ^\n      |                                 int\ntests/../candidate.c:11:18: error: use of undeclared identifier 'v'\n   11 | r->data[r->next]=v;\n      |                  ^\ntests/../candidate.c:9:33: error: unused parameter 'intv' [-Werror,-Wunused-parameter]\n    9 | int trail_ring_push(TraceRing*r,intv){\n      |                                 ^\ntests/../candidate.c:15:38: error: type specifier missing, defaults to 'int'; ISO C99 and later do not support implicit int [-Wimplicit-int]\n   15 | int trail_ring_get(const TraceRing*r,size_tage,int*out){\n      |                                      ^\n      |                                      int\ntests/../candidate.c:17:4: error: use of undeclared identifier 'age'\n   17 | if(age>=r->size)return -1;\n      |    ^~~\ntests/../candidate.c:18:23: error: use of undeclared identifier 'age'\n   18 | *out=r->data[(r->next+age)%r->capacity];\n      |                       ^~~\ntests/../candidate.c:15:38: error: unused parameter 'size_tage' [-Werror,-Wunused-parameter]\n   15 | int trail_ring_get(const TraceRing*r,size_tage,int*out){\n      |                                      ^\n12 errors generated.\n"
+        },
+        {
+          "task_id": "c_echo_ring",
+          "sample_index": 4,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "build failed:\nIn file included from tests/test_c_echo_ring.c:12:\ntests/../candidate.c:3:10: fatal error: 'candidate.h' file not found\n    3 | #include \"candidate.h\"\n      |          ^~~~~~~~~~~~~\n1 error generated.\n"
+        }
+      ],
+      "first_pass": 0.0,
+      "passed": 0.0,
+      "attempts": 1.0,
+      "attempt_score": 2.0,
+      "output_tail": "build failed:\nIn file included from tests/test_c_echo_ring.c:12:\ntests/../candidate.c:3:10: fatal error: 'candidate.h' file not found\n    3 | #include \"candidate.h\"\n      |          ^~~~~~~~~~~~~\n1 error generated.\n"
+    },
+    {
+      "task_id": "c_group_lse",
+      "samples": [
+        {
+          "task_id": "c_group_lse",
+          "sample_index": 0,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "build failed:\nIn file included from tests/test_c_group_lse.c:13:\ntests/../candidate.c:6:45: error: use of undeclared identifier 'lengths'\n    6 | int group_log_partition(const float *x,size[lengths[i] <= total) { return -1; } total -= lengths[i]; } return 0; }\n      |                                             ^~~~~~~\ntests/../candidate.c:6:53: error: use of undeclared identifier 'i'\n    6 | int group_log_partition(const float *x,size[lengths[i] <= total) { return -1; } total -= lengths[i]; } return 0; }\n      |                                                     ^\ntests/../candidate.c:6:59: error: use of undeclared identifier 'total'\n    6 | int group_log_partition(const float *x,size[lengths[i] <= total) { return -1; } total -= lengths[i]; } return 0; }\n      |                                                           ^~~~~\ntests/../candidate.c:6:40: error: type specifier missing, defaults to 'int'; ISO C99 and later do not support implicit int [-Wimplicit-int]\n    6 | int group_log_partition(const float *x,size[lengths[i] <= total) { return -1; } total -= lengths[i]; } return 0; }\n      |                                        ^\n      |                                        int\ntests/../candidate.c:6:100: error: expected ')'\n    6 | int group_log_partition(const float *x,size[lengths[i] <= total) { return -1; } total -= lengths[i]; } return 0; }\n      |                                                                                                    ^\ntests/../candidate.c:6:24: note: to match this '('\n    6 | int group_log_partition(const float *x,size[lengths[i] <= total) { return -1; } total -= lengths[i]; } return 0; }\n      |                        ^\ntests/../candidate.c:6:102: error: extraneous closing brace ('}')\n    6 | int group_log_partition(const float *x,size[lengths[i] <= total) { return -1; } total -= lengths[i]; } return 0; }\n      |                                                                                                      ^\ntests/../candidate.c:6:104: error: expected identifier or '('\n    6 | int group_log_partition(const float *x,size[lengths[i] <= total) { return -1; } total -= lengths[i]; } return 0; }\n      |                                                                                                        ^\ntests/../candidate.c:6:114: error: extraneous closing brace ('}')\n    6 | int group_log_partition(const float *x,size[lengths[i] <= total) { return -1; } total -= lengths[i]; } return 0; }\n      |                                                                                                                  ^\n8 errors generated.\n"
+        },
+        {
+          "task_id": "c_group_lse",
+          "sample_index": 1,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "build failed:\nIn file included from tests/test_c_group_lse.c:13:\ntests/../candidate.c:8:14: error: use of undeclared identifier 'lengths'\n    8 | { if (!x || !lengths || !out || total==0 || groups==0 || x==NULL || groups==0) return -1; for(size_t i=0;i<groups;i++) if(lengths[i]==0) return -1; size_t total_len=0; for(size_t i=0;i<groups;i++) total_len+=lengths[i]; if(total!=total_len) return -1; size_t current=0; for(size_t g=0;g<groups;g++) { size_t len=lengths[g]; if(len>total-current) return -1; float max=-INFINITY; for(size_t i=current;i<current+len;i++) if(x[i]>max) max=x[i]; float sum=0.0f; for(size_t i=current;i<current+len;i++) sum+=expf(x[i]-max); out[g]=logf(sum)+max; current+=len; } return 0; }\n      |              ^~~~~~~\ntests/../candidate.c:8:123: error: use of undeclared identifier 'lengths'\n    8 | { if (!x || !lengths || !out || total==0 || groups==0 || x==NULL || groups==0) return -1; for(size_t i=0;i<groups;i++) if(lengths[i]==0) return -1; size_t total_len=0; for(size_t i=0;i<groups;i++) total_len+=lengths[i]; if(total!=total_len) return -1; size_t current=0; for(size_t g=0;g<groups;g++) { size_t len=lengths[g]; if(len>total-current) return -1; float max=-INFINITY; for(size_t i=current;i<current+len;i++) if(x[i]>max) max=x[i]; float sum=0.0f; for(size_t i=current;i<current+len;i++) sum+=expf(x[i]-max); out[g]=logf(sum)+max; current+=len; } return 0; }\n      |                                                                                                                           ^~~~~~~\ntests/../candidate.c:8:209: error: use of undeclared identifier 'lengths'\n    8 | { if (!x || !lengths || !out || total==0 || groups==0 || x==NULL || groups==0) return -1; for(size_t i=0;i<groups;i++) if(lengths[i]==0) return -1; size_t total_len=0; for(size_t i=0;i<groups;i++) total_len+=lengths[i]; if(total!=total_len) return -1; size_t current=0; for(size_t g=0;g<groups;g++) { size_t len=lengths[g]; if(len>total-current) return -1; float max=-INFINITY; for(size_t i=current;i<current+len;i++) if(x[i]>max) max=x[i]; float sum=0.0f; for(size_t i=current;i<current+len;i++) sum+=expf(x[i]-max); out[g]=logf(sum)+max; current+=len; } return 0; }\n      |                                                                                                                                                                                                                 ^~~~~~~\ntests/../candidate.c:8:313: error: use of undeclared identifier 'lengths'\n    8 | { if (!x || !lengths || !out || total==0 || groups==0 || x==NULL || groups==0) return -1; for(size_t i=0;i<groups;i++) if(lengths[i]==0) return -1; size_t total_len=0; for(size_t i=0;i<groups;i++) total_len+=lengths[i]; if(total!=total_len) return -1; size_t current=0; for(size_t g=0;g<groups;g++) { size_t len=lengths[g]; if(len>total-current) return -1; float max=-INFINITY; for(size_t i=current;i<current+len;i++) if(x[i]>max) max=x[i]; float sum=0.0f; for(size_t i=current;i<current+len;i++) sum+=expf(x[i]-max); out[g]=logf(sum)+max; current+=len; } return 0; }\n      |                                                                                                                                                                                                                                                                                                                         ^~~~~~~\ntests/test_c_group_lse.c:51:65: error: too many arguments to function call, expected 4, have 5\n   51 |         int             rc = group_log_partition(x, lens, 4, 2, out);\n      |                              ~~~~~~~~~~~~~~~~~~~                ^~~\ntests/../candidate.c:7:5: note: 'group_log_partition' declared here\n    7 | int group_log_partition(const float *x,size_t total,size_t groups,float *out)\n      |     ^                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\ntests/test_c_group_lse.c:58:78: error: too many arguments to function call, expected 4, have 5\n   58 |         ICASE(\"zero-group-length\", 0, -1, group_log_partition(x, lens, 4, 2, out));\n      |                                           ~~~~~~~~~~~~~~~~~~~                ^~~\ntests/../candidate.c:7:5: note: 'group_log_partition' declared here\n    7 | int group_log_partition(const float *x,size_t total,size_t groups,float *out)\n      |     ^                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\ntests/test_c_group_lse.c:63:81: error: too many arguments to function call, expected 4, have 5\n   63 |         ICASE(\"length-sum-too-large\", 0, -1, group_log_partition(x, lens, 4, 2, out));\n      |                                              ~~~~~~~~~~~~~~~~~~~                ^~~\ntests/../candidate.c:7:5: note: 'group_log_partition' declared here\n    7 | int group_log_partition(const float *x,size_t total,size_t groups,float *out)\n      |     ^                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\ntests/test_c_group_lse.c:66:81: error: too many arguments to function call, expected 4, have 5\n   66 |         ICASE(\"length-sum-too-small\", 0, -1, group_log_partition(x, lens, 4, 2, out));\n      |                                              ~~~~~~~~~~~~~~~~~~~                ^~~\ntests/../candidate.c:7:5: note: 'group_log_partition' declared here\n    7 | int group_log_partition(const float *x,size_t total,size_t groups,float *out)\n      |     ^                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\ntests/test_c_group_lse.c:69:71: error: too many arguments to function call, expected 4, have 5\n   69 |         ICASE(\"zero-total\", 0, -1, group_log_partition(x, lens, 0, 2, out));\n      |                                    ~~~~~~~~~~~~~~~~~~~                ^~~\ntests/../candidate.c:7:5: note: 'group_log_partition' declared here\n    7 | int group_log_partition(const float *x,size_t total,size_t groups,float *out)\n      |     ^                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\ntests/test_c_group_lse.c:70:72: error: too many arguments to function call, expected 4, have 5\n   70 |         ICASE(\"zero-groups\", 0, -1, group_log_partition(x, lens, 4, 0, out));\n      |                                     ~~~~~~~~~~~~~~~~~~~                ^~~\ntests/../candidate.c:7:5: note: 'group_log_partition' declared here\n    7 | int group_log_partition(const float *x,size_t total,size_t groups,float *out)\n      |     ^                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\ntests/test_c_group_lse.c:71:70: error: too many arguments to function call, expected 4, have 5\n   71 |         ICASE(\"null-x\", 0, -1, group_log_partition(NULL, lens, 4, 2, out));\n      |                                ~~~~~~~~~~~~~~~~~~~                   ^~~\ntests/test_c_group_lse.c:27:81: note: expanded from macro 'ICASE'\n   27 | #define ICASE(name,idx,exp,got) do{long long e_=(long long)(exp),g_=(long long)(got);if(e_!=g_){fprintf(stderr,\"case %s index %zu expected %lld got %lld\\n\",name,(size_t)(idx),e_,g_);return 1;}}while(0)\n      |                                                                                 ^~~\ntests/../candidate.c:7:5: note: 'group_log_partition' declared here\n    7 | int group_log_partition(const float *x,size_t total,size_t groups,float *out)\n      |     ^                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\ntests/test_c_group_lse.c:72:73: error: too many arguments to function call, expected 4, have 5\n   72 |         ICASE(\"null-lengths\", 0, -1, group_log_partition(x, NULL, 4, 2, out));\n      |                                      ~~~~~~~~~~~~~~~~~~~                ^~~\ntests/test_c_group_lse.c:27:81: note: expanded from macro 'ICASE'\n   27 | #define ICASE(name,idx,exp,got) do{long long e_=(long long)(exp),g_=(long long)(got);if(e_!=g_){fprintf(stderr,\"case %s index %zu expected %lld got %lld\\n\",name,(size_t)(idx),e_,g_);return 1;}}while(0)\n      |                                                                                 ^~~\ntests/../candidate.c:7:5: note: 'group_log_partition' declared here\n    7 | int group_log_partition(const float *x,size_t total,size_t groups,float *out)\n      |     ^                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\ntests/test_c_group_lse.c:73:72: error: too many arguments to function call, expected 4, have 5\n   73 |         ICASE(\"null-output\", 0, -1, group_log_partition(x, lens, 4, 2, NULL));\n      |                                     ~~~~~~~~~~~~~~~~~~~                ^~~~\n/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/21/include/__stddef_null.h:26:14: note: expanded from macro 'NULL'\n   26 | #define NULL ((void*)0)\n      |              ^~~~~~~~~~\ntests/test_c_group_lse.c:27:81: note: expanded from macro 'ICASE'\n   27 | #define ICASE(name,idx,exp,got) do{long long e_=(long long)(exp),g_=(long long)(got);if(e_!=g_){fprintf(stderr,\"case %s index %zu expected %lld got %lld\\n\",name,(size_t)(idx),e_,g_);return 1;}}while(0)\n      |                                                                                 ^~~\ntests/../candidate.c:7:5: note: 'group_log_partition' declared here\n    7 | int group_log_partition(const float *x,size_t total,size_t groups,float *out)\n      |     ^                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\ntests/test_c_group_lse.c:75:79: error: too many arguments to function call, expected 4, have 5\n   75 |         ICASE(\"nonfinite-input\", 0, -1, group_log_partition(badx, lens, 4, 2, out));\n      |                                         ~~~~~~~~~~~~~~~~~~~                   ^~~\ntests/../candidate.c:7:5: note: 'group_log_partition' declared here\n    7 | int group_log_partition(const float *x,size_t total,size_t groups,float *out)\n      |     ^                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\ntests/test_c_group_lse.c:89:74: error: too many arguments to function call, expected 4, have 5\n   89 |         int             rc = group_log_partition(x, lens, total, groups, out);\n      |                              ~~~~~~~~~~~~~~~~~~~                         ^~~\ntests/../candidate.c:7:5: note: 'group_log_partition' declared here\n    7 | int group_log_partition(const float *x,size_t total,size_t groups,float *out)\n      |     ^                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\ntests/test_c_group_lse.c:111:89: error: too many arguments to function call, expected 4, have 5\n  111 |         ICASE(\"largest-uneven-total\", 0, 0, group_log_partition(x, lens, total, groups, out));\n      |                                             ~~~~~~~~~~~~~~~~~~~                         ^~~\ntests/../candidate.c:7:5: note: 'group_log_partition' declared here\n    7 | int group_log_partition(const float *x,size_t total,size_t groups,float *out)\n      |     ^                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n16 errors generated.\n"
+        },
+        {
+          "task_id": "c_group_lse",
+          "sample_index": 2,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "case length-sum-too-small index 0 expected -1 got 0\n"
+        },
+        {
+          "task_id": "c_group_lse",
+          "sample_index": 3,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "case length-sum-too-large index 0 expected -1 got 0\n"
+        },
+        {
+          "task_id": "c_group_lse",
+          "sample_index": 4,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "case length-sum-too-small index 0 expected -1 got 0\n"
+        }
+      ],
+      "first_pass": 0.0,
+      "passed": 0.0,
+      "attempts": 1.0,
+      "attempt_score": 2.0,
+      "output_tail": "case length-sum-too-small index 0 expected -1 got 0\n"
+    },
+    {
+      "task_id": "c_rank_topk",
+      "samples": [
+        {
+          "task_id": "c_rank_topk",
+          "sample_index": 0,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "build failed:\nIn file included from tests/test_c_rank_topk.c:13:\ntests/../candidate.c:5:10: fatal error: 'candidate.h' file not found\n    5 | #include \"candidate.h\"\n      |          ^~~~~~~~~~~~~\n1 error generated.\n"
+        },
+        {
+          "task_id": "c_rank_topk",
+          "sample_index": 1,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "case stable-tied-top-k index 1 expected 2 got 1\n"
+        },
+        {
+          "task_id": "c_rank_topk",
+          "sample_index": 2,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "build failed:\nIn file included from tests/test_c_rank_topk.c:13:\ntests/../candidate.c:4:10: fatal error: 'stdlib' file not found\n    4 | #include <stdlib>\n      |          ^~~~~~~~\n1 error generated.\n"
+        },
+        {
+          "task_id": "c_rank_topk",
+          "sample_index": 3,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "build failed:\nIn file included from tests/test_c_rank_topk.c:13:\ntests/../candidate.c:5:446: error: read-only variable is not assignable\n    5 | int rank_largest_topk(const float *values,int n,int k,int *indices,float *ranked){if(n<=0||k<=0||k>n||!values||!indices||!ranked)return -1;size_t valid=0;for(int i=0;i<n;++i){if(!isfinite(values[i]))return -1;}for(int i=0;i<k;++i){int best=-1;for(int j=0;j<n;++j){if(isfinite(values[j])){if(best==-1||values[j]>values[best]||((values[j]==values[best])&&j<best)){best=j;}}}if(best==-1)return -1;indices[i]=best;ranked[i]=values[best];values[best]=nanf(0);}return 0;}\n      |                                                                                                                                                                                                                                                                                                                                                                                                                                                  ~~~~~~~~~~~~^\n1 error generated.\n"
+        },
+        {
+          "task_id": "c_rank_topk",
+          "sample_index": 4,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "case no-heap-allocation index 0 expected 0 got 490\n"
+        }
+      ],
+      "first_pass": 0.0,
+      "passed": 0.0,
+      "attempts": 1.0,
+      "attempt_score": 2.0,
+      "output_tail": "case no-heap-allocation index 0 expected 0 got 490\n"
+    },
+    {
+      "task_id": "c_rms_gate",
+      "samples": [
+        {
+          "task_id": "c_rms_gate",
+          "sample_index": 0,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": ""
+        },
+        {
+          "task_id": "c_rms_gate",
+          "sample_index": 1,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "case nonfinite-residual-sum index 0 expected -1 got 0\n"
+        },
+        {
+          "task_id": "c_rms_gate",
+          "sample_index": 2,
+          "passed": true,
+          "first_pass": true,
+          "attempts": 1,
+          "attempt_score": 1,
+          "output_tail": ""
+        },
+        {
+          "task_id": "c_rms_gate",
+          "sample_index": 3,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "case data-errors-atomic index 0 expected 71 got 0\n"
+        },
+        {
+          "task_id": "c_rms_gate",
+          "sample_index": 4,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "case data-errors-atomic index 0 expected 71 got 0\n"
+        }
+      ],
+      "first_pass": 0.2,
+      "passed": 0.2,
+      "attempts": 1.0,
+      "attempt_score": 1.8,
+      "output_tail": "case data-errors-atomic index 0 expected 71 got 0\n"
+    },
+    {
+      "task_id": "c_sat8_pair",
+      "samples": [
+        {
+          "task_id": "c_sat8_pair",
+          "sample_index": 0,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "build failed:\nIn file included from tests/test_c_sat8_pair.c:13:\ntests/../candidate.c:3:73: error: type specifier missing, defaults to 'int'; ISO C99 and later do not support implicit int [-Wimplicit-int]\n    3 | int saturating_pair_u8(uint8_t *dst, const uint8_t *a, const uint8_t *b,size_t_n,uint8_t cap){if(!dst||!a||!b||!n)return-1;for(size_t i=0;i<n;i++){unsigned sum=(unsigned)a[i]+(unsigned)b[i];dst[i]=(uint8_t)(sum<cap?sum:cap);}return 0;}\n      |                                                                         ^\n      |                                                                         int\ntests/../candidate.c:3:113: error: use of undeclared identifier 'n'\n    3 | int saturating_pair_u8(uint8_t *dst, const uint8_t *a, const uint8_t *b,size_t_n,uint8_t cap){if(!dst||!a||!b||!n)return-1;for(size_t i=0;i<n;i++){unsigned sum=(unsigned)a[i]+(unsigned)b[i];dst[i]=(uint8_t)(sum<cap?sum:cap);}return 0;}\n      |                                                                                                                 ^\ntests/../candidate.c:3:141: error: use of undeclared identifier 'n'\n    3 | int saturating_pair_u8(uint8_t *dst, const uint8_t *a, const uint8_t *b,size_t_n,uint8_t cap){if(!dst||!a||!b||!n)return-1;for(size_t i=0;i<n;i++){unsigned sum=(unsigned)a[i]+(unsigned)b[i];dst[i]=(uint8_t)(sum<cap?sum:cap);}return 0;}\n      |                                                                                                                                             ^\ntests/../candidate.c:3:73: error: unused parameter 'size_t_n' [-Werror,-Wunused-parameter]\n    3 | int saturating_pair_u8(uint8_t *dst, const uint8_t *a, const uint8_t *b,size_t_n,uint8_t cap){if(!dst||!a||!b||!n)return-1;for(size_t i=0;i<n;i++){unsigned sum=(unsigned)a[i]+(unsigned)b[i];dst[i]=(uint8_t)(sum<cap?sum:cap);}return 0;}\n      |                                                                         ^\n4 errors generated.\n"
+        },
+        {
+          "task_id": "c_sat8_pair",
+          "sample_index": 1,
+          "passed": true,
+          "first_pass": true,
+          "attempts": 1,
+          "attempt_score": 1,
+          "output_tail": ""
+        },
+        {
+          "task_id": "c_sat8_pair",
+          "sample_index": 2,
+          "passed": true,
+          "first_pass": true,
+          "attempts": 1,
+          "attempt_score": 1,
+          "output_tail": ""
+        },
+        {
+          "task_id": "c_sat8_pair",
+          "sample_index": 3,
+          "passed": true,
+          "first_pass": true,
+          "attempts": 1,
+          "attempt_score": 1,
+          "output_tail": ""
+        },
+        {
+          "task_id": "c_sat8_pair",
+          "sample_index": 4,
+          "passed": true,
+          "first_pass": true,
+          "attempts": 1,
+          "attempt_score": 1,
+          "output_tail": ""
+        }
+      ],
+      "first_pass": 0.8,
+      "passed": 0.8,
+      "attempts": 1.0,
+      "attempt_score": 1.2,
+      "output_tail": ""
+    },
+    {
+      "task_id": "c_scan_checked",
+      "samples": [
+        {
+          "task_id": "c_scan_checked",
+          "sample_index": 0,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "build failed:\nIn file included from tests/test_c_scan_checked.c:13:\ntests/../candidate.c:15:21: error: comparison of integers of different signs: 'int32_t' (aka 'int') and 'uint32_t' (aka 'unsigned int') [-Werror,-Wsign-compare]\n   15 |                     (sum ^ in[i]) >= 2 * ((uint32_t)(-(sum < 0))))\n      |                      ~~~~~~~~~~~  ^  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n1 error generated.\n"
+        },
+        {
+          "task_id": "c_scan_checked",
+          "sample_index": 1,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "case positive-overflow index 0 expected -2 got 0\n"
+        },
+        {
+          "task_id": "c_scan_checked",
+          "sample_index": 2,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "case inclusive-scan index 0 expected 0 got -2\n"
+        },
+        {
+          "task_id": "c_scan_checked",
+          "sample_index": 3,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "case positive-overflow-atomic index 0 expected 51 got 2147483647\n"
+        },
+        {
+          "task_id": "c_scan_checked",
+          "sample_index": 4,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "case positive-overflow-atomic index 0 expected 51 got 2147483647\n"
+        }
+      ],
+      "first_pass": 0.0,
+      "passed": 0.0,
+      "attempts": 1.0,
+      "attempt_score": 2.0,
+      "output_tail": "case positive-overflow-atomic index 0 expected 51 got 2147483647\n"
+    },
+    {
+      "task_id": "c_skeleton_clamp",
+      "samples": [
+        {
+          "task_id": "c_skeleton_clamp",
+          "sample_index": 0,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "case skeleton-fixed-lines index 0 expected template non-TODO bytes identical got mismatch\n"
+        },
+        {
+          "task_id": "c_skeleton_clamp",
+          "sample_index": 1,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "case skeleton-fixed-lines index 0 expected template non-TODO bytes identical got mismatch\n"
+        },
+        {
+          "task_id": "c_skeleton_clamp",
+          "sample_index": 2,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "build failed:\nIn file included from tests/test_c_skeleton_clamp.c:6:\ntests/../candidate.c:2:34: error: unused parameter 'input' [-Werror,-Wunused-parameter]\n    2 | int clamp_and_count(const float *input,size_t n,float lo,float hi,float *out,size_t *clamped){return 0;}\n      |                                  ^\ntests/../candidate.c:2:47: error: unused parameter 'n' [-Werror,-Wunused-parameter]\n    2 | int clamp_and_count(const float *input,size_t n,float lo,float hi,float *out,size_t *clamped){return 0;}\n      |                                               ^\ntests/../candidate.c:2:55: error: unused parameter 'lo' [-Werror,-Wunused-parameter]\n    2 | int clamp_and_count(const float *input,size_t n,float lo,float hi,float *out,size_t *clamped){return 0;}\n      |                                                       ^\ntests/../candidate.c:2:64: error: unused parameter 'hi' [-Werror,-Wunused-parameter]\n    2 | int clamp_and_count(const float *input,size_t n,float lo,float hi,float *out,size_t *clamped){return 0;}\n      |                                                                ^\ntests/../candidate.c:2:74: error: unused parameter 'out' [-Werror,-Wunused-parameter]\n    2 | int clamp_and_count(const float *input,size_t n,float lo,float hi,float *out,size_t *clamped){return 0;}\n      |                                                                          ^\ntests/../candidate.c:2:86: error: unused parameter 'clamped' [-Werror,-Wunused-parameter]\n    2 | int clamp_and_count(const float *input,size_t n,float lo,float hi,float *out,size_t *clamped){return 0;}\n      |                                                                                      ^\n6 errors generated.\n"
+        },
+        {
+          "task_id": "c_skeleton_clamp",
+          "sample_index": 3,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "build failed:\nIn file included from tests/test_c_skeleton_clamp.c:6:\ntests/../candidate.c:5:51: error: '&&' within '||' [-Werror,-Wlogical-op-parentheses]\n    5 |     if(!isfinite(lo)||!isfinite(hi)||!isfinite(lo)&&!isfinite(hi)||lo>hi||!isfinite(input[0])){return -1;}\n      |                                    ~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~\ntests/../candidate.c:5:51: note: place parentheses around the '&&' expression to silence this warning\n    5 |     if(!isfinite(lo)||!isfinite(hi)||!isfinite(lo)&&!isfinite(hi)||lo>hi||!isfinite(input[0])){return -1;}\n      |                                      ~~~~~~~~~~~~~^~~~~~~~~~~~~~~\n1 error generated.\n"
+        },
+        {
+          "task_id": "c_skeleton_clamp",
+          "sample_index": 4,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "case skeleton-fixed-lines index 0 expected template non-TODO bytes identical got mismatch\n"
+        }
+      ],
+      "first_pass": 0.0,
+      "passed": 0.0,
+      "attempts": 1.0,
+      "attempt_score": 2.0,
+      "output_tail": "case skeleton-fixed-lines index 0 expected template non-TODO bytes identical got mismatch\n"
+    },
+    {
+      "task_id": "c_skeleton_pair",
+      "samples": [
+        {
+          "task_id": "c_skeleton_pair",
+          "sample_index": 0,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "build failed:\nIn file included from tests/test_c_skeleton_pair.c:7:\ntests/../candidate.c:2:35: error: unused parameter 'text' [-Werror,-Wunused-parameter]\n    2 | int parse_pair_record(const char *text,int16_t *left,int16_t *right)\n      |                                   ^\ntests/../candidate.c:2:49: error: unused parameter 'left' [-Werror,-Wunused-parameter]\n    2 | int parse_pair_record(const char *text,int16_t *left,int16_t *right)\n      |                                                 ^\ntests/../candidate.c:2:63: error: unused parameter 'right' [-Werror,-Wunused-parameter]\n    2 | int parse_pair_record(const char *text,int16_t *left,int16_t *right)\n      |                                                               ^\n3 errors generated.\n"
+        },
+        {
+          "task_id": "c_skeleton_pair",
+          "sample_index": 1,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "case skeleton-fixed-lines index 0 expected template non-TODO bytes identical got mismatch\n"
+        },
+        {
+          "task_id": "c_skeleton_pair",
+          "sample_index": 2,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "case skeleton-fixed-lines index 0 expected template non-TODO bytes identical got mismatch\n"
+        },
+        {
+          "task_id": "c_skeleton_pair",
+          "sample_index": 3,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "case skeleton-fixed-lines index 0 expected template non-TODO bytes identical got mismatch\n"
+        },
+        {
+          "task_id": "c_skeleton_pair",
+          "sample_index": 4,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "case skeleton-fixed-lines index 0 expected template non-TODO bytes identical got mismatch\n"
+        }
+      ],
+      "first_pass": 0.0,
+      "passed": 0.0,
+      "attempts": 1.0,
+      "attempt_score": 2.0,
+      "output_tail": "case skeleton-fixed-lines index 0 expected template non-TODO bytes identical got mismatch\n"
+    },
+    {
+      "task_id": "c_skeleton_window",
+      "samples": [
+        {
+          "task_id": "c_skeleton_window",
+          "sample_index": 0,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "case skeleton-fixed-lines index 0 expected template non-TODO bytes identical got mismatch\n"
+        },
+        {
+          "task_id": "c_skeleton_window",
+          "sample_index": 1,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "case skeleton-fixed-lines index 0 expected template non-TODO bytes identical got mismatch\n"
+        },
+        {
+          "task_id": "c_skeleton_window",
+          "sample_index": 2,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "case skeleton-fixed-lines index 0 expected template non-TODO bytes identical got mismatch\n"
+        },
+        {
+          "task_id": "c_skeleton_window",
+          "sample_index": 3,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "case skeleton-fixed-lines index 0 expected template non-TODO bytes identical got mismatch\n"
+        },
+        {
+          "task_id": "c_skeleton_window",
+          "sample_index": 4,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "case skeleton-fixed-lines index 0 expected template non-TODO bytes identical got mismatch\n"
+        }
+      ],
+      "first_pass": 0.0,
+      "passed": 0.0,
+      "attempts": 1.0,
+      "attempt_score": 2.0,
+      "output_tail": "case skeleton-fixed-lines index 0 expected template non-TODO bytes identical got mismatch\n"
+    },
+    {
+      "task_id": "c_span_alias",
+      "samples": [
+        {
+          "task_id": "c_span_alias",
+          "sample_index": 0,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": ""
+        },
+        {
+          "task_id": "c_span_alias",
+          "sample_index": 1,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": ""
+        },
+        {
+          "task_id": "c_span_alias",
+          "sample_index": 2,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "case disjoint-scale index 0 expected 0 got -1\n"
+        },
+        {
+          "task_id": "c_span_alias",
+          "sample_index": 3,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "case exact-in-place index 0 expected -0.5 got 1\n"
+        },
+        {
+          "task_id": "c_span_alias",
+          "sample_index": 4,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": ""
+        }
+      ],
+      "first_pass": 0.0,
+      "passed": 0.0,
+      "attempts": 1.0,
+      "attempt_score": 2.0,
+      "output_tail": ""
+    },
+    {
+      "task_id": "c_stable_norm",
+      "samples": [
+        {
+          "task_id": "c_stable_norm",
+          "sample_index": 0,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "build failed:\nIn file included from tests/test_c_stable_norm.c:15:\ntests/../candidate.c:4:10: fatal error: 'stdfloat.h' file not found\n    4 | #include <stdfloat.h>\n      |          ^~~~~~~~~~~~\n1 error generated.\n"
+        },
+        {
+          "task_id": "c_stable_norm",
+          "sample_index": 1,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "case partial-overlap-forward index 0 expected -1 got 0\n"
+        },
+        {
+          "task_id": "c_stable_norm",
+          "sample_index": 2,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "build failed:\nIn file included from tests/test_c_stable_norm.c:15:\ntests/../candidate.c:6:294: error: call to undeclared function 'float_exp'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]\n    6 | int normalize_logits_unit(const float *x,float*y,int n){if(x==NULL||y==NULL||n<=0)return -1;for(int i=0;i<n;i++){if(!isfinite(x[i]))return -1;}float max=x[0];for(int i=1;i<n;i++){if(x[i]>max){max=x[i];}}if(y!=x){memcpy(y,x,sizeof(float)*(size_t)n);}float sum=0.0f;for(int i=0;i<n;i++){float e=float_exp(y[i]-max);y[i]=e;sum+=e;}if(sum==0.0f)return -1;for(int i=0;i<n;i++){y[i]/=sum;}return 0;}\n      |                                                                                                                                                                                                                                                                                                      ^\n1 error generated.\n"
+        },
+        {
+          "task_id": "c_stable_norm",
+          "sample_index": 3,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "case partial-overlap-forward index 0 expected -1 got 0\n"
+        },
+        {
+          "task_id": "c_stable_norm",
+          "sample_index": 4,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "build failed:\nIn file included from tests/test_c_stable_norm.c:15:\ntests/../candidate.c:26:17: error: read-only variable is not assignable\n   26 |             x[i]=(float)(exp(x[i]-max)/sum);\n      |             ~~~~^\n1 error generated.\n"
+        }
+      ],
+      "first_pass": 0.0,
+      "passed": 0.0,
+      "attempts": 1.0,
+      "attempt_score": 2.0,
+      "output_tail": "build failed:\nIn file included from tests/test_c_stable_norm.c:15:\ntests/../candidate.c:26:17: error: read-only variable is not assignable\n   26 |             x[i]=(float)(exp(x[i]-max)/sum);\n      |             ~~~~^\n1 error generated.\n"
+    },
+    {
+      "task_id": "c_strided_proj",
+      "samples": [
+        {
+          "task_id": "c_strided_proj",
+          "sample_index": 0,
+          "passed": true,
+          "first_pass": true,
+          "attempts": 1,
+          "attempt_score": 1,
+          "output_tail": ""
+        },
+        {
+          "task_id": "c_strided_proj",
+          "sample_index": 1,
+          "passed": true,
+          "first_pass": true,
+          "attempts": 1,
+          "attempt_score": 1,
+          "output_tail": ""
+        },
+        {
+          "task_id": "c_strided_proj",
+          "sample_index": 2,
+          "passed": true,
+          "first_pass": true,
+          "attempts": 1,
+          "attempt_score": 1,
+          "output_tail": ""
+        },
+        {
+          "task_id": "c_strided_proj",
+          "sample_index": 3,
+          "passed": true,
+          "first_pass": true,
+          "attempts": 1,
+          "attempt_score": 1,
+          "output_tail": ""
+        },
+        {
+          "task_id": "c_strided_proj",
+          "sample_index": 4,
+          "passed": true,
+          "first_pass": true,
+          "attempts": 1,
+          "attempt_score": 1,
+          "output_tail": ""
+        }
+      ],
+      "first_pass": 1.0,
+      "passed": 1.0,
+      "attempts": 1.0,
+      "attempt_score": 1.0,
+      "output_tail": ""
+    },
+    {
+      "task_id": "c_u4_groupdot",
+      "samples": [
+        {
+          "task_id": "c_u4_groupdot",
+          "sample_index": 0,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "case unsigned-high-nibbles-multiple-groups index 0 expected 21.5 got -42 (tol 0.000216)\n"
+        },
+        {
+          "task_id": "c_u4_groupdot",
+          "sample_index": 1,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "case unsigned-high-nibbles-multiple-groups index 0 expected 21.5 got 165 (tol 0.000216)\n"
+        },
+        {
+          "task_id": "c_u4_groupdot",
+          "sample_index": 2,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "case unsigned-high-nibbles-multiple-groups index 0 expected 21.5 got -64 (tol 0.000216)\n"
+        },
+        {
+          "task_id": "c_u4_groupdot",
+          "sample_index": 3,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "case unsigned-high-nibbles-multiple-groups index 0 expected 21.5 got -483.25 (tol 0.000216)\n"
+        },
+        {
+          "task_id": "c_u4_groupdot",
+          "sample_index": 4,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "build failed:\nIn file included from tests/test_c_u4_groupdot.c:13:\ntests/../candidate.c:2:42: error: unused parameter 'packed' [-Werror,-Wunused-parameter]\n    2 | int affine_nibble_project(const uint8_t *packed, const float *scales, const float *biases, const float *x,int n,int group,float *out){ return 0;}\n      |                                          ^\ntests/../candidate.c:2:63: error: unused parameter 'scales' [-Werror,-Wunused-parameter]\n    2 | int affine_nibble_project(const uint8_t *packed, const float *scales, const float *biases, const float *x,int n,int group,float *out){ return 0;}\n      |                                                               ^\ntests/../candidate.c:2:84: error: unused parameter 'biases' [-Werror,-Wunused-parameter]\n    2 | int affine_nibble_project(const uint8_t *packed, const float *scales, const float *biases, const float *x,int n,int group,float *out){ return 0;}\n      |                                                                                    ^\ntests/../candidate.c:2:105: error: unused parameter 'x' [-Werror,-Wunused-parameter]\n    2 | int affine_nibble_project(const uint8_t *packed, const float *scales, const float *biases, const float *x,int n,int group,float *out){ return 0;}\n      |                                                                                                         ^\ntests/../candidate.c:2:111: error: unused parameter 'n' [-Werror,-Wunused-parameter]\n    2 | int affine_nibble_project(const uint8_t *packed, const float *scales, const float *biases, const float *x,int n,int group,float *out){ return 0;}\n      |                                                                                                               ^\ntests/../candidate.c:2:117: error: unused parameter 'group' [-Werror,-Wunused-parameter]\n    2 | int affine_nibble_project(const uint8_t *packed, const float *scales, const float *biases, const float *x,int n,int group,float *out){ return 0;}\n      |                                                                                                                     ^\ntests/../candidate.c:2:130: error: unused parameter 'out' [-Werror,-Wunused-parameter]\n    2 | int affine_nibble_project(const uint8_t *packed, const float *scales, const float *biases, const float *x,int n,int group,float *out){ return 0;}\n      |                                                                                                                                  ^\n7 errors generated.\n"
+        }
+      ],
+      "first_pass": 0.0,
+      "passed": 0.0,
+      "attempts": 1.0,
+      "attempt_score": 2.0,
+      "output_tail": "build failed:\nIn file included from tests/test_c_u4_groupdot.c:13:\ntests/../candidate.c:2:42: error: unused parameter 'packed' [-Werror,-Wunused-parameter]\n    2 | int affine_nibble_project(const uint8_t *packed, const float *scales, const float *biases, const float *x,int n,int group,float *out){ return 0;}\n      |                                          ^\ntests/../candidate.c:2:63: error: unused parameter 'scales' [-Werror,-Wunused-parameter]\n    2 | int affine_nibble_project(const uint8_t *packed, const float *scales, const float *biases, const float *x,int n,int group,float *out){ return 0;}\n      |                                                               ^\ntests/../candidate.c:2:84: error: unused parameter 'biases' [-Werror,-Wunused-parameter]\n    2 | int affine_nibble_project(const uint8_t *packed, const float *scales, const float *biases, const float *x,int n,int group,float *out){ return 0;}\n      |                                                                                    ^\ntests/../candidate.c:2:105: error: unused parameter 'x' [-Werror,-Wunused-parameter]\n    2 | int affine_nibble_project(const uint8_t *packed, const float *scales, const float *biases, const float *x,int n,int group,float *out){ return 0;}\n      |                                                                                                         ^\ntests/../candidate.c:2:111: error: unused parameter 'n' [-Werror,-Wunused-parameter]\n    2 | int affine_nibble_project(const uint8_t *packed, const float *scales, const float *biases, const float *x,int n,int group,float *out){ return 0;}\n      |                                                                                                               ^\ntests/../candidate.c:2:117: error: unused parameter 'group' [-Werror,-Wunused-parameter]\n    2 | int affine_nibble_project(const uint8_t *packed, const float *scales, const float *biases, const float *x,int n,int group,float *out){ return 0;}\n      |                                                                                                                     ^\ntests/../candidate.c:2:130: error: unused parameter 'out' [-Werror,-Wunused-parameter]\n    2 | int affine_nibble_project(const uint8_t *packed, const float *scales, const float *biases, const float *x,int n,int group,float *out){ return 0;}\n      |                                                                                                                                  ^\n7 errors generated.\n"
+    },
+    {
+      "task_id": "p_affine_groups",
+      "samples": [
+        {
+          "task_id": "p_affine_groups",
+          "sample_index": 0,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-dkjnfs1d/tests/test_p_affine_groups.py\", line 68, in <module>\n    y = dequant_byte_groups(p, s, b, 2)\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-dkjnfs1d/candidate.py\", line 18, in dequant_byte_groups\n    raise TypeError(\"scales must be a rank-1 real numeric array\")\nTypeError: scales must be a rank-1 real numeric array\n"
+        },
+        {
+          "task_id": "p_affine_groups",
+          "sample_index": 1,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-dobz04ug/tests/test_p_affine_groups.py\", line 68, in <module>\n    y = dequant_byte_groups(p, s, b, 2)\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-dobz04ug/candidate.py\", line 17, in dequant_byte_groups\n    raise ValueError(\"scale/bias count must equal length/group_size\")\nValueError: scale/bias count must equal length/group_size\n"
+        },
+        {
+          "task_id": "p_affine_groups",
+          "sample_index": 2,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-db8gf2n5/tests/test_p_affine_groups.py\", line 68, in <module>\n    y = dequant_byte_groups(p, s, b, 2)\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-db8gf2n5/candidate.py\", line 30, in dequant_byte_groups\n    raise ValueError(\"scale/bias count must equal length/group_size\")\nValueError: scale/bias count must equal length/group_size\n"
+        },
+        {
+          "task_id": "p_affine_groups",
+          "sample_index": 3,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-zjd_mhne/tests/test_p_affine_groups.py\", line 68, in <module>\n    y = dequant_byte_groups(p, s, b, 2)\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-zjd_mhne/candidate.py\", line 16, in dequant_byte_groups\n    raise ValueError(\"scale/bias count must equal packed length divided by group_size\")\nValueError: scale/bias count must equal packed length divided by group_size\n"
+        },
+        {
+          "task_id": "p_affine_groups",
+          "sample_index": 4,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-eoy520jr/tests/test_p_affine_groups.py\", line 68, in <module>\n    y = dequant_byte_groups(p, s, b, 2)\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-eoy520jr/candidate.py\", line 15, in dequant_byte_groups\n    raise ValueError(\"scale/bias count must equal length/group_size\")\nValueError: scale/bias count must equal length/group_size\n"
+        }
+      ],
+      "first_pass": 0.0,
+      "passed": 0.0,
+      "attempts": 1.0,
+      "attempt_score": 2.0,
+      "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-eoy520jr/tests/test_p_affine_groups.py\", line 68, in <module>\n    y = dequant_byte_groups(p, s, b, 2)\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-eoy520jr/candidate.py\", line 15, in dequant_byte_groups\n    raise ValueError(\"scale/bias count must equal length/group_size\")\nValueError: scale/bias count must equal length/group_size\n"
+    },
+    {
+      "task_id": "p_axis_layout",
+      "samples": [
+        {
+          "task_id": "p_axis_layout",
+          "sample_index": 0,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-0uaqq7ui/tests/test_p_axis_layout.py\", line 55, in <module>\n    y = move_feature_axis(x, 0, -1)\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-0uaqq7ui/candidate.py\", line 13, in move_feature_axis\n    a=a.moveaxis(axis,destination)\n      ^^^^^^^^^^\nAttributeError: 'numpy.ndarray' object has no attribute 'moveaxis'\n"
+        },
+        {
+          "task_id": "p_axis_layout",
+          "sample_index": 1,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-p82dgz_j/tests/test_p_axis_layout.py\", line 82, in <module>\n    error(\n    ~~~~~^\n        \"axis-range\",\n        ^^^^^^^^^^^^^\n        ValueError,\n        ^^^^^^^^^^^\n        lambda axis=axis, dest=dest: move_feature_axis(x, axis, dest),\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-p82dgz_j/tests/test_p_axis_layout.py\", line 36, in error\n    raise AssertionError(f\"case {case} index 0: expected {typ}, got {got!r}\")\nAssertionError: case axis-range index 0: expected <class 'ValueError'>, got array([[[ 0,  1,  2,  3],\n        [ 4,  5,  6,  7],\n        [ 8,  9, 10, 11]],\n\n       [[12, 13, 14, 15],\n        [16, 17, 18, 19],\n        [20, 21, 22, 23]]], dtype=int16)\n"
+        },
+        {
+          "task_id": "p_axis_layout",
+          "sample_index": 2,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-26pjel7h/tests/test_p_axis_layout.py\", line 55, in <module>\n    y = move_feature_axis(x, 0, -1)\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-26pjel7h/candidate.py\", line 14, in move_feature_axis\n    raise ValueError(\"axis and destination must be in [0, ndim)\")\nValueError: axis and destination must be in [0, ndim)\n"
+        },
+        {
+          "task_id": "p_axis_layout",
+          "sample_index": 3,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-4q4lu_7n/tests/test_p_axis_layout.py\", line 101, in <module>\n    check(\"random-axis-move-copy\", case, False, np.shares_memory(a, got))\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-4q4lu_7n/tests/test_p_axis_layout.py\", line 25, in check\n    raise AssertionError(\n        f\"case {case} index {index}: expected {expected!r}, got {got!r}\"\n    )\nAssertionError: case random-axis-move-copy index 1: expected False, got True\n"
+        },
+        {
+          "task_id": "p_axis_layout",
+          "sample_index": 4,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-1_d5h14f/tests/test_p_axis_layout.py\", line 55, in <module>\n    y = move_feature_axis(x, 0, -1)\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-1_d5h14f/candidate.py\", line 12, in move_feature_axis\n    if axis<0 or axis>=ndim or destination<0 or destination>=ndim: raise ValueError(\"invalid axis/range\")\n                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: invalid axis/range\n"
+        }
+      ],
+      "first_pass": 0.0,
+      "passed": 0.0,
+      "attempts": 1.0,
+      "attempt_score": 2.0,
+      "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-1_d5h14f/tests/test_p_axis_layout.py\", line 55, in <module>\n    y = move_feature_axis(x, 0, -1)\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-1_d5h14f/candidate.py\", line 12, in move_feature_axis\n    if axis<0 or axis>=ndim or destination<0 or destination>=ndim: raise ValueError(\"invalid axis/range\")\n                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: invalid axis/range\n"
+    },
+    {
+      "task_id": "p_axis_take",
+      "samples": [
+        {
+          "task_id": "p_axis_take",
+          "sample_index": 0,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-ihgpv6_7/tests/test_p_axis_take.py\", line 55, in <module>\n    check(\n    ~~~~~^\n        \"gather-values-order-duplicates\", 0, True, np.array_equal(y, naive_take(x, pos, 1))\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-ihgpv6_7/tests/test_p_axis_take.py\", line 25, in check\n    raise AssertionError(\n        f\"case {case} index {index}: expected {expected!r}, got {got!r}\"\n    )\nAssertionError: case gather-values-order-duplicates index 0: expected True, got False\n"
+        },
+        {
+          "task_id": "p_axis_take",
+          "sample_index": 1,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-bmofql1k/tests/test_p_axis_take.py\", line 52, in <module>\n    y = take_axis_positions(x, pos, -2)\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-bmofql1k/candidate.py\", line 32, in take_axis_positions\n    out=np.take(out,idx,axis=axis,index=[i],out=out)\nTypeError: take() got an unexpected keyword argument 'index'\n"
+        },
+        {
+          "task_id": "p_axis_take",
+          "sample_index": 2,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-6vsefsat/tests/test_p_axis_take.py\", line 55, in <module>\n    check(\n    ~~~~~^\n        \"gather-values-order-duplicates\", 0, True, np.array_equal(y, naive_take(x, pos, 1))\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-6vsefsat/tests/test_p_axis_take.py\", line 25, in check\n    raise AssertionError(\n        f\"case {case} index {index}: expected {expected!r}, got {got!r}\"\n    )\nAssertionError: case gather-values-order-duplicates index 0: expected True, got False\n"
+        },
+        {
+          "task_id": "p_axis_take",
+          "sample_index": 3,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-bje0ufau/tests/test_p_axis_take.py\", line 55, in <module>\n    check(\n    ~~~~~^\n        \"gather-values-order-duplicates\", 0, True, np.array_equal(y, naive_take(x, pos, 1))\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-bje0ufau/tests/test_p_axis_take.py\", line 25, in check\n    raise AssertionError(\n        f\"case {case} index {index}: expected {expected!r}, got {got!r}\"\n    )\nAssertionError: case gather-values-order-duplicates index 0: expected True, got False\n"
+        },
+        {
+          "task_id": "p_axis_take",
+          "sample_index": 4,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-4d9_059x/tests/test_p_axis_take.py\", line 52, in <module>\n    y = take_axis_positions(x, pos, -2)\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-4d9_059x/candidate.py\", line 17, in take_axis_positions\n    if p.size>0: out[slices]=a[slices]\n                             ~^^^^^^^^\nValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (3,) + inhomogeneous part.\n"
+        }
+      ],
+      "first_pass": 0.0,
+      "passed": 0.0,
+      "attempts": 1.0,
+      "attempt_score": 2.0,
+      "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-4d9_059x/tests/test_p_axis_take.py\", line 52, in <module>\n    y = take_axis_positions(x, pos, -2)\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-4d9_059x/candidate.py\", line 17, in take_axis_positions\n    if p.size>0: out[slices]=a[slices]\n                             ~^^^^^^^^\nValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (3,) + inhomogeneous part.\n"
+    },
+    {
+      "task_id": "p_block_header",
+      "samples": [
+        {
+          "task_id": "p_block_header",
+          "sample_index": 0,
+          "passed": true,
+          "first_pass": true,
+          "attempts": 1,
+          "attempt_score": 1,
+          "output_tail": ""
+        },
+        {
+          "task_id": "p_block_header",
+          "sample_index": 1,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "No single fenced code block found in model response."
+        },
+        {
+          "task_id": "p_block_header",
+          "sample_index": 2,
+          "passed": true,
+          "first_pass": true,
+          "attempts": 1,
+          "attempt_score": 1,
+          "output_tail": ""
+        },
+        {
+          "task_id": "p_block_header",
+          "sample_index": 3,
+          "passed": true,
+          "first_pass": true,
+          "attempts": 1,
+          "attempt_score": 1,
+          "output_tail": ""
+        },
+        {
+          "task_id": "p_block_header",
+          "sample_index": 4,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-9kzr3hw7/tests/test_p_block_header.py\", line 69, in <module>\n    error(name, ValueError, lambda bad=bad: unpack_frame_header(bad))\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-9kzr3hw7/tests/test_p_block_header.py\", line 36, in error\n    raise AssertionError(f\"case {case} index 0: expected {typ}, got {got!r}\")\nAssertionError: case bad-version index 0: expected <class 'ValueError'>, got (0, 0, 0)\n"
+        }
+      ],
+      "first_pass": 0.6,
+      "passed": 0.6,
+      "attempts": 1.0,
+      "attempt_score": 1.4,
+      "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-9kzr3hw7/tests/test_p_block_header.py\", line 69, in <module>\n    error(name, ValueError, lambda bad=bad: unpack_frame_header(bad))\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-9kzr3hw7/tests/test_p_block_header.py\", line 36, in error\n    raise AssertionError(f\"case {case} index 0: expected {typ}, got {got!r}\")\nAssertionError: case bad-version index 0: expected <class 'ValueError'>, got (0, 0, 0)\n"
+    },
+    {
+      "task_id": "p_bytes_lru",
+      "samples": [
+        {
+          "task_id": "p_bytes_lru",
+          "sample_index": 0,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-73zq_lk7/tests/test_p_bytes_lru.py\", line 119, in <module>\n    check(\"bytes-after-eviction\", 0, 16, c.bytes_used)\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-73zq_lk7/tests/test_p_bytes_lru.py\", line 45, in check\n    raise AssertionError(\n        f\"case {case} index {index}: expected {expected!r}, got {got!r}\"\n    )\nAssertionError: case bytes-after-eviction index 0: expected 16, got 24\n"
+        },
+        {
+          "task_id": "p_bytes_lru",
+          "sample_index": 1,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-yclwbzdg/tests/test_p_bytes_lru.py\", line 108, in <module>\n    store_a = c.store_cached(\"a\", a)\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-yclwbzdg/candidate.py\", line 29, in store_cached\n    if not isinstance(key, hashable_wrapper):\n                           ^^^^^^^^^^^^^^^^\nNameError: name 'hashable_wrapper' is not defined\n"
+        },
+        {
+          "task_id": "p_bytes_lru",
+          "sample_index": 2,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "No single fenced code block found in model response."
+        },
+        {
+          "task_id": "p_bytes_lru",
+          "sample_index": 3,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-jy75d388/tests/test_p_bytes_lru.py\", line 151, in <module>\n    check(\"oversized-replacement-removes-old\", 0, (0, 0), (z.bytes_used, z.entry_count()))\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-jy75d388/tests/test_p_bytes_lru.py\", line 45, in check\n    raise AssertionError(\n        f\"case {case} index {index}: expected {expected!r}, got {got!r}\"\n    )\nAssertionError: case oversized-replacement-removes-old index 0: expected (0, 0), got (8, 1)\n"
+        },
+        {
+          "task_id": "p_bytes_lru",
+          "sample_index": 4,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-oup07cff/tests/test_p_bytes_lru.py\", line 151, in <module>\n    check(\"oversized-replacement-removes-old\", 0, (0, 0), (z.bytes_used, z.entry_count()))\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-oup07cff/tests/test_p_bytes_lru.py\", line 45, in check\n    raise AssertionError(\n        f\"case {case} index {index}: expected {expected!r}, got {got!r}\"\n    )\nAssertionError: case oversized-replacement-removes-old index 0: expected (0, 0), got (8, 1)\n"
+        }
+      ],
+      "first_pass": 0.0,
+      "passed": 0.0,
+      "attempts": 1.0,
+      "attempt_score": 2.0,
+      "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-oup07cff/tests/test_p_bytes_lru.py\", line 151, in <module>\n    check(\"oversized-replacement-removes-old\", 0, (0, 0), (z.bytes_used, z.entry_count()))\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-oup07cff/tests/test_p_bytes_lru.py\", line 45, in check\n    raise AssertionError(\n        f\"case {case} index {index}: expected {expected!r}, got {got!r}\"\n    )\nAssertionError: case oversized-replacement-removes-old index 0: expected (0, 0), got (8, 1)\n"
+    },
+    {
+      "task_id": "p_chunk_plan",
+      "samples": [
+        {
+          "task_id": "p_chunk_plan",
+          "sample_index": 0,
+          "passed": true,
+          "first_pass": true,
+          "attempts": 1,
+          "attempt_score": 1,
+          "output_tail": ""
+        },
+        {
+          "task_id": "p_chunk_plan",
+          "sample_index": 1,
+          "passed": true,
+          "first_pass": true,
+          "attempts": 1,
+          "attempt_score": 1,
+          "output_tail": ""
+        },
+        {
+          "task_id": "p_chunk_plan",
+          "sample_index": 2,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-70j47wz_/tests/test_p_chunk_plan.py\", line 75, in <module>\n    validate(\n    ~~~~~~~~^\n        \"random-chunk-plan\", total, chunk, align, plan_byte_chunks(total, chunk, align)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-70j47wz_/tests/test_p_chunk_plan.py\", line 45, in validate\n    check(case + \"-exact-coverage\", 0, naive(total, chunk), got)\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-70j47wz_/tests/test_p_chunk_plan.py\", line 25, in check\n    raise AssertionError(\n        f\"case {case} index {index}: expected {expected!r}, got {got!r}\"\n    )\nAssertionError: case random-chunk-plan-exact-coverage index 0: expected [(0, 189), (189, 189), (378, 189), (567, 189), (756, 189), (945, 189), (1134, 189), (1323, 189), (1512, 189), (1701, 189), (1890, 189), (2079, 189), (2268, 189), (2457, 189), (2646, 136)], got [(0, 189), (189, 189), (378, 189), (567, 189), (756, 189), (945, 189), (1134, 189), (1323, 189), (1512, 189), (1701, 189), (1890, 189), (2079, 189), (2268, 189), (2457, 189), (2646, 7), (2653, 7), (2660, 7), (2667, 7), (2674, 7), (2681, 7), (2688, 7), (2695, 7), (2702, 7), (2709, 7), (2716, 7), (2723, 7), (2730, 7), (2737, 7), (2744, 7), (2751, 7), (2758, 7), (2765, 7), (2772, 7), (2779, 3)]\n"
+        },
+        {
+          "task_id": "p_chunk_plan",
+          "sample_index": 3,
+          "passed": true,
+          "first_pass": true,
+          "attempts": 1,
+          "attempt_score": 1,
+          "output_tail": ""
+        },
+        {
+          "task_id": "p_chunk_plan",
+          "sample_index": 4,
+          "passed": true,
+          "first_pass": true,
+          "attempts": 1,
+          "attempt_score": 1,
+          "output_tail": ""
+        }
+      ],
+      "first_pass": 0.8,
+      "passed": 0.8,
+      "attempts": 1.0,
+      "attempt_score": 1.2,
+      "output_tail": ""
+    },
+    {
+      "task_id": "p_dtype_blend",
+      "samples": [
+        {
+          "task_id": "p_dtype_blend",
+          "sample_index": 0,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-nrd4u30h/tests/test_p_dtype_blend.py\", line 66, in <module>\n    y = weighted_blend32(a, b, w)\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-nrd4u30h/candidate.py\", line 8, in weighted_blend32\n    w=float(weight)\nTypeError: only 0-dimensional arrays can be converted to Python scalars\n"
+        },
+        {
+          "task_id": "p_dtype_blend",
+          "sample_index": 1,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-1v28heox/tests/test_p_dtype_blend.py\", line 66, in <module>\n    y = weighted_blend32(a, b, w)\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-1v28heox/candidate.py\", line 8, in weighted_blend32\n    for a,b,w in [(a_arr,a_arr.dtype),(b_arr,b_arr.dtype),(w_arr,w_arr.dtype)]:\n        ^^^^^\nValueError: not enough values to unpack (expected 3, got 2)\n"
+        },
+        {
+          "task_id": "p_dtype_blend",
+          "sample_index": 2,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-h2grf7np/tests/test_p_dtype_blend.py\", line 71, in <module>\n    close(\"weight-zero\", np.array([2.0], np.float32), weighted_blend32([1], [2], 0))\n                                                      ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-h2grf7np/candidate.py\", line 7, in weighted_blend32\n    if isinstance(a.dtype, np.dtype) and a.dtype.kind == 'b':\n                  ^^^^^^^\nAttributeError: 'list' object has no attribute 'dtype'\n"
+        },
+        {
+          "task_id": "p_dtype_blend",
+          "sample_index": 3,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-_5rwkc5r/tests/test_p_dtype_blend.py\", line 86, in <module>\n    error(\n    ~~~~~^\n        name,\n        ^^^^^\n    ...<3 lines>...\n        else weighted_blend32([1], [2], bad),\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-_5rwkc5r/tests/test_p_dtype_blend.py\", line 37, in error\n    raise AssertionError(f\"case {case} index 0: expected {typ}, got {got!r}\")\nAssertionError: case bool-weight index 0: expected <class 'TypeError'>, got array([1.], dtype=float32)\n"
+        },
+        {
+          "task_id": "p_dtype_blend",
+          "sample_index": 4,
+          "passed": true,
+          "first_pass": true,
+          "attempts": 1,
+          "attempt_score": 1,
+          "output_tail": ""
+        }
+      ],
+      "first_pass": 0.2,
+      "passed": 0.2,
+      "attempts": 1.0,
+      "attempt_score": 1.8,
+      "output_tail": ""
+    },
+    {
+      "task_id": "p_lex_order",
+      "samples": [
+        {
+          "task_id": "p_lex_order",
+          "sample_index": 0,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-mzu14wvs/tests/test_p_lex_order.py\", line 32, in error\n    got = fn()\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-mzu14wvs/tests/test_p_lex_order.py\", line 101, in <lambda>\n    \"limit-type-bool-vs-int\", TypeError, lambda bad=bad: stable_rank_rows(s, g, bad)\n                                                         ~~~~~~~~~~~~~~~~^^^^^^^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-mzu14wvs/candidate.py\", line 13, in stable_rank_rows\n    if limit<0 or limit>n or not isinstance(limit,int): raise ValueError(\"invalid limit\")\n                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: invalid limit\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-mzu14wvs/tests/test_p_lex_order.py\", line 100, in <module>\n    error(\n    ~~~~~^\n        \"limit-type-bool-vs-int\", TypeError, lambda bad=bad: stable_rank_rows(s, g, bad)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-mzu14wvs/tests/test_p_lex_order.py\", line 34, in error\n    check(case, 0, typ, type(exc))\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-mzu14wvs/tests/test_p_lex_order.py\", line 25, in check\n    raise AssertionError(\n        f\"case {case} index {index}: expected {expected!r}, got {got!r}\"\n    )\nAssertionError: case limit-type-bool-vs-int index 0: expected <class 'TypeError'>, got <class 'ValueError'>\n"
+        },
+        {
+          "task_id": "p_lex_order",
+          "sample_index": 1,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-vm_qu7wu/tests/test_p_lex_order.py\", line 64, in <module>\n    verify(\"score-group-source-ties\", s, g, 5)\n    ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-vm_qu7wu/tests/test_p_lex_order.py\", line 49, in verify\n    got = stable_rank_rows(s, g, k)\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-vm_qu7wu/candidate.py\", line 56, in stable_rank_rows\n    np.sort(combined,axis=0,out=sorted)\n    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: sort() got an unexpected keyword argument 'out'\n"
+        },
+        {
+          "task_id": "p_lex_order",
+          "sample_index": 2,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-1k14shp1/tests/test_p_lex_order.py\", line 64, in <module>\n    verify(\"score-group-source-ties\", s, g, 5)\n    ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-1k14shp1/tests/test_p_lex_order.py\", line 49, in verify\n    got = stable_rank_rows(s, g, k)\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-1k14shp1/candidate.py\", line 11, in stable_rank_rows\n    if not np.issubdtype(score_arr.dtype,np.integer) or not np.issubdtype(score_arr.dtype,np.signedinteger) or not np.floating: raise TypeError(\"scores must have integer or float dtype\")\n                                                                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: scores must have integer or float dtype\n"
+        },
+        {
+          "task_id": "p_lex_order",
+          "sample_index": 3,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-x1bb8io3/tests/test_p_lex_order.py\", line 64, in <module>\n    verify(\"score-group-source-ties\", s, g, 5)\n    ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-x1bb8io3/tests/test_p_lex_order.py\", line 55, in verify\n    raise AssertionError(\n        f\"case {case} index {i}: expected {int(exp[i])}, got {int(got[i])}\"\n    )\nAssertionError: case score-group-source-ties index 0: expected 2, got 0\n"
+        },
+        {
+          "task_id": "p_lex_order",
+          "sample_index": 4,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-qxnx5ai7/tests/test_p_lex_order.py\", line 64, in <module>\n    verify(\"score-group-source-ties\", s, g, 5)\n    ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-qxnx5ai7/tests/test_p_lex_order.py\", line 49, in verify\n    got = stable_rank_rows(s, g, k)\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-qxnx5ai7/candidate.py\", line 11, in stable_rank_rows\n    raise ValueError(\"invalid input\")\nValueError: invalid input\n"
+        }
+      ],
+      "first_pass": 0.0,
+      "passed": 0.0,
+      "attempts": 1.0,
+      "attempt_score": 2.0,
+      "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-qxnx5ai7/tests/test_p_lex_order.py\", line 64, in <module>\n    verify(\"score-group-source-ties\", s, g, 5)\n    ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-qxnx5ai7/tests/test_p_lex_order.py\", line 49, in verify\n    got = stable_rank_rows(s, g, k)\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-qxnx5ai7/candidate.py\", line 11, in stable_rank_rows\n    raise ValueError(\"invalid input\")\nValueError: invalid input\n"
+    },
+    {
+      "task_id": "p_mask_out",
+      "samples": [
+        {
+          "task_id": "p_mask_out",
+          "sample_index": 0,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-602v86w3/tests/test_p_mask_out.py\", line 93, in <module>\n    error(\n    ~~~~~^\n        \"factor-finite-real-scalar\",\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        ValueError,\n        ^^^^^^^^^^^\n        lambda bad=bad: masked_scale_copy(x, m, bad),\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-602v86w3/tests/test_p_mask_out.py\", line 37, in error\n    raise AssertionError(f\"case {case} index 0: expected {typ}, got {got!r}\")\nAssertionError: case factor-finite-real-scalar index 0: expected <class 'ValueError'>, got array([[1., 2.],\n       [3., 4.]], dtype=float32)\n"
+        },
+        {
+          "task_id": "p_mask_out",
+          "sample_index": 1,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-1fksvcnw/tests/test_p_mask_out.py\", line 73, in <module>\n    y = masked_scale_copy(x, m, 2.5)\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-1fksvcnw/candidate.py\", line 28, in masked_scale_copy\n    out+=values_arr\nValueError: non-broadcastable output operand with shape (2,) doesn't match the broadcast shape (2,2)\n"
+        },
+        {
+          "task_id": "p_mask_out",
+          "sample_index": 2,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-z3gd56ev/tests/test_p_mask_out.py\", line 7, in <module>\n    from candidate import masked_scale_copy\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-z3gd56ev/candidate.py\", line 10\n    if value_array.dtype.kind!='f raise TypeError(\"values must be a floating-point dtype\") mask=np.broadcast_to(mask,value_array.shape) if mask.dtype!=bool raise TypeError(\"mask must be boolean\") result=np.empty(value_array.shape,dtype=value_array.dtype) result[value_array!=0]=value_array[value_array!=0]*float(factor) return result\n                               ^\nSyntaxError: unterminated string literal (detected at line 10)\n"
+        },
+        {
+          "task_id": "p_mask_out",
+          "sample_index": 3,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-fnnlx861/tests/test_p_mask_out.py\", line 73, in <module>\n    y = masked_scale_copy(x, m, 2.5)\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-fnnlx861/candidate.py\", line 9, in masked_scale_copy\n    if not np.issubdtype(factor,np.number):\n           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^\n  File \"/Users/hatim/moe-stream-mac/.venv/lib/python3.14/site-packages/numpy/_core/numerictypes.py\", line 477, in issubdtype\n    arg1 = dtype(arg1).type\n           ~~~~~^^^^^^\nTypeError: Cannot interpret '2.5' as a data type\n"
+        },
+        {
+          "task_id": "p_mask_out",
+          "sample_index": 4,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-sjyu0sa4/tests/test_p_mask_out.py\", line 73, in <module>\n    y = masked_scale_copy(x, m, 2.5)\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-sjyu0sa4/candidate.py\", line 22, in masked_scale_copy\n    raise ValueError(\"values and mask must have the same number of dimensions\")\nValueError: values and mask must have the same number of dimensions\n"
+        }
+      ],
+      "first_pass": 0.0,
+      "passed": 0.0,
+      "attempts": 1.0,
+      "attempt_score": 2.0,
+      "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-sjyu0sa4/tests/test_p_mask_out.py\", line 73, in <module>\n    y = masked_scale_copy(x, m, 2.5)\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-sjyu0sa4/candidate.py\", line 22, in masked_scale_copy\n    raise ValueError(\"values and mask must have the same number of dimensions\")\nValueError: values and mask must have the same number of dimensions\n"
+    },
+    {
+      "task_id": "p_runs_merge",
+      "samples": [
+        {
+          "task_id": "p_runs_merge",
+          "sample_index": 0,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "No single fenced code block found in model response."
+        },
+        {
+          "task_id": "p_runs_merge",
+          "sample_index": 1,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-ah5meo7c/tests/test_p_runs_merge.py\", line 86, in <module>\n    verify(\n    ~~~~~~^\n        \"stable-run-ties-and-empty-run\",\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    ...<4 lines>...\n        ],\n        ^^\n    )\n    ^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-ah5meo7c/tests/test_p_runs_merge.py\", line 56, in verify\n    got_v, got_o = merge_sorted_runs(iter(runs))\n                   ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-ah5meo7c/candidate.py\", line 36, in merge_sorted_runs\n    sorted_indices=np.lexsort((origins,), values)\nTypeError: only integer scalar arrays can be converted to a scalar index\n"
+        },
+        {
+          "task_id": "p_runs_merge",
+          "sample_index": 2,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-af7ovfxw/tests/test_p_runs_merge.py\", line 7, in <module>\n    from candidate import merge_sorted_runs\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-af7ovfxw/candidate.py\", line 2\n    __all__ = [\"merge_sorted_runs\"]def merge_sorted_runs(runs):    runs_list=list(runs)    if not runs_list:        return np.array([], dtype=np.float64), np.array([], dtype=np.int64)    arrays=[]    for item in runs_list:        if not isinstance(item,np.ndarray):            raise TypeError(\"Expected numpy ndarray\")        if item.ndim!=1:            raise TypeError(\"Expected 1-dimensional arrays\")        arrays.append(item)    if not arrays:        return np.array([],dtype=np.float64),np.array([],dtype=np.int64)    common_dtype=arrays[0].dtype    for arr in arrays[1:]:        if arr.dtype!=common_dtype:            raise TypeError(\"Mismatched dtypes\")    for arr in arrays:        if arr.size>1:            if not np.all(np.diff(arr)>=0): raise ValueError(\"Runs must be sorted\")    total_size=sum(x.size for x in arrays)    if total_size==0:        return np.array([],dtype=common_dtype),np.array([],dtype=np.int64)    values=np.empty(total_size,dtype=common_dtype)    origins=np.empty(total_si\n                                   ^^^\nSyntaxError: invalid syntax\n"
+        },
+        {
+          "task_id": "p_runs_merge",
+          "sample_index": 3,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-cl1bqosy/tests/test_p_runs_merge.py\", line 120, in <module>\n    verify(\"random-stable-merge\", runs)\n    ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-cl1bqosy/tests/test_p_runs_merge.py\", line 58, in verify\n    check(case + \"-values-dtype\", 0, dtype, got_v.dtype)\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-cl1bqosy/tests/test_p_runs_merge.py\", line 25, in check\n    raise AssertionError(\n        f\"case {case} index {index}: expected {expected!r}, got {got!r}\"\n    )\nAssertionError: case random-stable-merge-values-dtype index 0: expected dtype('int16'), got dtype('float64')\n"
+        },
+        {
+          "task_id": "p_runs_merge",
+          "sample_index": 4,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-ud3nzxhf/tests/test_p_runs_merge.py\", line 32, in error\n    got = fn()\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-ud3nzxhf/tests/test_p_runs_merge.py\", line 102, in <lambda>\n    \"rank-or-common-real-dtype\", TypeError, lambda bad=bad: merge_sorted_runs(bad)\n                                                            ~~~~~~~~~~~~~~~~~^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-ud3nzxhf/candidate.py\", line 55, in merge_sorted_runs\n    if real(val)<min_val or (real(val)==min_val and imag(val)<imag(min_val)):\n       ^^^^\nNameError: name 'real' is not defined\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-ud3nzxhf/tests/test_p_runs_merge.py\", line 101, in <module>\n    error(\n    ~~~~~^\n        \"rank-or-common-real-dtype\", TypeError, lambda bad=bad: merge_sorted_runs(bad)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-ud3nzxhf/tests/test_p_runs_merge.py\", line 34, in error\n    check(case, 0, typ, type(exc))\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-ud3nzxhf/tests/test_p_runs_merge.py\", line 25, in check\n    raise AssertionError(\n        f\"case {case} index {index}: expected {expected!r}, got {got!r}\"\n    )\nAssertionError: case rank-or-common-real-dtype index 0: expected <class 'TypeError'>, got <class 'NameError'>\n"
+        }
+      ],
+      "first_pass": 0.0,
+      "passed": 0.0,
+      "attempts": 1.0,
+      "attempt_score": 2.0,
+      "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-ud3nzxhf/tests/test_p_runs_merge.py\", line 32, in error\n    got = fn()\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-ud3nzxhf/tests/test_p_runs_merge.py\", line 102, in <lambda>\n    \"rank-or-common-real-dtype\", TypeError, lambda bad=bad: merge_sorted_runs(bad)\n                                                            ~~~~~~~~~~~~~~~~~^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-ud3nzxhf/candidate.py\", line 55, in merge_sorted_runs\n    if real(val)<min_val or (real(val)==min_val and imag(val)<imag(min_val)):\n       ^^^^\nNameError: name 'real' is not defined\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-ud3nzxhf/tests/test_p_runs_merge.py\", line 101, in <module>\n    error(\n    ~~~~~^\n        \"rank-or-common-real-dtype\", TypeError, lambda bad=bad: merge_sorted_runs(bad)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-ud3nzxhf/tests/test_p_runs_merge.py\", line 34, in error\n    check(case, 0, typ, type(exc))\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-ud3nzxhf/tests/test_p_runs_merge.py\", line 25, in check\n    raise AssertionError(\n        f\"case {case} index {index}: expected {expected!r}, got {got!r}\"\n    )\nAssertionError: case rank-or-common-real-dtype index 0: expected <class 'TypeError'>, got <class 'NameError'>\n"
+    },
+    {
+      "task_id": "p_segment_pool",
+      "samples": [
+        {
+          "task_id": "p_segment_pool",
+          "sample_index": 0,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-xovd2ca2/tests/test_p_segment_pool.py\", line 69, in <module>\n    verify(\"leading-rows-and-empty-segments\", v, ids, 4)\n    ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-xovd2ca2/tests/test_p_segment_pool.py\", line 49, in verify\n    got = segment_reduce_sum(v, ids, n)\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-xovd2ca2/candidate.py\", line 5, in segment_reduce_sum\n    raise NotImplementedError\nNotImplementedError\n"
+        },
+        {
+          "task_id": "p_segment_pool",
+          "sample_index": 1,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-7a4w4gsy/tests/test_p_segment_pool.py\", line 97, in <module>\n    error(\n    ~~~~~^\n        \"values-real-numeric-dtype\",\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        TypeError,\n        ^^^^^^^^^^\n        lambda bad=bad: segment_reduce_sum(bad, np.array([0]), 1),\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-7a4w4gsy/tests/test_p_segment_pool.py\", line 36, in error\n    raise AssertionError(f\"case {case} index 0: expected {typ}, got {got!r}\")\nAssertionError: case values-real-numeric-dtype index 0: expected <class 'TypeError'>, got array([1.])\n"
+        },
+        {
+          "task_id": "p_segment_pool",
+          "sample_index": 2,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-8bz3v7yw/tests/test_p_segment_pool.py\", line 69, in <module>\n    verify(\"leading-rows-and-empty-segments\", v, ids, 4)\n    ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-8bz3v7yw/tests/test_p_segment_pool.py\", line 49, in verify\n    got = segment_reduce_sum(v, ids, n)\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-8bz3v7yw/candidate.py\", line 14, in segment_reduce_sum\n    raise TypeError(\"values must have dtype float64\")\nTypeError: values must have dtype float64\n"
+        },
+        {
+          "task_id": "p_segment_pool",
+          "sample_index": 3,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-ahqd5en6/tests/test_p_segment_pool.py\", line 7, in <module>\n    from candidate import segment_reduce_sum\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-ahqd5en6/candidate.py\", line 11\n    values=np.asarray(values) segment_ids=np.asarray(segment_ids) if not values.ndim>=1 raise ValueError(\"values must have rank>=1\") if segment.ndim!=1 raise ValueError(\"segment_ids must be rank-1\") if values.shape[0]!=segment_ids.shape[0 raise ValueError(\"values and segment_ids must have matching leading dimensions\") if values.dtype.kind!='f' raise TypeError(\"values must have floating-point dtype\") if segment_ids.dtype.kind!='i' raise TypeError(\"segment_ids must have integer dtype\") if values.shape[0]!=segment_ids.shape[0 raise ValueError(\"values and segment_ids must have matching leading dimensions\") if n_segments>0 and(segment_ids.size==0 raise ValueError(\"values is empty but n_segments>0\") if values.size==0 and segment_ids.size>0 raise ValueError(\"segment_ids is empty but values is not\") if n_segments>0 and segment_ids.size>0 if np.any(segment_ids<0) or np.any(segment_ids>=n_segments raise ValueError(\"segment_ids out of bounds\") output=np.zeros((n_segments,)+values.shape[1:],dtype\n                              ^^^^^^^^^^^\nSyntaxError: invalid syntax\n"
+        },
+        {
+          "task_id": "p_segment_pool",
+          "sample_index": 4,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-xwahlcmy/tests/test_p_segment_pool.py\", line 69, in <module>\n    verify(\"leading-rows-and-empty-segments\", v, ids, 4)\n    ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-xwahlcmy/tests/test_p_segment_pool.py\", line 49, in verify\n    got = segment_reduce_sum(v, ids, n)\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-xwahlcmy/candidate.py\", line 12, in segment_reduce_sum\n    raise ValueError(\"values and segment_ids must have the same leading dimension\")\nValueError: values and segment_ids must have the same leading dimension\n"
+        }
+      ],
+      "first_pass": 0.0,
+      "passed": 0.0,
+      "attempts": 1.0,
+      "attempt_score": 2.0,
+      "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-xwahlcmy/tests/test_p_segment_pool.py\", line 69, in <module>\n    verify(\"leading-rows-and-empty-segments\", v, ids, 4)\n    ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-xwahlcmy/tests/test_p_segment_pool.py\", line 49, in verify\n    got = segment_reduce_sum(v, ids, n)\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-xwahlcmy/candidate.py\", line 12, in segment_reduce_sum\n    raise ValueError(\"values and segment_ids must have the same leading dimension\")\nValueError: values and segment_ids must have the same leading dimension\n"
+    },
+    {
+      "task_id": "p_skeleton_calibrate",
+      "samples": [
+        {
+          "task_id": "p_skeleton_calibrate",
+          "sample_index": 0,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-5g_zkwv9/tests/test_p_skeleton_calibrate.py\", line 37, in error\n    got = fn()\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-5g_zkwv9/tests/test_p_skeleton_calibrate.py\", line 98, in <lambda>\n    error(\"invalid-raw-values\", ValueError, lambda raw=raw: calibrate_scores(raw, 1, 0))\n                                                            ~~~~~~~~~~~~~~~~^^^^^^^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-5g_zkwv9/candidate.py\", line 5, in calibrate_scores\n    raw=np.asarray(raw,dtype=np.float64)\nTypeError: float() argument must be a string or a real number, not 'complex'\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-5g_zkwv9/tests/test_p_skeleton_calibrate.py\", line 98, in <module>\n    error(\"invalid-raw-values\", ValueError, lambda raw=raw: calibrate_scores(raw, 1, 0))\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-5g_zkwv9/tests/test_p_skeleton_calibrate.py\", line 39, in error\n    check(case, 0, typ, type(exc))\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-5g_zkwv9/tests/test_p_skeleton_calibrate.py\", line 30, in check\n    raise AssertionError(\n        f\"case {case} index {index}: expected {expected!r}, got {got!r}\"\n    )\nAssertionError: case invalid-raw-values index 0: expected <class 'ValueError'>, got <class 'TypeError'>\n"
+        },
+        {
+          "task_id": "p_skeleton_calibrate",
+          "sample_index": 1,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-bplodpgy/tests/test_p_skeleton_calibrate.py\", line 91, in <module>\n    close(\"stable-sigmoid-positive-negative\", naive(x, 2, 1), calibrate_scores(x, 2, 1))\n                                                              ~~~~~~~~~~~~~~~~^^^^^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-bplodpgy/candidate.py\", line 20, in calibrate_scores\n    out[neg]=(exp_s/(1.0+exp_s)).astype(np.float32)\n                     ~~~^~~~~~\nTypeError: unsupported operand type(s) for +: 'float' and 'tuple'\n"
+        },
+        {
+          "task_id": "p_skeleton_calibrate",
+          "sample_index": 2,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-_70d3fhj/tests/test_p_skeleton_calibrate.py\", line 91, in <module>\n    close(\"stable-sigmoid-positive-negative\", naive(x, 2, 1), calibrate_scores(x, 2, 1))\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-_70d3fhj/tests/test_p_skeleton_calibrate.py\", line 50, in close\n    raise AssertionError(\n        f\"case {case} index {i}: expected {exp[i]!r}, got {got[i]!r} (rtol=1e-5, atol=1e-6)\"\n    )\nAssertionError: case stable-sigmoid-positive-negative index (0,): expected np.float32(0.0), got np.float32(0.5) (rtol=1e-5, atol=1e-6)\n"
+        },
+        {
+          "task_id": "p_skeleton_calibrate",
+          "sample_index": 3,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-dly1v_ti/tests/test_p_skeleton_calibrate.py\", line 91, in <module>\n    close(\"stable-sigmoid-positive-negative\", naive(x, 2, 1), calibrate_scores(x, 2, 1))\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-dly1v_ti/tests/test_p_skeleton_calibrate.py\", line 50, in close\n    raise AssertionError(\n        f\"case {case} index {i}: expected {exp[i]!r}, got {got[i]!r} (rtol=1e-5, atol=1e-6)\"\n    )\nAssertionError: case stable-sigmoid-positive-negative index (2,): expected np.float32(0.62245935), got np.float32(0.974077) (rtol=1e-5, atol=1e-6)\n"
+        },
+        {
+          "task_id": "p_skeleton_calibrate",
+          "sample_index": 4,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-cgkws4_l/tests/test_p_skeleton_calibrate.py\", line 91, in <module>\n    close(\"stable-sigmoid-positive-negative\", naive(x, 2, 1), calibrate_scores(x, 2, 1))\n                                                              ~~~~~~~~~~~~~~~~^^^^^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-cgkws4_l/candidate.py\", line 18, in calibrate_scores\n    out=numpy.where(positive,numerator/denominator,numerator/denominator)\n        ^^^^^\nNameError: name 'numpy' is not defined\n"
+        }
+      ],
+      "first_pass": 0.0,
+      "passed": 0.0,
+      "attempts": 1.0,
+      "attempt_score": 2.0,
+      "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-cgkws4_l/tests/test_p_skeleton_calibrate.py\", line 91, in <module>\n    close(\"stable-sigmoid-positive-negative\", naive(x, 2, 1), calibrate_scores(x, 2, 1))\n                                                              ~~~~~~~~~~~~~~~~^^^^^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-cgkws4_l/candidate.py\", line 18, in calibrate_scores\n    out=numpy.where(positive,numerator/denominator,numerator/denominator)\n        ^^^^^\nNameError: name 'numpy' is not defined\n"
+    },
+    {
+      "task_id": "p_skeleton_delta",
+      "samples": [
+        {
+          "task_id": "p_skeleton_delta",
+          "sample_index": 0,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-qt5zneja/tests/test_p_skeleton_delta.py\", line 37, in error\n    got = fn()\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-qt5zneja/tests/test_p_skeleton_delta.py\", line 100, in <lambda>\n    \"first-value-int16-range\", ValueError, lambda bad=bad: encode_delta_bytes(bad)\n                                                           ~~~~~~~~~~~~~~~~~~^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-qt5zneja/candidate.py\", line 10, in encode_delta_bytes\n    out.extend(struct.pack('<h',int(a[0])))\n               ~~~~~~~~~~~^^^^^^^^^^^^^^^^\nstruct.error: 'h' format requires -32768 <= number <= 32767\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-qt5zneja/tests/test_p_skeleton_delta.py\", line 99, in <module>\n    error(\n    ~~~~~^\n        \"first-value-int16-range\", ValueError, lambda bad=bad: encode_delta_bytes(bad)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-qt5zneja/tests/test_p_skeleton_delta.py\", line 39, in error\n    check(case, 0, typ, type(exc))\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-qt5zneja/tests/test_p_skeleton_delta.py\", line 30, in check\n    raise AssertionError(\n        f\"case {case} index {index}: expected {expected!r}, got {got!r}\"\n    )\nAssertionError: case first-value-int16-range index 0: expected <class 'ValueError'>, got <class 'struct.error'>\n"
+        },
+        {
+          "task_id": "p_skeleton_delta",
+          "sample_index": 1,
+          "passed": true,
+          "first_pass": true,
+          "attempts": 1,
+          "attempt_score": 1,
+          "output_tail": ""
+        },
+        {
+          "task_id": "p_skeleton_delta",
+          "sample_index": 2,
+          "passed": true,
+          "first_pass": true,
+          "attempts": 1,
+          "attempt_score": 1,
+          "output_tail": ""
+        },
+        {
+          "task_id": "p_skeleton_delta",
+          "sample_index": 3,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-dbfg1v5u/tests/test_p_skeleton_delta.py\", line 59, in <module>\n    from candidate import encode_delta_bytes\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-dbfg1v5u/candidate.py\", line 17\n    for i in range(1,len(values)):prev=int(values[i-1]);curr=int(values[i]);delta=int(curr-prev)if delta<-128 or delta>127:raise ValueError(\"delta out of int8 range\")out+=(delta.to_bytes(1,'little',signed=True))return out\n                                                                                                                          ^\nSyntaxError: invalid syntax\n"
+        },
+        {
+          "task_id": "p_skeleton_delta",
+          "sample_index": 4,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-loz9fn1l/tests/test_p_skeleton_delta.py\", line 93, in <module>\n    error(\n    ~~~~~^\n        \"invalid-rank-empty-or-dtype\",\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        ValueError,\n        ^^^^^^^^^^^\n        lambda bad=bad: encode_delta_bytes(bad),\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-loz9fn1l/tests/test_p_skeleton_delta.py\", line 41, in error\n    raise AssertionError(f\"case {case} index 0: expected {typ}, got {got!r}\")\nAssertionError: case invalid-rank-empty-or-dtype index 0: expected <class 'ValueError'>, got b'\\x01\\x00'\n"
+        }
+      ],
+      "first_pass": 0.4,
+      "passed": 0.4,
+      "attempts": 1.0,
+      "attempt_score": 1.6,
+      "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-loz9fn1l/tests/test_p_skeleton_delta.py\", line 93, in <module>\n    error(\n    ~~~~~^\n        \"invalid-rank-empty-or-dtype\",\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        ValueError,\n        ^^^^^^^^^^^\n        lambda bad=bad: encode_delta_bytes(bad),\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-loz9fn1l/tests/test_p_skeleton_delta.py\", line 41, in error\n    raise AssertionError(f\"case {case} index 0: expected {typ}, got {got!r}\")\nAssertionError: case invalid-rank-empty-or-dtype index 0: expected <class 'ValueError'>, got b'\\x01\\x00'\n"
+    },
+    {
+      "task_id": "p_skeleton_diags",
+      "samples": [
+        {
+          "task_id": "p_skeleton_diags",
+          "sample_index": 0,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-k5grxofi/candidate.py:16: RuntimeWarning: Mean of empty slice\n  out.append(matrix[rows_idx,cols_idx].mean())\n/Users/hatim/moe-stream-mac/.venv/lib/python3.14/site-packages/numpy/_core/_methods.py:142: RuntimeWarning: invalid value encountered in scalar divide\n  ret = ret.dtype.type(ret / rcount)\nTraceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-k5grxofi/tests/test_p_skeleton_diags.py\", line 91, in <module>\n    verify(\"rectangular-diagonal-order\", np.array([[1, 2, 3], [4, 5, 6]], np.int16))\n    ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-k5grxofi/tests/test_p_skeleton_diags.py\", line 65, in verify\n    raise AssertionError(\n        f\"case {case} index {i}: expected {exp[i]!r}, got {got[i]!r} (rtol=1e-5, atol=1e-6)\"\n    )\nAssertionError: case rectangular-diagonal-order index 3: expected np.float64(3.0), got np.float64(nan) (rtol=1e-5, atol=1e-6)\n"
+        },
+        {
+          "task_id": "p_skeleton_diags",
+          "sample_index": 1,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-1750odq3/tests/test_p_skeleton_diags.py\", line 72, in <module>\n    check(\n    ~~~~~^\n        \"skeleton-fixed-lines\",\n        ^^^^^^^^^^^^^^^^^^^^^^^\n    ...<2 lines>...\n        _without_todo(path.read_text()),\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-1750odq3/tests/test_p_skeleton_diags.py\", line 30, in check\n    raise AssertionError(\n        f\"case {case} index {index}: expected {expected!r}, got {got!r}\"\n    )\nAssertionError: case skeleton-fixed-lines index 0: expected ['import numpy as np\\n', '\\n', 'def diagonal_means(matrix):\\n', '    # TODO_BEGIN\\n', '    # TODO_END\\n'], got ['import numpy as np\\n', '\\n', 'def diagonal_means(matrix):\\n', '    array=np.asarray(matrix,dtype=float)\\n', '    if array.ndim!=2 or array.size==0: raise ValueError\\n', '    if not np.all(np.isfinite(array)): raise TypeError\\n', '    rows,cols=array.shape\\n', '    diag=np.zeros(rows+cols-1,dtype=np.float64)\\n', '    for i in range(rows):\\n', '        for j in range(cols):\\n', '            k=i-j+(cols-1)\\n', '            diag[k]+=array[i,j]\\n', '    counts=np.zeros(rows+cols-1,dtype=np.int64)\\n', '    for i in range(rows):\\n', '        for j in range(cols):\\n', '            k=i-j+(cols-1)\\n', '            counts[k]+=1\\n', '    return np.divide(diag,counts,out=np.zeros(rows+cols-1,dtype=np.float64),where=counts!=0)\\n']\n"
+        },
+        {
+          "task_id": "p_skeleton_diags",
+          "sample_index": 2,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-xztrsf_5/tests/test_p_skeleton_diags.py\", line 105, in <module>\n    error(\"non-real-or-nonfinite\", TypeError, lambda bad=bad: diagonal_means(bad))\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-xztrsf_5/tests/test_p_skeleton_diags.py\", line 41, in error\n    raise AssertionError(f\"case {case} index 0: expected {typ}, got {got!r}\")\nAssertionError: case non-real-or-nonfinite index 0: expected <class 'TypeError'>, got array([1.])\n"
+        },
+        {
+          "task_id": "p_skeleton_diags",
+          "sample_index": 3,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-bmydd455/tests/test_p_skeleton_diags.py\", line 72, in <module>\n    check(\n    ~~~~~^\n        \"skeleton-fixed-lines\",\n        ^^^^^^^^^^^^^^^^^^^^^^^\n    ...<2 lines>...\n        _without_todo(path.read_text()),\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-bmydd455/tests/test_p_skeleton_diags.py\", line 30, in check\n    raise AssertionError(\n        f\"case {case} index {index}: expected {expected!r}, got {got!r}\"\n    )\nAssertionError: case skeleton-fixed-lines index 0: expected ['import numpy as np\\n', '\\n', 'def diagonal_means(matrix):\\n', '    # TODO_BEGIN\\n', '    # TODO_END\\n'], got ['import numpy as np\\n', '\\n', 'def diagonal_means(matrix):\\n', '    matrix=np.asarray(matrix,dtype=float)\\n', '    if matrix.ndim!=2 or matrix.size==0: raise ValueError\\n', '    if not np.isfinite(matrix).all(): raise TypeError\\n', '    rows,cols=matrix.shape\\n', '    out=np.empty(rows+cols-1,dtype=np.float64)\\n', '    for off in range(-(rows-1),cols):\\n', '        i=np.arange(max(0,off),min(rows,off+cols))\\n', '        j=i-off\\n', '        out[off+rows-1]=matrix[i,j].mean()\\n', '    return out\\n']\n"
+        },
+        {
+          "task_id": "p_skeleton_diags",
+          "sample_index": 4,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-oghvqnvx/candidate.py:19: RuntimeWarning: Mean of empty slice\n  out[i]=matrix[r,c].mean()\n/Users/hatim/moe-stream-mac/.venv/lib/python3.14/site-packages/numpy/_core/_methods.py:142: RuntimeWarning: invalid value encountered in scalar divide\n  ret = ret.dtype.type(ret / rcount)\nTraceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-oghvqnvx/tests/test_p_skeleton_diags.py\", line 91, in <module>\n    verify(\"rectangular-diagonal-order\", np.array([[1, 2, 3], [4, 5, 6]], np.int16))\n    ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-oghvqnvx/tests/test_p_skeleton_diags.py\", line 65, in verify\n    raise AssertionError(\n        f\"case {case} index {i}: expected {exp[i]!r}, got {got[i]!r} (rtol=1e-5, atol=1e-6)\"\n    )\nAssertionError: case rectangular-diagonal-order index 0: expected np.float64(4.0), got np.float64(3.0) (rtol=1e-5, atol=1e-6)\n"
+        }
+      ],
+      "first_pass": 0.0,
+      "passed": 0.0,
+      "attempts": 1.0,
+      "attempt_score": 2.0,
+      "output_tail": "/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-oghvqnvx/candidate.py:19: RuntimeWarning: Mean of empty slice\n  out[i]=matrix[r,c].mean()\n/Users/hatim/moe-stream-mac/.venv/lib/python3.14/site-packages/numpy/_core/_methods.py:142: RuntimeWarning: invalid value encountered in scalar divide\n  ret = ret.dtype.type(ret / rcount)\nTraceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-oghvqnvx/tests/test_p_skeleton_diags.py\", line 91, in <module>\n    verify(\"rectangular-diagonal-order\", np.array([[1, 2, 3], [4, 5, 6]], np.int16))\n    ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-oghvqnvx/tests/test_p_skeleton_diags.py\", line 65, in verify\n    raise AssertionError(\n        f\"case {case} index {i}: expected {exp[i]!r}, got {got[i]!r} (rtol=1e-5, atol=1e-6)\"\n    )\nAssertionError: case rectangular-diagonal-order index 0: expected np.float64(4.0), got np.float64(3.0) (rtol=1e-5, atol=1e-6)\n"
+    },
+    {
+      "task_id": "p_window_copy",
+      "samples": [
+        {
+          "task_id": "p_window_copy",
+          "sample_index": 0,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-mirmpa4m/tests/test_p_window_copy.py\", line 64, in <module>\n    verify(\"leading-axis-step\", x, 3, 2)\n    ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-mirmpa4m/tests/test_p_window_copy.py\", line 50, in verify\n    got = window_matrix_copy(a, w, step)\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-mirmpa4m/candidate.py\", line 18, in window_matrix_copy\n    return np.lib.stride_tricks.sliding_window_view(a,count)[::step].copy()\n           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^\n  File \"/Users/hatim/moe-stream-mac/.venv/lib/python3.14/site-packages/numpy/lib/_stride_tricks_impl.py\", line 422, in sliding_window_view\n    raise ValueError(f'Since axis is `None`, must provide '\n    ...<2 lines>...\n                     f'and `x.ndim` is {x.ndim}.')\nValueError: Since axis is `None`, must provide window_shape for all dimensions of `x`; got 1 window_shape elements and `x.ndim` is 3.\n"
+        },
+        {
+          "task_id": "p_window_copy",
+          "sample_index": 1,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-28z0jyzv/tests/test_p_window_copy.py\", line 32, in error\n    got = fn()\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-28z0jyzv/tests/test_p_window_copy.py\", line 75, in <lambda>\n    lambda w=w, s=s: window_matrix_copy(x, w, s),\n                     ~~~~~~~~~~~~~~~~~~^^^^^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-28z0jyzv/candidate.py\", line 6, in window_matrix_copy\n    if not isinstance(step,int) or isinstance(step,bool): raise ValueError(\"step must be int\")\n                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: step must be int\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-28z0jyzv/tests/test_p_window_copy.py\", line 72, in <module>\n    error(\n    ~~~~~^\n        \"width-step-type-bool-vs-int\",\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        TypeError,\n        ^^^^^^^^^^\n        lambda w=w, s=s: window_matrix_copy(x, w, s),\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-28z0jyzv/tests/test_p_window_copy.py\", line 34, in error\n    check(case, 0, typ, type(exc))\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-28z0jyzv/tests/test_p_window_copy.py\", line 25, in check\n    raise AssertionError(\n        f\"case {case} index {index}: expected {expected!r}, got {got!r}\"\n    )\nAssertionError: case width-step-type-bool-vs-int index 0: expected <class 'TypeError'>, got <class 'ValueError'>\n"
+        },
+        {
+          "task_id": "p_window_copy",
+          "sample_index": 2,
+          "passed": true,
+          "first_pass": true,
+          "attempts": 1,
+          "attempt_score": 1,
+          "output_tail": ""
+        },
+        {
+          "task_id": "p_window_copy",
+          "sample_index": 3,
+          "passed": false,
+          "first_pass": false,
+          "attempts": 1,
+          "attempt_score": 2,
+          "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-aydvk2h0/tests/test_p_window_copy.py\", line 32, in error\n    got = fn()\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-aydvk2h0/tests/test_p_window_copy.py\", line 70, in <lambda>\n    error(\"scalar-rank\", ValueError, lambda: window_matrix_copy(np.array(1), 1, 1))\n                                             ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-aydvk2h0/candidate.py\", line 8, in window_matrix_copy\n    if width <= 0 or step <= 0 or width > len(values):\n                                          ~~~^^^^^^^^\nTypeError: len() of unsized object\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-aydvk2h0/tests/test_p_window_copy.py\", line 70, in <module>\n    error(\"scalar-rank\", ValueError, lambda: window_matrix_copy(np.array(1), 1, 1))\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-aydvk2h0/tests/test_p_window_copy.py\", line 34, in error\n    check(case, 0, typ, type(exc))\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-aydvk2h0/tests/test_p_window_copy.py\", line 25, in check\n    raise AssertionError(\n        f\"case {case} index {index}: expected {expected!r}, got {got!r}\"\n    )\nAssertionError: case scalar-rank index 0: expected <class 'ValueError'>, got <class 'TypeError'>\n"
+        },
+        {
+          "task_id": "p_window_copy",
+          "sample_index": 4,
+          "passed": true,
+          "first_pass": true,
+          "attempts": 1,
+          "attempt_score": 1,
+          "output_tail": ""
+        }
+      ],
+      "first_pass": 0.4,
+      "passed": 0.4,
+      "attempts": 1.0,
+      "attempt_score": 1.6,
+      "output_tail": ""
+    }
+  ],
+  "suite_sha256": "f36dc85b0ac3e23e0f8f2abab1ff90a0663668b7a58a1fc49cf9e338c326ff33"
+}
