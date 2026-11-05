@@ -1,0 +1,3 @@
+Implemented the wired-memory guard in [mem_guard.py](/Users/hatim/moe-stream-mac/tools/mem_guard.py) and added its startup report and `mem_guard.start()` call to [ft_lora_lowmem.py](/Users/hatim/moe-stream-mac/tools/ft_lora_lowmem.py). The existing `GDN_CHECKPOINT` block is preserved. No other files were changed, and I did not commit.
+
+`pytest tools/test_mem_guard.py`: **16 passed, 1 failed**. The remaining test reached `sysctl -n hw.memsize`, which this environment blocks with “Operation not permitted.” The unrestricted macOS `sysctl` check remains unverified.

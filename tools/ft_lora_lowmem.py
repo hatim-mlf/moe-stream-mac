@@ -9,6 +9,7 @@ import mlx.core as mx
 from mlx_lm import lora
 
 from ft_lowmem_loss import completion_only_loss
+import mem_guard
 
 
 _original_train = lora.train
@@ -43,6 +44,15 @@ mx.set_wired_limit(mx.device_info()["max_recommended_working_set_size"])
 if os.environ.get("MLX_CACHE_LIMIT_GB"):
     mx.set_cache_limit(int(float(os.environ["MLX_CACHE_LIMIT_GB"]) * 2**30))
 mx.reset_peak_memory()
+_total_memory = mem_guard.total_memory_bytes()
+_headroom = mem_guard.headroom_bytes_from_env(os.environ)
+_limit = _total_memory - _headroom
+print(
+    f"mem_guard: limit {_limit / 2**30:.2f} GiB "
+    f"(total {_total_memory / 2**30:.2f}, headroom {_headroom / 2**30:.2f})",
+    flush=True,
+)
+mem_guard.start(total_bytes=_total_memory, headroom_bytes=_headroom)
 lora.main()
 mx.eval(mx.array(0))
 peak = mx.get_peak_memory()
