@@ -1,0 +1,257 @@
+{
+  "benchmark_revision": "f36dc85b0ac3e23e0f8f2abab1ff90a0663668b7a58a1fc49cf9e338c326ff33",
+  "split": "heldout-v2",
+  "suite": "heldout-v2",
+  "model": "default_model",
+  "adapter": "base",
+  "attempt_cap": 3,
+  "endpoint": "http://127.0.0.1:8080/v1/chat/completions",
+  "temperature": 0.0,
+  "seed": null,
+  "samples": 1,
+  "max_tokens": 8192,
+  "review_notes": false,
+  "results": [
+    {
+      "task_id": "c_axis_record",
+      "passed": false,
+      "first_pass": false,
+      "attempts": 3,
+      "attempt_score": 4,
+      "output_tail": "case valid-leading-zeroes index 0 expected 0 got -2\n"
+    },
+    {
+      "task_id": "c_bits3_decode",
+      "passed": false,
+      "first_pass": false,
+      "attempts": 3,
+      "attempt_score": 4,
+      "output_tail": "case cross-byte-values index 0 expected 1 got 3\n"
+    },
+    {
+      "task_id": "c_echo_ring",
+      "passed": false,
+      "first_pass": false,
+      "attempts": 3,
+      "attempt_score": 4,
+      "output_tail": "case invalid-null-data-get index 0 expected -1 got 0\n"
+    },
+    {
+      "task_id": "c_group_lse",
+      "passed": false,
+      "first_pass": false,
+      "attempts": 3,
+      "attempt_score": 4,
+      "output_tail": "case nonfinite-input index 0 expected -1 got 0\n"
+    },
+    {
+      "task_id": "c_rank_topk",
+      "passed": true,
+      "first_pass": false,
+      "attempts": 2,
+      "attempt_score": 2,
+      "output_tail": ""
+    },
+    {
+      "task_id": "c_rms_gate",
+      "passed": false,
+      "first_pass": false,
+      "attempts": 3,
+      "attempt_score": 4,
+      "output_tail": "case data-errors-atomic index 0 expected 71 got 0\n"
+    },
+    {
+      "task_id": "c_sat8_pair",
+      "passed": true,
+      "first_pass": true,
+      "attempts": 1,
+      "attempt_score": 1,
+      "output_tail": ""
+    },
+    {
+      "task_id": "c_scan_checked",
+      "passed": false,
+      "first_pass": false,
+      "attempts": 3,
+      "attempt_score": 4,
+      "output_tail": "case positive-overflow index 0 expected -2 got 0\n"
+    },
+    {
+      "task_id": "c_skeleton_clamp",
+      "passed": false,
+      "first_pass": false,
+      "attempts": 3,
+      "attempt_score": 4,
+      "output_tail": "case nonfinite-input-atomic index 0 expected 71 got 0\n"
+    },
+    {
+      "task_id": "c_skeleton_pair",
+      "passed": false,
+      "first_pass": false,
+      "attempts": 3,
+      "attempt_score": 4,
+      "output_tail": "case signed-min-max index 0 expected 0 got -3\n"
+    },
+    {
+      "task_id": "c_skeleton_window",
+      "passed": false,
+      "first_pass": false,
+      "attempts": 3,
+      "attempt_score": 4,
+      "output_tail": "case nonfinite-atomic index 0 expected 51 got 2\n"
+    },
+    {
+      "task_id": "c_span_alias",
+      "passed": false,
+      "first_pass": false,
+      "attempts": 3,
+      "attempt_score": 4,
+      "output_tail": ""
+    },
+    {
+      "task_id": "c_stable_norm",
+      "passed": true,
+      "first_pass": true,
+      "attempts": 1,
+      "attempt_score": 1,
+      "output_tail": ""
+    },
+    {
+      "task_id": "c_strided_proj",
+      "passed": true,
+      "first_pass": true,
+      "attempts": 1,
+      "attempt_score": 1,
+      "output_tail": ""
+    },
+    {
+      "task_id": "c_u4_groupdot",
+      "passed": false,
+      "first_pass": false,
+      "attempts": 3,
+      "attempt_score": 4,
+      "output_tail": "case unsigned-high-nibbles-multiple-groups index 0 expected 21.5 got -42 (tol 0.000216)\n"
+    },
+    {
+      "task_id": "p_affine_groups",
+      "passed": false,
+      "first_pass": false,
+      "attempts": 3,
+      "attempt_score": 4,
+      "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-jx9lpma0/tests/test_p_affine_groups.py\", line 44, in error\n    got = fn()\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-jx9lpma0/tests/test_p_affine_groups.py\", line 112, in <lambda>\n    lambda: dequant_byte_groups(\n            ~~~~~~~~~~~~~~~~~~~^\n        np.array([1], np.uint8), np.array([[1]]), np.array([0]), 2\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    ),\n    ^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-jx9lpma0/candidate.py\", line 13, in dequant_byte_groups\n    raise TypeError(f\"{name} must be a rank-1 real numeric array\")\nTypeError: scales must be a rank-1 real numeric array\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-jx9lpma0/tests/test_p_affine_groups.py\", line 109, in <module>\n    error(\n    ~~~~~^\n        \"scale-rank\",\n        ^^^^^^^^^^^^^\n    ...<3 lines>...\n        ),\n        ^^\n    )\n    ^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-jx9lpma0/tests/test_p_affine_groups.py\", line 46, in error\n    check(case, 0, typ, type(exc))\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-jx9lpma0/tests/test_p_affine_groups.py\", line 26, in check\n    raise AssertionError(\n        f\"case {case} index {index}: expected {expected!r}, got {got!r}\"\n    )\nAssertionError: case scale-rank index 0: expected <class 'ValueError'>, got <class 'TypeError'>\n"
+    },
+    {
+      "task_id": "p_axis_layout",
+      "passed": true,
+      "first_pass": false,
+      "attempts": 2,
+      "attempt_score": 2,
+      "output_tail": ""
+    },
+    {
+      "task_id": "p_axis_take",
+      "passed": false,
+      "first_pass": false,
+      "attempts": 3,
+      "attempt_score": 4,
+      "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-dixetd8p/tests/test_p_axis_take.py\", line 52, in <module>\n    y = take_axis_positions(x, pos, -2)\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-dixetd8p/candidate.py\", line 57, in take_axis_positions\n    out[tuple(reshaped)] = arr[tuple(reshaped)]\n                           ~~~^^^^^^^^^^^^^^^^^\nIndexError: shape mismatch: indexing arrays could not be broadcast together with shapes (2,1) (3,) (4,1) \n"
+    },
+    {
+      "task_id": "p_block_header",
+      "passed": false,
+      "first_pass": false,
+      "attempts": 3,
+      "attempt_score": 4,
+      "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-o9lg11td/tests/test_p_block_header.py\", line 55, in <module>\n    got = unpack_frame_header(value)\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-o9lg11td/candidate.py\", line 46, in unpack_frame_header\n    raise ValueError(\"bad flags\")\nValueError: bad flags\n"
+    },
+    {
+      "task_id": "p_bytes_lru",
+      "passed": false,
+      "first_pass": false,
+      "attempts": 3,
+      "attempt_score": 4,
+      "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-t_4ez7lc/tests/test_p_bytes_lru.py\", line 118, in <module>\n    check(\"store-c-evicts-lru-b\", 0, True, c.store_cached(\"c\", np.array([1], np.int32)))\n                                           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-t_4ez7lc/candidate.py\", line 48, in store_cached\n    self._bytes_used -= evicted_size\nTypeError: unsupported operand type(s) for -=: 'int' and 'tuple'\n"
+    },
+    {
+      "task_id": "p_chunk_plan",
+      "passed": true,
+      "first_pass": true,
+      "attempts": 1,
+      "attempt_score": 1,
+      "output_tail": ""
+    },
+    {
+      "task_id": "p_dtype_blend",
+      "passed": true,
+      "first_pass": true,
+      "attempts": 1,
+      "attempt_score": 1,
+      "output_tail": ""
+    },
+    {
+      "task_id": "p_lex_order",
+      "passed": true,
+      "first_pass": true,
+      "attempts": 1,
+      "attempt_score": 1,
+      "output_tail": ""
+    },
+    {
+      "task_id": "p_mask_out",
+      "passed": true,
+      "first_pass": true,
+      "attempts": 1,
+      "attempt_score": 1,
+      "output_tail": ""
+    },
+    {
+      "task_id": "p_runs_merge",
+      "passed": true,
+      "first_pass": false,
+      "attempts": 2,
+      "attempt_score": 2,
+      "output_tail": ""
+    },
+    {
+      "task_id": "p_segment_pool",
+      "passed": false,
+      "first_pass": false,
+      "attempts": 3,
+      "attempt_score": 4,
+      "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-42mijihw/tests/test_p_segment_pool.py\", line 97, in <module>\n    error(\n    ~~~~~^\n        \"values-real-numeric-dtype\",\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        TypeError,\n        ^^^^^^^^^^\n        lambda bad=bad: segment_reduce_sum(bad, np.array([0]), 1),\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-42mijihw/tests/test_p_segment_pool.py\", line 36, in error\n    raise AssertionError(f\"case {case} index 0: expected {typ}, got {got!r}\")\nAssertionError: case values-real-numeric-dtype index 0: expected <class 'TypeError'>, got array([1.])\n"
+    },
+    {
+      "task_id": "p_skeleton_calibrate",
+      "passed": false,
+      "first_pass": false,
+      "attempts": 3,
+      "attempt_score": 4,
+      "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-oygvtjka/tests/test_p_skeleton_calibrate.py\", line 137, in <module>\n    \"random-logistic-calibration\", naive(raw, t, off), calibrate_scores(raw, t, off)\n                                                       ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-oygvtjka/candidate.py\", line 11, in calibrate_scores\n    raise ValueError(\"raw must be a floating-point array\")\nValueError: raw must be a floating-point array\n"
+    },
+    {
+      "task_id": "p_skeleton_delta",
+      "passed": true,
+      "first_pass": true,
+      "attempts": 1,
+      "attempt_score": 1,
+      "output_tail": ""
+    },
+    {
+      "task_id": "p_skeleton_diags",
+      "passed": false,
+      "first_pass": false,
+      "attempts": 3,
+      "attempt_score": 4,
+      "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-t258sw_f/tests/test_p_skeleton_diags.py\", line 91, in <module>\n    verify(\"rectangular-diagonal-order\", np.array([[1, 2, 3], [4, 5, 6]], np.int16))\n    ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-t258sw_f/tests/test_p_skeleton_diags.py\", line 57, in verify\n    got = diagonal_means(a)\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-t258sw_f/candidate.py\", line 12, in diagonal_means\n    raise TypeError(\"matrix must contain real finite values\")\nTypeError: matrix must contain real finite values\n"
+    },
+    {
+      "task_id": "p_window_copy",
+      "passed": true,
+      "first_pass": true,
+      "attempts": 1,
+      "attempt_score": 1,
+      "output_tail": ""
+    }
+  ],
+  "suite_sha256": "f36dc85b0ac3e23e0f8f2abab1ff90a0663668b7a58a1fc49cf9e338c326ff33"
+}

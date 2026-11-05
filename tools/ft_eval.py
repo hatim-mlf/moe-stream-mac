@@ -135,6 +135,8 @@ def v2_task_records(review=False, root=ROOT):
     records = []
     for entry in manifest["tasks"]:
         folder = root / "evals" / "heldout-v2" / entry["id"]
+        if review and not (folder / "review.md").exists():
+            continue  # only 10 of the 30 tasks have a frozen review prompt
         task = json.loads((folder / "task.json").read_text())
         task["_folder"] = str(folder)
         task["_manifest_entry"] = entry
