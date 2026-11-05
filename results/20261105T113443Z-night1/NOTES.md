@@ -24,3 +24,8 @@ Night 1 training set: data/finetune/night1 (22/31 train rows, 6/10 valid rows <=
 - run3 (1 layer, 26 train rows <= 3k tok, 28 iters = 1 epoch, lr 1e-5): MLX peak 24.18 GiB, val 0.763 -> 0.407 -> 0.363.
   No repetition collapse (~12 s/task). heldout-v2 first attempt 7/30 vs base 10/30 (delta -0.10, paired 95%
   [-0.23, +0.03]); public 3/3. NO-GO, as expected from 26 seed rows; the full ~250-row set is the real test.
+- Root cause found (13:40): qwen3_5.py:193 uses gated_delta_ops (per-token Python scan) when training; autodiff keeps
+  every recurrent state [1,32,128,128] fp32 = 2 MB/token/GDN layer. Layer 39 is full attention, so 1-layer LoRA has
+  no GDN layer in the backward path; 2+ layers do. Fix: chunked mx.checkpoint scan (brief 34).
+- Completion-only chunked loss (brief 32, tools/ft_lowmem_loss.py): correct (4/4 parity tests after a 1-line lead fix)
+  but NO measurable saving: 1 layer, 1.2-3k rows: 24.177 GiB vs 24.187 default; 2 layers still OOM.
