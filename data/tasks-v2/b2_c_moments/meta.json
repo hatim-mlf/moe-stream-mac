@@ -1,0 +1,7 @@
+{
+  "id": "b2_c_moments",
+  "language": "c",
+  "category": "c99-numeric",
+  "kind": "implement",
+  "source": "codex-batch2"
+}

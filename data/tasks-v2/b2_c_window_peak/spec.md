@@ -1,0 +1,1 @@
+Implement `ptrdiff_t first_max_window_f32(const float *x, size_t n, size_t start, size_t width)`. Assume every x[i] is finite. Return the absolute index of the greatest value in `[start,start+width)`, keeping the earliest index on ties. Return -1 if `x` is null, width is zero, the window exceeds `n`, or its result cannot fit `ptrdiff_t`. No allocation.

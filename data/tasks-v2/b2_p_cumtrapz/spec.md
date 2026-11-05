@@ -1,0 +1,1 @@
+Implement `cumulative_trapezoid(y, x)`. Convert both to float64 1-D finite arrays of equal length. Require `x` to be strictly increasing. Return a float64 vector of the same length, with element 0 equal to zero and each later element the cumulative trapezoid integral through that sample. Empty and one-element inputs are valid.

@@ -1,0 +1,11 @@
+{
+  "id": "b2_r_c_sum_threshold",
+  "language": "c",
+  "category": "review-following",
+  "kind": "review",
+  "source": "codex-batch2",
+  "review_notes": [
+    "Use a strict comparison: include x[i] only when x[i] > cutoff."
+  ],
+  "previous_attempt": "previous_attempt.c"
+}

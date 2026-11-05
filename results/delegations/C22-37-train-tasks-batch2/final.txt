@@ -1,0 +1,58 @@
+## Files touched
+
+Added 50 task folders under [data/tasks-v2](/Users/hatim/moe-stream-mac/data/tasks-v2), totaling 314 files: 50 specs, 50 references, 50 test files, 100 mutants, 8 skeletons, 6 previous attempts, and 50 metadata files. Every metadata file has `source: codex-batch2`. No tools or protected data files were modified.
+
+## Counts
+
+- 18 C99 implementations
+- 18 Python utilities
+- 8 skeleton-fill tasks: 3 C, 5 Python
+- 6 review tasks: 3 C, 3 Python
+
+All 50 spec-plus-reference pairs are under 2,000 characters. A scan found no heldout manifest IDs/public names or exact batch 1 function-name matches.
+
+## Gate outputs
+
+The exact task-check command stops at a metadata mismatch: `ft_tasks_check.py` requires `source: codex-batch1`, conflicting with your required `codex-batch2`. I left the tool and requested metadata unchanged.
+
+```text
+$ python3 tools/ft_tasks_check.py data/tasks-v2
+task check error: /Users/hatim/moe-stream-mac/data/tasks-v2/b2_c_bit_reverse: source must be 'codex-batch1'
+```
+
+With only the source field temporarily normalized for the checker, the full run passed:
+
+```text
+checked 50 task(s); violations=0
+```
+
+That run verified all 50 references and rejected all 100 mutants. The metadata was restored afterward.
+
+```text
+$ python3 tools/ft_tasks_to_sft.py data/tasks-v2 --out /tmp/ft-b2-check
+leak check passed: 66 heldout-v2 ids/public names absent outside suite
+wrote 45 train and 5 valid rows to /tmp/ft-b2-check
+{
+  "sha256": {
+    "train.jsonl": "3d8e2f18f186e38c8b8d4b47d5f7f9932429ab36774fad54ca668921ca6a3273",
+    "valid.jsonl": "acbbf51f84fe0ca380003a6276b8100e07c14410f9c383fab2bc03491ea25a31"
+  },
+  "train_ids": 45,
+  "valid_ids": 5
+}
+```
+
+```text
+$ python3 tools/ft_leak_check.py
+leak check passed: 66 heldout-v2 ids/public names absent outside suite
+```
+
+## Hardest tasks
+
+- `b2_c_milli_decimal`: strict parsing with signed int64 boundary handling.
+- `b2_c_q16_division`: signed fixed-point division, ties-to-even, and saturation.
+- `b2_c_requant_i8`: wide intermediate arithmetic, rounding, and int8 clamping.
+- `b2_c_packet_queue`: FIFO ordering and capacity handling across two fixed stacks.
+- `b2_p_box_sum`: integral-image indexing and empty output shapes.
+
+I found no prompt-construction details I had to guess: the SFT builder appends skeletons or review context, Python tests import `candidate.py`, and C tests compile against `candidate.c`. The exact task-check gate remains blocked by its hard-coded batch 1 source value.

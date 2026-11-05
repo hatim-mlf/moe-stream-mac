@@ -1,0 +1,7 @@
+{
+  "id": "b2_c_field_extract",
+  "language": "c",
+  "category": "c99-kernel",
+  "kind": "implement",
+  "source": "codex-batch2"
+}

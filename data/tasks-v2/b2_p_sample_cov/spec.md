@@ -1,0 +1,1 @@
+Implement `sample_covariance(x)`. Convert to float64; require a finite 2-D array with at least two rows or raise ValueError. Return the sample covariance matrix across columns, centered and divided by `n-1`; shape is `(features, features)`, including `(0,0)` for zero features. Do not mutate input.

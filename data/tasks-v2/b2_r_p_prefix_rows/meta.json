@@ -1,0 +1,12 @@
+{
+  "id": "b2_r_p_prefix_rows",
+  "language": "python",
+  "category": "review-following",
+  "kind": "review",
+  "source": "codex-batch2",
+  "review_notes": [
+    "Reject count values outside 0..array.shape[0] instead of relying on slice clipping.",
+    "Return an independent copy of the selected rows."
+  ],
+  "previous_attempt": "previous_attempt.py"
+}

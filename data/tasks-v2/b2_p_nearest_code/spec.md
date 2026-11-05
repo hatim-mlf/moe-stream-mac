@@ -1,0 +1,1 @@
+Implement `nearest_codebook(values, centers)`. Convert both to finite float64 1-D arrays; centers must be nonempty. Return an int64 index for each value selecting the center with smallest absolute distance. Ties select the smallest center index. Empty values return an empty int64 array. Raise ValueError for invalid input.

@@ -1,0 +1,1 @@
+Implement `void matvec_rowmajor_f32(const float *matrix, const float *x, size_t rows, size_t cols, float *y)`. Matrix is row-major. Set `y[r]` to the left-to-right float sum of `matrix[r*cols+c]*x[c]`. If `rows==0`, access nothing; if `cols==0`, write zero to each output. Pointers are valid for accessed elements and `y` does not overlap inputs. No allocation.

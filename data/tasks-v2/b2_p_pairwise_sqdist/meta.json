@@ -1,0 +1,7 @@
+{
+  "id": "b2_p_pairwise_sqdist",
+  "language": "python",
+  "category": "numpy-utility",
+  "kind": "implement",
+  "source": "codex-batch2"
+}

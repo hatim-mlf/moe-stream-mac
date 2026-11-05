@@ -1,0 +1,1 @@
+Fill `lower_triangle_values(matrix)`. Convert to float64; require a finite square 2-D matrix or raise ValueError. Return a 1-D float64 array of the lower triangle, including the diagonal, in row-major order. Do not mutate input. Return a complete function.

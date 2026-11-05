@@ -1,0 +1,1 @@
+Fill `sliding_dot_valid(signal, kernel)`. Convert both to finite float64 1-D arrays; kernel must be nonempty or raise ValueError. Return a float64 valid cross-correlation: output[i] is `sum(signal[i+j]*kernel[j])`. If kernel is longer than signal, return an empty float64 array. Do not reverse the kernel. Return a complete function.

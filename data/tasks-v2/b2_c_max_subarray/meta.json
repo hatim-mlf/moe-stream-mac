@@ -1,0 +1,7 @@
+{
+  "id": "b2_c_max_subarray",
+  "language": "c",
+  "category": "c99-numeric",
+  "kind": "implement",
+  "source": "codex-batch2"
+}

@@ -1,0 +1,1 @@
+Implement `int parse_port_decimal(const char *text, uint16_t *out)`. Accept one or more ASCII decimal digits representing 0..65535; no signs, whitespace, or trailing bytes. Return 0 on success or -1 for invalid input/null pointers, preserving output.

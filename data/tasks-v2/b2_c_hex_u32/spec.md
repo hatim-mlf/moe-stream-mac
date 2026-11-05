@@ -1,0 +1,1 @@
+Implement `int parse_hex_u32_exact(const char *text, uint32_t *out)`. Accept 1 through 8 ASCII hexadecimal digits (`0-9`, `a-f`, `A-F`), with no prefix, spaces, or trailing bytes. Return 0 or -1 for invalid input/null pointers. Preserve `*out` on failure.

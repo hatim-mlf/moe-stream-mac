@@ -1,0 +1,1 @@
+Implement `histogram_with_edges(values, edges)`. Convert both to float64 1-D arrays. Require finite values, at least two finite strictly increasing edges, or raise ValueError. Return int64 counts for bins `[edges[i], edges[i+1])`, except the final bin includes its right edge. Values outside the full edge range are ignored.

@@ -1,0 +1,1 @@
+Implement `parse_dims(text)` using Python standard library only. Accept one or more positive base-10 dimensions separated by lowercase `x`. Each dimension has no leading zero. No whitespace, signs, or trailing separator. Return a tuple of Python ints; raise ValueError for malformed text.

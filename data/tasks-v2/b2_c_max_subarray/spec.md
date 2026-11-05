@@ -1,0 +1,1 @@
+Implement `int64_t max_subarray_sum_i32(const int32_t *values, size_t n)`. Return the greatest sum of any nonempty contiguous subarray. The sum of any subarray fits int64. For n==0 return 0 and allow null; otherwise values is valid. No allocation.

@@ -1,0 +1,11 @@
+Implemented the chunked custom VJP in [gdn_vjp.py](/Users/hatim/moe-stream-mac/tools/gdn_vjp.py), added the requested parity and install tests in [test_gdn_vjp.py](/Users/hatim/moe-stream-mac/tools/test_gdn_vjp.py), added the memory probe in [gdn_vjp_mem.py](/Users/hatim/moe-stream-mac/tools/gdn_vjp_mem.py), and wired `GDN_VJP=1` into [ft_lora_lowmem.py](/Users/hatim/moe-stream-mac/tools/ft_lora_lowmem.py). The backward saves copied, stopped-gradient chunk boundaries and adds a dependency on the later chunk’s state cotangent to serialize recomputation.
+
+The adjoint uses \(A=S_{prev}\odot decay\), \(r=v-Ak\), \(\delta=\beta r\), and \(\tilde S=A+k\otimes\delta\). With \(D=\mathrm{d}y\otimes q+m\,\mathrm{d}S\):
+
+- \(\mathrm{d}q=\tilde S^\mathsf{T}\mathrm{d}y\), \(u=Dk\), \(\mathrm{d}\beta=\sum_v ur\), \(\mathrm{d}v=\beta u\)
+- \(e=\beta u\), \(\mathrm{d}A=D-e\otimes k\)
+- \(\mathrm{d}k=\sum_v(D\odot\delta-A\odot e)\)
+- \(\mathrm{d}S_{prev}=\mathrm{d}A\odot decay+(1-m)\mathrm{d}S\)
+- For vector gates, \(\mathrm{d}g=\sum_v(\mathrm{d}A\odot S_{prev})\); for scalar gates, reduce over value and key dimensions.
+
+**Verification:** `py_compile` passed, and all functions meet the under-50-line constraint. I could not run pytest or measure memory: importing `mlx.core` in this sandbox fails because no Metal device is available. The Metal runtime parity, lazy-evaluation memory bound, and target peak remain unverified. The probe accepts `--impl kernel` but reports that no Metal backward kernel was implemented.

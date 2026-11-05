@@ -1,0 +1,12 @@
+{
+  "id": "b2_r_p_prob_norm",
+  "language": "python",
+  "category": "review-following",
+  "kind": "review",
+  "source": "codex-batch2",
+  "review_notes": [
+    "Raise ValueError when any weight is negative.",
+    "Raise ValueError when the vector has zero total mass."
+  ],
+  "previous_attempt": "previous_attempt.py"
+}

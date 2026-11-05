@@ -1,0 +1,1 @@
+Implement `int sum_i32_above(const int32_t *x, size_t n, int32_t cutoff, int64_t *out)`. Sum values strictly greater than cutoff. Require nonnull out and nonnull x when n>0; the sum fits int64. Return 0 on success, -1 on invalid pointers, preserving output on failure.

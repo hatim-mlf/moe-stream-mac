@@ -1,0 +1,1 @@
+Implement `upsample_nearest_2x_nhwc(x)`. Convert with `numpy.asarray`; require rank 4 `(batch,height,width,channels)` or raise ValueError. Return an independent array with each pixel repeated twice along height and width. Preserve dtype and do not mutate input. Empty dimensions are valid.

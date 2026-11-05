@@ -1,0 +1,11 @@
+{
+  "id": "b2_r_c_sat_bias",
+  "language": "c",
+  "category": "review-following",
+  "kind": "review",
+  "source": "codex-batch2",
+  "review_notes": [
+    "Clamp each widened sum to INT16_MIN..INT16_MAX before converting it to int16_t."
+  ],
+  "previous_attempt": "previous_attempt.c"
+}

@@ -1,0 +1,7 @@
+{
+  "id": "b2_c_bit_reverse",
+  "language": "c",
+  "category": "c99-kernel",
+  "kind": "implement",
+  "source": "codex-batch2"
+}

@@ -1,0 +1,1 @@
+Implement `argmax_coords(x)`. Convert to a float64 2-D array; require a nonempty shape and finite values or raise ValueError. Return `(row, column)` as Python ints for the first maximum in row-major order.

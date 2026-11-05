@@ -1,0 +1,1 @@
+Implement `channel_affine(x, scale, bias)`. Convert `x`, `scale`, and `bias` to float64. `x` must have rank at least one and finite values; each parameter must be finite and either scalar or a 1-D vector of length `x.shape[-1]`. Return `x*scale+bias` with the same shape and float64 dtype. Raise ValueError on invalid shape/value; do not mutate inputs.

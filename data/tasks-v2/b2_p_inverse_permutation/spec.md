@@ -1,0 +1,1 @@
+Implement `inverse_permutation(indices)`. Convert to an array; require a 1-D integer array containing every integer from 0 through n-1 exactly once, or raise ValueError. An empty input is valid. Return an int64 array `inverse` such that `inverse[indices[i]] == i`. Do not mutate input.

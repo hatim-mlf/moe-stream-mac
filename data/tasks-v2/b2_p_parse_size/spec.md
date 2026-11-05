@@ -1,0 +1,1 @@
+Implement `parse_size_bytes(text)` using the Python standard library. Accept a canonical nonnegative decimal integer followed by exactly one unit: `B`, `KiB`, `MiB`, or `GiB`. Multipliers are powers of 1024. Digits have no leading zeros except `0`; no whitespace or sign. Return an integer byte count; raise ValueError for malformed text.

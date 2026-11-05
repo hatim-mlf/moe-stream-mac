@@ -1,0 +1,12 @@
+import numpy as np
+def histogram_with_edges(values, edges):
+    x = np.asarray(values, dtype=np.float64)
+    e = np.asarray(edges, dtype=np.float64)
+    if x.ndim != 1 or e.ndim != 1 or e.size < 2:
+        raise ValueError("expected vectors and at least two edges")
+    if not np.isfinite(x).all() or not np.isfinite(e).all() or np.any(e[1:] <= e[:-1]):
+        raise ValueError("values and edges must be finite; edges strictly increase")
+    bins = np.searchsorted(e, x, side="right") - 1
+    bins[x == e[-1]] = e.size - 2
+    keep = (x >= e[0]) & (x <= e[-1])
+    return np.bincount(bins[keep], minlength=e.size - 1).astype(np.int64)

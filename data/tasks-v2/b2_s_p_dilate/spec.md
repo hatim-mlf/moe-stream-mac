@@ -1,0 +1,1 @@
+Fill `dilate_mask_1d(mask, radius)`. Convert mask to a 1-D bool array; radius must be an integer >=0 excluding bool. Return a new bool array where output[i] is true if any input[j] is true for `abs(i-j)<=radius`, clipped to the array bounds. Raise ValueError for invalid rank/radius. Return a complete function.

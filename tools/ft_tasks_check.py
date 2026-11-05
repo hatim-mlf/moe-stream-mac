@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Run reference and mutant checks for a directory of supervised coding tasks."""
 import argparse
+import re
 import json
 import subprocess
 import sys
@@ -11,6 +12,9 @@ ROOT = Path(__file__).resolve().parents[1]
 EXTENSIONS = {"c": ".c", "python": ".py"}
 MAX_BRIEF_SOLUTION_CHARS = 6000
 MAX_ROW_BYTES = 7500
+
+
+SOURCE_PATTERN = r"codex-batch[1-9][0-9]*"
 
 
 def arguments(argv=None):
@@ -68,8 +72,8 @@ def validate_meta(folder, meta):
         raise ValueError(f"{folder}: invalid kind {kind!r}")
     if not isinstance(meta.get("category"), str) or not meta["category"].strip():
         raise ValueError(f"{folder}: category must be nonempty")
-    if meta.get("source") != "codex-batch1":
-        raise ValueError(f"{folder}: source must be 'codex-batch1'")
+    if not re.fullmatch(SOURCE_PATTERN, str(meta.get("source", ""))):
+        raise ValueError(f"{folder}: source must match {SOURCE_PATTERN!r}")
     if kind == "skeleton" and not (folder / f"skeleton{EXTENSIONS[language]}").is_file():
         raise ValueError(f"{folder}: skeleton task is missing its skeleton file")
     if kind == "review":

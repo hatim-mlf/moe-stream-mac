@@ -1,0 +1,1 @@
+Implement `diagonal_band_mask(rows, cols, offset, radius)`. All four arguments must be integers excluding bool; rows/cols/radius are nonnegative. Return a bool array of shape `(rows, cols)` that is true exactly when `abs((column-row)-offset)<=radius`. Raise ValueError for invalid arguments.

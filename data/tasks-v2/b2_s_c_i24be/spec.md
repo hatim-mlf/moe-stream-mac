@@ -1,0 +1,1 @@
+Fill the TODO in `int decode_i24_be(const uint8_t *data, size_t len, size_t offset, int32_t *out)`. Read three big-endian bytes as a signed two's-complement 24-bit integer and sign-extend to int32. Return 0 or -1 for null arguments or an out-of-bounds slice. On failure leave `*out` unchanged. Avoid `offset+3` overflow; no allocation. Return the complete function.

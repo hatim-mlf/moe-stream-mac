@@ -1,0 +1,7 @@
+{
+  "id": "b2_c_hex_u32",
+  "language": "c",
+  "category": "c99-parser",
+  "kind": "implement",
+  "source": "codex-batch2"
+}

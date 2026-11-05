@@ -1,0 +1,1 @@
+Implement `copy_prefix_rows(array, count)`. Convert array with `numpy.asarray`; require a 2-D array and integer `count` excluding bool in `[0,array.shape[0]]`, or raise ValueError. Return the first count rows with the same dtype in independent storage.

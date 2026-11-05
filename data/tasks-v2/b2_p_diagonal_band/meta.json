@@ -1,0 +1,7 @@
+{
+  "id": "b2_p_diagonal_band",
+  "language": "python",
+  "category": "numpy-utility",
+  "kind": "implement",
+  "source": "codex-batch2"
+}

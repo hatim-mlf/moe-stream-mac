@@ -1,0 +1,1 @@
+Implement `int parse_ipv4_u32(const char *text, uint32_t *out)`. Accept exactly four decimal octets separated by dots. Each octet is `0` or has no leading zero, contains 1-3 digits, and is in 0..255. No whitespace or trailing bytes. Store network-order numeric form (first octet in bits 31..24). Return 0/-1 and preserve output on failure.

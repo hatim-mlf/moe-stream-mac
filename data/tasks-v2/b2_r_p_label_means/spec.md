@@ -1,0 +1,1 @@
+Implement `means_by_label(values, labels)`. Convert values to finite float64 and labels to a 1-D integer array. Require both 1-D, equal nonzero length, or raise ValueError. Return `(unique_labels, means)` where labels are int64 sorted ascending and each mean averages all values with that label, as float64.

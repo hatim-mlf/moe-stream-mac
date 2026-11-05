@@ -1,0 +1,1 @@
+Implement `unpack_ragged(flat, offsets)`. Convert `flat` and `offsets` to arrays. Require 1-D flat, 1-D integer offsets of length at least one, first offset 0, nondecreasing offsets, and final offset `len(flat)`; otherwise raise ValueError. Return a list of independent copies of each segment, preserving flat dtype.

@@ -1,0 +1,1 @@
+Implement `void add_bias_sat_s16(const int16_t *src, size_t n, int16_t bias, int16_t *dst)`. Add bias elementwise and saturate to int16 range. Pointers are valid when n>0. Exact in-place operation `src==dst` is supported. No allocation.

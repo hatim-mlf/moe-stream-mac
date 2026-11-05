@@ -1,0 +1,7 @@
+{
+  "id": "b2_c_q16_division",
+  "language": "c",
+  "category": "c99-fixed-point",
+  "kind": "implement",
+  "source": "codex-batch2"
+}

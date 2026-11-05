@@ -1,0 +1,1 @@
+Fill `split_by_budget(costs, limit)`. `costs` is an iterable of nonnegative integers; `limit` is a positive integer, all excluding bool. Return consecutive groups as lists, greedily adding each next cost while the group total stays <= limit. Start a new group when needed. An item above limit raises ValueError. Empty input returns []. Return a complete function.

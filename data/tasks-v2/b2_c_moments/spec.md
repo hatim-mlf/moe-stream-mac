@@ -1,0 +1,1 @@
+Implement `int mean_popvar_f32(const float *x, size_t n, double *mean, double *variance)`. Inputs are finite. Return arithmetic mean and population variance (`sum((x-mean)^2)/n`) using double accumulators. Require nonnull pointers and `n>0`; return -1 and leave both outputs unchanged on invalid arguments. No allocation.

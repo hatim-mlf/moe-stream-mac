@@ -1,0 +1,11 @@
+{
+  "id": "b2_r_c_port_decimal",
+  "language": "c",
+  "category": "review-following",
+  "kind": "review",
+  "source": "codex-batch2",
+  "review_notes": [
+    "Before parsing, require the first byte to be an ASCII digit; this rejects both signs and leading whitespace."
+  ],
+  "previous_attempt": "previous_attempt.c"
+}

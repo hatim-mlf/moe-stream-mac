@@ -1,0 +1,1 @@
+Implement `int rmse_f32(const float *a, const float *b, size_t n, double *out)`. Inputs contain finite floats. Compute `sqrt(sum((a[i]-b[i])^2)/n)` with a double accumulator and left-to-right order. Require nonnull pointers and `n>0`; return 0 on success or -1 on invalid arguments, preserving `*out` on failure. No allocation.

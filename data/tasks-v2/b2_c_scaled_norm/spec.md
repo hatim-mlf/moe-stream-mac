@@ -1,0 +1,1 @@
+Implement `double l2_norm_f32(const float *x, size_t n)`. Values are finite. Return the Euclidean norm using a scaled sum-of-squares method so intermediate squaring does not overflow when the true result is representable as double. For `n==0`, return 0; no allocation.

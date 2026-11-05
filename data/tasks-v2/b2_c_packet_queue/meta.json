@@ -1,0 +1,7 @@
+{
+  "id": "b2_c_packet_queue",
+  "language": "c",
+  "category": "c99-queue",
+  "kind": "implement",
+  "source": "codex-batch2"
+}

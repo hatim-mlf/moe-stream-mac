@@ -1,0 +1,1 @@
+Implement `int extract_u32_field(uint32_t word, unsigned lsb, unsigned width, uint32_t *out)`. Extract `width` bits beginning at bit `lsb` (bit 0 is least significant), right-aligned. Require nonnull `out`, `1<=width<=32`, and `lsb+width<=32`. Return 0 on success or -1 on invalid input, preserving `*out` on failure. No allocation.

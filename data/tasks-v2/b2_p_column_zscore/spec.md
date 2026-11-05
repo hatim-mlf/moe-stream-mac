@@ -1,0 +1,1 @@
+Implement `column_zscore(x)` using float64. Require a finite 2-D array with at least one row or raise ValueError. Subtract each column's population mean and divide by its population standard deviation; constant columns become all zero. Return float64 and do not mutate input.

@@ -1,0 +1,1 @@
+Implement `weighted_rows_mean(x, weights)`. Convert to float64; require finite 2-D `x`, a finite 1-D nonnegative weight vector of length `x.shape[0]`, and positive total weight. Raise ValueError otherwise. Return the weighted mean across rows as a float64 vector. Zero feature columns are valid.

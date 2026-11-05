@@ -1,0 +1,1 @@
+Implement `normalize_prob_vector(weights)`. Convert to float64; require a finite 1-D vector with nonnegative entries and positive total, otherwise raise ValueError. Return a float64 vector divided by its total. Empty input is invalid.

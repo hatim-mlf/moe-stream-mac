@@ -1,0 +1,1 @@
+Implement `int weighted_mean_f32(const float *x, const float *weight, size_t n, double *out)`. Inputs must be finite; weights must be nonnegative and have positive total. Compute `sum(x[i]*weight[i])/sum(weight[i])` with double accumulators. Require nonnull pointers and `n>0`. Return 0/-1 and preserve output on failure. No allocation.

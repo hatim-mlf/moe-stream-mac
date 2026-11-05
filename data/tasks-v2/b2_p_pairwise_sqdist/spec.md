@@ -1,0 +1,1 @@
+Implement `pairwise_sqdist(x, y)` with NumPy. Convert both inputs to float64; require finite 2-D arrays with the same feature count or raise ValueError. Return a float64 matrix of squared Euclidean distances with shape `(len(x), len(y))`. Empty row counts and zero features are valid. Do not mutate inputs.
