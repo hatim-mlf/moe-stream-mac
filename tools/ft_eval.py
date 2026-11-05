@@ -72,7 +72,13 @@ def arguments(argv=None):
     p.add_argument("--self-check", action="store_true", help="test accepted repository code without a model")
     p.add_argument("--mutant-check", action="store_true", help="require every heldout-v2 mutant to fail")
     p.add_argument("--paired", nargs=2, type=Path, metavar=("BASE.json", "ADAPTER.json"))
-    return p.parse_args(argv)
+    args = p.parse_args(argv)
+    if args.adapter and args.model == "default_model":
+        # mlx_lm/server.py:478 maps "default_model" to the server's --adapter-path, which overrides the
+        # request's `adapters` field: the adapter would be silently ignored (seen 2026-11-05, config A).
+        p.error("--adapter is ignored by mlx_lm.server for model 'default_model'; start the server with "
+                "--adapter-path <dir> instead and omit --adapter")
+    return args
 
 
 def extract_code(reply):

@@ -1,0 +1,37 @@
+{
+ "run": "config A",
+ "data": "data/finetune/v1 (76 train / 15 valid)",
+ "lora_layers": 1,
+ "iters": 152,
+ "epochs": 2,
+ "lr": 1e-05,
+ "rank": 8,
+ "scale": 20,
+ "cache_limit_gb": 0,
+ "gdn_checkpoint": 1,
+ "training_seconds": 2618.8,
+ "s_per_step": 17.23,
+ "mlx_peak_gib": 20.344,
+ "val_loss": {
+  "1": 0.906,
+  "38": 0.307,
+  "76": 0.325,
+  "114": 0.331,
+  "152": 0.372
+ },
+ "evaluated_checkpoint": "step 76 (epoch 1)",
+ "heldout_v2_first_pass": {
+  "base": 0.333,
+  "adapter": 0.267,
+  "delta": -0.067,
+  "paired_ci95": [
+   -0.2,
+   0.0667
+  ],
+  "n": 30
+ },
+ "notes": [
+  "first two attempts stopped by mem_guard: GDN_CHECKPOINT default was off (fixed 9e67fdb)",
+  "first eval INVALID: mlx_lm.server ignored per-request adapter for default_model; rerun with --adapter-path"
+ ]
+}

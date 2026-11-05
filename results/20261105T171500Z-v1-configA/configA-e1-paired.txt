@@ -1,0 +1,3 @@
+first_pass: base=0.333, adapter=0.267, delta=-0.067, paired-bootstrap-95%=(-0.2, 0.06666666666666667), n_tasks=30
+passed: base=0.333, adapter=0.267, delta=-0.067, paired-bootstrap-95%=(-0.2, 0.06666666666666667), n_tasks=30
+attempt_score (lower better): base=1.667, adapter=1.733, delta=+0.067, paired-bootstrap-95%=(-0.06666666666666667, 0.2), n_tasks=30

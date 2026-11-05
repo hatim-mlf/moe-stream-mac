@@ -1,0 +1,257 @@
+{
+ "benchmark_revision": "f36dc85b0ac3e23e0f8f2abab1ff90a0663668b7a58a1fc49cf9e338c326ff33",
+ "split": "heldout-v2",
+ "suite": "heldout-v2",
+ "model": "default_model",
+ "adapter": "results/20261105T171500Z-v1-configA/adapter-e1 (loaded at server start)",
+ "attempt_cap": 1,
+ "endpoint": "http://127.0.0.1:8080/v1/chat/completions",
+ "temperature": 0.0,
+ "seed": null,
+ "samples": 1,
+ "max_tokens": 8192,
+ "review_notes": false,
+ "results": [
+  {
+   "task_id": "c_axis_record",
+   "passed": false,
+   "first_pass": false,
+   "attempts": 1,
+   "attempt_score": 2,
+   "output_tail": "No single fenced code block found in model response."
+  },
+  {
+   "task_id": "c_bits3_decode",
+   "passed": false,
+   "first_pass": false,
+   "attempts": 1,
+   "attempt_score": 2,
+   "output_tail": ""
+  },
+  {
+   "task_id": "c_echo_ring",
+   "passed": false,
+   "first_pass": false,
+   "attempts": 1,
+   "attempt_score": 2,
+   "output_tail": "No single fenced code block found in model response."
+  },
+  {
+   "task_id": "c_group_lse",
+   "passed": false,
+   "first_pass": false,
+   "attempts": 1,
+   "attempt_score": 2,
+   "output_tail": "case nonfinite-input-atomic index 0 expected 71 got 2.31326175 (tol 0.000711)\n"
+  },
+  {
+   "task_id": "c_rank_topk",
+   "passed": false,
+   "first_pass": false,
+   "attempts": 1,
+   "attempt_score": 2,
+   "output_tail": "case stable-tied-top-k index 1 expected 2 got 1\n"
+  },
+  {
+   "task_id": "c_rms_gate",
+   "passed": true,
+   "first_pass": true,
+   "attempts": 1,
+   "attempt_score": 1,
+   "output_tail": ""
+  },
+  {
+   "task_id": "c_sat8_pair",
+   "passed": true,
+   "first_pass": true,
+   "attempts": 1,
+   "attempt_score": 1,
+   "output_tail": ""
+  },
+  {
+   "task_id": "c_scan_checked",
+   "passed": false,
+   "first_pass": false,
+   "attempts": 1,
+   "attempt_score": 2,
+   "output_tail": "case positive-overflow-atomic index 0 expected 51 got 2147483647\n"
+  },
+  {
+   "task_id": "c_skeleton_clamp",
+   "passed": false,
+   "first_pass": false,
+   "attempts": 1,
+   "attempt_score": 2,
+   "output_tail": "case nonfinite-input-atomic index 0 expected 71 got 0\n"
+  },
+  {
+   "task_id": "c_skeleton_pair",
+   "passed": false,
+   "first_pass": false,
+   "attempts": 1,
+   "attempt_score": 2,
+   "output_tail": "case signed-min-max index 0 expected 0 got -3\n"
+  },
+  {
+   "task_id": "c_skeleton_window",
+   "passed": false,
+   "first_pass": false,
+   "attempts": 1,
+   "attempt_score": 2,
+   "output_tail": "case nonfinite-atomic index 0 expected 51 got 2\n"
+  },
+  {
+   "task_id": "c_span_alias",
+   "passed": false,
+   "first_pass": false,
+   "attempts": 1,
+   "attempt_score": 2,
+   "output_tail": ""
+  },
+  {
+   "task_id": "c_stable_norm",
+   "passed": false,
+   "first_pass": false,
+   "attempts": 1,
+   "attempt_score": 2,
+   "output_tail": "case partial-overlap-forward index 0 expected -1 got 0\n"
+  },
+  {
+   "task_id": "c_strided_proj",
+   "passed": true,
+   "first_pass": true,
+   "attempts": 1,
+   "attempt_score": 1,
+   "output_tail": ""
+  },
+  {
+   "task_id": "c_u4_groupdot",
+   "passed": false,
+   "first_pass": false,
+   "attempts": 1,
+   "attempt_score": 2,
+   "output_tail": "No single fenced code block found in model response."
+  },
+  {
+   "task_id": "p_affine_groups",
+   "passed": false,
+   "first_pass": false,
+   "attempts": 1,
+   "attempt_score": 2,
+   "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-zvnc3ber/tests/test_p_affine_groups.py\", line 68, in <module>\n    y = dequant_byte_groups(p, s, b, 2)\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-zvnc3ber/candidate.py\", line 16, in dequant_byte_groups\n    raise TypeError(\"scales must be a rank-1 real numeric array\")\nTypeError: scales must be a rank-1 real numeric array\n"
+  },
+  {
+   "task_id": "p_axis_layout",
+   "passed": false,
+   "first_pass": false,
+   "attempts": 1,
+   "attempt_score": 2,
+   "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-7v56vhqg/tests/test_p_axis_layout.py\", line 55, in <module>\n    y = move_feature_axis(x, 0, -1)\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-7v56vhqg/candidate.py\", line 12, in move_feature_axis\n    raise ValueError(\"axis out of range\")\nValueError: axis out of range\n"
+  },
+  {
+   "task_id": "p_axis_take",
+   "passed": false,
+   "first_pass": false,
+   "attempts": 1,
+   "attempt_score": 2,
+   "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-p8dd8ttc/tests/test_p_axis_take.py\", line 55, in <module>\n    check(\n    ~~~~~^\n        \"gather-values-order-duplicates\", 0, True, np.array_equal(y, naive_take(x, pos, 1))\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-p8dd8ttc/tests/test_p_axis_take.py\", line 25, in check\n    raise AssertionError(\n        f\"case {case} index {index}: expected {expected!r}, got {got!r}\"\n    )\nAssertionError: case gather-values-order-duplicates index 0: expected True, got False\n"
+  },
+  {
+   "task_id": "p_block_header",
+   "passed": true,
+   "first_pass": true,
+   "attempts": 1,
+   "attempt_score": 1,
+   "output_tail": ""
+  },
+  {
+   "task_id": "p_bytes_lru",
+   "passed": false,
+   "first_pass": false,
+   "attempts": 1,
+   "attempt_score": 2,
+   "output_tail": "No single fenced code block found in model response."
+  },
+  {
+   "task_id": "p_chunk_plan",
+   "passed": true,
+   "first_pass": true,
+   "attempts": 1,
+   "attempt_score": 1,
+   "output_tail": ""
+  },
+  {
+   "task_id": "p_dtype_blend",
+   "passed": true,
+   "first_pass": true,
+   "attempts": 1,
+   "attempt_score": 1,
+   "output_tail": ""
+  },
+  {
+   "task_id": "p_lex_order",
+   "passed": false,
+   "first_pass": false,
+   "attempts": 1,
+   "attempt_score": 2,
+   "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-4muo9t6l/tests/test_p_lex_order.py\", line 64, in <module>\n    verify(\"score-group-source-ties\", s, g, 5)\n    ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-4muo9t6l/tests/test_p_lex_order.py\", line 49, in verify\n    got = stable_rank_rows(s, g, k)\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-4muo9t6l/candidate.py\", line 9, in stable_rank_rows\n    if not np.issubdtype(scores.dtype, (np.integer, np.floating)):\n           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/hatim/moe-stream-mac/.venv/lib/python3.14/site-packages/numpy/_core/numerictypes.py\", line 479, in issubdtype\n    arg2 = dtype(arg2).type\n           ~~~~~^^^^^^\nTypeError: Converting 'np.integer' or 'np.signedinteger' to a dtype is not allowed\n"
+  },
+  {
+   "task_id": "p_mask_out",
+   "passed": false,
+   "first_pass": false,
+   "attempts": 1,
+   "attempt_score": 2,
+   "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-s71ez7pe/tests/test_p_mask_out.py\", line 74, in <module>\n    check(\"broadcast-mask-values\", 0, True, np.array_equal(y, [[2.5, 2], [7.5, 4]]))\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-s71ez7pe/tests/test_p_mask_out.py\", line 26, in check\n    raise AssertionError(\n        f\"case {case} index {index}: expected {expected!r}, got {got!r}\"\n    )\nAssertionError: case broadcast-mask-values index 0: expected True, got False\n"
+  },
+  {
+   "task_id": "p_runs_merge",
+   "passed": false,
+   "first_pass": false,
+   "attempts": 1,
+   "attempt_score": 2,
+   "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-tteeq1n7/tests/test_p_runs_merge.py\", line 86, in <module>\n    verify(\n    ~~~~~~^\n        \"stable-run-ties-and-empty-run\",\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    ...<4 lines>...\n        ],\n        ^^\n    )\n    ^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-tteeq1n7/tests/test_p_runs_merge.py\", line 58, in verify\n    check(case + \"-values-dtype\", 0, dtype, got_v.dtype)\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-tteeq1n7/tests/test_p_runs_merge.py\", line 25, in check\n    raise AssertionError(\n        f\"case {case} index {index}: expected {expected!r}, got {got!r}\"\n    )\nAssertionError: case stable-run-ties-and-empty-run-values-dtype index 0: expected dtype('int16'), got dtype('float64')\n"
+  },
+  {
+   "task_id": "p_segment_pool",
+   "passed": false,
+   "first_pass": false,
+   "attempts": 1,
+   "attempt_score": 2,
+   "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-8lygodoo/tests/test_p_segment_pool.py\", line 69, in <module>\n    verify(\"leading-rows-and-empty-segments\", v, ids, 4)\n    ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-8lygodoo/tests/test_p_segment_pool.py\", line 49, in verify\n    got = segment_reduce_sum(v, ids, n)\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-8lygodoo/candidate.py\", line 26, in segment_reduce_sum\n    out_shape=(n_segment,value_arr.shape[1:])\n               ^^^^^^^^^\nNameError: name 'n_segment' is not defined. Did you mean: 'n_segments'?\n"
+  },
+  {
+   "task_id": "p_skeleton_calibrate",
+   "passed": false,
+   "first_pass": false,
+   "attempts": 1,
+   "attempt_score": 2,
+   "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-nj3j1c9b/tests/test_p_skeleton_calibrate.py\", line 71, in <module>\n    check(\n    ~~~~~^\n        \"skeleton-fixed-lines\",\n        ^^^^^^^^^^^^^^^^^^^^^^^\n    ...<2 lines>...\n        _without_todo(path.read_text()),\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-nj3j1c9b/tests/test_p_skeleton_calibrate.py\", line 30, in check\n    raise AssertionError(\n        f\"case {case} index {index}: expected {expected!r}, got {got!r}\"\n    )\nAssertionError: case skeleton-fixed-lines index 0: expected ['import numpy as np\\n', '\\n', 'def calibrate_scores(raw, temperature, offset):\\n', '    # TODO_BEGIN\\n', '    # TODO_END\\n'], got ['import numpy as np\\n', 'def calibrate_scores(raw, temperature, offset):\\n', '    # TODO_BEGIN\\n', '    # TODO_END\\n']\n"
+  },
+  {
+   "task_id": "p_skeleton_delta",
+   "passed": true,
+   "first_pass": true,
+   "attempts": 1,
+   "attempt_score": 1,
+   "output_tail": ""
+  },
+  {
+   "task_id": "p_skeleton_diags",
+   "passed": false,
+   "first_pass": false,
+   "attempts": 1,
+   "attempt_score": 2,
+   "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-35ye70s7/tests/test_p_skeleton_diags.py\", line 72, in <module>\n    check(\n    ~~~~~^\n        \"skeleton-fixed-lines\",\n        ^^^^^^^^^^^^^^^^^^^^^^^\n    ...<2 lines>...\n        _without_todo(path.read_text()),\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-35ye70s7/tests/test_p_skeleton_diags.py\", line 30, in check\n    raise AssertionError(\n        f\"case {case} index {index}: expected {expected!r}, got {got!r}\"\n    )\nAssertionError: case skeleton-fixed-lines index 0: expected ['import numpy as np\\n', '\\n', 'def diagonal_means(matrix):\\n', '    # TODO_BEGIN\\n', '    # TODO_END\\n'], got ['import numpy as np\\n', 'def diagonal_means(matrix):\\n', '    # TODO_BEGIN\\n', '    # TODO_END\\n']\n"
+  },
+  {
+   "task_id": "p_window_copy",
+   "passed": true,
+   "first_pass": true,
+   "attempts": 1,
+   "attempt_score": 1,
+   "output_tail": ""
+  }
+ ],
+ "suite_sha256": "f36dc85b0ac3e23e0f8f2abab1ff90a0663668b7a58a1fc49cf9e338c326ff33"
+}
