@@ -1,0 +1,33 @@
+{
+  "benchmark_revision": "f36dc85b0ac3e23e0f8f2abab1ff90a0663668b7a58a1fc49cf9e338c326ff33",
+  "split": "heldout-v2",
+  "suite": "heldout-v2",
+  "model": "default_model",
+  "adapter": "base",
+  "attempt_cap": 1,
+  "endpoint": "http://127.0.0.1:8080/v1/chat/completions",
+  "temperature": 0.0,
+  "seed": null,
+  "samples": 1,
+  "max_tokens": 8192,
+  "review_notes": false,
+  "results": [
+    {
+      "task_id": "c_axis_record",
+      "passed": false,
+      "first_pass": false,
+      "attempts": 1,
+      "attempt_score": 2,
+      "output_tail": "No single fenced code block found in model response."
+    },
+    {
+      "task_id": "c_bits3_decode",
+      "passed": false,
+      "first_pass": false,
+      "attempts": 1,
+      "attempt_score": 2,
+      "output_tail": "No single fenced code block found in model response."
+    }
+  ],
+  "suite_sha256": "f36dc85b0ac3e23e0f8f2abab1ff90a0663668b7a58a1fc49cf9e338c326ff33"
+}

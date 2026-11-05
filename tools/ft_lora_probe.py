@@ -18,6 +18,10 @@ def timed_train(*args, **kwargs):
 
 _original_train = lora.train
 lora.train = timed_train
+mx.set_wired_limit(mx.device_info()["max_recommended_working_set_size"])  # else macOS compresses weights and stalls
+import os
+if os.environ.get("MLX_CACHE_LIMIT_GB"):
+    mx.set_cache_limit(int(float(os.environ["MLX_CACHE_LIMIT_GB"]) * 2**30))
 mx.reset_peak_memory()
 lora.main()
 mx.eval(mx.array(0))

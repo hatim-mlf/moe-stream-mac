@@ -16,3 +16,7 @@ results/mlx-server.log
 # raw routing traces and engine run logs
 results/*/traces/
 results/*/out/
+results/*/adapter/
+results/*/*adapter/
+results/*/*.log
+results/*/sample-output.txt

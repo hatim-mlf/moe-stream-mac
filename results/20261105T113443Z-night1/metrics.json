@@ -1,0 +1,47 @@
+{
+  "run": "night1-pipeline-check",
+  "date": "2026-11-05",
+  "status": "pipeline_ok_adapter_nogo",
+  "wired_limit_mb": 28672,
+  "model": "Qwen3.6-35B-A3B-4bit",
+  "lora": {
+    "num_layers": 2,
+    "rank": 8,
+    "scale": 20.0,
+    "lr": 1e-05,
+    "iters": 66,
+    "max_seq_length": 640
+  },
+  "data": {
+    "train_rows": 22,
+    "valid_rows": 6,
+    "max_tokens_per_row": 600,
+    "source": "data/finetune/night1"
+  },
+  "train": {
+    "mlx_peak_gib": 24.46,
+    "val_loss": {
+      "1": 0.763,
+      "22": 0.337,
+      "44": 0.277,
+      "66": 0.249
+    },
+    "final_train_loss": 0.056
+  },
+  "eval": {
+    "heldout_v2_first": {
+      "passed": 0,
+      "total": 2,
+      "note": "partial; repetition loop to 8192-token cap"
+    },
+    "base_v2_first": "10/30"
+  },
+  "memory_probes_gib": {
+    "1layer_470tok": 19.48,
+    "4layer_470tok": 25.14,
+    "4layer_5269tok": "OOM",
+    "4layer_1200-2968tok": "OOM",
+    "2layer_1200-2968tok": "OOM",
+    "1layer_1200-2968tok": 24.19
+  }
+}
