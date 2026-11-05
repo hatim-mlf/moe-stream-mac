@@ -1,6 +1,6 @@
-# DRAFT (not filed): mx.checkpoint does not bound backward memory of a chunked recurrence when per-step inputs need gradients
+# FILED 2026-11-05 as ml-explore/mlx#4837: mx.checkpoint does not bound backward memory of a chunked recurrence when per-step inputs need gradients
 
-To file on github.com/ml-explore/mlx only after the user approves.
+Filed: https://github.com/ml-explore/mlx/issues/4837 (user approved).
 
 **MLX version:** 0.32.4, macOS 26.4.1, Apple M1 Max 32 GB.
 
