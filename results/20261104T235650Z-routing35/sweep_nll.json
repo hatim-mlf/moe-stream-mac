@@ -1,0 +1,74 @@
+{
+ "maxlen": 2048,
+ "n_rows": {
+  "code": 30,
+  "other": 12,
+  "code_greedy": 12
+ },
+ "mode": "select",
+ "results": [
+  {
+   "arm": "base",
+   "b": 0,
+   "code": 0.31207,
+   "other": 0.34276,
+   "code_greedy": 0.27111
+  },
+  {
+   "arm": "coding16",
+   "b": 0.5,
+   "code": 0.31315,
+   "other": 0.34378,
+   "code_greedy": 0.27449
+  },
+  {
+   "arm": "random16",
+   "b": 0.5,
+   "code": 0.31637,
+   "other": 0.35299,
+   "code_greedy": 0.2805
+  },
+  {
+   "arm": "coding16",
+   "b": 1.0,
+   "code": 0.31976,
+   "other": 0.35606,
+   "code_greedy": 0.29727
+  },
+  {
+   "arm": "random16",
+   "b": 1.0,
+   "code": 0.32426,
+   "other": 0.3834,
+   "code_greedy": 0.30188
+  },
+  {
+   "arm": "coding16",
+   "b": 2.0,
+   "code": 0.37826,
+   "other": 0.73547,
+   "code_greedy": 0.48136
+  },
+  {
+   "arm": "random16",
+   "b": 2.0,
+   "code": 0.45483,
+   "other": 0.82135,
+   "code_greedy": 0.60795
+  },
+  {
+   "arm": "coding16",
+   "b": 4.0,
+   "code": 0.67911,
+   "other": 5.18903,
+   "code_greedy": 1.69174
+  },
+  {
+   "arm": "random16",
+   "b": 4.0,
+   "code": 2.55441,
+   "other": 4.16057,
+   "code_greedy": 2.83132
+  }
+ ]
+}
