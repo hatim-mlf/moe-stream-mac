@@ -1,0 +1,9 @@
+ok  split_ids
+Traceback (most recent call last):
+  File "/Users/hatim/moe-stream-mac/tools/test_route_nll.py", line 65, in <module>
+    main()
+    ~~~~^^
+  File "/Users/hatim/moe-stream-mac/tools/test_route_nll.py", line 50, in main
+    assert n == 4 and math.isclose(nll, expected, rel_tol=1e-4), (nll, expected)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: (-0.0, 5.194106762473893e-07)

@@ -1,0 +1,12 @@
+ok  split_ids
+Traceback (most recent call last):
+  File "/Users/hatim/moe-stream-mac/tools/test_route_nll.py", line 65, in <module>
+    main()
+    ~~~~^^
+  File "/Users/hatim/moe-stream-mac/tools/test_route_nll.py", line 46, in main
+    nll, n = rn.completion_nll(uniform_model(vocab), small_full[:2], small_full)
+             ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/hatim/moe-stream-mac/tools/route_nll.py", line 32, in completion_nll
+    nlls = -mx.take_along_axis(log_probs, mx.expand_dims(answer_mx, -1), axis=-1).squeeze(-1)
+            ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: [take_along_axis] Indices of dimension 2 does not match array of dimension 3.

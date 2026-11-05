@@ -1,0 +1,12 @@
+{
+  "seconds": 32.958,
+  "usage": {
+    "prompt_tokens": 2278,
+    "completion_tokens": 938,
+    "total_tokens": 3216,
+    "prompt_tokens_details": {
+      "cached_tokens": 414
+    }
+  },
+  "exit_code": 1
+}

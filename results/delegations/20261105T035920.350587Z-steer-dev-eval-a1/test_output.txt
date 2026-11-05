@@ -1,0 +1,9 @@
+ok  load_pairs
+Traceback (most recent call last):
+  File "/Users/hatim/moe-stream-mac/tools/test_steer_dev_eval.py", line 35, in <module>
+    main()
+    ~~~~^^
+  File "/Users/hatim/moe-stream-mac/tools/test_steer_dev_eval.py", line 24, in main
+    assert all(r["passed"] for r in good), [r["task_id"] for r in good if not r["passed"]]
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ['py_rotate_left', 'py_strip_outer_quotes', 'py_exact_match_indices', 'py_parse_csv_ints', 'py_clamp_values', 'py_min_with_index', 'py_map_with_count']

@@ -1,0 +1,12 @@
+ok  split_ids
+Traceback (most recent call last):
+  File "/Users/hatim/moe-stream-mac/tools/test_route_nll.py", line 65, in <module>
+    main()
+    ~~~~^^
+  File "/Users/hatim/moe-stream-mac/tools/test_route_nll.py", line 46, in main
+    nll, n = rn.completion_nll(uniform_model(vocab), small_full[:2], small_full)
+             ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/hatim/moe-stream-mac/tools/route_nll.py", line 32, in completion_nll
+    nlls = -mx.gather(log_probs, 0, answer_mx)
+            ^^^^^^^^^
+AttributeError: module 'mlx.core' has no attribute 'gather'. Did you mean: 'gather_mm'?
