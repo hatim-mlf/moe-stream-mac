@@ -49,10 +49,14 @@ _preflight_exit = mem_preflight.lora_preflight(sys.argv[1:])
 if _preflight_exit:
     raise SystemExit(_preflight_exit)
 mx.reset_peak_memory()
-if os.environ.get("GDN_CHECKPOINT", "0") == "1":
+if os.environ.get("GDN_CHECKPOINT", "1") == "1":
     import gdn_checkpoint
 
     gdn_checkpoint.install()
+if os.environ.get("GDN_VJP", "0") == "1":
+    import gdn_vjp
+
+    gdn_vjp.install()
 _total_memory = mem_guard.total_memory_bytes()
 _headroom = mem_guard.headroom_bytes_from_env(os.environ)
 _limit = _total_memory - _headroom

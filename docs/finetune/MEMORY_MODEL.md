@@ -249,7 +249,14 @@ only layer 39 (full attention), which is why it fits at 3k tokens. Every L ≥ 2
   Minimal repro (`results/20261105T143800Z-memory-model/repro/ckpt_toy2.py`, 2 MiB state): gradient w.r.t. the
   initial state only: checkpointed backward is flat (0.37-0.43 GiB, T = 256-1024). Gradients w.r.t. per-step
   q, k, v (what training needs): 1.03 / 1.58 / 2.69 GiB, growing with T. Mechanism in MLX 0.32.4 not yet traced.
-  This is why `GDN_CHECKPOINT` saves 0-15%; it now defaults to off in `tools/ft_lora_lowmem.py`.
+  This is why `GDN_CHECKPOINT` saves only 0-15% on the backward of an *adapted* GDN layer.
+- **Correction (17:20): keep `GDN_CHECKPOINT=1` (default on).** It does matter for the *frozen* GDN layers.
+  In training mode every GDN layer runs the ops path (`use_kernel=not self.training`), including the 30 frozen
+  ones that need no gradient. The checkpointed version roughly halves their forward cost. Real 1-layer
+  training, one step on the v1 rows: row 29 (5,269 tokens) and row 3 (4,380 tokens) hit mem_guard with the
+  checkpoint off (> 29.5 GiB wired), and peak at 20.34 / 20.26 GiB with it on. Flipping the default off (16:30)
+  caused the first two config-A stops. All sweep numbers above were taken with it on, so the law holds with it on.
+  Follow-up: frozen GDN layers could run the inference kernel (no autodiff graph) instead.
 - Open #2: wired − active grows with L (2.4 → 4.0 GiB), outside MLX's counters. The budget uses the largest
   measured gap (4.0 GiB) as the OS reserve, which makes the preflight conservative.
 - Open #3: the trainer is 2.94 GiB above the isolated step at L = 2, T = 1000 after padding (untraced).
