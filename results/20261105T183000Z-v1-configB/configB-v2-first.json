@@ -1,0 +1,257 @@
+{
+ "benchmark_revision": "f36dc85b0ac3e23e0f8f2abab1ff90a0663668b7a58a1fc49cf9e338c326ff33",
+ "split": "heldout-v2",
+ "suite": "heldout-v2",
+ "model": "default_model",
+ "adapter": "results/20261105T183000Z-v1-configB/adapter step 124 (loaded at server start)",
+ "attempt_cap": 1,
+ "endpoint": "http://127.0.0.1:8080/v1/chat/completions",
+ "temperature": 0.0,
+ "seed": null,
+ "samples": 1,
+ "max_tokens": 8192,
+ "review_notes": false,
+ "results": [
+  {
+   "task_id": "c_axis_record",
+   "passed": false,
+   "first_pass": false,
+   "attempts": 1,
+   "attempt_score": 2,
+   "output_tail": "No single fenced code block found in model response."
+  },
+  {
+   "task_id": "c_bits3_decode",
+   "passed": false,
+   "first_pass": false,
+   "attempts": 1,
+   "attempt_score": 2,
+   "output_tail": "case cross-byte-values index 0 expected 1 got 4\n"
+  },
+  {
+   "task_id": "c_echo_ring",
+   "passed": false,
+   "first_pass": false,
+   "attempts": 1,
+   "attempt_score": 2,
+   "output_tail": "case get-newest index 1 expected 40 got 20\n"
+  },
+  {
+   "task_id": "c_group_lse",
+   "passed": false,
+   "first_pass": false,
+   "attempts": 1,
+   "attempt_score": 2,
+   "output_tail": "No single fenced code block found in model response."
+  },
+  {
+   "task_id": "c_rank_topk",
+   "passed": false,
+   "first_pass": false,
+   "attempts": 1,
+   "attempt_score": 2,
+   "output_tail": "No single fenced code block found in model response."
+  },
+  {
+   "task_id": "c_rms_gate",
+   "passed": false,
+   "first_pass": false,
+   "attempts": 1,
+   "attempt_score": 2,
+   "output_tail": "No single fenced code block found in model response."
+  },
+  {
+   "task_id": "c_sat8_pair",
+   "passed": true,
+   "first_pass": true,
+   "attempts": 1,
+   "attempt_score": 1,
+   "output_tail": ""
+  },
+  {
+   "task_id": "c_scan_checked",
+   "passed": false,
+   "first_pass": false,
+   "attempts": 1,
+   "attempt_score": 2,
+   "output_tail": "No single fenced code block found in model response."
+  },
+  {
+   "task_id": "c_skeleton_clamp",
+   "passed": false,
+   "first_pass": false,
+   "attempts": 1,
+   "attempt_score": 2,
+   "output_tail": "case nonfinite-input-atomic index 0 expected 71 got 0\n"
+  },
+  {
+   "task_id": "c_skeleton_pair",
+   "passed": false,
+   "first_pass": false,
+   "attempts": 1,
+   "attempt_score": 2,
+   "output_tail": "case signed-min-max index 0 expected 0 got -2\n"
+  },
+  {
+   "task_id": "c_skeleton_window",
+   "passed": false,
+   "first_pass": false,
+   "attempts": 1,
+   "attempt_score": 2,
+   "output_tail": "case nonfinite-input index 0 expected -1 got 0\n"
+  },
+  {
+   "task_id": "c_span_alias",
+   "passed": false,
+   "first_pass": false,
+   "attempts": 1,
+   "attempt_score": 2,
+   "output_tail": "No single fenced code block found in model response."
+  },
+  {
+   "task_id": "c_stable_norm",
+   "passed": false,
+   "first_pass": false,
+   "attempts": 1,
+   "attempt_score": 2,
+   "output_tail": "No single fenced code block found in model response."
+  },
+  {
+   "task_id": "c_strided_proj",
+   "passed": false,
+   "first_pass": false,
+   "attempts": 1,
+   "attempt_score": 2,
+   "output_tail": "No single fenced code block found in model response."
+  },
+  {
+   "task_id": "c_u4_groupdot",
+   "passed": false,
+   "first_pass": false,
+   "attempts": 1,
+   "attempt_score": 2,
+   "output_tail": "No single fenced code block found in model response."
+  },
+  {
+   "task_id": "p_affine_groups",
+   "passed": false,
+   "first_pass": false,
+   "attempts": 1,
+   "attempt_score": 2,
+   "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-icb29tzp/tests/test_p_affine_groups.py\", line 68, in <module>\n    y = dequant_byte_groups(p, s, b, 2)\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-icb29tzp/candidate.py\", line 6, in dequant_byte_groups\n    raise TypeError(\"scales must be a rank-1 numeric array\")\nTypeError: scales must be a rank-1 numeric array\n"
+  },
+  {
+   "task_id": "p_axis_layout",
+   "passed": false,
+   "first_pass": false,
+   "attempts": 1,
+   "attempt_score": 2,
+   "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-yo0pfye5/tests/test_p_axis_layout.py\", line 101, in <module>\n    check(\"random-axis-move-copy\", case, False, np.shares_memory(a, got))\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-yo0pfye5/tests/test_p_axis_layout.py\", line 25, in check\n    raise AssertionError(\n        f\"case {case} index {index}: expected {expected!r}, got {got!r}\"\n    )\nAssertionError: case random-axis-move-copy index 4: expected False, got True\n"
+  },
+  {
+   "task_id": "p_axis_take",
+   "passed": false,
+   "first_pass": false,
+   "attempts": 1,
+   "attempt_score": 2,
+   "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-eec4yy3l/tests/test_p_axis_take.py\", line 55, in <module>\n    check(\n    ~~~~~^\n        \"gather-values-order-duplicates\", 0, True, np.array_equal(y, naive_take(x, pos, 1))\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-eec4yy3l/tests/test_p_axis_take.py\", line 25, in check\n    raise AssertionError(\n        f\"case {case} index {index}: expected {expected!r}, got {got!r}\"\n    )\nAssertionError: case gather-values-order-duplicates index 0: expected True, got False\n"
+  },
+  {
+   "task_id": "p_block_header",
+   "passed": false,
+   "first_pass": false,
+   "attempts": 1,
+   "attempt_score": 2,
+   "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-nqtnod71/tests/test_p_block_header.py\", line 69, in <module>\n    error(name, ValueError, lambda bad=bad: unpack_frame_header(bad))\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-nqtnod71/tests/test_p_block_header.py\", line 36, in error\n    raise AssertionError(f\"case {case} index 0: expected {typ}, got {got!r}\")\nAssertionError: case reserved-flags index 0: expected <class 'ValueError'>, got (8, 0, 0)\n"
+  },
+  {
+   "task_id": "p_bytes_lru",
+   "passed": false,
+   "first_pass": false,
+   "attempts": 1,
+   "attempt_score": 2,
+   "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-0fv1el_s/tests/test_p_bytes_lru.py\", line 118, in <module>\n    check(\"store-c-evicts-lru-b\", 0, True, c.store_cached(\"c\", np.array([1], np.int32)))\n                                           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-0fv1el_s/candidate.py\", line 37, in store_cached\n    self.used_bytes-=evicted_value.nbytes\n                     ^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'tuple' object has no attribute 'nbytes'\n"
+  },
+  {
+   "task_id": "p_chunk_plan",
+   "passed": true,
+   "first_pass": true,
+   "attempts": 1,
+   "attempt_score": 1,
+   "output_tail": ""
+  },
+  {
+   "task_id": "p_dtype_blend",
+   "passed": false,
+   "first_pass": false,
+   "attempts": 1,
+   "attempt_score": 2,
+   "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-nrzomaic/tests/test_p_dtype_blend.py\", line 7, in <module>\n    from candidate import weighted_blend32\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-nrzomaic/candidate.py\", line 16\n    out=np.asarray(x,dtype=np.float64)*np.asarray(w,dtype=np.float64)+np.asarray(y,dtype=np.float64)*(1-np.asarray(w,dtype=np.float64)))\n                                                                                                                                       ^\nSyntaxError: unmatched ')'\n"
+  },
+  {
+   "task_id": "p_lex_order",
+   "passed": false,
+   "first_pass": false,
+   "attempts": 1,
+   "attempt_score": 2,
+   "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-lpujo0e7/tests/test_p_lex_order.py\", line 7, in <module>\n    from candidate import stable_rank_rows\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-lpujo0e7/candidate.py\", line 15\n    order=np.lexsort((np.arange(len(x),dtype=np.int64),g.astype(np.int64),-x.astype(np.float64))))\n                                                                                                 ^\nSyntaxError: unmatched ')'\n"
+  },
+  {
+   "task_id": "p_mask_out",
+   "passed": false,
+   "first_pass": false,
+   "attempts": 1,
+   "attempt_score": 2,
+   "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-t6ebps4c/tests/test_p_mask_out.py\", line 74, in <module>\n    check(\"broadcast-mask-values\", 0, True, np.array_equal(y, [[2.5, 2], [7.5, 4]]))\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-t6ebps4c/tests/test_p_mask_out.py\", line 26, in check\n    raise AssertionError(\n        f\"case {case} index {index}: expected {expected!r}, got {got!r}\"\n    )\nAssertionError: case broadcast-mask-values index 0: expected True, got False\n"
+  },
+  {
+   "task_id": "p_runs_merge",
+   "passed": false,
+   "first_pass": false,
+   "attempts": 1,
+   "attempt_score": 2,
+   "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-tawrm9fn/tests/test_p_runs_merge.py\", line 86, in <module>\n    verify(\n    ~~~~~~^\n        \"stable-run-ties-and-empty-run\",\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    ...<4 lines>...\n        ],\n        ^^\n    )\n    ^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-tawrm9fn/tests/test_p_runs_merge.py\", line 56, in verify\n    got_v, got_o = merge_sorted_runs(iter(runs))\n                   ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-tawrm9fn/candidate.py\", line 8, in merge_sorted_runs\n    raise TypeError(\"expected numeric floating arrays\")\nTypeError: expected numeric floating arrays\n"
+  },
+  {
+   "task_id": "p_segment_pool",
+   "passed": false,
+   "first_pass": false,
+   "attempts": 1,
+   "attempt_score": 2,
+   "output_tail": "No single fenced code block found in model response."
+  },
+  {
+   "task_id": "p_skeleton_calibrate",
+   "passed": false,
+   "first_pass": false,
+   "attempts": 1,
+   "attempt_score": 2,
+   "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-wtt49cqq/tests/test_p_skeleton_calibrate.py\", line 71, in <module>\n    check(\n    ~~~~~^\n        \"skeleton-fixed-lines\",\n        ^^^^^^^^^^^^^^^^^^^^^^^\n    ...<2 lines>...\n        _without_todo(path.read_text()),\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-wtt49cqq/tests/test_p_skeleton_calibrate.py\", line 30, in check\n    raise AssertionError(\n        f\"case {case} index {index}: expected {expected!r}, got {got!r}\"\n    )\nAssertionError: case skeleton-fixed-lines index 0: expected ['import numpy as np\\n', '\\n', 'def calibrate_scores(raw, temperature, offset):\\n', '    # TODO_BEGIN\\n', '    # TODO_END\\n'], got ['import numpy as np\\n', 'def calibrate_scores(raw,temperature,offset):\\n', '    # TODO_BEGIN\\n', '    # TODO_END\\n']\n"
+  },
+  {
+   "task_id": "p_skeleton_delta",
+   "passed": false,
+   "first_pass": false,
+   "attempts": 1,
+   "attempt_score": 2,
+   "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-50bpgfl1/tests/test_p_skeleton_delta.py\", line 53, in <module>\n    check(\n    ~~~~~^\n        \"skeleton-fixed-lines\",\n        ^^^^^^^^^^^^^^^^^^^^^^^\n    ...<2 lines>...\n        _without_todo(path.read_text()),\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-50bpgfl1/tests/test_p_skeleton_delta.py\", line 30, in check\n    raise AssertionError(\n        f\"case {case} index {index}: expected {expected!r}, got {got!r}\"\n    )\nAssertionError: case skeleton-fixed-lines index 0: expected ['import struct\\n', 'import numpy as np\\n', '\\n', 'def encode_delta_bytes(values):\\n', '    # TODO_BEGIN\\n', '    # TODO_END\\n'], got ['import struct\\n', 'import numpy as np\\n', 'def encode_delta_bytes(values):\\n', '    # TODO_BEGIN\\n', '    # TODO_END\\n']\n"
+  },
+  {
+   "task_id": "p_skeleton_diags",
+   "passed": false,
+   "first_pass": false,
+   "attempts": 1,
+   "attempt_score": 2,
+   "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-gz3k8qm8/tests/test_p_skeleton_diags.py\", line 72, in <module>\n    check(\n    ~~~~~^\n        \"skeleton-fixed-lines\",\n        ^^^^^^^^^^^^^^^^^^^^^^^\n    ...<2 lines>...\n        _without_todo(path.read_text()),\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-gz3k8qm8/tests/test_p_skeleton_diags.py\", line 30, in check\n    raise AssertionError(\n        f\"case {case} index {index}: expected {expected!r}, got {got!r}\"\n    )\nAssertionError: case skeleton-fixed-lines index 0: expected ['import numpy as np\\n', '\\n', 'def diagonal_means(matrix):\\n', '    # TODO_BEGIN\\n', '    # TODO_END\\n'], got ['import numpy as np\\n', 'def diagonal_means(matrix):\\n', '    # TODO_BEGIN\\n', '    # TODO_END\\n']\n"
+  },
+  {
+   "task_id": "p_window_copy",
+   "passed": false,
+   "first_pass": false,
+   "attempts": 1,
+   "attempt_score": 2,
+   "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-b1wt64jk/tests/test_p_window_copy.py\", line 64, in <module>\n    verify(\"leading-axis-step\", x, 3, 2)\n    ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-b1wt64jk/tests/test_p_window_copy.py\", line 52, in verify\n    check(case + \"-shape\", 0, exp.shape, got.shape)\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-b1wt64jk/tests/test_p_window_copy.py\", line 25, in check\n    raise AssertionError(\n        f\"case {case} index {index}: expected {expected!r}, got {got!r}\"\n    )\nAssertionError: case leading-axis-step-shape index 0: expected (2, 3, 2, 2), got (2, 2, 2)\n"
+  }
+ ],
+ "suite_sha256": "f36dc85b0ac3e23e0f8f2abab1ff90a0663668b7a58a1fc49cf9e338c326ff33"
+}
