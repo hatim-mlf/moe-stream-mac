@@ -314,6 +314,9 @@ def _read_pairs(path, split):
 def _capture_cli(args):
     from mlx_lm import load
 
+    mx = _mlx()
+    # Wire the weights like mlx_lm.server does; otherwise macOS compresses them and capture stalls.
+    mx.set_wired_limit(mx.device_info()["max_recommended_working_set_size"])
     model, tokenizer = load(args.model)
     layers = find_layers(model)
     selected = sorted(_validate_layers(layers, args.layers))

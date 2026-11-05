@@ -1,0 +1,98 @@
+{
+ "label": "L28-a0.2",
+ "split": "dev",
+ "passed": 11,
+ "total": 15,
+ "rows": [
+  {
+   "task_id": "py_rotate_left",
+   "category": "spec",
+   "passed": true,
+   "output_tail": ""
+  },
+  {
+   "task_id": "py_strip_outer_quotes",
+   "category": "spec",
+   "passed": true,
+   "output_tail": ""
+  },
+  {
+   "task_id": "py_exact_match_indices",
+   "category": "spec",
+   "passed": true,
+   "output_tail": ""
+  },
+  {
+   "task_id": "c_reverse_chars",
+   "category": "spec",
+   "passed": false,
+   "output_tail": "tnzn84_934l2hr0vkvpg4n040000gn/T/tmpeox851st/candidate.c:15:12: error: use of undeclared identifier 'left'\n   15 |     size_t left = 0;\n      |            ^~~~\n/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/tmpeox851st/candidate.c:16:5: error: use of undeclared identifier 'size_t'; did you mean 'sizeof'?\n   16 |     size_t right = len - 1;\n      |     ^~~~~~\n      |     sizeof\n/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/tmpeox851st/candidate.c:16:12: error: use of undeclared identifier 'right'\n   16 |     size_t right = len - 1;\n      |            ^~~~~\n/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/tmpeox851st/candidate.c:16:20: error: use of undeclared identifier 'len'\n   16 |     size_t right = len - 1;\n      |                    ^~~\n/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/tmpeox851st/candidate.c:17:12: error: use of undeclared identifier 'left'\n   17 |     while (left < right) {\n      |            ^~~~\n/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/tmpeox851st/candidate.c:17:19: error: use of undeclared identifier 'right'\n   17 |     while (left < right) {\n      |                   ^~~~~\n/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/tmpeox851st/candidate.c:18:25: error: use of undeclared identifier 'left'\n   18 |         char tmp = text[left];\n      |                         ^~~~\n/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/tmpeox851st/candidate.c:19:14: error: use of undeclared identifier 'left'\n   19 |         text[left] = text[right];\n      |              ^~~~\n/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/tmpeox851st/candidate.c:19:27: error: use of undeclared identifier 'right'\n   19 |         text[left] = text[right];\n      |                           ^~~~~\n/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/tmpeox851st/candidate.c:20:14: error: use of undeclared identifier 'right'\n   20 |         text[right] = tmp;\n      |              ^~~~~\nfatal error: too many errors emitted, stopping now [-ferror-limit=]\n20 errors generated.\n"
+  },
+  {
+   "task_id": "c_xor_bytes",
+   "category": "spec",
+   "passed": false,
+   "output_tail": "compile failed:\n/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/tmpvvrahkz9/candidate.c:3:21: error: unknown type name 'uint8_t'\n    3 | int xor_bytes(const uint8_t *left, const uint8_t *right, uint8_t *out, size_t count) {\n      |                     ^\n/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/tmpvvrahkz9/candidate.c:3:42: error: unknown type name 'uint8_t'\n    3 | int xor_bytes(const uint8_t *left, const uint8_t *right, uint8_t *out, size_t count) {\n      |                                          ^\n/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/tmpvvrahkz9/candidate.c:3:58: error: unknown type name 'uint8_t'\n    3 | int xor_bytes(const uint8_t *left, const uint8_t *right, uint8_t *out, size_t count) {\n      |                                                          ^\n3 errors generated.\n"
+  },
+  {
+   "task_id": "c_count_ascii_digits",
+   "category": "spec",
+   "passed": true,
+   "output_tail": ""
+  },
+  {
+   "task_id": "py_parse_csv_ints",
+   "category": "review",
+   "passed": true,
+   "output_tail": ""
+  },
+  {
+   "task_id": "py_clamp_values",
+   "category": "review",
+   "passed": true,
+   "output_tail": ""
+  },
+  {
+   "task_id": "c_first_nonzero",
+   "category": "review",
+   "passed": true,
+   "output_tail": ""
+  },
+  {
+   "task_id": "c_ascii_lower",
+   "category": "review",
+   "passed": true,
+   "output_tail": ""
+  },
+  {
+   "task_id": "c_rotate_left",
+   "category": "review",
+   "passed": true,
+   "output_tail": ""
+  },
+  {
+   "task_id": "py_min_with_index",
+   "category": "api",
+   "passed": true,
+   "output_tail": ""
+  },
+  {
+   "task_id": "py_map_with_count",
+   "category": "api",
+   "passed": true,
+   "output_tail": ""
+  },
+  {
+   "task_id": "c_sat_sub",
+   "category": "api",
+   "passed": false,
+   "output_tail": "Assertion failed: (sat_sub(INT32_MAX, -1) == INT32_MAX), function main, file test.c, line 4.\n"
+  },
+  {
+   "task_id": "c_row_total",
+   "category": "api",
+   "passed": false,
+   "output_tail": "w_total(const int *matrix, size_t rows, size_t cols, size_t row, long long *out) {\n      |                                                            ^\n/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/tmprhq4e068/candidate.c:2:16: error: use of undeclared identifier 'NULL'\n    2 |     if (out == NULL) {\n      |                ^~~~\n/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/tmprhq4e068/candidate.c:5:19: error: use of undeclared identifier 'NULL'\n    5 |     if (matrix == NULL) {\n      |                   ^~~~\n/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/tmprhq4e068/candidate.c:16:5: error: use of undeclared identifier 'size_t'; did you mean 'sizeof'?\n   16 |     size_t offset = row * cols;\n      |     ^~~~~~\n      |     sizeof\n/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/tmprhq4e068/candidate.c:16:12: error: use of undeclared identifier 'offset'\n   16 |     size_t offset = row * cols;\n      |            ^~~~~~\n/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/tmprhq4e068/candidate.c:17:10: error: use of undeclared identifier 'size_t'; did you mean 'sizeof'?\n   17 |     for (size_t i = 0; i < cols; i++) {\n      |          ^~~~~~\n/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/tmprhq4e068/candidate.c:17:24: error: use of undeclared identifier 'i'\n   17 |     for (size_t i = 0; i < cols; i++) {\n      |                        ^\n/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/tmprhq4e068/candidate.c:17:34: error: use of undeclared identifier 'i'\n   17 |     for (size_t i = 0; i < cols; i++) {\n      |                                  ^\n/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/tmprhq4e068/candidate.c:18:23: error: use of undeclared identifier 'offset'\n   18 |         sum += matrix[offset + i];\n      |                       ^~~~~~\n/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/tmprhq4e068/candidate.c:18:32: error: use of undeclared identifier 'i'\n   18 |         sum += matrix[offset + i];\n      |                                ^\n12 errors generated.\n"
+  }
+ ]
+}
