@@ -1,0 +1,257 @@
+{
+  "benchmark_revision": "f36dc85b0ac3e23e0f8f2abab1ff90a0663668b7a58a1fc49cf9e338c326ff33",
+  "split": "heldout-v2",
+  "suite": "heldout-v2",
+  "model": "default_model",
+  "adapter": "base",
+  "attempt_cap": 1,
+  "endpoint": "http://127.0.0.1:8080/v1/chat/completions",
+  "temperature": 0.0,
+  "seed": null,
+  "samples": 1,
+  "max_tokens": 8192,
+  "review_notes": false,
+  "results": [
+    {
+      "task_id": "c_axis_record",
+      "passed": false,
+      "first_pass": false,
+      "attempts": 1,
+      "attempt_score": 2,
+      "output_tail": "case valid-basic index 0 expected 0 got -2\n"
+    },
+    {
+      "task_id": "c_bits3_decode",
+      "passed": false,
+      "first_pass": false,
+      "attempts": 1,
+      "attempt_score": 2,
+      "output_tail": ""
+    },
+    {
+      "task_id": "c_echo_ring",
+      "passed": false,
+      "first_pass": false,
+      "attempts": 1,
+      "attempt_score": 2,
+      "output_tail": "case invalid-next-get index 0 expected -1 got 0\n"
+    },
+    {
+      "task_id": "c_group_lse",
+      "passed": false,
+      "first_pass": false,
+      "attempts": 1,
+      "attempt_score": 2,
+      "output_tail": "case length-sum-too-small index 0 expected -1 got 0\n"
+    },
+    {
+      "task_id": "c_rank_topk",
+      "passed": false,
+      "first_pass": false,
+      "attempts": 1,
+      "attempt_score": 2,
+      "output_tail": "case stable-tied-top-k index 0 expected 1 got 0\n"
+    },
+    {
+      "task_id": "c_rms_gate",
+      "passed": false,
+      "first_pass": false,
+      "attempts": 1,
+      "attempt_score": 2,
+      "output_tail": "case no-heap-allocation index 0 expected 0 got 246\n"
+    },
+    {
+      "task_id": "c_sat8_pair",
+      "passed": true,
+      "first_pass": true,
+      "attempts": 1,
+      "attempt_score": 1,
+      "output_tail": ""
+    },
+    {
+      "task_id": "c_scan_checked",
+      "passed": false,
+      "first_pass": false,
+      "attempts": 1,
+      "attempt_score": 2,
+      "output_tail": "case positive-overflow-atomic index 0 expected 51 got 2147483647\n"
+    },
+    {
+      "task_id": "c_skeleton_clamp",
+      "passed": false,
+      "first_pass": false,
+      "attempts": 1,
+      "attempt_score": 2,
+      "output_tail": "case nonfinite-input-atomic index 0 expected 71 got 0\n"
+    },
+    {
+      "task_id": "c_skeleton_pair",
+      "passed": false,
+      "first_pass": false,
+      "attempts": 1,
+      "attempt_score": 2,
+      "output_tail": "build failed:\nIn file included from tests/test_c_skeleton_pair.c:7:\ntests/../candidate.c:25:26: error: '&&' within '||' [-Werror,-Wlogical-op-parentheses]\n   25 |     if (!valid || !neg_l && l_val > 3276 || neg_l && l_val > 3276) { valid = 0; }\n      |                ~~ ~~~~~~~^~~~~~~~~~~~~~~\ntests/../candidate.c:25:26: note: place parentheses around the '&&' expression to silence this warning\n   25 |     if (!valid || !neg_l && l_val > 3276 || neg_l && l_val > 3276) { valid = 0; }\n      |                          ^\n      |                   (                     )\ntests/../candidate.c:25:51: error: '&&' within '||' [-Werror,-Wlogical-op-parentheses]\n   25 |     if (!valid || !neg_l && l_val > 3276 || neg_l && l_val > 3276) { valid = 0; }\n      |                                          ~~ ~~~~~~^~~~~~~~~~~~~~~\ntests/../candidate.c:25:51: note: place parentheses around the '&&' expression to silence this warning\n   25 |     if (!valid || !neg_l && l_val > 3276 || neg_l && l_val > 3276) { valid = 0; }\n      |                                                   ^              \n      |                                             (                    )\ntests/../candidate.c:48:26: error: '&&' within '||' [-Werror,-Wlogical-op-parentheses]\n   48 |     if (!valid || !neg_r && r_val > 3276 || neg_r && r_val > 3276) { valid = 0; }\n      |                ~~ ~~~~~~~^~~~~~~~~~~~~~~\ntests/../candidate.c:48:26: note: place parentheses around the '&&' expression to silence this warning\n   48 |     if (!valid || !neg_r && r_val > 3276 || neg_r && r_val > 3276) { valid = 0; }\n      |                          ^\n      |                   (                     )\ntests/../candidate.c:48:51: error: '&&' within '||' [-Werror,-Wlogical-op-parentheses]\n   48 |     if (!valid || !neg_r && r_val > 3276 || neg_r && r_val > 3276) { valid = 0; }\n      |                                          ~~ ~~~~~~^~~~~~~~~~~~~~~\ntests/../candidate.c:48:51: note: place parentheses around the '&&' expression to silence this warning\n   48 |     if (!valid || !neg_r && r_val > 3276 || neg_r && r_val > 3276) { valid = 0; }\n      |                                                   ^              \n      |                                             (                    )\n4 errors generated.\n"
+    },
+    {
+      "task_id": "c_skeleton_window",
+      "passed": false,
+      "first_pass": false,
+      "attempts": 1,
+      "attempt_score": 2,
+      "output_tail": "case nonfinite-atomic index 0 expected 51 got 2\n"
+    },
+    {
+      "task_id": "c_span_alias",
+      "passed": false,
+      "first_pass": false,
+      "attempts": 1,
+      "attempt_score": 2,
+      "output_tail": ""
+    },
+    {
+      "task_id": "c_stable_norm",
+      "passed": false,
+      "first_pass": false,
+      "attempts": 1,
+      "attempt_score": 2,
+      "output_tail": "case partial-overlap-forward index 0 expected -1 got 0\n"
+    },
+    {
+      "task_id": "c_strided_proj",
+      "passed": true,
+      "first_pass": true,
+      "attempts": 1,
+      "attempt_score": 1,
+      "output_tail": ""
+    },
+    {
+      "task_id": "c_u4_groupdot",
+      "passed": false,
+      "first_pass": false,
+      "attempts": 1,
+      "attempt_score": 2,
+      "output_tail": ""
+    },
+    {
+      "task_id": "p_affine_groups",
+      "passed": false,
+      "first_pass": false,
+      "attempts": 1,
+      "attempt_score": 2,
+      "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-eiltwltm/tests/test_p_affine_groups.py\", line 69, in <module>\n    array_close(\n    ~~~~~~~~~~~^\n        \"unsigned-high-nibbles-distinct-groups\",\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        np.array([2.5, 30.5, -2, -9], np.float32),\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        y,\n        ^^\n    )\n    ^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-eiltwltm/tests/test_p_affine_groups.py\", line 33, in array_close\n    check(case + \".dtype\", 0, np.dtype(np.float32), got.dtype)\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-eiltwltm/tests/test_p_affine_groups.py\", line 26, in check\n    raise AssertionError(\n        f\"case {case} index {index}: expected {expected!r}, got {got!r}\"\n    )\nAssertionError: case unsigned-high-nibbles-distinct-groups.dtype index 0: expected dtype('float32'), got dtype('float64')\n"
+    },
+    {
+      "task_id": "p_axis_layout",
+      "passed": true,
+      "first_pass": true,
+      "attempts": 1,
+      "attempt_score": 1,
+      "output_tail": ""
+    },
+    {
+      "task_id": "p_axis_take",
+      "passed": false,
+      "first_pass": false,
+      "attempts": 1,
+      "attempt_score": 2,
+      "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-6cj4fd9q/tests/test_p_axis_take.py\", line 52, in <module>\n    y = take_axis_positions(x, pos, -2)\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-6cj4fd9q/candidate.py\", line 34, in take_axis_positions\n    result[slices] = pos_arr\n    ~~~~~~^^^^^^^^\nValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (3,) + inhomogeneous part.\n"
+    },
+    {
+      "task_id": "p_block_header",
+      "passed": true,
+      "first_pass": true,
+      "attempts": 1,
+      "attempt_score": 1,
+      "output_tail": ""
+    },
+    {
+      "task_id": "p_bytes_lru",
+      "passed": false,
+      "first_pass": false,
+      "attempts": 1,
+      "attempt_score": 2,
+      "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-utonm8j4/tests/test_p_bytes_lru.py\", line 108, in <module>\n    store_a = c.store_cached(\"a\", a)\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-utonm8j4/candidate.py\", line 30, in store_cached\n    if not isinstance(key, hashable_type):\n           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^\nTypeError: isinstance() arg 2 must be a type, a tuple of types, or a union\n"
+    },
+    {
+      "task_id": "p_chunk_plan",
+      "passed": true,
+      "first_pass": true,
+      "attempts": 1,
+      "attempt_score": 1,
+      "output_tail": ""
+    },
+    {
+      "task_id": "p_dtype_blend",
+      "passed": false,
+      "first_pass": false,
+      "attempts": 1,
+      "attempt_score": 2,
+      "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-qg6cugxc/tests/test_p_dtype_blend.py\", line 86, in <module>\n    error(\n    ~~~~~^\n        name,\n        ^^^^^\n    ...<3 lines>...\n        else weighted_blend32([1], [2], bad),\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-qg6cugxc/tests/test_p_dtype_blend.py\", line 37, in error\n    raise AssertionError(f\"case {case} index 0: expected {typ}, got {got!r}\")\nAssertionError: case bool-weight index 0: expected <class 'TypeError'>, got array([1.], dtype=float32)\n"
+    },
+    {
+      "task_id": "p_lex_order",
+      "passed": false,
+      "first_pass": false,
+      "attempts": 1,
+      "attempt_score": 2,
+      "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-krrj4msu/tests/test_p_lex_order.py\", line 64, in <module>\n    verify(\"score-group-source-ties\", s, g, 5)\n    ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-krrj4msu/tests/test_p_lex_order.py\", line 55, in verify\n    raise AssertionError(\n        f\"case {case} index {i}: expected {int(exp[i])}, got {int(got[i])}\"\n    )\nAssertionError: case score-group-source-ties index 2: expected 1, got 4\n"
+    },
+    {
+      "task_id": "p_mask_out",
+      "passed": false,
+      "first_pass": false,
+      "attempts": 1,
+      "attempt_score": 2,
+      "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-mw_hon7i/tests/test_p_mask_out.py\", line 33, in error\n    got = fn()\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-mw_hon7i/tests/test_p_mask_out.py\", line 96, in <lambda>\n    lambda bad=bad: masked_scale_copy(x, m, bad),\n                    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-mw_hon7i/candidate.py\", line 7, in masked_scale_copy\n    factor_val = float(factor)\nTypeError: float() argument must be a string or a real number, not 'list'\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-mw_hon7i/tests/test_p_mask_out.py\", line 93, in <module>\n    error(\n    ~~~~~^\n        \"factor-finite-real-scalar\",\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        ValueError,\n        ^^^^^^^^^^^\n        lambda bad=bad: masked_scale_copy(x, m, bad),\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-mw_hon7i/tests/test_p_mask_out.py\", line 35, in error\n    check(case, 0, typ, type(exc))\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-mw_hon7i/tests/test_p_mask_out.py\", line 26, in check\n    raise AssertionError(\n        f\"case {case} index {index}: expected {expected!r}, got {got!r}\"\n    )\nAssertionError: case factor-finite-real-scalar index 0: expected <class 'ValueError'>, got <class 'TypeError'>\n"
+    },
+    {
+      "task_id": "p_runs_merge",
+      "passed": false,
+      "first_pass": false,
+      "attempts": 1,
+      "attempt_score": 2,
+      "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-rc_l681k/tests/test_p_runs_merge.py\", line 86, in <module>\n    verify(\n    ~~~~~~^\n        \"stable-run-ties-and-empty-run\",\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    ...<4 lines>...\n        ],\n        ^^\n    )\n    ^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-rc_l681k/tests/test_p_runs_merge.py\", line 56, in verify\n    got_v, got_o = merge_sorted_runs(iter(runs))\n                   ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-rc_l681k/candidate.py\", line 23, in merge_sorted_runs\n    raise TypeError(\"All runs must have floating-point dtype\")\nTypeError: All runs must have floating-point dtype\n"
+    },
+    {
+      "task_id": "p_segment_pool",
+      "passed": false,
+      "first_pass": false,
+      "attempts": 1,
+      "attempt_score": 2,
+      "output_tail": "/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-capr5hpz/candidate.py:45: ComplexWarning: Casting complex values to real discards the imaginary part\n  values_flat = values_arr.reshape(values_arr.shape[0], -1).astype(np.float64)\nTypeError: only 0-dimensional arrays can be converted to Python scalars\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-capr5hpz/tests/test_p_segment_pool.py\", line 32, in error\n    got = fn()\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-capr5hpz/tests/test_p_segment_pool.py\", line 100, in <lambda>\n    lambda bad=bad: segment_reduce_sum(bad, np.array([0]), 1),\n                    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-capr5hpz/candidate.py\", line 50, in segment_reduce_sum\n    result[seg_id] = values_flat[mask].sum(axis=0)\n    ~~~~~~^^^^^^^^\nValueError: setting an array element with a sequence.\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-capr5hpz/tests/test_p_segment_pool.py\", line 97, in <module>\n    error(\n    ~~~~~^\n        \"values-real-numeric-dtype\",\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        TypeError,\n        ^^^^^^^^^^\n        lambda bad=bad: segment_reduce_sum(bad, np.array([0]), 1),\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-capr5hpz/tests/test_p_segment_pool.py\", line 34, in error\n    check(case, 0, typ, type(exc))\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-capr5hpz/tests/test_p_segment_pool.py\", line 25, in check\n    raise AssertionError(\n        f\"case {case} index {index}: expected {expected!r}, got {got!r}\"\n    )\nAssertionError: case values-real-numeric-dtype index 0: expected <class 'TypeError'>, got <class 'ValueError'>\n"
+    },
+    {
+      "task_id": "p_skeleton_calibrate",
+      "passed": false,
+      "first_pass": false,
+      "attempts": 1,
+      "attempt_score": 2,
+      "output_tail": "/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-lfuifmd6/candidate.py:16: ComplexWarning: Casting complex values to real discards the imaginary part\n  scaled = (raw_arr.astype(np.float64) - off_float) / temp_float\nTraceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-lfuifmd6/tests/test_p_skeleton_calibrate.py\", line 98, in <module>\n    error(\"invalid-raw-values\", ValueError, lambda raw=raw: calibrate_scores(raw, 1, 0))\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-lfuifmd6/tests/test_p_skeleton_calibrate.py\", line 41, in error\n    raise AssertionError(f\"case {case} index 0: expected {typ}, got {got!r}\")\nAssertionError: case invalid-raw-values index 0: expected <class 'ValueError'>, got array([0.7310586], dtype=float32)\n"
+    },
+    {
+      "task_id": "p_skeleton_delta",
+      "passed": true,
+      "first_pass": true,
+      "attempts": 1,
+      "attempt_score": 1,
+      "output_tail": ""
+    },
+    {
+      "task_id": "p_skeleton_diags",
+      "passed": false,
+      "first_pass": false,
+      "attempts": 1,
+      "attempt_score": 2,
+      "output_tail": "Traceback (most recent call last):\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-tqy4tzaa/tests/test_p_skeleton_diags.py\", line 91, in <module>\n    verify(\"rectangular-diagonal-order\", np.array([[1, 2, 3], [4, 5, 6]], np.int16))\n    ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-tqy4tzaa/tests/test_p_skeleton_diags.py\", line 57, in verify\n    got = diagonal_means(a)\n  File \"/private/var/folders/mk/tnzn84_934l2hr0vkvpg4n040000gn/T/ft-v2-tqy4tzaa/candidate.py\", line 14, in diagonal_means\n    raise TypeError(\"matrix must contain real numeric values\")\nTypeError: matrix must contain real numeric values\n"
+    },
+    {
+      "task_id": "p_window_copy",
+      "passed": true,
+      "first_pass": true,
+      "attempts": 1,
+      "attempt_score": 1,
+      "output_tail": ""
+    }
+  ],
+  "suite_sha256": "f36dc85b0ac3e23e0f8f2abab1ff90a0663668b7a58a1fc49cf9e338c326ff33"
+}

@@ -43,5 +43,27 @@
     "4layer_1200-2968tok": "OOM",
     "2layer_1200-2968tok": "OOM",
     "1layer_1200-2968tok": 24.19
+  },
+  "run3": {
+    "num_layers": 1,
+    "iters": 28,
+    "train_rows": 26,
+    "max_tokens_per_row": 3000,
+    "mlx_peak_gib": 24.18,
+    "val_loss": {
+      "1": 0.763,
+      "14": 0.407,
+      "28": 0.363
+    },
+    "heldout_v2_first": "7/30",
+    "paired_vs_base": {
+      "delta": -0.1,
+      "ci95": [
+        -0.233,
+        0.033
+      ]
+    },
+    "public": "3/3",
+    "verdict": "no-go"
   }
 }

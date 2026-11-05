@@ -21,3 +21,6 @@ Night 1 training set: data/finetune/night1 (22/31 train rows, 6/10 valid rows <=
 - probeB (2 layers, rows 1,200-2,968 tok): OOM on the first step. Length cost dominates above ~1k tokens even at
   2 layers => completion-only chunked loss (brief 32) is required before training on real rows.
 - probeC (1 layer, rows 1,200-2,968 tok): OK, MLX peak 24.19 GiB (vs 19.48 at 470 tok) => ~1.9 GiB per extra 1k tokens at 1 layer. 1-layer LoRA on rows <= 3k tokens (28/31 rows) is the config that fits today.
+- run3 (1 layer, 26 train rows <= 3k tok, 28 iters = 1 epoch, lr 1e-5): MLX peak 24.18 GiB, val 0.763 -> 0.407 -> 0.363.
+  No repetition collapse (~12 s/task). heldout-v2 first attempt 7/30 vs base 10/30 (delta -0.10, paired 95%
+  [-0.23, +0.03]); public 3/3. NO-GO, as expected from 26 seed rows; the full ~250-row set is the real test.
