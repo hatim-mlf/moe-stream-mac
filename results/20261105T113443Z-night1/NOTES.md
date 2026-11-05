@@ -29,3 +29,13 @@ Night 1 training set: data/finetune/night1 (22/31 train rows, 6/10 valid rows <=
   no GDN layer in the backward path; 2+ layers do. Fix: chunked mx.checkpoint scan (brief 34).
 - Completion-only chunked loss (brief 32, tools/ft_lowmem_loss.py): correct (4/4 parity tests after a 1-line lead fix)
   but NO measurable saving: 1 layer, 1.2-3k rows: 24.177 GiB vs 24.187 default; 2 layers still OOM.
+- probeF (13:41, 2 layers, rows 1-3k tok, wired limit ~31 GiB): **kernel panic 13:45** (watchdog timeout, process
+  wired 31.26 GiB of 32, OS left ~14 MB). Fix: tools/mem_guard.py (brief 35) kills the run at total - 2.5 GiB wired.
+- probeG (after reboot, default wired limit ~25 GiB, GDN_CHECKPOINT=1, mem_guard on): Metal OOM on train step 1
+  (val step OK), peak footprint 27.5 GB, clean exit, no panic. Needs the raised limit to measure the checkpoint.
+- probeH (wired limit 31744, GDN_CHECKPOINT=1, 2 layers, rows 1-3k): mem_guard stopped it at 29.93 GiB wired on
+  train step 1 (exit 86, footprint 30.2 GB), no panic. Guard verified in a real run.
+- A/B, 2 layers, night1 rows <= 600 tok, 6 iters: GDN_CHECKPOINT=1 22.532 GiB vs =0 22.528 GiB (identical).
+  Instrumented run: the checkpointed GDN path IS called (62 calls in 2 iters + val). => the 13:40 "root cause"
+  (per-token GDN states) is wrong or already bounded by grad_checkpoint: true; GDN states are not the peak.
+  Next: profile one 2-layer train step to find what grows with layers and length.
