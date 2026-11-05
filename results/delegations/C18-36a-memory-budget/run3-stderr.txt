@@ -1,0 +1,12 @@
+2026-11-05T15:53:25.490876Z ERROR rmcp::transport::worker: worker quit with fatal: Transport channel closed, when Client(HttpRequest(HttpRequest("http/request failed: error sending request for url (http://127.0.0.1:3847/mcp)")))
+2026-11-05T15:53:25.744818Z ERROR rmcp::transport::worker: worker quit with fatal: Transport channel closed, when Client(HttpRequest(HttpRequest("http/request failed: error sending request for url (http://127.0.0.1:3847/mcp)")))
+2026-11-05T15:53:26.747790Z ERROR rmcp::transport::worker: worker quit with fatal: Transport channel closed, when Client(HttpRequest(HttpRequest("http/request failed: error sending request for url (http://127.0.0.1:3847/mcp)")))
+2026-11-05T15:58:01.441366Z ERROR codex_models_manager::manager: failed to refresh available models: request timed out
+2026-11-05T16:05:48.457417Z ERROR codex_core::tools::router: error=apply_patch verification failed: Failed to find expected lines in /Users/hatim/moe-stream-mac/tools/mem_budget.py:
+        active = peak_bytes(
+            shapes, tokens, layers, grad_checkpoint=checkpoint, rank=rank,
+2026-11-05T16:15:44.206778Z ERROR codex_core::tools::router: error=exec_command failed: CreateProcess { message: "Rejected(\"`/bin/zsh -lc 'rm -f tools/__pycache__/ft_lora_lowmem.cpython-314.pyc tools/__pycache__/mem_budget.cpython-314.pyc tools/__pycache__/mem_budget_terms.cpython-314.pyc tools/__pycache__/mem_preflight.cpython-314.pyc tools/__pycache__/test_mem_budget.cpython-314-pytest-9.2.0.pyc'` rejected: rm -f style commands are not permitted. Use a safer approach\")" }
+2026-11-05T16:16:45.141181Z ERROR codex_core::tools::router: error=apply_patch verification failed: Failed to find expected lines in /Users/hatim/moe-stream-mac/docs/finetune/MEMORY_MODEL.md:
+For formulas, let `B=1`, `H=2048`, `V=248320`, `d=2` BF16 bytes, `E=256`, `k=8`, `I=S=512`, `Q=16`, `K_v=2`, `D=256`, `V_g=H_vD_v=4096`, `r=8`, `R=BTk`, and `M=BH_vD_vD_k*4=2,097,152` bytes per FP32 GDN state. `P(L,r)=r*sum_j(input_j+output_j)` across configured LoRA targets.
+2026-11-05T16:22:45.426154Z ERROR codex_core::tools::router: error=apply_patch verification failed: Failed to find expected lines in /Users/hatim/moe-stream-mac/docs/finetune/MEMORY_MODEL.md:
+The router's original top-k indices are separately retained as `R*4` bytes; sorting adds route-order arrays when `indices.size>=64` (`mlx_lm/models/qwen3_next.py:328-335`; `mlx_lm/models/switch_layers.py:11-23,201-218`).

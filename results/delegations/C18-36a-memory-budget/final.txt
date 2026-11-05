@@ -1,0 +1,17 @@
+Implemented:
+
+- [tools/mem_budget.py](/Users/hatim/moe-stream-mac/tools/mem_budget.py): stdlib budget model, term table, peak estimate, and `--points` CLI.
+- [docs/finetune/MEMORY_MODEL.md](/Users/hatim/moe-stream-mac/docs/finetune/MEMORY_MODEL.md): source derivation, term formulas and citations, prediction table, and open questions.
+- [tools/test_mem_budget.py](/Users/hatim/moe-stream-mac/tools/test_mem_budget.py): shape validation, scaling, and Safetensors checks.
+
+**Tests:** `./.venv/bin/python -m pytest -q tools/test_mem_budget.py` passed (3 tests). The requested system `python3 -m pytest -q tools/test_mem_budget.py` could not start because that Python has no pytest installed.
+
+At **T=1000, L=2**, the model predicts **21,200,138,804 bytes (19.744 GiB)**, peaking during backward replay of layer 38 (GDN). The three largest individual terms are:
+
+- Weights resident: **20,401,929,952 B** (19.001 GiB)
+- Logits chunk: **254,279,680 B** (0.237 GiB)
+- Loss logits gradient: **254,279,680 B** (0.237 GiB)
+
+**Open questions:** probe4 (−22.3%); train2 (−20.0%); probeI and probeJ (−13.1% each); probeC (−18.3..−14.3%), run3 (−18.2..−14.3%), probeE (−18.2..−14.2%); probeB and probeG (−22.4..−18.2% each); probeH (−33.6..−30.0%); probeF (−36.5..−33.0%). The document lists candidate terms for each gap without treating them as established causes. ProbeA is +0.2%; train1 has no numeric peak for a percentage comparison.
+
+**Unverified:** exact padded row lengths and completion spans; runtime copies, allocator lifetimes, and operation fusion; and the differences between allocator, system-wired, and process-resident measurements. No Metal capture was run.

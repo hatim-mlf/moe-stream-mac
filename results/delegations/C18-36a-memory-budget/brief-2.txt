@@ -1,0 +1,26 @@
+Follow-up on tools/mem_budget.py and MEMORY_MODEL.md. The lead has measured on the Mac (raw in
+results/20261105T143800Z-memory-model/NOTES.md, blocks*.jsonl, compare.jsonl, cachelimit-*.jsonl). Your budget
+underpredicts every point by 13-36%. Three measured facts your source derivation must now explain (trace the
+mechanism in source; do not fit constants):
+
+1. GDN backward. Isolated real-weight GDN block (layer 38), value_and_grad of sum(block(x)) w.r.t. x, peak
+   above loaded weights: checkpoint OFF 1.14 / 2.19 / 4.29 GiB at T=128/256/512 (~8.2 MiB/token), checkpoint ON
+   (tools/gdn_checkpoint.py, chunk 64) 0.89 / 1.62 / 3.68 GiB (~7.2 MiB/token); T=1000 off > 11 GiB. Forward only
+   ~2.3 MiB/token. One recurrent state [1,32,128,128] fp32 = 2 MiB, so ~4 states/token stay alive in backward
+   even with checkpointing; your budget assumes ~64 states. Find in MLX 0.32.4 source why: how vjp builds the
+   backward of a chain of mx.checkpoint'ed functions and of the per-step ops loop (mlx/transforms.cpp vjp and
+   checkpoint, mlx/backend eval order / buffer release in eval), and which arrays of `_gated_delta_step_ops`'s
+   vjp are per-step (outer products, decay multiply, mask where). Give the per-token byte formula.
+2. Weights: measured MLX active after load = 18.17 GiB (your 19.00). Trace the difference (tensors in the
+   safetensors that mlx_lm does not load, e.g. vision / mtp, or dtype).
+3. Allocator cache. System wired (what mem_guard and the OS see) ~ MLX active + MLX cache + ~1.7 GiB OS.
+   Isolated L=2 T=1000 step: active peak 23.21 GiB, cache 6.55 GiB at the end. mlx_lm trainer, same config:
+   default cache limit -> mem_guard stop at 29.59 GiB wired; mx.set_cache_limit(0) -> fits, active peak 26.36;
+   cache limit 2 GiB -> stop at 29.88. Add a system-wired prediction with a cache term from the allocator
+   source (mlx/backend/metal/allocator.cpp: cache limit default, when buffers are reused vs kept).
+   Also trace the trainer-vs-isolated gap (26.36 vs 23.21 active at L=2 T=1000, 19.27 vs 19.29 at L=1):
+   tools/mem_trainer.py vs tools/mem_profile.py `step` and mlx_lm/tuner/trainer.py (padding, mask from prompt
+   offset, grad accumulation, step+update in one eval graph, GDN_CHECKPOINT default).
+Update mem_budget.py (keep the term table; add `--cache-limit` and a `system_wired` prediction), tests, and
+MEMORY_MODEL.md section 1 (new prediction table incl. the block and trainer points). Same constraints. Report
+the new per-token GDN formula with its source lines, and every gap still > 10%.

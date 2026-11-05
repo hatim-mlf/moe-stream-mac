@@ -2,6 +2,7 @@
 """Run mlx_lm.lora with completion-only loss and memory reporting."""
 
 import os
+import sys
 import time
 from typing import Any
 
@@ -10,6 +11,7 @@ from mlx_lm import lora
 
 from ft_lowmem_loss import completion_only_loss
 import mem_guard
+import mem_preflight
 
 
 _original_train = lora.train
@@ -43,7 +45,14 @@ lora.evaluate = lowmem_evaluate
 mx.set_wired_limit(mx.device_info()["max_recommended_working_set_size"])
 if os.environ.get("MLX_CACHE_LIMIT_GB"):
     mx.set_cache_limit(int(float(os.environ["MLX_CACHE_LIMIT_GB"]) * 2**30))
+_preflight_exit = mem_preflight.lora_preflight(sys.argv[1:])
+if _preflight_exit:
+    raise SystemExit(_preflight_exit)
 mx.reset_peak_memory()
+if os.environ.get("GDN_CHECKPOINT", "0") == "1":
+    import gdn_checkpoint
+
+    gdn_checkpoint.install()
 _total_memory = mem_guard.total_memory_bytes()
 _headroom = mem_guard.headroom_bytes_from_env(os.environ)
 _limit = _total_memory - _headroom

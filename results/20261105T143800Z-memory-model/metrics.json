@@ -1,0 +1,383 @@
+{
+ "date_utc": "2026-11-05",
+ "machine": "MacBookPro18,2 M1 Max 32 GiB",
+ "mlx": "0.32.4",
+ "mlx_lm": "0.32.2",
+ "model": "Qwen3.6-35B-A3B-4bit",
+ "wired_limit_mb": 31744,
+ "mem_guard_limit_gib": 29.5,
+ "cache_limit_gb": 0,
+ "trainer_points": [
+  {
+   "tokens": 256,
+   "layers": 1,
+   "status": "complete",
+   "active_peak_gib": 18.599,
+   "max_system_wired_gib": 21.315,
+   "source": "sweep.jsonl"
+  },
+  {
+   "tokens": 256,
+   "layers": 2,
+   "status": "complete",
+   "active_peak_gib": 20.225,
+   "max_system_wired_gib": 23.202,
+   "source": "sweep.jsonl"
+  },
+  {
+   "tokens": 512,
+   "layers": 1,
+   "status": "complete",
+   "active_peak_gib": 18.874,
+   "max_system_wired_gib": 21.293,
+   "source": "sweep.jsonl"
+  },
+  {
+   "tokens": 256,
+   "layers": 3,
+   "status": "complete",
+   "active_peak_gib": 20.252,
+   "max_system_wired_gib": 23.987,
+   "source": "sweep.jsonl"
+  },
+  {
+   "tokens": 1000,
+   "layers": 1,
+   "status": "complete",
+   "active_peak_gib": 19.392,
+   "max_system_wired_gib": 21.955,
+   "source": "sweep.jsonl"
+  },
+  {
+   "tokens": 256,
+   "layers": 4,
+   "status": "complete",
+   "active_peak_gib": 20.253,
+   "max_system_wired_gib": 23.844,
+   "source": "sweep.jsonl"
+  },
+  {
+   "tokens": 512,
+   "layers": 2,
+   "status": "complete",
+   "active_peak_gib": 22.339,
+   "max_system_wired_gib": 24.591,
+   "source": "sweep.jsonl"
+  },
+  {
+   "tokens": 512,
+   "layers": 3,
+   "status": "complete",
+   "active_peak_gib": 22.393,
+   "max_system_wired_gib": 25.513,
+   "source": "sweep.jsonl"
+  },
+  {
+   "tokens": 1000,
+   "layers": 2,
+   "status": "complete",
+   "active_peak_gib": 26.356,
+   "max_system_wired_gib": 28.92,
+   "source": "sweep.jsonl"
+  },
+  {
+   "tokens": 2000,
+   "layers": 1,
+   "status": "complete",
+   "active_peak_gib": 19.849,
+   "max_system_wired_gib": 22.043,
+   "source": "sweep.jsonl"
+  },
+  {
+   "tokens": 512,
+   "layers": 4,
+   "status": "complete",
+   "active_peak_gib": 22.322,
+   "max_system_wired_gib": 24.515,
+   "source": "sweep.jsonl"
+  },
+  {
+   "tokens": 1000,
+   "layers": 3,
+   "status": "guard_stop",
+   "source": "sweep.jsonl"
+  },
+  {
+   "tokens": 3000,
+   "layers": 1,
+   "status": "complete",
+   "active_peak_gib": 20.111,
+   "max_system_wired_gib": 22.519,
+   "source": "sweep.jsonl"
+  },
+  {
+   "tokens": 1000,
+   "layers": 4,
+   "status": "complete",
+   "active_peak_gib": 26.448,
+   "max_system_wired_gib": 29.031,
+   "source": "sweep.jsonl"
+  },
+  {
+   "tokens": 2000,
+   "layers": 2,
+   "status": "guard_stop",
+   "source": "sweep.jsonl"
+  },
+  {
+   "tokens": 2000,
+   "layers": 3,
+   "status": "guard_stop",
+   "source": "sweep.jsonl"
+  },
+  {
+   "tokens": 3000,
+   "layers": 2,
+   "status": "guard_stop",
+   "source": "sweep.jsonl"
+  },
+  {
+   "tokens": 2000,
+   "layers": 4,
+   "status": "guard_stop",
+   "source": "sweep.jsonl"
+  },
+  {
+   "tokens": 3000,
+   "layers": 3,
+   "status": "guard_stop",
+   "source": "sweep.jsonl"
+  },
+  {
+   "tokens": 3000,
+   "layers": 4,
+   "status": "guard_stop",
+   "source": "sweep.jsonl"
+  },
+  {
+   "tokens": 768,
+   "layers": 3,
+   "status": "complete",
+   "active_peak_gib": 24.464,
+   "max_system_wired_gib": 27.177,
+   "source": "heldout.jsonl"
+  },
+  {
+   "tokens": 900,
+   "layers": 8,
+   "status": "complete",
+   "active_peak_gib": 25.663,
+   "max_system_wired_gib": 28.575,
+   "source": "deep.jsonl"
+  },
+  {
+   "tokens": 900,
+   "layers": 16,
+   "status": "complete",
+   "active_peak_gib": 25.696,
+   "max_system_wired_gib": 29.27,
+   "source": "deep.jsonl"
+  },
+  {
+   "tokens": 768,
+   "layers": 16,
+   "status": "complete",
+   "active_peak_gib": 24.399,
+   "max_system_wired_gib": 28.362,
+   "source": "deep.jsonl"
+  },
+  {
+   "tokens": 1500,
+   "layers": 2,
+   "status": "guard_stop",
+   "max_system_wired_gib": 29.52,
+   "source": "heldout"
+  }
+ ],
+ "block_points": [
+  {
+   "kind": "moe",
+   "layer": 39,
+   "tokens": 1000,
+   "gdn_checkpoint": false,
+   "phase": "forward",
+   "incremental_peak_gib": 0.12
+  },
+  {
+   "kind": "moe",
+   "layer": 39,
+   "tokens": 1000,
+   "gdn_checkpoint": false,
+   "phase": "value_and_grad",
+   "incremental_peak_gib": 0.187
+  },
+  {
+   "kind": "attention",
+   "layer": 39,
+   "tokens": 1000,
+   "gdn_checkpoint": false,
+   "phase": "forward",
+   "incremental_peak_gib": 0.082
+  },
+  {
+   "kind": "attention",
+   "layer": 39,
+   "tokens": 1000,
+   "gdn_checkpoint": false,
+   "phase": "value_and_grad",
+   "incremental_peak_gib": 0.298
+  },
+  {
+   "kind": "moe",
+   "layer": 39,
+   "tokens": 2000,
+   "gdn_checkpoint": false,
+   "phase": "forward",
+   "incremental_peak_gib": 0.237
+  },
+  {
+   "kind": "moe",
+   "layer": 39,
+   "tokens": 2000,
+   "gdn_checkpoint": false,
+   "phase": "value_and_grad",
+   "incremental_peak_gib": 0.632
+  },
+  {
+   "kind": "attention",
+   "layer": 39,
+   "tokens": 2000,
+   "gdn_checkpoint": false,
+   "phase": "forward",
+   "incremental_peak_gib": 0.224
+  },
+  {
+   "kind": "attention",
+   "layer": 39,
+   "tokens": 2000,
+   "gdn_checkpoint": false,
+   "phase": "value_and_grad",
+   "incremental_peak_gib": 0.48
+  },
+  {
+   "kind": "gdn",
+   "layer": 38,
+   "tokens": 128,
+   "gdn_checkpoint": false,
+   "phase": "forward",
+   "incremental_peak_gib": 0.411
+  },
+  {
+   "kind": "gdn",
+   "layer": 38,
+   "tokens": 128,
+   "gdn_checkpoint": false,
+   "phase": "value_and_grad",
+   "incremental_peak_gib": 1.141
+  },
+  {
+   "kind": "gdn",
+   "layer": 38,
+   "tokens": 256,
+   "gdn_checkpoint": false,
+   "phase": "forward",
+   "incremental_peak_gib": 0.597
+  },
+  {
+   "kind": "gdn",
+   "layer": 38,
+   "tokens": 256,
+   "gdn_checkpoint": false,
+   "phase": "value_and_grad",
+   "incremental_peak_gib": 2.192
+  },
+  {
+   "kind": "gdn",
+   "layer": 38,
+   "tokens": 512,
+   "gdn_checkpoint": false,
+   "phase": "forward",
+   "incremental_peak_gib": 1.167
+  },
+  {
+   "kind": "gdn",
+   "layer": 38,
+   "tokens": 512,
+   "gdn_checkpoint": false,
+   "phase": "value_and_grad",
+   "incremental_peak_gib": 4.292
+  },
+  {
+   "kind": "gdn",
+   "layer": 38,
+   "tokens": 128,
+   "gdn_checkpoint": true,
+   "phase": "forward",
+   "incremental_peak_gib": 0.353
+  },
+  {
+   "kind": "gdn",
+   "layer": 38,
+   "tokens": 128,
+   "gdn_checkpoint": true,
+   "phase": "value_and_grad",
+   "incremental_peak_gib": 0.887
+  },
+  {
+   "kind": "gdn",
+   "layer": 38,
+   "tokens": 256,
+   "gdn_checkpoint": true,
+   "phase": "forward",
+   "incremental_peak_gib": 0.497
+  },
+  {
+   "kind": "gdn",
+   "layer": 38,
+   "tokens": 256,
+   "gdn_checkpoint": true,
+   "phase": "value_and_grad",
+   "incremental_peak_gib": 1.617
+  },
+  {
+   "kind": "gdn",
+   "layer": 38,
+   "tokens": 512,
+   "gdn_checkpoint": true,
+   "phase": "forward",
+   "incremental_peak_gib": 0.521
+  },
+  {
+   "kind": "gdn",
+   "layer": 38,
+   "tokens": 512,
+   "gdn_checkpoint": true,
+   "phase": "value_and_grad",
+   "incremental_peak_gib": 3.681
+  }
+ ],
+ "law": {
+  "active_gib": "18.45 + 0.55 MiB*T + [GDN adapted] * ~7 MiB*T",
+  "wired_minus_active_gib": [
+   2.4,
+   4.0
+  ]
+ },
+ "heldout_predictions": [
+  {
+   "tokens": 768,
+   "layers": 3,
+   "lead_law": 24.07,
+   "budget": 24.59,
+   "measured": 24.46
+  },
+  {
+   "tokens": 1500,
+   "layers": 2,
+   "lead_law": "guard_stop",
+   "budget": "guard_stop",
+   "measured": "guard_stop"
+  }
+ ],
+ "fit_requested_form_r2": 0.724
+}

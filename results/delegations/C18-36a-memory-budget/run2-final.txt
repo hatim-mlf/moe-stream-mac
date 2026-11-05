@@ -1,0 +1,30 @@
+## Completed
+
+- [mem_budget.py](/Users/hatim/moe-stream-mac/tools/mem_budget.py) adds the source-derived byte inventory, active peak estimate, `--points`, and `--cache-limit`. Its system-wired output is a floor-to-capacity range because allocator source does not determine actual cache occupancy.
+- [test_mem_budget.py](/Users/hatim/moe-stream-mac/tools/test_mem_budget.py) covers missing config keys, scaling formulas, safetensors weights, and cache bounds.
+- [MEMORY_MODEL.md](/Users/hatim/moe-stream-mac/docs/finetune/MEMORY_MODEL.md) now contains the term-by-term derivation, source citations, predictions, and open questions.
+
+The requested system `python3 -m pytest` command could not run because that Python has no pytest installed. The repository environment passed: `.venv/bin/python -m pytest -q tools/test_mem_budget.py` — **6 passed**. The stdlib CLI ran successfully, and no function exceeds 49 lines.
+
+## GDN formula and peak
+
+One recurrent state is `M = 1 × 32 × 128 × 128 × 4 = 2,097,152 B` (2 MiB). The budget counts four state-sized slots per timestep—recurrent state, decay product, state/key product, and key/delta update product—so **`4 × T × M = 8,388,608 × T B`, or 8 MiB/token**. At T=1000, that term is 8,388,608,000 B (7.8125 GiB). The chunk-boundary term is separate: `(ceil(T/64)+1) × M`.
+
+The traced ops loop and checkpoint VJP explain why the budget does not reduce backward memory to 64 states. Exact simultaneous buffer lifetimes remain unproven; the query product and other VJP arrays may change overlap. This source-derived model predicts 26.514 GiB active peak at backward replay of layer 38. Its three largest co-live terms are:
+
+1. Resident weights: **19,508,787,456 B (18.169 GiB)**
+2. GDN state arrays: **8,388,608,000 B (7.813 GiB)**
+3. GDN projection activations: **110,976,000 B (0.103 GiB)**
+
+## Open gaps greater than 10%
+
+The document lists these with candidate terms, without claiming an untraced cause:
+
+- probe4: −12.1%; probeC/run3/probeE: −22.5% to −19.6%.
+- probeB/probeG: +10.0% to +68.6%; their reported footprint is not an allocator peak.
+- GDN block: checkpoint off T128 −10.5%; checkpoint on T128/T256/T512 +15.8%/+26.9%/+11.4%; checkpoint off T1000 is at least 27.5% below the `>11 GiB` stop bound.
+- MoE block T2000: −35.5%; attention block T1000/T2000: −37.7%/−44.5%.
+- Isolated L2 step: +14.2%.
+- Trainer versus isolated L2: the measured active increase is 3.147 GiB; padding accounts for 0.207 GiB in this model, leaving 2.940 GiB unexplained.
+
+Unverified details include exact GDN buffer overlap, Adam temporary lifetimes, instantaneous cache occupancy, the approximate 1.7 GiB OS reserve, and exact row/padding lengths. Default and 2 GiB cache guard stops are censored readings; probeH is a bound comparison, and probeF uses a different memory metric. No Metal measurements were run.

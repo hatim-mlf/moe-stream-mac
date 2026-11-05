@@ -1,0 +1,32 @@
+Final round on the budget (tests 6/6 on the Mac). Your revised budget predicted both held-out points before they
+ran: L=3 T=768 active 24.59 vs measured 24.46 GiB (+0.5%); L=2 T=1500 guard stop, as measured. An independent
+read-only review (results/delegations/C20-36c-budget-review/final.txt; read it) found these; apply them:
+
+1. Split mem_budget.py (870 lines, limit 800): e.g. tools/mem_budget_terms.py (term formulas) + mem_budget.py
+   (Shapes, peak, CLI). Keep the public API and CLI.
+2. Peak by backward phase: within one layer's replay take the max over phase-specific scratch (MoE/router vs
+   GDN/attention), do not sum branches that are not co-live; keep the outer max over layers plus the SUM of saved
+   hidden boundaries across adapted layers.
+3. Add the missing terms the review names: full-sequence [T,H] hidden gradient from the chunked loss, final norm
+   output, MoE score-weighted routed output + reduction, retained top-k indices.
+4. Allocator: read runtime device limits when mlx is importable (mx.device_info()), else the current constants;
+   report cache occupancy separately from its cap; model trainer's per-step clear_cache.
+5. GDN: the review says that, from code, gdn_checkpoint.py should cut the term to 4·min(T,64) + boundaries.
+   MEASUREMENT CONTRADICTS THIS: with the checkpoint ON the isolated GDN block costs ~7.2 MiB/token (0.89 / 1.62 /
+   3.68 GiB at T=128/256/512) and every trainer point (which has GDN_CHECKPOINT=1) matches 4T (sweep: GDN term
+   6.3 / 6.9 / 7.1 MiB/token at T=256/512/1000; L=2..16 flat). Keep 4T as the measured coefficient for BOTH
+   settings, add a flag `--assume-working-gdn-checkpoint` that switches to 4·min(T,C)+boundaries (what a working
+   checkpoint would give), and document the contradiction as open question #1 with this evidence.
+6. Preflight: `tools/mem_preflight.py --data <dir with train.jsonl/valid.jsonl> --layers L [--max-seq-length N]
+   [--cache-limit-gb X]`: tokenizes every row with the model's chat template (mlx_lm tokenizer via
+   mlx_lm.utils.load_tokenizer or the tokenizer in the model dir; no weights), takes the longest row (capped at
+   max-seq-length), predicts system wired with mem_budget, and exits 0 if < guard limit (29.5 GiB) minus a
+   1.0 GiB margin, else exits 3 listing the rows over budget and the largest T that fits for this L. Wire it into
+   tools/ft_lora_lowmem.py: before lora.main(), parse --data/--num-layers/--max-seq-length from sys.argv (or the
+   yaml) and refuse to start (exit 3) when preflight fails, unless MEM_PREFLIGHT=0.
+   Use these measured points as the regression table in tests (trainer-step, cache limit 0, active GiB):
+   (256,1) 18.60 (512,1) 18.87 (1000,1) 19.39 (2000,1) 19.85 (3000,1) 20.11 (256,2) 20.22 (512,2) 22.34
+   (1000,2) 26.36 (512,4) 22.32 (1000,4) 26.45 (768,3) 24.46 (900,8) 25.66 (900,16) 25.70 (768,16) 24.40;
+   test that every prediction is within 10% (report each % in MEMORY_MODEL.md).
+Update MEMORY_MODEL.md section 1 (keep it about the budget; the lead writes sections 2-5). Same constraints.
+Report: files, tests, the % error table, remaining > 5% gaps.
