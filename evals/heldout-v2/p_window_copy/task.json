@@ -1,0 +1,17 @@
+{
+  "id": "p_window_copy",
+  "lang": "python",
+  "target": "candidate.py",
+  "build_cmd": null,
+  "test_cmd": [
+    "{python}",
+    "tests/test_p_window_copy.py"
+  ],
+  "timeout_s": 20,
+  "classes": [
+    "Buffer bounds, offsets, or aliasing",
+    "Required behavior omitted"
+  ],
+  "kind": "utility",
+  "difficulty": "easy"
+}

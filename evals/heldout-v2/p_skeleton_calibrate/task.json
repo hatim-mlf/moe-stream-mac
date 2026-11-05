@@ -1,0 +1,17 @@
+{
+  "id": "p_skeleton_calibrate",
+  "lang": "python",
+  "target": "candidate.py",
+  "build_cmd": null,
+  "test_cmd": [
+    "{python}",
+    "tests/test_p_skeleton_calibrate.py"
+  ],
+  "timeout_s": 20,
+  "classes": [
+    "Required behavior omitted",
+    "Ignored or partly applied review note"
+  ],
+  "kind": "skeleton",
+  "difficulty": "hard"
+}

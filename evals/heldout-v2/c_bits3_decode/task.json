@@ -1,0 +1,27 @@
+{
+  "id": "c_bits3_decode",
+  "lang": "c",
+  "target": "candidate.c",
+  "build_cmd": [
+    "{cc}",
+    "-O2",
+    "-std=c99",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "tests/test_c_bits3_decode.c",
+    "-lm",
+    "-o",
+    "test_c_bits3_decode"
+  ],
+  "test_cmd": [
+    "./test_c_bits3_decode"
+  ],
+  "timeout_s": 20,
+  "classes": [
+    "Buffer bounds, offsets, or aliasing",
+    "Quantized signedness or group indexing"
+  ],
+  "kind": "kernel",
+  "difficulty": "medium"
+}

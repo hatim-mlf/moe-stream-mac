@@ -1,0 +1,17 @@
+{
+  "id": "p_bytes_lru",
+  "lang": "python",
+  "target": "candidate.py",
+  "build_cmd": null,
+  "test_cmd": [
+    "{python}",
+    "tests/test_p_bytes_lru.py"
+  ],
+  "timeout_s": 20,
+  "classes": [
+    "API, return-value, or data-shape misuse",
+    "Buffer bounds, offsets, or aliasing"
+  ],
+  "kind": "utility",
+  "difficulty": "hard"
+}

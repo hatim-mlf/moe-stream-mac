@@ -36,6 +36,74 @@ training-data cutoff, so I cannot certify these old public tasks as post-cutoff 
 a small forgetting/regression check only. [Qwen3.6 model card](https://huggingface.co/Qwen/Qwen3.6-35B-A3B),
 [EvalPlus project](https://github.com/evalplus/evalplus).
 
+## Heldout-v2: frozen local coding evaluation
+
+`heldout-v2` is a new, independently frozen 30-task suite for measuring the local Qwen3.6-35B-A3B 4-bit model before and after weight edits or fine-tuning. It uses the unchanged `tools/helper_rules.md` system prompt. The model receives one `spec.md` per task, or one `review.md` for the 10 review-note tasks; the generic runner writes the response into a temporary task copy and runs its frozen build and test commands. `tools/ft_eval_heldout_v2.json` pins every prompt, task contract, and test asset and records the suite hash.
+
+Each `evals/heldout-v2/<id>/` contains `spec.md`, `task.json`, `tests/`, `reference/`, `mutants/`, and, for exactly 10 tasks, `review.md`. Fixtures are optional and none are needed in this suite. The mix is 12 C99 kernels, 12 Python/NumPy utilities, and 6 skeleton-fill tasks (3 C and 3 Python); difficulty is balanced 10/10/10.
+
+The revised tests map every behavioral spec clause to named cases in the suite coverage table. They contain 3,648
+test-program lines (templates and coverage documentation excluded), with 67 minimum and 121 median lines per
+task. Each task has 240 or 256 fixed-seed randomized oracle cases, including a larger stress input, and four
+mutants that cover distinct errors; the suite has 120 mutants total. The slowest reference test took 0.823 seconds
+in this workspace. One spec clarification sets the packed-rank
+exception in `p_affine_groups` to `TypeError`, matching the frozen reference's existing behavior. See
+[`tests/COVERAGE.md`](../../evals/heldout-v2/c_axis_record/tests/COVERAGE.md) for the requirement-to-case map.
+
+| ID | Language | Kind | Difficulty | Diagnosis classes |
+|---|---|---|---|---|
+| `c_axis_record` | c | kernel | easy | Spec drift, invented behavior, or omitted requested content, API, return-value, or data-shape misuse |
+| `c_bits3_decode` | c | kernel | medium | Buffer bounds, offsets, or aliasing, Quantized signedness or group indexing |
+| `c_echo_ring` | c | kernel | medium | Buffer bounds, offsets, or aliasing, API, return-value, or data-shape misuse |
+| `c_group_lse` | c | kernel | hard | Buffer bounds, offsets, or aliasing, Required behavior omitted |
+| `c_rank_topk` | c | kernel | medium | Buffer bounds, offsets, or aliasing, Required behavior omitted |
+| `c_rms_gate` | c | kernel | hard | API, return-value, or data-shape misuse, Spec drift, invented behavior, or omitted requested content |
+| `c_sat8_pair` | c | kernel | easy | Buffer bounds, offsets, or aliasing, Required behavior omitted |
+| `c_scan_checked` | c | kernel | medium | Buffer bounds, offsets, or aliasing, API, return-value, or data-shape misuse |
+| `c_skeleton_clamp` | c | skeleton | easy | Buffer bounds, offsets, or aliasing, Ignored or partly applied review note |
+| `c_skeleton_pair` | c | skeleton | medium | API, return-value, or data-shape misuse, Ignored or partly applied review note |
+| `c_skeleton_window` | c | skeleton | hard | Buffer bounds, offsets, or aliasing, Ignored or partly applied review note |
+| `c_span_alias` | c | kernel | hard | Buffer bounds, offsets, or aliasing, Required behavior omitted |
+| `c_stable_norm` | c | kernel | medium | Buffer bounds, offsets, or aliasing, Required behavior omitted |
+| `c_strided_proj` | c | kernel | medium | API, return-value, or data-shape misuse, Buffer bounds, offsets, or aliasing |
+| `c_u4_groupdot` | c | kernel | hard | Quantized signedness or group indexing, Spec drift, invented behavior, or omitted requested content |
+| `p_affine_groups` | python | utility | hard | Quantized signedness or group indexing, API, return-value, or data-shape misuse |
+| `p_axis_layout` | python | utility | easy | API, return-value, or data-shape misuse, Buffer bounds, offsets, or aliasing |
+| `p_axis_take` | python | utility | medium | API, return-value, or data-shape misuse, Required behavior omitted |
+| `p_block_header` | python | utility | easy | API, return-value, or data-shape misuse, Spec drift, invented behavior, or omitted requested content |
+| `p_bytes_lru` | python | utility | hard | API, return-value, or data-shape misuse, Buffer bounds, offsets, or aliasing |
+| `p_chunk_plan` | python | utility | easy | Buffer bounds, offsets, or aliasing, Required behavior omitted |
+| `p_dtype_blend` | python | utility | easy | API, return-value, or data-shape misuse, Spec drift, invented behavior, or omitted requested content |
+| `p_lex_order` | python | utility | hard | API, return-value, or data-shape misuse, Required behavior omitted |
+| `p_mask_out` | python | utility | medium | Buffer bounds, offsets, or aliasing, Spec drift, invented behavior, or omitted requested content |
+| `p_runs_merge` | python | utility | hard | API, return-value, or data-shape misuse, Required behavior omitted |
+| `p_segment_pool` | python | utility | medium | API, return-value, or data-shape misuse, Required behavior omitted |
+| `p_skeleton_calibrate` | python | skeleton | hard | Required behavior omitted, Ignored or partly applied review note |
+| `p_skeleton_delta` | python | skeleton | easy | Quantized signedness or group indexing, Ignored or partly applied review note |
+| `p_skeleton_diags` | python | skeleton | easy | API, return-value, or data-shape misuse, Ignored or partly applied review note |
+| `p_window_copy` | python | utility | easy | Buffer bounds, offsets, or aliasing, Required behavior omitted |
+
+Freeze and run the offline gates:
+
+```bash
+.venv/bin/python tools/ft_heldout_v2_freeze.py
+.venv/bin/python tools/ft_eval.py --split heldout-v2 --self-check
+.venv/bin/python tools/ft_eval.py --split heldout-v2 --mutant-check
+.venv/bin/python tools/ft_leak_check.py
+```
+
+Run the local model for a paired measurement, including optional seeded repeated samples:
+
+```bash
+.venv/bin/python tools/ft_eval.py --model /Users/hatim/models/Qwen3.6-35B-A3B-4bit --split heldout-v2 --attempts 1 --temperature 0 --samples 1 --out results/finetune/base-heldout-v2.json
+.venv/bin/python tools/ft_eval.py --model /Users/hatim/models/Qwen3.6-35B-A3B-4bit --split heldout-v2 --attempts 1 --temperature 0 --samples 1 --out results/finetune/edited-heldout-v2.json
+.venv/bin/python tools/ft_eval.py --paired results/finetune/base-heldout-v2.json results/finetune/edited-heldout-v2.json
+```
+
+Use `--review-notes` to measure the frozen review prompts; it accepts one response per task. `--samples K` sends K separate requests per task and stores the per-sample rows plus their task-level means. `--seed N` adds a deterministic request seed (each sample uses `N + sample_index`). Paired reports require identical suites and hashes, task IDs, retry caps, review mode, model, temperature, and sample count.
+
+**Never-train rule:** no heldout-v2 spec, review prompt, model response, reference solution, test output, task ID, or public function name may be used in SFT, preference, review-following, teacher prompts, or train/validation data. `ft_build_dataset.py` excludes both held-out manifests and rejects heldout-v2 public names; `ft_leak_check.py` scans `data/finetune/` and other `evals/` files for leaks.
+
 ## Metrics
 
 - **First-attempt pass rate:** fraction of tasks whose first response has one fenced code block and passes the

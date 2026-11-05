@@ -1,0 +1,27 @@
+{
+  "id": "c_skeleton_clamp",
+  "lang": "c",
+  "target": "candidate.c",
+  "build_cmd": [
+    "{cc}",
+    "-O2",
+    "-std=c99",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "tests/test_c_skeleton_clamp.c",
+    "-lm",
+    "-o",
+    "test_c_skeleton_clamp"
+  ],
+  "test_cmd": [
+    "./test_c_skeleton_clamp"
+  ],
+  "timeout_s": 20,
+  "classes": [
+    "Buffer bounds, offsets, or aliasing",
+    "Ignored or partly applied review note"
+  ],
+  "kind": "skeleton",
+  "difficulty": "easy"
+}

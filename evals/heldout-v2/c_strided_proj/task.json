@@ -1,0 +1,27 @@
+{
+  "id": "c_strided_proj",
+  "lang": "c",
+  "target": "candidate.c",
+  "build_cmd": [
+    "{cc}",
+    "-O2",
+    "-std=c99",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "tests/test_c_strided_proj.c",
+    "-lm",
+    "-o",
+    "test_c_strided_proj"
+  ],
+  "test_cmd": [
+    "./test_c_strided_proj"
+  ],
+  "timeout_s": 20,
+  "classes": [
+    "API, return-value, or data-shape misuse",
+    "Buffer bounds, offsets, or aliasing"
+  ],
+  "kind": "kernel",
+  "difficulty": "medium"
+}

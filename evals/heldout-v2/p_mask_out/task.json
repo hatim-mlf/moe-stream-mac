@@ -1,0 +1,17 @@
+{
+  "id": "p_mask_out",
+  "lang": "python",
+  "target": "candidate.py",
+  "build_cmd": null,
+  "test_cmd": [
+    "{python}",
+    "tests/test_p_mask_out.py"
+  ],
+  "timeout_s": 20,
+  "classes": [
+    "Buffer bounds, offsets, or aliasing",
+    "Spec drift, invented behavior, or omitted requested content"
+  ],
+  "kind": "utility",
+  "difficulty": "medium"
+}
