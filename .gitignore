@@ -12,3 +12,7 @@ results/litellm.log
 config/.litellm_key
 engine/build/
 results/mlx-server.log
+
+# raw routing traces and engine run logs
+results/*/traces/
+results/*/out/
