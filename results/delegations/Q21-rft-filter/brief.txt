@@ -1,0 +1,12 @@
+Write a Python 3 module `tools/rft_filter.py` (stdlib only) with exactly one public function:
+
+def filter_by_pass_rate(samples: dict[str, list[dict]], max_pass_fraction: float) -> dict[str, list[dict]]:
+
+- `samples` maps a task id to its list of sample rows; each row is a dict with a boolean key "passed".
+- For each task, pass fraction = (number of rows with passed True) / (number of rows).
+- Return a NEW dict (do not mutate the input) containing only the tasks whose pass fraction is
+  less than or equal to max_pass_fraction, with their row lists copied (list(rows)).
+- Tasks with an empty row list are dropped.
+- Raise ValueError if max_pass_fraction is not a number in [0.0, 1.0] (bool is not accepted).
+- Keep the input order of task ids.
+Add a module docstring and a docstring on the function. Type hints. No print statements.

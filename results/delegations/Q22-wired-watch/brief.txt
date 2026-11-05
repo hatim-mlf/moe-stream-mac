@@ -1,0 +1,19 @@
+Write a Python 3 module `tools/wired_watch.py` (stdlib only) that protects a NON-Python process (e.g. llama-server)
+from exhausting wired memory, using the existing module `mem_guard` (import mem_guard; it is on sys.path).
+mem_guard provides: read_wired_bytes() -> int, total_memory_bytes() -> int,
+headroom_bytes_from_env(env) -> int, is_breach(wired, total, headroom) -> bool, POLL_SECONDS = 0.2.
+
+Public function:
+
+def watch(pid: int, *, read_wired=None, total_bytes=None, headroom_bytes=None, poll_seconds=None,
+          is_alive=None, kill=None, sleep=None, log=print) -> str:
+
+- Defaults: read_wired=mem_guard.read_wired_bytes, total_bytes=mem_guard.total_memory_bytes(),
+  headroom_bytes=mem_guard.headroom_bytes_from_env(os.environ), poll_seconds=mem_guard.POLL_SECONDS,
+  is_alive=a function that returns True while the process exists (os.kill(pid, 0); ProcessLookupError -> False),
+  kill=lambda pid: os.kill(pid, signal.SIGKILL), sleep=time.sleep.
+- Loop: if not is_alive(pid): return "exited". Read wired; if mem_guard.is_breach(wired, total, headroom):
+  call log with a one-line message containing the pid and the wired and limit GiB with 2 decimals, call kill(pid),
+  return "killed". If read_wired raises an exception: log it, kill(pid), return "killed" (fail safe). Else sleep.
+- CLI: `python tools/wired_watch.py PID` runs watch(PID) and exits 0 if "exited", 86 if "killed".
+Type hints, docstrings, functions under 50 lines.
