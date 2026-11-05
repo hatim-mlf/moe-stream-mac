@@ -1,0 +1,1 @@
+Implement `int64_t masked_dot_i16(const int16_t *a,const int16_t *b,const uint8_t *mask,size_t n)`. Sum `(int64_t)a[i]*b[i]` only where `mask[i] != 0`, in increasing index order. Assume the sum fits int64 and pointers are valid when n>0. For n=0 return 0 and allow null pointers. No allocation.

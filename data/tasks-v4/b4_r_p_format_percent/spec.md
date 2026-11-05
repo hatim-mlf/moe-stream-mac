@@ -1,0 +1,1 @@
+Implement `format_percent_1dp(value)`. Require a finite real scalar excluding bool, else raise ValueError. Return `value*100` formatted with exactly one digit after the decimal point and a trailing `%`, using Python's standard fixed-point formatting. Example: `0.125` returns `"12.5%"`.

@@ -1,0 +1,1 @@
+Fill `lower_bound_index(values, target)`. Convert values to finite float64 1-D and require nondecreasing order. Target must be a finite scalar convertible to float. Raise ValueError on invalid input. Return the first index i with values[i]>=target, or len(values) if none. Return a Python int; empty input is valid. Return a complete Python function.

@@ -1,0 +1,1 @@
+Implement `binary_roc_auc(scores, labels)`. Scores must be finite float64-convertible 1-D values. Labels must be a same-length 1-D bool or integer array containing only 0/1. Require at least one positive and one negative; invalid input raises ValueError. Return the Mann-Whitney ROC AUC as a Python float, awarding half credit for tied positive/negative scores.

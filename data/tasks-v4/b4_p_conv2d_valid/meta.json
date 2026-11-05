@@ -1,0 +1,7 @@
+{
+  "id": "b4_p_conv2d_valid",
+  "language": "python",
+  "category": "python-numpy",
+  "kind": "implement",
+  "source": "codex-batch4"
+}

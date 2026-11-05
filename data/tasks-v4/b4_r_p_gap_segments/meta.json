@@ -1,0 +1,11 @@
+{
+  "id": "b4_r_p_gap_segments",
+  "language": "python",
+  "category": "review-python",
+  "kind": "review",
+  "source": "codex-batch4",
+  "review_notes": [
+    "A gap equal to max_gap stays within its group; split only when the gap is strictly greater."
+  ],
+  "previous_attempt": "previous_attempt.py"
+}

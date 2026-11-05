@@ -1,0 +1,1 @@
+Implement `solve_tridiagonal(lower, diagonal, upper, rhs)` using the Thomas algorithm. Convert all arguments to float64 1-D finite arrays; for n=`len(diagonal)`, require n>=1, rhs length n, and lower/upper lengths n-1. A zero pivot during elimination or back substitution raises ValueError. Return a new float64 solution vector; do not mutate inputs.

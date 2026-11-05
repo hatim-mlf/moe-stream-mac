@@ -1,0 +1,1 @@
+Implement `float strict_upper_sum_f32(const float *matrix,size_t n)`. Treat matrix as row-major n by n and sum only entries with column>row, visiting rows then columns in increasing order using float addition. For n=0 return 0 and allow null; otherwise matrix is valid. No allocation.

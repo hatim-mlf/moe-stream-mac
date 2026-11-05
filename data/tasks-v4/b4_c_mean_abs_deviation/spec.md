@@ -1,0 +1,1 @@
+Implement `int mean_abs_dev_f32(const float *x,size_t n,double *out)`. For finite input and n>0, compute the mean absolute deviation around the arithmetic mean using two double-precision passes. Return 0. Return -1 for null pointers, n=0, or a nonfinite value, preserving `*out`. No allocation.

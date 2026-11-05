@@ -1,0 +1,1 @@
+Implement `spectral_norm_2x2(x)`. Convert x to finite float64 with rank at least 2 and trailing shape `(2,2)`, else raise ValueError. Return the largest singular value of each 2 by 2 matrix, as float64 with shape `x.shape[:-2]`. Empty leading dimensions are valid; do not mutate input.

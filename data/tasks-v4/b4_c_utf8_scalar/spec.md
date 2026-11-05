@@ -1,0 +1,1 @@
+Implement `int encode_utf8_scalar(uint32_t cp,uint8_t out[4])`. Encode one Unicode scalar value as UTF-8 and return its byte length (1..4). Reject values above U+10FFFF and surrogate values U+D800..U+DFFF; also reject null out. On failure return -1 without modifying out. On success write only the returned number of bytes. No allocation.

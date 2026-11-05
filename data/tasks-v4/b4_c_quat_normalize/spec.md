@@ -1,0 +1,1 @@
+Implement `int normalize_quat_f32(const float in[4],float out[4])`. Normalize four finite components by their Euclidean norm using double accumulation. Return 0 on success. Return -1 for null pointers, any nonfinite component, or zero norm, leaving all of out unchanged. Exact in-place operation is supported. No allocation.

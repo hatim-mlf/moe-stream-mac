@@ -1,0 +1,1 @@
+Implement `uint64_t fnv1a64_update(uint64_t state,const uint8_t *data,size_t n)`. For each byte, XOR it into state then multiply modulo 2^64 by 1099511628211. Do not apply an initial or final offset basis. For n=0 return state and allow null data; otherwise data is valid. No allocation.

@@ -1,0 +1,1 @@
+Fill `first_unique_rows(x)`. Require a finite real numeric 2-D NumPy-convertible array or raise ValueError. Return int64 row indices for the first occurrence of each distinct row, preserving input order; equality is exact elementwise equality. Empty input returns an empty int64 vector. Do not mutate input. Return a complete Python function.

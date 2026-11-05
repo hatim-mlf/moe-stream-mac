@@ -1,0 +1,1 @@
+Fill `longest_strict_rise(values)`. Return the length of the longest contiguous strictly increasing run in the iterable. Equal adjacent values break a run. Return 0 for empty input. Do not sort or mutate input. Return a complete Python function.

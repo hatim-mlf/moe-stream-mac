@@ -1,0 +1,1 @@
+Implement `void rgb565_expand(uint16_t pixel, uint8_t *r, uint8_t *g, uint8_t *b)`. Expand RGB565 channels to 0..255 by bit replication: 5-bit channels use `(v<<3)|(v>>2)` and the 6-bit channel uses `(v<<2)|(v>>4)`. Output pointers are nonnull and pairwise distinct. No allocation.

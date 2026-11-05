@@ -1,0 +1,1 @@
+Implement `polyphase_decompose(values, factor)`. Convert values to a 1-D NumPy array. Require factor to be a positive integer excluding bool and the length to be divisible by factor; otherwise raise ValueError. Return `factor` independent arrays, phase r containing `values[r], values[r+factor], ...`, preserving dtype. Empty input is valid.

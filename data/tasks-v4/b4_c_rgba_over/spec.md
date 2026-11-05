@@ -1,0 +1,1 @@
+Implement `void rgba_over_opaque(const uint8_t fg[4], const uint8_t bg[3], uint8_t out[4])`. Blend straight-alpha foreground RGB over opaque background using `(fg[c]*fg[3] + bg[c]*(255-fg[3]) + 127)/255` for each channel. Set `out[3]=255`. Inputs and output do not overlap. No allocation.

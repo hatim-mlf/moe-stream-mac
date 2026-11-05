@@ -1,0 +1,1 @@
+Implement `int32_t lerp_i32_u16(int32_t a,int32_t b,uint16_t weight)`. Treat weight as unsigned Q0.16 with denominator 65535: result is `a + round_even(((int64_t)b-a)*weight / 65535)`. Round to nearest integer, exact halves to even. Endpoints therefore map exactly at weights 0 and 65535. No allocation.

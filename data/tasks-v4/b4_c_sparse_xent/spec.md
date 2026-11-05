@@ -1,0 +1,1 @@
+Implement `int sparse_cross_entropy_f32(const float *logits,size_t n,size_t target,double *out)`. For finite logits with n>0 and target<n, compute `log(sum(exp(logits[i]))) - logits[target]` stably in double precision. Return 0; return -1 for null pointers, n=0, target>=n, or any nonfinite logit, preserving `*out`. No allocation.

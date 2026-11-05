@@ -1,0 +1,1 @@
+Implement `project_simplex_rows(x)`. Convert x to finite float64 2-D with at least one column, else raise ValueError. Project each row in Euclidean distance onto `{z: z>=0, sum(z)=1}`. Return a new float64 array with the same shape; zero rows are valid and inputs are not mutated.

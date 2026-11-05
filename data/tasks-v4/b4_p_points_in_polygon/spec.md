@@ -1,0 +1,1 @@
+Implement `points_in_polygon(points, polygon)`. Convert to finite float64 arrays with shapes `(n,2)` and `(m,2)`, m>=3; invalid input raises ValueError. Return a bool vector marking points inside or exactly on the polygon boundary. Polygon edges connect consecutive vertices and the last to the first. Do not mutate inputs.

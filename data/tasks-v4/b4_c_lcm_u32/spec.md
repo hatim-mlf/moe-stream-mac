@@ -1,0 +1,1 @@
+Implement `int lcm_u32(uint32_t a,uint32_t b,uint32_t *out)`. Store the least common multiple, defining it as zero if either input is zero. Return 0 on success; return -1 for null out or if the exact result exceeds UINT32_MAX, leaving `*out` unchanged. Use integer arithmetic without overflow. No allocation.

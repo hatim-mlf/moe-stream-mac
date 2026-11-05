@@ -1,0 +1,1 @@
+Implement `int is_ascii_space_byte(unsigned char value)`. Return 1 exactly for the six ASCII whitespace bytes: horizontal tab, line feed, vertical tab, form feed, carriage return, and space. Return 0 for every other byte. Do not use locale-dependent functions.

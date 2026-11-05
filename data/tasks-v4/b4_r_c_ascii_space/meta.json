@@ -1,0 +1,11 @@
+{
+  "id": "b4_r_c_ascii_space",
+  "language": "c",
+  "category": "review-c",
+  "kind": "review",
+  "source": "codex-batch4",
+  "review_notes": [
+    "Include all five ASCII control whitespace bytes (HT, LF, VT, FF, CR), not only space."
+  ],
+  "previous_attempt": "previous_attempt.c"
+}

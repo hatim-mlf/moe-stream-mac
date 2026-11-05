@@ -1,0 +1,1 @@
+Implement `int parse_version_triplet(const char *text,uint16_t out[3])`. Accept exactly `vMAJOR.MINOR.PATCH`; each field is canonical unsigned decimal (one or more digits, no leading zero unless the field is `0`) and at most 65535. No whitespace or trailing bytes. Return 0 on success, -1 for null pointers or invalid text. Preserve all three outputs on failure. No allocation.

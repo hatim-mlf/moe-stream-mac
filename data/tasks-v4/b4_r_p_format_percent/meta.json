@@ -1,0 +1,11 @@
+{
+  "id": "b4_r_p_format_percent",
+  "language": "python",
+  "category": "review-python",
+  "kind": "review",
+  "source": "codex-batch4",
+  "review_notes": [
+    "Include exactly one digit after the decimal point before the percent sign; keep scaling the input by 100."
+  ],
+  "previous_attempt": "previous_attempt.py"
+}

@@ -1,0 +1,11 @@
+{
+  "id": "b4_r_p_stable_mode",
+  "language": "python",
+  "category": "review-python",
+  "kind": "review",
+  "source": "codex-batch4",
+  "review_notes": [
+    "Break frequency ties by earliest first occurrence; do not compare the values themselves."
+  ],
+  "previous_attempt": "previous_attempt.py"
+}

@@ -1,0 +1,11 @@
+{
+  "id": "b4_r_c_days_month",
+  "language": "c",
+  "category": "review-c",
+  "kind": "review",
+  "source": "codex-batch4",
+  "review_notes": [
+    "Apply the Gregorian century rule: years divisible by 100 are not leap years unless divisible by 400."
+  ],
+  "previous_attempt": "previous_attempt.c"
+}

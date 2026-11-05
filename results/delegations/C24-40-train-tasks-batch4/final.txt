@@ -1,0 +1,91 @@
+Created the 50-task batch under [data/tasks-v4](/Users/hatim/moe-stream-mac/data/tasks-v4): 18 C kernels, 18 Python/NumPy utilities, 8 skeleton tasks, and 6 review tasks. The skeletons split 3 C / 5 Python; reviews split 3 C / 3 Python.
+
+The directory contains 265 files: 50 specs, references, tests, and metadata files; 51 mutants; 8 skeletons; and 6 previous attempts. All 50 spec/reference pairs are under 2,000 characters (maximum 1,734). The name checks found no collisions with earlier task IDs/function names or heldout IDs/public names. I did not open any heldout task sources.
+
+### Gate outputs
+
+For the task checker, `PASS` in a mutant column means that mutant was rejected by the tests.
+
+```text
+task_id	kind	chars	reference	mutants
+b4_c_byte_ring_batch	implement	1646	PASS	1.c:PASS,2.c:PASS
+b4_c_fnv1a64	implement	512	PASS	1.c:PASS
+b4_c_fp8_e4m3fn	implement	1166	PASS	1.c:PASS
+b4_c_hex_encode	implement	901	PASS	1.c:PASS
+b4_c_layer_norm_affine	implement	1188	PASS	1.c:PASS
+b4_c_lcm_u32	implement	668	PASS	1.c:PASS
+b4_c_lerp_i32_q16	implement	678	PASS	1.c:PASS
+b4_c_masked_dot_i16	implement	548	PASS	1.c:PASS
+b4_c_mean_abs_deviation	implement	708	PASS	1.c:PASS
+b4_c_parse_version	implement	1173	PASS	1.c:PASS
+b4_c_pool2x2	implement	870	PASS	1.c:PASS
+b4_c_quat_normalize	implement	796	PASS	1.c:PASS
+b4_c_rgb565_expand	implement	644	PASS	1.c:PASS
+b4_c_rgba_over	implement	619	PASS	1.c:PASS
+b4_c_rotl64	implement	423	PASS	1.c:PASS
+b4_c_sparse_xent	implement	884	PASS	1.c:PASS
+b4_c_strict_upper_sum	implement	509	PASS	1.c:PASS
+b4_c_utf8_scalar	implement	1071	PASS	1.c:PASS
+b4_p_batched_gather	implement	850	PASS	1.py:PASS
+b4_p_binary_auc	implement	1316	PASS	1.py:PASS
+b4_p_column_changes	implement	611	PASS	1.py:PASS
+b4_p_conv2d_valid	implement	913	PASS	1.py:PASS
+b4_p_edit_distance	implement	691	PASS	1.py:PASS
+b4_p_gaussian_weights	implement	773	PASS	1.py:PASS
+b4_p_histogram2d_xy	implement	1091	PASS	1.py:PASS
+b4_p_nms_xyxy	implement	1734	PASS	1.py:PASS
+b4_p_nonuniform_derivative	implement	1034	PASS	1.py:PASS
+b4_p_overlap_add	implement	1149	PASS	1.py:PASS
+b4_p_points_in_polygon	implement	1277	PASS	1.py:PASS
+b4_p_polyphase	implement	766	PASS	1.py:PASS
+b4_p_project_homography	implement	1000	PASS	1.py:PASS
+b4_p_project_simplex_rows	implement	813	PASS	1.py:PASS
+b4_p_row_mad	implement	962	PASS	1.py:PASS
+b4_p_solve_tridiagonal	implement	1347	PASS	1.py:PASS
+b4_p_spectral_norm2x2	implement	752	PASS	1.py:PASS
+b4_p_stable_toposort	implement	1483	PASS	1.py:PASS
+b4_r_c_ascii_space	review	414	PASS	1.c:PASS
+b4_r_c_copy_byte_span	review	802	PASS	1.c:PASS
+b4_r_c_days_month	review	594	PASS	1.c:PASS
+b4_r_p_format_percent	review	541	PASS	1.py:PASS
+b4_r_p_gap_segments	review	958	PASS	1.py:PASS
+b4_r_p_stable_mode	review	478	PASS	1.py:PASS
+b4_s_c_copy_even_positions	skeleton	746	PASS	1.c:PASS
+b4_s_c_is_prime	skeleton	434	PASS	1.c:PASS
+b4_s_c_printable_ascii	skeleton	508	PASS	1.c:PASS
+b4_s_p_longest_rise	skeleton	607	PASS	1.py:PASS
+b4_s_p_lower_bound	skeleton	932	PASS	1.py:PASS
+b4_s_p_record_highs	skeleton	782	PASS	1.py:PASS
+b4_s_p_split_rises	skeleton	859	PASS	1.py:PASS
+b4_s_p_unique_rows	skeleton	776	PASS	1.py:PASS
+checked 50 task(s); violations=0
+```
+
+```text
+leak check passed: 66 heldout-v2 ids/public names absent outside suite
+wrote 45 train and 5 valid rows to /tmp/ft-b4-check
+{
+  "sha256": {
+    "train.jsonl": "562f33a20e797287df17387ab8053365cebd4402c1af10a217b3bae0a84ee75b",
+    "valid.jsonl": "4be324ab881c2c39ecaf842b2e0a6b16094917b46ffaabfbec1d3c22fdaf5a7d"
+  },
+  "train_ids": 45,
+  "valid_ids": 5
+}
+```
+
+Standalone `python3 tools/ft_leak_check.py` output:
+
+```text
+leak check passed: 66 heldout-v2 ids/public names absent outside suite
+```
+
+### Hardest tasks
+
+- `b4_c_fp8_e4m3fn`: nearest representable E4M3FN value, ties-to-even, saturation, and signed zero.
+- `b4_c_byte_ring_batch`: wraparound plus all-or-nothing reads and writes.
+- `b4_p_stable_toposort`: stable ordering among ready nodes, validation, and cycle detection.
+- `b4_p_nms_xyxy`: stable score ties, zero-area boxes, and a strict IoU threshold.
+- `b4_p_solve_tridiagonal`: elimination, back-substitution, and zero-pivot errors.
+
+I had no prompt-construction guesses: the task builder appends the skeleton or review attempt and notes as applicable, and the SFT converter wraps that prompt with the existing system message and fenced reference solution. No evaluator or dataset tool files were changed, and I did not commit.

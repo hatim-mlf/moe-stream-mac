@@ -1,0 +1,1 @@
+Implement `conv2d_valid(image, kernel)`. Convert both to finite float64 2-D arrays; kernel dimensions must be positive. Return cross-correlation (do not flip the kernel) over every complete window, shape `(max(H-kH+1,0), max(W-kW+1,0))`. Return float64; do not mutate inputs.

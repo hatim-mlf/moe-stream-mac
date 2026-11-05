@@ -1,0 +1,1 @@
+Fill `record_high_indices(values)`. Convert values to a finite 1-D numeric NumPy array or raise ValueError. Return int64 indices of strict record highs: include index 0 when nonempty, then each index whose value is greater than every earlier value. Equal-to-maximum values are not records. Empty input returns an empty int64 vector. Return a complete Python function.

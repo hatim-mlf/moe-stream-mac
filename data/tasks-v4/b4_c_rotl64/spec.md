@@ -1,0 +1,1 @@
+Implement `uint64_t rotate_left_u64(uint64_t value,unsigned shift)`. Rotate the 64-bit word left by `shift mod 64` positions. Shift zero and any multiple of 64 return the input unchanged. Use C99 integer operations and no allocation.

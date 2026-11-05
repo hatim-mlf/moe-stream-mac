@@ -1,0 +1,7 @@
+{
+  "id": "b4_c_layer_norm_affine",
+  "language": "c",
+  "category": "c99-kernel",
+  "kind": "implement",
+  "source": "codex-batch4"
+}

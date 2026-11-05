@@ -1,0 +1,1 @@
+Fill the TODO in `int is_prime_u32(uint32_t value)`. Return 1 exactly for prime values and 0 for values below 2 or composite values. Use integer operations without overflow and no allocation. Return the complete C file.

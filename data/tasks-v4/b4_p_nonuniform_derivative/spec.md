@@ -1,0 +1,1 @@
+Implement `derivative_nonuniform(y, x)`. Convert both to float64 1-D finite arrays of equal length at least 2; require x strictly increasing, else raise ValueError. Return float64 derivatives: first/last use the adjacent secant; each interior sample uses the distance-weighted mean of its left and right secant slopes. Return a new array and do not mutate inputs.

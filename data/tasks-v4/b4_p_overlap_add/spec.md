@@ -1,0 +1,1 @@
+Implement `overlap_add_frames(frames, hop, length)`. Convert frames to finite float64 rank-2 `(count,width)`. Require integer hop>0 and integer length>=0, excluding bool; otherwise raise ValueError. Add each frame starting at `i*hop`, cropping samples beyond length. Return a float64 vector of exactly length; empty frames or length zero produce zeros. Do not mutate input.

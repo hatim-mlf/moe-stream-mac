@@ -1,0 +1,1 @@
+Implement `split_by_gap(values, max_gap)`. Convert values to finite float64 1-D and require nondecreasing order. `max_gap` must be finite and nonnegative. Raise ValueError for invalid input. Split into consecutive groups only when the difference between neighbors is strictly greater than max_gap. Return a list of independent array copies; empty input returns [].

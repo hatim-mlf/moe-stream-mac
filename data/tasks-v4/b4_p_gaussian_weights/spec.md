@@ -1,0 +1,1 @@
+Implement `gaussian_weights(radius, sigma)`. Radius must be an integer >=0 excluding bool; sigma must be finite and >0. Return a float64 vector of length `2*radius+1` with entries proportional to `exp(-0.5*(offset/sigma)^2)` for offsets `-radius..radius`, normalized to sum to 1. Raise ValueError for invalid inputs.

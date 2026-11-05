@@ -1,0 +1,1 @@
+Implement `column_change_counts(x)`. Convert x to a NumPy array and require rank 2, else raise ValueError. Return an int64 vector of length `x.shape[1]`; each entry counts how many adjacent row pairs differ in that column. A column changes when the two values are unequal. Zero or one row returns all zeros. Do not mutate input.

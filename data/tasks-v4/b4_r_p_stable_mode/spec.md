@@ -1,0 +1,1 @@
+Implement `stable_mode(values)` for a nonempty iterable of hashable values. Return the value with the greatest frequency; on a tie return the one whose first occurrence is earliest. Raise ValueError for empty input. Do not sort or mutate the iterable.

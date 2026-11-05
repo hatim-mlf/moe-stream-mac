@@ -1,0 +1,1 @@
+Implement `row_mad(x, axis=0)`. Convert x to finite float64 with rank at least one. Axis must be an integer excluding bool and valid for x; the reduced dimension must be nonempty. Otherwise raise ValueError. Return the median absolute deviation along axis: median(abs(x - median(x, axis, keepdims=True)), axis). The result is float64; inputs are not mutated.

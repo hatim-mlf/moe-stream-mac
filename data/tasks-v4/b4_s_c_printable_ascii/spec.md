@@ -1,0 +1,1 @@
+Fill the TODO in `int is_printable_ascii_span(const unsigned char *data,size_t n)`. Return 1 iff every byte is in the inclusive range 0x20..0x7E. Return 0 if data is null and n>0. For n=0 return 1 and allow null. Do not use locale-dependent character functions. Return the complete C file.
