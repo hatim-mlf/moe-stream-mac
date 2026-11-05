@@ -1,0 +1,17 @@
+Lead ran your work on the Mac: tools/test_gdn_vjp.py 42/42 pass (parity is right). But memory is NOT bounded
+(tools/gdn_vjp_mem.py, backward peak): T=256: ops 2476 MiB (9.67/token) vs chunked 1442 (5.63); T=512: 4554 vs
+2770 (5.41); T=1024: 8694 vs 7861 (7.68). Option (a)'s dependency trick does not stop lazy whole-graph
+evaluation from keeping per-step state-sized temporaries of all chunks alive.
+
+Next, in this order, keeping the same API, tests and probe:
+(c) Staged evaluation: inside the custom vjp, walk chunks in reverse and `mx.eval` each chunk's cotangents and
+    the carried dS before building the next chunk's backward, so only one chunk's temporaries exist at a time.
+    First verify in MLX 0.32.4 source (/Users/hatim/src/mlx-0.32.4: mlx/transforms.cpp vjp / custom_function,
+    python/src/transforms.cpp) that calling mx.eval inside a custom_function vjp during mx.value_and_grad is
+    allowed and what it does; cite the lines. Add `impl="staged"`.
+(b) If (c) is not allowed or does not bound memory: the per-chunk backward as one mx.fast.metal_kernel that
+    recomputes states in registers (model on gated_delta.py:429-555 for the forward kernel). Algorithm
+    reference with a permissive license: fla-org/flash-linear-attention (MIT), chunk_gated_delta_rule backward.
+    Do not copy code from davesque/flash-linear-attention-mlx (no license); reading its design is fine.
+Target: backward peak roughly flat in T (O(T/C + C) states), e.g. <= 1 GiB at T=1024. The lead will rerun the
+probe at T=256/512/1024/2048 and the 42 tests. Same constraints; no commit. Report the source lines for (c).
