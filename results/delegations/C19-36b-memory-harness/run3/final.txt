@@ -1,0 +1,8 @@
+Updated the harness:
+
+- [mem_profile.py](/Users/hatim/moe-stream-mac/tools/mem_profile.py) now uses `data/finetune/train.jsonl` and selects its longest chat-templated row before truncating to T. It is 751 lines.
+- [mem_sweep.py](/Users/hatim/moe-stream-mac/tools/mem_sweep.py) now owns sweep and fit logic; the CLI delegates to it.
+- [mem_trainer.py](/Users/hatim/moe-stream-mac/tools/mem_trainer.py) adds the one-iteration trainer path, with eval and train-step callback measurements plus an overall peak.
+- [test_mem_profile.py](/Users/hatim/moe-stream-mac/tools/test_mem_profile.py) now covers longest-row selection and the trainer-step path with an injected tiny model.
+
+Syntax compilation and the under-50-line function check passed. I did not run pytest or Metal measurements in this sandbox; the new trainer-step test and its memory readings still need the Mac run.

@@ -1,0 +1,3 @@
+Added [mem_profile.py](/Users/hatim/moe-stream-mac/tools/mem_profile.py) with the four subcommands and [test_mem_profile.py](/Users/hatim/moe-stream-mac/tools/test_mem_profile.py) with injectable tiny-model, row-builder, fit, and sweep tests. The module docstring cites the `mlx_lm` source locations it mirrors.
+
+`py_compile` and the under-50-line function check passed. I did not run pytest or Metal measurements; model execution, memory readings, and GPU capture remain unverified in this sandbox for the lead to run on the Mac.

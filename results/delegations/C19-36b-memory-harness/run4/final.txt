@@ -1,0 +1,8 @@
+Implemented the follow-up.
+
+- Added `--cache-limit-gb` to the measurement commands and sweep children. Records include the cache setting and `system_wired_bytes`; trainer-step also samples `max_system_wired_bytes`.
+- Sweep defaults to `trainer-step`, passes the selected mode and cache limit to each child, and fit uses trainer-step’s `overall` peak.
+- Moved fixed-row handling into [mem_rows.py](/Users/hatim/moe-stream-mac/tools/mem_rows.py). [mem_profile.py](/Users/hatim/moe-stream-mac/tools/mem_profile.py) is 790 lines; all functions are under 50 lines.
+- Updated the injected-model tests in [test_mem_profile.py](/Users/hatim/moe-stream-mac/tools/test_mem_profile.py). Supporting changes are in [mem_sweep.py](/Users/hatim/moe-stream-mac/tools/mem_sweep.py) and [mem_trainer.py](/Users/hatim/moe-stream-mac/tools/mem_trainer.py).
+
+AST and whitespace checks passed. I did not run pytest or MLX measurements here because this environment has no Metal; cache behavior, wired-memory sampling, and trainer peaks remain to be verified on the lead’s Mac. No commit was made.

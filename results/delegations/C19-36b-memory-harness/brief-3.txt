@@ -1,0 +1,12 @@
+Follow-up 2 on the harness (lead ran it: tests 6/6; trainer-step works). Measured: MLX's buffer cache counts as
+system wired, and with the default cache limit the trainer L=2 T=1000 is stopped by mem_guard; with
+mx.set_cache_limit(0) it fits (active peak 26.36 GiB). Changes:
+1. Global option `--cache-limit-gb X` (float >= 0) on step, trainer-step, waterfall, block: calls
+   `mx.set_cache_limit(int(X * 2**30))` right after the mlx import, before loading; recorded in the config.
+   Absent = MLX default (record "default").
+2. Every measurement record also carries `system_wired_bytes` (mem_guard.read_wired_bytes()) at the moment of
+   the measurement, and trainer-step records the max system wired seen by a 0.2 s sampler thread during the run
+   (`max_system_wired_bytes`).
+3. `sweep --mode step|trainer-step` (default trainer-step) and `--cache-limit-gb` passed to every child; the
+   fit uses the trainer overall peak for trainer-step records. Order points smallest first as now.
+Tests with the injected tiny model; same constraints; no commit. Report as before.

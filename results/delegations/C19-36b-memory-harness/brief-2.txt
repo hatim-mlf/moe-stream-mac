@@ -1,0 +1,17 @@
+Follow-up on tools/mem_profile.py (lead ran it on the Mac: tests 5/5 pass, `step --tokens 1000 --layers 1` works:
+phases load 18.17 / forward 18.92 / value_and_grad 19.38 / optimizer 18.18 GiB peak). Three changes:
+
+1. Row source: probe2 has no row >= 3000 tokens, so T=3000 fails. Default to `data/finetune/train.jsonl` and use
+   ONE fixed row for every T: the longest row after the chat template, truncated to its first T tokens (so routing
+   is comparable across T). Keep the completion mask over the last half. Keep the injectable row source.
+2. File size: 902 lines is over our 800-line limit. Move sweep/fit (run_sweep, _run_sweep_child, read_jsonl,
+   _completed_points, fit_coefficients, print_fit and helpers) into `tools/mem_sweep.py`; keep the CLI in
+   mem_profile.py (sweep/fit subcommands call into mem_sweep). Update tests accordingly.
+3. New subcommand `trainer-step --tokens T --layers L`: same model setup and the same fixed row, but run
+   mlx_lm's own `mlx_lm.tuner.trainer.train(...)` (mirror how `mlx_lm/lora.py` builds TrainingArgs, datasets and
+   the optimizer from docs/finetune/lora.yaml; loss = completion_only_loss like tools/ft_lora_lowmem.py, with
+   `mx.disable_compile()` as there) for exactly 1 iteration, with the yaml's val_batches and an eval at step 1
+   as the real runs do, on a 1-row train set and 1-row valid set made of that row. Record the overall
+   `mx.get_peak_memory()` and, via a training_callback, the peak after the eval and after the train step.
+   Purpose: compare an isolated step with the trainer (real runs peak ~5 GiB higher than `step`).
+Same constraints as before; tests for 1 and 3 with the tiny model (inject). Report as before.
