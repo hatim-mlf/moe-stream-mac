@@ -15,7 +15,7 @@ def main():
                      {name for task in manifest["tasks"] for name in task["public_names"]})
     patterns = [(value, re.compile(r"(?<![A-Za-z0-9_])" + re.escape(value) + r"(?![A-Za-z0-9_])"))
                 for value in needles]
-    roots = [ROOT / "data" / "finetune", ROOT / "evals"]
+    roots = [ROOT / "data" / "finetune", ROOT / "data" / "steering", ROOT / "evals"]
     failures = []
     for scan_root in roots:
         if not scan_root.exists():
