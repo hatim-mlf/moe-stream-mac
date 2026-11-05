@@ -1,0 +1,7 @@
+{
+  "id": "b3_c_store_u32be",
+  "language": "c",
+  "category": "kernel",
+  "kind": "implement",
+  "source": "codex-batch3"
+}

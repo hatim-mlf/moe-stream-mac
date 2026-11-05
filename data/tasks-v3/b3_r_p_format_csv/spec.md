@@ -1,0 +1,1 @@
+Implement `format_csv_record(fields)`. Use Python's `csv` module with the default Excel dialect to serialize one iterable of strings. Return exactly one record without the writer's final line terminator; preserve CSV quoting and embedded newlines.

@@ -1,0 +1,1 @@
+Implement `integral_table_2d(x)`. Require a finite 2-D numeric input, convert to float64, and return a new `(rows+1, cols+1)` float64 table with a zero top row/left column and cumulative rectangle sums. Do not mutate input; empty dimensions are valid.

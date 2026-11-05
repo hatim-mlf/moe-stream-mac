@@ -1,0 +1,1 @@
+Implement `void prefix_min_i16(const int16_t *src, int16_t *dst, size_t n)`. Set `dst[i]` to the minimum of `src[0..i]`. Exact in-place operation is supported; for `n==0`, no access occurs and null pointers are allowed. No allocation.

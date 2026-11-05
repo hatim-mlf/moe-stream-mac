@@ -1,0 +1,1 @@
+Implement `parse_csv_record(text)` using Python's `csv` module and its default Excel dialect. Parse exactly one logical record and return its fields as a list of strings; quoted commas and doubled quotes follow CSV rules. Malformed CSV or zero/multiple records raises ValueError.

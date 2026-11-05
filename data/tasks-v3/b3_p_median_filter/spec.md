@@ -1,0 +1,1 @@
+Implement `median_filter_valid(x, width)`. Convert `x` to finite float64 1-D; width must be a positive integer excluding bool. Return medians for all complete contiguous windows, using NumPy's median rule for even widths. If width exceeds input length, return empty float64. Do not mutate input.

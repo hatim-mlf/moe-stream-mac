@@ -1,0 +1,7 @@
+{
+  "id": "b3_c_sat_sub16",
+  "language": "c",
+  "category": "kernel",
+  "kind": "implement",
+  "source": "codex-batch3"
+}

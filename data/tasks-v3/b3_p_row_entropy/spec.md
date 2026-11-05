@@ -1,0 +1,1 @@
+Implement `row_entropy(probabilities)`. Convert to finite float64 2-D input; entries must be nonnegative and each row must have positive sum. Normalize each row internally and return its Shannon entropy using natural logarithms, with zero-probability terms contributing zero. Return a float64 vector; empty row count is valid. Do not mutate input.

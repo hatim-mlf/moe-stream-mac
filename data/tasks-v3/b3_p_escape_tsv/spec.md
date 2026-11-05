@@ -1,0 +1,1 @@
+Implement `escape_tsv_cell(text)`. Return text with backslash, tab, carriage return, and newline escaped respectively as `\`, `\t`, `\r`, and `\n`. Escape original backslashes first. Other characters are unchanged.

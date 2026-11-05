@@ -1,0 +1,1 @@
+Implement `uint64_t sum_absdiff_u16(const uint16_t *a,const uint16_t *b,size_t n)`. Return the sum of absolute elementwise differences. For `n==0`, return zero and allow null pointers. Assume the sum fits uint64; no allocation.

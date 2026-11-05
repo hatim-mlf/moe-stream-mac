@@ -1,0 +1,1 @@
+Implement `pack_i16le(values)`. Require a 1-D integer array (not bool) whose values fit signed int16. Return its elements encoded as contiguous little-endian two's-complement bytes. Invalid input raises ValueError; input is unchanged.

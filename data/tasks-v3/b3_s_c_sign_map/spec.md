@@ -1,0 +1,1 @@
+Fill the TODO in `void sign_map_i16(const int16_t *src,int8_t *dst,size_t n)`. Write -1, 0, or 1 according to each source value's sign. Buffers are disjoint; for `n==0`, allow null pointers. No allocation.

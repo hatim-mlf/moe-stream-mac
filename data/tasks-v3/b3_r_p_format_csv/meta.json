@@ -1,0 +1,11 @@
+{
+  "id": "b3_r_p_format_csv",
+  "language": "python",
+  "category": "review-utility",
+  "kind": "review",
+  "source": "codex-batch3",
+  "previous_attempt": "previous_attempt.py",
+  "review_notes": [
+    "Remove only the final record terminator from the writer output; keep any newline characters inside quoted fields."
+  ]
+}

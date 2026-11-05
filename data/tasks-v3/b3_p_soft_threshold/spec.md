@@ -1,0 +1,1 @@
+Implement `soft_threshold_array(x, threshold)`. Convert `x` to finite float64; threshold must be finite and nonnegative. Return `sign(x)*max(abs(x)-threshold,0)` elementwise as a new float64 array; do not mutate input.

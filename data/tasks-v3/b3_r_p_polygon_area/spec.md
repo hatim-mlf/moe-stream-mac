@@ -1,0 +1,1 @@
+Implement `signed_polygon_area(points)`. Convert to finite float64 shape `(n,2)` or raise ValueError. Return the signed shoelace area of the vertices, with the last point connected to the first; fewer than three points return 0. Counterclockwise order is positive. Do not mutate input.

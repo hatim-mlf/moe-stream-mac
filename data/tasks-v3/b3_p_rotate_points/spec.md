@@ -1,0 +1,1 @@
+Implement `rotate_points2d(points, angle)`. Convert points to finite float64 with shape `(...,2)` and require finite angle. Return a new array with each `(x,y)` rotated counterclockwise by `angle` radians, preserving shape. Empty leading dimensions are valid; do not mutate input.

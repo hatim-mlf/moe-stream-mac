@@ -1,0 +1,1 @@
+Fill `column_range(x)`. Require a finite float64 2-D array with at least one row. Return a float64 vector of `column maximum - column minimum`; zero columns return an empty vector. Do not mutate input.

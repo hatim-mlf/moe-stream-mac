@@ -1,0 +1,1 @@
+Implement `max_bracket_depth(text)`. Scan `()`, `[]`, and `{}` with proper nesting; ignore all other characters. Return maximum nesting depth, including zero for no brackets. Return -1 for mismatched, premature, or unclosed brackets.

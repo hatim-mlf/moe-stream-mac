@@ -1,0 +1,11 @@
+{
+  "id": "b3_r_c_first_negative",
+  "language": "c",
+  "category": "review-kernel",
+  "kind": "review",
+  "source": "codex-batch3",
+  "previous_attempt": "previous_attempt.c",
+  "review_notes": [
+    "Return -1 immediately when n is zero; do not read x in that case."
+  ]
+}

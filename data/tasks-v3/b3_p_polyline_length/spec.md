@@ -1,0 +1,1 @@
+Implement `polyline_length2d(points)`. Convert to finite float64 shape `(n,2)` or raise ValueError. Return the sum of Euclidean lengths between consecutive points as a Python float; fewer than two points return 0. Do not mutate input.

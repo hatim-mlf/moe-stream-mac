@@ -1,0 +1,11 @@
+{
+  "id": "b3_r_c_argmin_first",
+  "language": "c",
+  "category": "review-kernel",
+  "kind": "review",
+  "source": "codex-batch3",
+  "previous_attempt": "previous_attempt.c",
+  "review_notes": [
+    "Keep the earliest index on equal minima by updating only when x[i] is strictly smaller."
+  ]
+}

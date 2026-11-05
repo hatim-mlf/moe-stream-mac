@@ -1,0 +1,1 @@
+Implement `void transpose_u8(const uint8_t *src, size_t rows, size_t cols, uint8_t *dst)`. Copy a row-major matrix to a row-major matrix of shape `(cols, rows)`. The element count is representable in size_t; buffers do not overlap and are valid when nonempty. Pointers may be null when the element count is zero. No allocation.

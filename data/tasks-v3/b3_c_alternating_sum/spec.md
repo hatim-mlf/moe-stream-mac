@@ -1,0 +1,1 @@
+Implement `int64_t alternating_sum_i32(const int32_t *x,size_t n)`. Return x[0]-x[1]+x[2]-x[3]+... in int64. For n==0 return 0 and allow null; otherwise x is valid. Assume the result fits int64. No allocation.

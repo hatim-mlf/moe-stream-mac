@@ -1,0 +1,1 @@
+Implement `decode_records_u32be(data)`. Read consecutive records encoded as a 4-byte big-endian unsigned length followed by that many bytes. Return a list of payload `bytes`; empty input is valid. Truncated headers or payloads raise ValueError; do not return partial results.

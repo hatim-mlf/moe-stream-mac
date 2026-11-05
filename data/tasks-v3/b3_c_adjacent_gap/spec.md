@@ -1,0 +1,1 @@
+Implement `float max_adjacent_gap_f32(const float *x,size_t n)`. Return the largest absolute difference between consecutive values. For n<2 return 0 and allow null when n==0. Inputs are finite; no allocation.

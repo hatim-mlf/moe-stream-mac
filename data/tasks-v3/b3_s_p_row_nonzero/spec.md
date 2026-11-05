@@ -1,0 +1,1 @@
+Fill `rows_with_nonzero(x)`. Convert to a 2-D NumPy array or raise ValueError. Return int64 row indices, in order, for rows containing at least one nonzero value. Zero-column matrices return an empty vector; do not mutate input.

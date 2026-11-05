@@ -1,0 +1,11 @@
+{
+  "id": "b3_r_c_sum_until_zero",
+  "language": "c",
+  "category": "review-kernel",
+  "kind": "review",
+  "source": "codex-batch3",
+  "previous_attempt": "previous_attempt.c",
+  "review_notes": [
+    "Stop at the first zero and exclude it and every following value from the sum."
+  ]
+}

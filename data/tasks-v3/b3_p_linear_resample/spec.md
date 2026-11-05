@@ -1,0 +1,1 @@
+Implement `linear_resample_1d(query, xp, fp)`. Convert inputs to float64; `xp` and `fp` must be finite 1-D arrays of equal length >=2, with `xp` strictly increasing; `query` must be finite and may have any shape. Return linear interpolation with endpoint clamping and the query shape. Do not mutate inputs.

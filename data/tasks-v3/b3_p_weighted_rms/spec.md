@@ -1,0 +1,1 @@
+Implement `weighted_rms(values, weights)`. Convert both to finite float64 1-D arrays of equal nonzero length; weights must be nonnegative with positive sum. Return `sqrt(sum(weights*values**2)/sum(weights))` as Python float. Raise ValueError otherwise; do not mutate inputs.

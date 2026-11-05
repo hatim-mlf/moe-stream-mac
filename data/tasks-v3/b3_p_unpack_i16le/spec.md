@@ -1,0 +1,1 @@
+Implement `unpack_i16le(data)`. Accept bytes, bytearray, or memoryview with even byte length. Return an independent 1-D native int16 NumPy array decoded as little-endian signed values. Invalid type or odd length raises ValueError.

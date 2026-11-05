@@ -1,0 +1,1 @@
+Implement `float trace_rowmajor_f32(const float *matrix,size_t rows,size_t cols)`. Sum the main diagonal of a row-major matrix, through min(rows,cols), in left-to-right float order. If either dimension is zero return 0 without access; otherwise matrix is valid. No allocation.

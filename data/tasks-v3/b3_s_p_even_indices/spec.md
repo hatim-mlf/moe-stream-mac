@@ -1,0 +1,1 @@
+Fill `evenly_spaced_indices(length, count)`. Require integer arguments excluding bool with `length>=0` and `0<=count<=length`, else raise ValueError. Return `count` distinct increasing indices from `[0,length)`, choosing `floor(i*length/count)` for each `i`; count zero returns `[]`.

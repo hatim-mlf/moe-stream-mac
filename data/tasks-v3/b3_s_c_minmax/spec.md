@@ -1,0 +1,1 @@
+Fill the TODO in `int minmax_i16(const int16_t *x,size_t n,int16_t *out_min,int16_t *out_max)`. For `n>0`, require all pointers; store minimum and maximum. For `n==0`, return -1 without changing outputs; null input is allowed only then. Return 0 on success. No allocation.

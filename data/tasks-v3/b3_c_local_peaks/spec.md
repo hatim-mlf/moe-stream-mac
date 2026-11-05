@@ -1,0 +1,1 @@
+Implement `size_t count_strict_peaks_f32(const float *x,size_t n)`. Count interior positions i for which x[i] is strictly greater than both neighbors. Endpoints are never peaks; for n<3, return 0. Values are finite and valid when n>0; no allocation.

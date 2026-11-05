@@ -1,0 +1,1 @@
+Implement `merge_count_maps(left,right)`. Both inputs must be mappings from strings to nonnegative Python integers excluding bool. Return a new dict with keywise sums (missing keys count as zero). Invalid keys/values raise ValueError; inputs are not mutated.

@@ -1,0 +1,1 @@
+Implement `int second_largest_distinct_i32(const int32_t *x,size_t n,int32_t *out)`. Store the second-largest distinct value in one pass, using O(1) space. Return 0 on success; return -1 for null out, null x when n>0, or fewer than two distinct values, preserving *out. Empty input is valid but has no answer.

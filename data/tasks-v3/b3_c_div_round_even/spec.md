@@ -1,0 +1,1 @@
+Implement `int div_round_even_i64(int64_t numerator,int64_t denominator,int64_t *out)`. Divide and round to nearest integer, with exact halves to the even integer. Return 0 on success; return -1 for null output, zero denominator, or a result outside int64, preserving `*out`. No allocation.

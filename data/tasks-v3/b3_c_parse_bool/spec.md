@@ -1,0 +1,1 @@
+Implement `int parse_ascii_bool(const char *text,int *out)`. Accept exactly `true`, `false`, `1`, or `0`; store 1 or 0 respectively. Return 0 on success or -1 for null/invalid input, preserving `*out` on failure. Matching is case-sensitive; no whitespace.

@@ -1,0 +1,1 @@
+Implement `int is_ascii_identifier(const char *text)`. Return 1 iff nonempty text begins with ASCII letter or `_` and all remaining bytes are ASCII letters, digits, or `_`; otherwise return 0. Null returns 0. Do not use locale-dependent character classes.

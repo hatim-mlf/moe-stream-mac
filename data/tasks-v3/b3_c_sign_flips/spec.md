@@ -1,0 +1,1 @@
+Implement `size_t sign_flips_f32(const float *x,size_t n)`. Count changes of sign between consecutive nonzero values; zero values are ignored. Values are finite. For `n==0`, return 0 and allow null. No allocation.

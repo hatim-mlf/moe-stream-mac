@@ -1,0 +1,107 @@
+## Files touched
+
+Created [data/tasks-v3](/Users/hatim/moe-stream-mac/data/tasks-v3): 50 task folders, 314 files total. Each task has two mutants, and all six review tasks include a previous attempt and precise review notes. No other repository files were changed; no commit was created.
+
+## Counts
+
+| Kind | C | Python | Total |
+|---|---:|---:|---:|
+| Implement | 18 | 18 | 36 |
+| Skeleton | 4 | 4 | 8 |
+| Review | 3 | 3 | 6 |
+| **Total** | **25** | **25** | **50** |
+
+All 50 spec/reference pairs are under 2,000 characters; 30 implementation pairs are at most 750 characters. After assembling SFT messages, 33 rows have at most 2,400 combined content characters. That is a size proxy for the requested short rows; an exact Qwen token count was unavailable because no tokenizer package was installed.
+
+The heldout manifest check found no reused task IDs or public function names. I did not open any frozen heldout task sources.
+
+## Five hardest tasks
+
+1. `b3_c_parse_i16_list` — strict grammar, range and capacity checks, and unchanged outputs on failure without allocation.
+2. `b3_c_div_round_even` — signed ties-to-even rounding and int64 boundary cases.
+3. `b3_c_second_largest` — distinguishing unique maxima from duplicates in one pass.
+4. `b3_p_row_entropy` — stable row normalization, zero entries, and very large finite values.
+5. `b3_p_decode_records` — length-prefixed decoding with strict truncation handling and no partial result.
+
+## Prompt construction
+
+I had no prompt-construction guess. For heldout-v2, `ft_eval` reads `spec.md` (or `review.md` for review prompts); the SFT converter appends the skeleton or the previous attempt and review notes for those task kinds. Candidate replies must contain a fenced code block. C checks compile as C99 with warnings treated as errors; Python checks import `candidate.py` under pytest.
+
+## Gate outputs
+
+`ft_tasks_check` marks a mutant `PASS` when the tests reject it.
+
+```text
+$ python3 tools/ft_tasks_check.py data/tasks-v3
+task_id	kind	chars	reference	mutants
+b3_c_absdiff_sum	implement	474	PASS	1.c:PASS,2.c:PASS
+b3_c_adjacent_gap	implement	463	PASS	1.c:PASS,2.c:PASS
+b3_c_alternating_sum	implement	416	PASS	1.c:PASS,2.c:PASS
+b3_c_div_round_even	implement	1010	PASS	1.c:PASS,2.c:PASS
+b3_c_gray_decode	implement	297	PASS	1.c:PASS,2.c:PASS
+b3_c_gray_encode	implement	228	PASS	1.c:PASS,2.c:PASS
+b3_c_identifier	implement	638	PASS	1.c:PASS,2.c:PASS
+b3_c_local_peaks	implement	459	PASS	1.c:PASS,2.c:PASS
+b3_c_parse_bool	implement	568	PASS	1.c:PASS,2.c:PASS
+b3_c_parse_i16_list	implement	1461	PASS	1.c:PASS,2.c:PASS
+b3_c_poly3	implement	312	PASS	1.c:PASS,2.c:PASS
+b3_c_prefix_min16	implement	521	PASS	1.c:PASS,2.c:PASS
+b3_c_sat_sub16	implement	408	PASS	1.c:PASS,2.c:PASS
+b3_c_second_largest	implement	827	PASS	1.c:PASS,2.c:PASS
+b3_c_sign_flips	implement	489	PASS	1.c:PASS,2.c:PASS
+b3_c_store_u32be	implement	618	PASS	1.c:PASS,2.c:PASS
+b3_c_trace_matrix	implement	488	PASS	1.c:PASS,2.c:PASS
+b3_c_transpose_u8	implement	581	PASS	1.c:PASS,2.c:PASS
+b3_p_apply_lut	implement	559	PASS	1.py:PASS,2.py:PASS
+b3_p_block_mean	implement	835	PASS	1.py:PASS,2.py:PASS
+b3_p_bracket_depth	implement	569	PASS	1.py:PASS,2.py:PASS
+b3_p_csv_fields	implement	575	PASS	1.py:PASS,2.py:PASS
+b3_p_decode_records	implement	725	PASS	1.py:PASS,2.py:PASS
+b3_p_escape_tsv	implement	339	PASS	1.py:PASS,2.py:PASS
+b3_p_integral_table	implement	549	PASS	1.py:PASS,2.py:PASS
+b3_p_linear_resample	implement	736	PASS	1.py:PASS,2.py:PASS
+b3_p_median_filter	implement	720	PASS	1.py:PASS,2.py:PASS
+b3_p_merge_counts	implement	719	PASS	1.py:PASS,2.py:PASS
+b3_p_pack_i16le	implement	486	PASS	1.py:PASS,2.py:PASS
+b3_p_polyline_length	implement	503	PASS	1.py:PASS,2.py:PASS
+b3_p_rotate_points	implement	615	PASS	1.py:PASS,2.py:PASS
+b3_p_row_entropy	implement	828	PASS	1.py:PASS,2.py:PASS
+b3_p_smoothstep	implement	389	PASS	1.py:PASS,2.py:PASS
+b3_p_soft_threshold	implement	487	PASS	1.py:PASS,2.py:PASS
+b3_p_unpack_i16le	implement	521	PASS	1.py:PASS,2.py:PASS
+b3_p_weighted_rms	implement	763	PASS	1.py:PASS,2.py:PASS
+b3_r_c_argmin_first	review	386	PASS	1.c:PASS,2.c:PASS
+b3_r_c_first_negative	review	436	PASS	1.c:PASS,2.c:PASS
+b3_r_c_sum_until_zero	review	420	PASS	1.c:PASS,2.c:PASS
+b3_r_p_first_duplicate	review	345	PASS	1.py:PASS,2.py:PASS
+b3_r_p_format_csv	review	410	PASS	1.py:PASS,2.py:PASS
+b3_r_p_polygon_area	review	611	PASS	1.py:PASS,2.py:PASS
+b3_s_c_count_zero	skeleton	360	PASS	1.c:PASS,2.c:PASS
+b3_s_c_minmax	skeleton	610	PASS	1.c:PASS,2.c:PASS
+b3_s_c_reverse_i32	skeleton	402	PASS	1.c:PASS,2.c:PASS
+b3_s_c_sign_map	skeleton	377	PASS	1.c:PASS,2.c:PASS
+b3_s_p_column_range	skeleton	438	PASS	1.py:PASS,2.py:PASS
+b3_s_p_even_indices	skeleton	573	PASS	1.py:PASS,2.py:PASS
+b3_s_p_row_nonzero	skeleton	413	PASS	1.py:PASS,2.py:PASS
+b3_s_p_split_sentinel	skeleton	489	PASS	1.py:PASS,2.py:PASS
+checked 50 task(s); violations=0
+```
+
+```text
+$ python3 tools/ft_tasks_to_sft.py data/tasks-v3 --out /tmp/ft-b3-check
+leak check passed: 66 heldout-v2 ids/public names absent outside suite
+wrote 45 train and 5 valid rows to /tmp/ft-b3-check
+{
+  "sha256": {
+    "train.jsonl": "28a0a7f8237fa4d1f02177aac23509da5b67c673ea798eaf52b6933d0a1f9f1e",
+    "valid.jsonl": "8ae6dd2c8d9afacc5853536ef5aa64139afa4f46b7758b5adbcbec535d230dae"
+  },
+  "train_ids": 45,
+  "valid_ids": 5
+}
+```
+
+```text
+$ python3 tools/ft_leak_check.py
+leak check passed: 66 heldout-v2 ids/public names absent outside suite
+```

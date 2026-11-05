@@ -1,0 +1,1 @@
+Implement `int64_t sum_i16_before_zero(const int16_t *x,size_t n)`. Sum values from the start up to, but excluding, the first zero. Ignore all later values. For `n==0`, return 0 and allow null. Assume the sum fits int64; no allocation.

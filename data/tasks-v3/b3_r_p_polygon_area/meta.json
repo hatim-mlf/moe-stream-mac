@@ -1,0 +1,11 @@
+{
+  "id": "b3_r_p_polygon_area",
+  "language": "python",
+  "category": "review-utility",
+  "kind": "review",
+  "source": "codex-batch3",
+  "previous_attempt": "previous_attempt.py",
+  "review_notes": [
+    "Return the signed shoelace result; remove abs(...) so clockwise inputs remain negative."
+  ]
+}

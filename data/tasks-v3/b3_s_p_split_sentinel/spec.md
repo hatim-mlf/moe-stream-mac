@@ -1,0 +1,1 @@
+Fill `split_on_sentinel(values, sentinel)`. Return consecutive nonempty groups as lists; each sentinel ends the current group and is omitted. Ignore leading, trailing, and repeated sentinels. Do not mutate the input.

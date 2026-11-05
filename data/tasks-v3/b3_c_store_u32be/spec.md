@@ -1,0 +1,1 @@
+Implement `int put_u32be(uint8_t *dst, size_t cap, size_t off, uint32_t value)`. Write four big-endian bytes. Return 0 or -1 for null `dst` or insufficient/out-of-range capacity. On failure leave the entire buffer unchanged. Check bounds without overflow; no allocation.

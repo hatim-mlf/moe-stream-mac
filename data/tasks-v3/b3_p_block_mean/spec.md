@@ -1,0 +1,1 @@
+Implement `block_mean_2d(x, height, width)`. Convert to finite float64 2-D input; dimensions must be positive integers excluding bool. Return means of nonoverlapping full blocks in row-major order, dropping incomplete bottom/right edges. Return float64; do not mutate input.

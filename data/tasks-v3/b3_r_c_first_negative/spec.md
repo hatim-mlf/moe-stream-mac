@@ -1,0 +1,1 @@
+Implement `ptrdiff_t first_negative_i32(const int32_t *x,size_t n)`. Return the first index whose value is negative, or -1 if none. For `n==0`, allow null and return -1; for `n>0`, `x` is valid. The result fits ptrdiff_t; no allocation.

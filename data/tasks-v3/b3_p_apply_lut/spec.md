@@ -1,0 +1,1 @@
+Implement `apply_integer_lut(indices, lut)`. `indices` must be an integer NumPy array of any rank; `lut` must be a nonempty 1-D array. Require every index in `[0,len(lut))`, else raise ValueError. Return a new array with `lut` dtype and the index shape; do not mutate inputs.
