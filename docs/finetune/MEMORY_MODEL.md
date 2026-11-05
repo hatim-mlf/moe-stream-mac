@@ -281,3 +281,8 @@ To train many layers on long rows, GDN needs a backward that `mx.checkpoint` can
 options are a hand-written chunked vjp (`mx.custom_function`, reverse recurrence per chunk) or a chunked
 forward/backward Metal kernel like flash-linear-attention's. Either would cut ~7 GiB to ~0.5 GiB at T = 1000.
 That is a separate decision.
+- **Attempted fix, parked (C21, brief 38):** a hand-written chunked GDN vjp (`mx.custom_function`) is correct
+  (41/42 parity) but still linear in T: 5.4-7.7 MiB/token. Staged `mx.eval` inside the vjp is legal but cannot
+  free the chunk graphs (vjp runs under RetainGraph): 52 MiB/token. A first Metal-kernel backward: 10.3 MiB/token.
+  Long rows with many LoRA layers stay out of reach until a kernel backward avoids materialising per-step
+  outputs. Deep LoRA also overfit the current data (config B), so this is parked.
