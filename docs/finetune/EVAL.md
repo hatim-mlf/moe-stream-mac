@@ -181,3 +181,14 @@ The live baseline could not run in this session: the request to `127.0.0.1:8080`
 `[Errno 1] Operation not permitted`; importing MLX also reports that no Metal device is available. No baseline
 model scores are claimed. The first baseline command above is the required next measurement on the interactive
 Mac.
+
+## Comparison protocol (set 2026-11-05)
+
+- **Serve adapters at server start.** `mlx_lm.server --adapter-path <dir>`; mlx_lm.server ignores a per-request
+  `adapters` field for model `default_model` (server.py:478), so `ft_eval.py --adapter` is refused.
+- **Report the sampled paired comparison, not one greedy run.** 30 tasks × 1 greedy sample cannot resolve
+  differences under ~3 tasks: the v5 SFT adapter looked like 8/30 vs 10/30 greedy (CI −0.17..0.0), but
+  with `--samples 5 --temperature 0.6 --seed 7` it is 0.147 vs 0.320 (CI −0.27..−0.08). Use the 5-sample run for
+  decisions; keep greedy as a secondary number.
+- Base reference files: `results/finetune/base-v2-first.json` (greedy, reproduced exactly on 2026-11-05) and
+  `results/20261105T201500Z-eval-resolution/base-s5-t06.json` (5 samples, T=0.6, seed 7).
