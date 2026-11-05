@@ -1,0 +1,1 @@
+Implement void histogram_u8(const uint8_t *values, size_t n, uint32_t counts[256]). Set every bin to zero, then count each byte value. Assume n<=UINT32_MAX and pointers are valid when n>0. No allocation.

@@ -1,0 +1,1 @@
+Implement int quantize_affine_u8(float x, float scale, int zero_point, uint8_t *out). Require finite x, finite scale > 0, zero_point in [0,255], and nonnull out. Compute round-half-away-from-zero(x/scale) + zero_point, then clamp to [0,255]. Return 0 on success or -1 on invalid input; leave *out unchanged on failure.

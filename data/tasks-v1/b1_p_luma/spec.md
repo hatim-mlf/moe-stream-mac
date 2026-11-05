@@ -1,0 +1,1 @@
+Implement rgb_luma(rgb). Convert input to float64 and require the last dimension to have length 3, otherwise raise ValueError. Return the Rec. 709 luma 0.2126*R + 0.7152*G + 0.0722*B, with all leading dimensions preserved. Do not mutate input.

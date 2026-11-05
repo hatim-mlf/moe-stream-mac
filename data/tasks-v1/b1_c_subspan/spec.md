@@ -1,0 +1,1 @@
+Implement ptrdiff_t find_subspan_u8(const uint8_t *haystack,size_t hay_n,const uint8_t *needle,size_t needle_n). Return the first byte offset of needle, or -1 if absent. Empty needle returns 0. A null pointer is allowed only for its corresponding zero length. No allocation.

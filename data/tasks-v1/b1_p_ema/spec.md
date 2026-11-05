@@ -1,0 +1,1 @@
+Implement ema_series(values, alpha). Convert values to float64 and require a one-dimensional finite array plus finite alpha in (0,1]; otherwise raise ValueError. For nonempty input set out[0]=values[0], then out[i]=alpha*values[i]+(1-alpha)*out[i-1]. Empty input returns empty float64.

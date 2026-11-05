@@ -1,0 +1,1 @@
+Implement int32_t saturating_mul_i32(int32_t a,int32_t b). Return the exact product when representable; otherwise return INT32_MAX for positive overflow or INT32_MIN for negative overflow. The implementation must not invoke signed overflow.

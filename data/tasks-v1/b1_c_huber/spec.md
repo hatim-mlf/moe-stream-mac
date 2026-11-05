@@ -1,0 +1,1 @@
+Implement float huber_mean_f32(const float *pred, const float *target, size_t n, float delta). For each difference d=pred[i]-target[i], loss is d*d/2 when abs(d)<=delta, otherwise delta*(abs(d)-delta/2). Return the arithmetic mean; n=0 returns 0. Assume valid pointers when n>0 and finite delta>0.

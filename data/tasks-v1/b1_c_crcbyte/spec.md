@@ -1,0 +1,1 @@
+Implement uint32_t crc32_ieee_update(uint32_t state,const uint8_t *data,size_t n). Update a reflected CRC-32 state using polynomial 0xEDB88320, processing each byte least-significant bit first. Do not apply initial or final XOR. For n=0 return state. Assume data is valid when n>0.

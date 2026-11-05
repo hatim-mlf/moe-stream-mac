@@ -1,0 +1,1 @@
+Implement decode_uleb32(data, offset=0), decoding one unsigned LEB128 integer no larger than 2^32-1. Accept bytes-like input and integer offset in [0,len(data)]. Return (value,next_offset). Raise ValueError for invalid offset, truncation, more than five bytes, or overflow in the fifth byte. Extra bytes after the encoded value are allowed.

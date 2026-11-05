@@ -1,0 +1,2 @@
+Implement int encode_flags_msb(const uint8_t *src, size_t n, uint8_t *dst, size_t cap).
+Each src byte must be 0 or 1. Pack eight flags per output byte, first flag in bit 7, next in bit 6, and so on. Unused low bits in the last byte are zero. Return output byte count, or -1 for invalid pointers, cap too small, a flag above 1, or a count that cannot fit int. For n=0 return 0 and allow null pointers. On failure, do not modify dst. No allocation.

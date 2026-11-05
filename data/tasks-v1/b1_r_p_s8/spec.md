@@ -1,0 +1,1 @@
+Implement quantize_symmetric_codes(values,scale). Convert values to float64, require finite values and finite scale>0 or raise ValueError. Divide by scale, round using IEEE ties-to-even, clamp to [-127,127], and return an int8 array with the same shape.

@@ -1,0 +1,1 @@
+Fill the TODO in int encode_runs_u8(const uint8_t *src,size_t n,uint8_t *values,uint32_t *counts,size_t cap,size_t *out_n). Encode consecutive equal bytes as value/count pairs. Return 0 on success or -1 for invalid arguments or insufficient cap. For n=0 allow null data arrays and set *out_n=0. On failure do not change outputs. Assume n<=UINT32_MAX.

@@ -1,0 +1,12 @@
+{
+  "id": "b1_r_p_env",
+  "language": "python",
+  "category": "review",
+  "kind": "review",
+  "source": "codex-batch1",
+  "previous_attempt": "previous_attempt.py",
+  "review_notes": [
+    "Keep the first value when a key appears more than once.",
+    "Split at only the first equals sign so the rest of the line remains part of the value."
+  ]
+}

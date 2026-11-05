@@ -1,0 +1,1 @@
+Implement masked_softmax_rows(logits, mask). Both inputs must be equal-shape 2-D arrays; otherwise raise ValueError. Convert logits to float64 and mask to bool. Apply a numerically stable softmax across each row using only true mask entries. Masked positions and all-masked rows are zero. Return float64 and do not mutate inputs.

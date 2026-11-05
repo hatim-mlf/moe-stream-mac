@@ -1,0 +1,1 @@
+Implement float bilinear_sample_f32(const float *grid, size_t rows, size_t cols, float y, float x). Grid is row-major and nonempty. Clamp coordinates to [0,rows-1] and [0,cols-1], then bilinearly interpolate the four surrounding values. Inputs and coordinates are finite. No allocation.

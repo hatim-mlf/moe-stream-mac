@@ -1,0 +1,1 @@
+Implement true_spans(mask). Convert input with numpy.asarray; require a one-dimensional boolean array or raise ValueError. Return half-open (start, stop) pairs for every maximal consecutive run of true values, in order. False values separate runs; empty input returns an empty list.

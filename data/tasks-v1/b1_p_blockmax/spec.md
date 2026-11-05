@@ -1,0 +1,1 @@
+Implement block_max_1d(values, width). Convert input with numpy.asarray and require one dimension plus integer width>0, otherwise raise ValueError. Return the maximum of each consecutive width-sized block; the final block may be shorter. Preserve input dtype. Empty input returns an empty copy.

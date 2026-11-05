@@ -1,0 +1,1 @@
+Implement float dot_weighted_f32(const float *a, const float *b, size_t n). Return the left-to-right float sum of a[i]*b[i] for i in [0,n). No allocation. For n=0 return 0.0f; otherwise inputs are valid.

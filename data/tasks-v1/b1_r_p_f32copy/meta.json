@@ -1,0 +1,12 @@
+{
+  "id": "b1_r_p_f32copy",
+  "language": "python",
+  "category": "review",
+  "kind": "review",
+  "source": "codex-batch1",
+  "previous_attempt": "previous_attempt.py",
+  "review_notes": [
+    "Return an owned copy even when input already has float32 dtype.",
+    "Make the returned array C-contiguous while preserving its shape."
+  ]
+}

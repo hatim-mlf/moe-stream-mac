@@ -1,0 +1,1 @@
+Fill format_duration(total_seconds). Require a nonnegative integer that is not bool or raise ValueError. Return H:MM:SS where H is unpadded hours and minutes/seconds are exactly two digits. Return a complete Python function.

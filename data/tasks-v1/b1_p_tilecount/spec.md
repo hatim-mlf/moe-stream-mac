@@ -1,0 +1,1 @@
+Implement count_true_tiles(mask, tile_rows, tile_cols). Require a two-dimensional boolean array and positive integer tile dimensions or raise ValueError. Return an int64 matrix whose cell counts true values in the corresponding nonoverlapping tile. Edge tiles may be smaller. Empty dimensions produce the correctly shaped empty result.

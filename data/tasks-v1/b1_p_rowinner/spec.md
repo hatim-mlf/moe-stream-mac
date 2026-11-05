@@ -1,0 +1,1 @@
+Implement rowwise_inner(left, right). Convert both arguments to arrays. Require equal two-dimensional shapes or raise ValueError. Return a one-dimensional float64 array containing each corresponding row's dot product. Empty row count returns an empty float64 array.

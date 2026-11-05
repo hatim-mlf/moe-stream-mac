@@ -1,0 +1,1 @@
+Implement float map_clamped_f32(float x,float in_lo,float in_hi,float out_lo,float out_hi). Clamp x to the closed input interval, then linearly map it to the output interval. Assume finite values and in_hi>in_lo.

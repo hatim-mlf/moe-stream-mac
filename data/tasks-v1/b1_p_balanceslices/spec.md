@@ -1,0 +1,1 @@
+Implement balanced_slices(length, parts) returning a list of (start, stop) pairs partitioning [0,length). Require integer length>=0 and integer parts>0 or raise ValueError. Slice sizes differ by at most one; the earliest slices receive the extra elements. Return exactly parts slices, including empty slices when parts>length.

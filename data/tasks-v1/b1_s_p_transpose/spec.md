@@ -1,0 +1,1 @@
+Fill transpose_rows(rows). Accept an iterable of row iterables and return a list of columns as lists. Rows must all have equal length; raise ValueError if they do not. Empty input and rows of length zero both return []. Return a complete Python function.

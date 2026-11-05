@@ -1,0 +1,1 @@
+Implement quantize_unit_u8(values, low, high). Convert values to float64. Require finite low/high with high>low and all values finite; invalid input raises ValueError. Clip values to [low,high], scale linearly to [0,255], round half upward using floor(scaled+0.5), and return a uint8 array with the input shape.

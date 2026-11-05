@@ -1,0 +1,1 @@
+Implement merge_adjacent_ranges(ranges) for inclusive integer intervals. Input is an iterable of pairs (start,end), each integer with start<=end; invalid pairs raise ValueError. Return sorted merged intervals, merging both overlaps and adjacency (next_start<=current_end+1). Empty input returns [].

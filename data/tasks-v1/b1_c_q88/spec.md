@@ -1,0 +1,1 @@
+Implement int q8_8_encode(float x, int16_t *out). Encode x as signed Q8.8 by rounding x*256 to nearest integer, with exact halfway cases away from zero. Return 0 on success and -1 if out is null, x is not finite, or the rounded integer is outside int16_t range. Do not change *out on failure.

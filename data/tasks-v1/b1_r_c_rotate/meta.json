@@ -1,0 +1,12 @@
+{
+  "id": "b1_r_c_rotate",
+  "language": "c",
+  "category": "review",
+  "kind": "review",
+  "source": "codex-batch1",
+  "previous_attempt": "previous_attempt.c",
+  "review_notes": [
+    "Rotate toward lower indices: output[i] must equal the original data[(i+shift)%n].",
+    "Reduce shift modulo n and return immediately for n==0 so null plus empty input is safe."
+  ]
+}

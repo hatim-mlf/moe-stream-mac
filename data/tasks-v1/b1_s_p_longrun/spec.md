@@ -1,0 +1,1 @@
+Fill longest_equal_run(values). Return the greatest number of consecutive equal values in the input iterable. Return 0 for empty input. Compare adjacent values only; do not sort. Return a complete Python function.

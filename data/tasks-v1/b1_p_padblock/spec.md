@@ -1,0 +1,1 @@
+Implement pad_axis_to_block(array, block, axis=-1, value=0). Convert input with numpy.asarray. block must be a positive integer and axis must be valid. Pad only at the high end of axis with value until its length is a multiple of block. Return a new array, even when no padding is needed, and do not mutate input. Preserve the array dtype.

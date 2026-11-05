@@ -1,0 +1,1 @@
+Implement int cosine_distance_f32(const float *a, const float *b, size_t n, float *out). Compute 1 - dot(a,b)/(sqrt(dot(a,a))*sqrt(dot(b,b))) using double accumulators. Return 0 on success; return -1 for null pointers, n=0, or either zero norm, leaving *out unchanged on failure. Do not clamp the result.

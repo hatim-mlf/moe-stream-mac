@@ -1,0 +1,1 @@
+Implement one_hot_matrix(indices, classes). Require a one-dimensional integer array and integer classes>0; every index must be in [0,classes), otherwise raise ValueError. Return a uint8 matrix with shape (len(indices), classes), with one 1 per row at the indexed column. Empty indices are valid.

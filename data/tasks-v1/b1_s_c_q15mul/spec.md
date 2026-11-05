@@ -1,0 +1,1 @@
+Fill the TODO in int16_t multiply_q15_round(int16_t a,int16_t b). Compute round-half-away-from-zero(a*b/32768), then saturate to [-32768,32767]. Use a wide intermediate. Return the complete C function.

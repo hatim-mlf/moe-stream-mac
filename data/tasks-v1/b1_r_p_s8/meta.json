@@ -1,0 +1,12 @@
+{
+  "id": "b1_r_p_s8",
+  "language": "python",
+  "category": "review",
+  "kind": "review",
+  "source": "codex-batch1",
+  "previous_attempt": "previous_attempt.py",
+  "review_notes": [
+    "Use the symmetric signed range [-127,127], so -128 is never emitted.",
+    "Reject nonfinite input values and nonfinite or nonpositive scale before quantizing."
+  ]
+}

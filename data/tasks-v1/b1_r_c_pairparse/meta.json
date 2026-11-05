@@ -1,0 +1,12 @@
+{
+  "id": "b1_r_c_pairparse",
+  "language": "c",
+  "category": "review",
+  "kind": "review",
+  "source": "codex-batch1",
+  "previous_attempt": "previous_attempt.c",
+  "review_notes": [
+    "Reject any bytes after the second integer; the accepted format ends immediately after its digits.",
+    "Do not write either output until all parsing and int32 range checks have succeeded."
+  ]
+}

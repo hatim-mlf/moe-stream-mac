@@ -1,0 +1,1 @@
+Implement int quantize_symmetric_s8(float x,float scale,int8_t *out). Require finite x, finite scale>0, and nonnull out. Round x/scale to nearest with ties away from zero, then clamp to [-127,127] (symmetric quantization never emits -128). Return 0 on success, -1 on invalid input, and preserve *out on failure.

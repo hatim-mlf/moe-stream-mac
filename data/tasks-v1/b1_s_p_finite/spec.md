@@ -1,0 +1,1 @@
+Fill finite_counts_2d(values). Convert to numpy float64, require a two-dimensional array or raise ValueError, and return an int64 vector counting finite values in each row. Return a complete Python function.

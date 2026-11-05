@@ -1,0 +1,1 @@
+Fill the TODO in int interleave_i16(const int16_t *a,const int16_t *b,size_t n,int16_t *out,size_t out_cap). Write a[0],b[0],a[1],b[1],... to out. Return 0 on success or -1 for invalid pointers or insufficient capacity. Require out_cap>=2*n and reject size overflow before writing. n=0 permits null pointers. No allocation.

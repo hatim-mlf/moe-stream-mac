@@ -1,0 +1,1 @@
+Implement expand_counts(values, counts). Convert both to arrays. Require one-dimensional inputs of equal length and a nonnegative integer counts dtype; otherwise raise ValueError. Return numpy.repeat(values, counts) preserving values dtype. Zero counts and empty input are valid.

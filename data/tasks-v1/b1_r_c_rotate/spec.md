@@ -1,0 +1,1 @@
+Implement int rotate_buffer_left(uint8_t *data,size_t n,size_t shift). Rotate n bytes left in place by shift positions. Return 0 on success. A null data pointer is valid only when n=0; invalid pointer returns -1 without access. Use O(1) extra space.

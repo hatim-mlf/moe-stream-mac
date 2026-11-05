@@ -1,0 +1,1 @@
+Implement int parse_i32_pair(const char *text,int32_t *left,int32_t *right). Accept exactly two base-10 signed int32 values separated by one comma, with no whitespace or trailing bytes. Return 0 on success and -1 on invalid input or null pointers. Leave both outputs unchanged on failure.

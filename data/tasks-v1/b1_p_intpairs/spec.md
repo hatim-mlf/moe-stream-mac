@@ -1,0 +1,1 @@
+Implement parse_int_pairs(text). Read newline-separated records; ignore blank lines. Each nonblank line must contain exactly one colon and two signed base-10 integer fields, with optional surrounding whitespace around fields. Return a list of (left,right) integer tuples in source order. Raise ValueError for malformed records.

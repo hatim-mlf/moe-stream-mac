@@ -1,0 +1,1 @@
+Implement int parse_mmss_total(const char *text, unsigned *seconds). Accept exactly one or more decimal minute digits, a colon, then exactly two decimal second digits from 00 through 59; no signs or whitespace. Reject overflow of the total seconds. Return 0 on success, -1 on invalid input or null pointers, and leave *seconds unchanged on failure.

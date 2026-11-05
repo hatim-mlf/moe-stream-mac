@@ -1,0 +1,1 @@
+Implement pad_numeric_rows(rows, pad_value=0). Each row must convert to a one-dimensional numeric array; otherwise raise ValueError. Return (matrix,lengths), padding on the right to the longest row. lengths is int64. matrix dtype is numpy.result_type of all row dtypes and pad_value. For an empty rows iterable return a float64 matrix of shape (0,0) and int64 lengths of shape (0,).

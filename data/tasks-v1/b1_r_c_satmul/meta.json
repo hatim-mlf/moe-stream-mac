@@ -1,0 +1,12 @@
+{
+  "id": "b1_r_c_satmul",
+  "language": "c",
+  "category": "review",
+  "kind": "review",
+  "source": "codex-batch1",
+  "previous_attempt": "previous_attempt.c",
+  "review_notes": [
+    "Compute the product in int64_t before checking its range.",
+    "Saturate both positive overflow and negative overflow to their respective int32 limits."
+  ]
+}
