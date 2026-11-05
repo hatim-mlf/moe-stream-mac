@@ -1,0 +1,23 @@
+{
+ "coding_routes": 793280,
+ "other_routes": 737280,
+ "n8": {
+  "coding_share_in_set": 0.155,
+  "other_share_in_set": 0.0005,
+  "uniform_share": 0.03125,
+  "coding_share_random_set": 0.0336
+ },
+ "n16": {
+  "coding_share_in_set": 0.2405,
+  "other_share_in_set": 0.0024,
+  "uniform_share": 0.0625,
+  "coding_share_random_set": 0.0638
+ },
+ "n32": {
+  "coding_share_in_set": 0.3229,
+  "other_share_in_set": 0.0093,
+  "uniform_share": 0.125,
+  "coding_share_random_set": 0.1295
+ },
+ "split_half_n16_share_on_unseen_coding": 0.2141
+}
