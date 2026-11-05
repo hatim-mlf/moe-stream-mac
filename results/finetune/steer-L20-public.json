@@ -1,0 +1,40 @@
+{
+  "benchmark_revision": "6f43cc8712a6a7a99d325e1db09b0377cd48a6d3",
+  "split": "public",
+  "suite": "public",
+  "model": "default_model",
+  "adapter": "base",
+  "attempt_cap": 1,
+  "endpoint": "http://127.0.0.1:8080/v1/chat/completions",
+  "temperature": 0.0,
+  "seed": null,
+  "samples": 1,
+  "max_tokens": 8192,
+  "review_notes": false,
+  "results": [
+    {
+      "task_id": "HumanEval/5",
+      "passed": true,
+      "first_pass": true,
+      "attempts": 1,
+      "attempt_score": 1,
+      "output_tail": ""
+    },
+    {
+      "task_id": "HumanEval/7",
+      "passed": true,
+      "first_pass": true,
+      "attempts": 1,
+      "attempt_score": 1,
+      "output_tail": ""
+    },
+    {
+      "task_id": "HumanEval/58",
+      "passed": true,
+      "first_pass": true,
+      "attempts": 1,
+      "attempt_score": 1,
+      "output_tail": ""
+    }
+  ]
+}
