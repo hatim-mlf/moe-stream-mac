@@ -16,10 +16,18 @@ import mem_preflight
 
 _original_train = lora.train
 _original_evaluate = lora.evaluate
+FROZEN_GDN_KERNEL_ENV = "FROZEN_GDN_KERNEL"
 
 
 def timed_train(*args: Any, **kwargs: Any) -> Any:
     steps = kwargs["args"].iters
+    if os.environ.get(FROZEN_GDN_KERNEL_ENV, "0") == "1":
+        model = kwargs.get("model", args[0] if args else None)
+        if model is None:
+            raise ValueError("FROZEN_GDN_KERNEL requires a model in lora.train")
+        import frozen_gdn
+
+        frozen_gdn.install(model)
     started = time.perf_counter()
     kwargs["loss"] = completion_only_loss
     # The loss uses concrete row boundaries to slice variable-length completions.

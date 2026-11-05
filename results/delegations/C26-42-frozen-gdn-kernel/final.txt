@@ -1,0 +1,7 @@
+Implemented the opt-in frozen GDN kernel path.
+
+- Added [frozen_gdn.py](/Users/hatim/moe-stream-mac/tools/frozen_gdn.py), which marks frozen GDN layers below the first trainable decoder layer and forces the inference kernel for those calls. Other layers keep the existing training behavior.
+- Hooked `FROZEN_GDN_KERNEL=1` into [ft_lora_lowmem.py](/Users/hatim/moe-stream-mac/tools/ft_lora_lowmem.py) via its `lora.train` wrapper. This runs after LoRA setup and before the trainer starts; the marker survives later `model.train()` calls.
+- Added [test_frozen_gdn.py](/Users/hatim/moe-stream-mac/tools/test_frozen_gdn.py) for loss and gradient parity, dispatch before and after `model.train()`, and the no-trainables error. The parity test prints the maximum loss or gradient difference. Updated the tiny-model helper in [test_gdn_checkpoint.py](/Users/hatim/moe-stream-mac/tools/test_gdn_checkpoint.py) to support the test configuration.
+
+`py_compile` and `git diff --check` passed. I couldn’t run pytest or measure the max difference because this environment has no Metal device; the lead can get that value from the test output on the Mac. No commit was made.

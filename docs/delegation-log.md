@@ -61,3 +61,4 @@ Lead wrote: `config.c` (strict config.json reader), `model.c` loader/reset, the 
 | C23 | **Codex** training tasks batch 3 (brief 39) | 1 | none | ~28 min | PASS 50/50 |
 | C24 | **Codex** training tasks batch 4 (brief 40) | 1 | none | — | PASS 50/50 |
 | C25 | **Codex** training tasks batch 5 (brief 41) | 1 | none; lead cross-checked all 250 tasks: no duplicate ids, specs, solutions or public names | — | PASS 50/50 |
+| C26 | **Codex** frozen GDN layers on the inference kernel during training `tools/frozen_gdn.py` + hook in ft_lora_lowmem.py (`FROZEN_GDN_KERNEL=1`) (brief 42) | 1 | none; no Metal in its sandbox, so the lead ran the tests and the real-model A/B | ~20 min | PASS 3/3 (max diff 1.9e-9 on the tiny model); real model, 6 steps: 11.8 → 2.45 s/step, same peak |

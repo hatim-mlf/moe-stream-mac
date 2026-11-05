@@ -129,7 +129,9 @@ def test_forward_and_gradients_match_ops(
     _assert_gradients_match(inputs, chunk)
 
 
-def _make_tiny_moe() -> nn.Module:
+def _make_tiny_moe(
+    num_lora_layers: int = 4, full_attention_interval: int = 2
+) -> nn.Module:
     text_config = {
         "model_type": "qwen3_5_moe_text",
         "hidden_size": 64,
@@ -146,7 +148,7 @@ def _make_tiny_moe() -> nn.Module:
         "linear_key_head_dim": 8,
         "linear_value_head_dim": 8,
         "linear_conv_kernel_dim": 4,
-        "full_attention_interval": 2,
+        "full_attention_interval": full_attention_interval,
         "num_experts": 4,
         "num_experts_per_tok": 2,
         "moe_intermediate_size": 32,
@@ -165,7 +167,11 @@ def _make_tiny_moe() -> nn.Module:
     )
     model = Model(args)
     model.freeze()
-    linear_to_lora_layers(model, 4, {"rank": 2, "scale": 2.0, "dropout": 0.0})
+    linear_to_lora_layers(
+        model,
+        num_lora_layers,
+        {"rank": 2, "scale": 2.0, "dropout": 0.0},
+    )
     model.train()
     return model
 
