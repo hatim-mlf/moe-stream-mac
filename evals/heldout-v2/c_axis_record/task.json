@@ -1,0 +1,27 @@
+{
+  "id": "c_axis_record",
+  "lang": "c",
+  "target": "candidate.c",
+  "build_cmd": [
+    "{cc}",
+    "-O2",
+    "-std=c99",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "tests/test_c_axis_record.c",
+    "-lm",
+    "-o",
+    "test_c_axis_record"
+  ],
+  "test_cmd": [
+    "./test_c_axis_record"
+  ],
+  "timeout_s": 20,
+  "classes": [
+    "Spec drift, invented behavior, or omitted requested content",
+    "API, return-value, or data-shape misuse"
+  ],
+  "kind": "kernel",
+  "difficulty": "easy"
+}

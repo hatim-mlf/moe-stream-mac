@@ -1,0 +1,27 @@
+{
+  "id": "c_u4_groupdot",
+  "lang": "c",
+  "target": "candidate.c",
+  "build_cmd": [
+    "{cc}",
+    "-O2",
+    "-std=c99",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "tests/test_c_u4_groupdot.c",
+    "-lm",
+    "-o",
+    "test_c_u4_groupdot"
+  ],
+  "test_cmd": [
+    "./test_c_u4_groupdot"
+  ],
+  "timeout_s": 20,
+  "classes": [
+    "Quantized signedness or group indexing",
+    "Spec drift, invented behavior, or omitted requested content"
+  ],
+  "kind": "kernel",
+  "difficulty": "hard"
+}

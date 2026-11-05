@@ -1,0 +1,27 @@
+{
+  "id": "c_scan_checked",
+  "lang": "c",
+  "target": "candidate.c",
+  "build_cmd": [
+    "{cc}",
+    "-O2",
+    "-std=c99",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "tests/test_c_scan_checked.c",
+    "-lm",
+    "-o",
+    "test_c_scan_checked"
+  ],
+  "test_cmd": [
+    "./test_c_scan_checked"
+  ],
+  "timeout_s": 20,
+  "classes": [
+    "Buffer bounds, offsets, or aliasing",
+    "API, return-value, or data-shape misuse"
+  ],
+  "kind": "kernel",
+  "difficulty": "medium"
+}

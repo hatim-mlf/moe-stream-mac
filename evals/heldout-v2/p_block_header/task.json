@@ -1,0 +1,17 @@
+{
+  "id": "p_block_header",
+  "lang": "python",
+  "target": "candidate.py",
+  "build_cmd": null,
+  "test_cmd": [
+    "{python}",
+    "tests/test_p_block_header.py"
+  ],
+  "timeout_s": 20,
+  "classes": [
+    "API, return-value, or data-shape misuse",
+    "Spec drift, invented behavior, or omitted requested content"
+  ],
+  "kind": "utility",
+  "difficulty": "easy"
+}

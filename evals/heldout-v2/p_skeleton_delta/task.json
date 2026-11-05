@@ -1,0 +1,17 @@
+{
+  "id": "p_skeleton_delta",
+  "lang": "python",
+  "target": "candidate.py",
+  "build_cmd": null,
+  "test_cmd": [
+    "{python}",
+    "tests/test_p_skeleton_delta.py"
+  ],
+  "timeout_s": 20,
+  "classes": [
+    "Quantized signedness or group indexing",
+    "Ignored or partly applied review note"
+  ],
+  "kind": "skeleton",
+  "difficulty": "easy"
+}

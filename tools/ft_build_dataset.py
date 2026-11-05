@@ -16,7 +16,11 @@ OUT = ROOT / "data/finetune"
 SYSTEM = ("You are a senior software engineer (C and Python). Follow the brief exactly. "
           "Reply with ONE fenced code block containing the requested code, and nothing else.\n\n" +
           (ROOT / "tools/helper_rules.md").read_text())
-HELDOUT = {"qmat", "ops", "gdn", "qmat-row", "qgroup", "expert-cache", "predictive", "pinned"}
+LEGACY_EVAL_MANIFEST = json.loads((ROOT / "tools/ft_eval_manifest.json").read_text())
+HELDOUT_V2_MANIFEST = json.loads((ROOT / "tools/ft_eval_heldout_v2.json").read_text())
+HELDOUT = ({task["id"] for task in LEGACY_EVAL_MANIFEST["tasks"]} |
+           {task["id"] for task in HELDOUT_V2_MANIFEST["tasks"]})
+HELDOUT_V2_PUBLIC_NAMES = {name for task in HELDOUT_V2_MANIFEST["tasks"] for name in task["public_names"]}
 TRAIN_IDS = {"gdn-layer", "attn-layer", "moe-layer", "qchat", "fetch-experts", "read-sorted"}
 VALID_IDS = {"model-forward", "expert-reader"}
 NATURAL = [
@@ -248,6 +252,12 @@ def verify_no_heldout(rows):
     leaking = sorted({row.get("task_id") for row in rows} & HELDOUT)
     if leaking:
         raise RuntimeError("held-out task data found: " + ", ".join(leaking))
+    for row in rows:
+        row_text = json.dumps(row, ensure_ascii=False)
+        names = sorted(name for name in HELDOUT_V2_PUBLIC_NAMES
+                       if re.search(r"(?<![A-Za-z0-9_])" + re.escape(name) + r"(?![A-Za-z0-9_])", row_text))
+        if names:
+            raise RuntimeError("heldout-v2 public function name found in row text: " + ", ".join(names))
 
 
 def arguments(argv=None):

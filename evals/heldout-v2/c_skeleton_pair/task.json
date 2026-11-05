@@ -1,0 +1,27 @@
+{
+  "id": "c_skeleton_pair",
+  "lang": "c",
+  "target": "candidate.c",
+  "build_cmd": [
+    "{cc}",
+    "-O2",
+    "-std=c99",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "tests/test_c_skeleton_pair.c",
+    "-lm",
+    "-o",
+    "test_c_skeleton_pair"
+  ],
+  "test_cmd": [
+    "./test_c_skeleton_pair"
+  ],
+  "timeout_s": 20,
+  "classes": [
+    "API, return-value, or data-shape misuse",
+    "Ignored or partly applied review note"
+  ],
+  "kind": "skeleton",
+  "difficulty": "medium"
+}

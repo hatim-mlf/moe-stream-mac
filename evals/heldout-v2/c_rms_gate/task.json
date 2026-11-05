@@ -1,0 +1,27 @@
+{
+  "id": "c_rms_gate",
+  "lang": "c",
+  "target": "candidate.c",
+  "build_cmd": [
+    "{cc}",
+    "-O2",
+    "-std=c99",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "tests/test_c_rms_gate.c",
+    "-lm",
+    "-o",
+    "test_c_rms_gate"
+  ],
+  "test_cmd": [
+    "./test_c_rms_gate"
+  ],
+  "timeout_s": 20,
+  "classes": [
+    "API, return-value, or data-shape misuse",
+    "Spec drift, invented behavior, or omitted requested content"
+  ],
+  "kind": "kernel",
+  "difficulty": "hard"
+}

@@ -1,0 +1,17 @@
+{
+  "id": "p_segment_pool",
+  "lang": "python",
+  "target": "candidate.py",
+  "build_cmd": null,
+  "test_cmd": [
+    "{python}",
+    "tests/test_p_segment_pool.py"
+  ],
+  "timeout_s": 20,
+  "classes": [
+    "API, return-value, or data-shape misuse",
+    "Required behavior omitted"
+  ],
+  "kind": "utility",
+  "difficulty": "medium"
+}

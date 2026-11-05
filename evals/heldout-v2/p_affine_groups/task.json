@@ -1,0 +1,17 @@
+{
+  "id": "p_affine_groups",
+  "lang": "python",
+  "target": "candidate.py",
+  "build_cmd": null,
+  "test_cmd": [
+    "{python}",
+    "tests/test_p_affine_groups.py"
+  ],
+  "timeout_s": 20,
+  "classes": [
+    "Quantized signedness or group indexing",
+    "API, return-value, or data-shape misuse"
+  ],
+  "kind": "utility",
+  "difficulty": "hard"
+}
