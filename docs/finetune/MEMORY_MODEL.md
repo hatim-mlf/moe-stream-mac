@@ -205,6 +205,18 @@ open. Harness: `tools/mem_profile.py` (`step`, `trainer-step`, `block`, `sweep`,
 | 3000 | 20.11 / 22.52 | stop | stop | stop |
 
   Deep LoRA: L = 8, T = 900: 25.66 / 28.58; L = 16, T = 900: 25.70 / 29.27; L = 16, T = 768: 24.40 / 28.36.
+- **Not done as asked (stated plainly):**
+  - *Per-layer waterfall:* `mem_profile.py waterfall` hits mem_guard even at L = 2, T = 512, where a normal step
+    needs 22.3 GiB. The brief (36b) asked for gradient cuts below every layer down to layer 0. That runs the
+    backward through ~30 frozen GDN layers, which real training never does, so these numbers would not describe
+    training. Fix: cut only within the adapted layers. Not yet re-run.
+  - *GPU capture:* a full-model capture would carry ~18 GB of weight buffers, so it was taken on the Open #1
+    toy repro instead (`repro/toy2-ckpt-T128.gputrace`, 288 MB, not committed; T = 128, checkpointed, gradients
+    w.r.t. q, k, v: 605 MiB). It still has to be read in Xcode (Memory / Resources view) for state-sized buffers
+    that stay live across chunks. Not analyzed yet.
+- **Entry point checked end to end:** `ft_lora_lowmem.py` on night1, L = 2, 2 iterations, with
+  `MLX_CACHE_LIMIT_GB=0`: preflight passes (28 rows, bound 27.1 GiB), trains at 10.4 s/step, peak 22.29 GiB.
+  Without the env var it refuses with exit 3 and prints the cache hint.
 
 ## 3. The law
 

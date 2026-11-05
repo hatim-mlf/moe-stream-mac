@@ -379,5 +379,19 @@
    "measured": "guard_stop"
   }
  ],
- "fit_requested_form_r2": 0.724
+ "fit_requested_form_r2": 0.724,
+ "entry_point_smoke": {
+  "data": "night1",
+  "layers": 2,
+  "iters": 2,
+  "cache_limit_gb": 0,
+  "preflight": "pass",
+  "s_per_step": 10.427,
+  "mlx_peak_gib": 22.286,
+  "without_cache_env": "exit 3 (refused)"
+ },
+ "not_done": {
+  "waterfall": "guard stop at L=2 T=512: brief design cut below every layer; needs cuts within adapted layers only",
+  "gpu_capture": "toy repro only (repro/toy2-ckpt-T128.gputrace, not committed); unread"
+ }
 }
