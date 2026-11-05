@@ -1,0 +1,11 @@
+Added the memory guard to the 10 named scripts, plus [`route_prompts.py`](/Users/hatim/moe-stream-mac/tools/route_prompts.py) and [`mem_profile.py`](/Users/hatim/moe-stream-mac/tools/mem_profile.py). The matching limit line is centralized in [`mem_guard.py`](/Users/hatim/moe-stream-mac/tools/mem_guard.py); [`sweep_router_nll.py`](/Users/hatim/moe-stream-mac/tools/sweep_router_nll.py) now has an explicit `main()` entry point.
+
+Added the AST check in [`test_mem_guard_entry_points.py`](/Users/hatim/moe-stream-mac/tools/test_mem_guard_entry_points.py). It excludes `test_*.py` modules and allows these libraries:
+
+- `frozen_gdn.py`
+- `gdn_checkpoint.py`
+- `ft_lowmem_loss.py`
+- `gdn_vjp.py`
+- `mem_budget.py`
+
+`git diff --check` passed. I did not run tests or create a commit.

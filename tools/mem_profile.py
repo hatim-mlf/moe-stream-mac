@@ -23,6 +23,7 @@ import importlib
 import math
 import os
 import sys
+import threading
 import time
 import uuid
 from collections.abc import Callable, Iterable, Mapping, Sequence
@@ -41,6 +42,7 @@ CONFIG_PATH = ROOT / "docs" / "finetune" / "lora.yaml"
 DATA_PATH = row_tools.DATA_PATH
 MODEL_PATH = "/Users/hatim/models/Qwen3.6-35B-A3B-4bit"
 GIB = 2**30
+_MEM_GUARD_THREAD: threading.Thread | None = None
 build_row = row_tools.build_row
 _row_source_name = row_tools.row_source_name
 
@@ -57,6 +59,20 @@ def _import_mlx() -> tuple[Any, Any, Any]:
     import mlx.optimizers as optim
 
     return mx, nn, optim
+
+
+def _start_mem_guard() -> None:
+    global _MEM_GUARD_THREAD
+    if _MEM_GUARD_THREAD is not None:
+        return
+    mem_guard = _import_local_module("mem_guard")
+    total_memory = mem_guard.total_memory_bytes()
+    headroom = mem_guard.headroom_bytes_from_env(os.environ)
+    print(mem_guard.startup_limit_message(total_memory, headroom), flush=True)
+    _MEM_GUARD_THREAD = mem_guard.start(
+        total_bytes=total_memory,
+        headroom_bytes=headroom,
+    )
 
 
 def load_training_config() -> dict[str, Any]:
@@ -140,9 +156,7 @@ def _load_model(
     if training_config is None:
         training_config = load_training_config()
     if model is None:
-        import mem_guard
-
-        mem_guard.start()
+        _start_mem_guard()
         import mlx.core as mx
 
         if cache_limit_bytes is not None:
@@ -746,6 +760,7 @@ def _build_parser() -> argparse.ArgumentParser:
 
 
 def main(argv: Sequence[str] | None = None) -> int:
+    _start_mem_guard()
     args = _build_parser().parse_args(argv)
     writer = _measurement_writer(args.out) if args.command != "fit" else None
     if args.command == "step":

@@ -1,4 +1,5 @@
 """Fixtures for engine/include/gdn.h: MLX ground truth, with gdn.h's spec re-checked in NumPy first."""
+import os
 import sys
 from pathlib import Path
 
@@ -6,6 +7,8 @@ import mlx.core as mx
 import mlx.nn as nn
 import numpy as np
 from mlx_lm.models.gated_delta import _gated_delta_step_ops, compute_g, normalize_qk
+
+import mem_guard
 
 OUT = Path(sys.argv[1] if len(sys.argv) > 1 else "engine/tests/fixtures")
 RNG = np.random.default_rng(11)
@@ -75,5 +78,9 @@ def recurrence():
 
 
 if __name__ == "__main__":
+    _total_memory = mem_guard.total_memory_bytes()
+    _headroom = mem_guard.headroom_bytes_from_env(os.environ)
+    print(mem_guard.startup_limit_message(_total_memory, _headroom), flush=True)
+    mem_guard.start(total_bytes=_total_memory, headroom_bytes=_headroom)
     OUT.mkdir(parents=True, exist_ok=True)
     conv(); norm_and_gates(); recurrence()

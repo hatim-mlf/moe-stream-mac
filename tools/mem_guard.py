@@ -68,6 +68,15 @@ def headroom_bytes_from_env(env: Mapping[str, str]) -> int:
         raise ValueError("MEM_GUARD_HEADROOM_GB is too large") from exc
 
 
+def startup_limit_message(total_bytes: int, headroom_bytes: int) -> str:
+    """Format the startup line describing the wired-memory safety limit."""
+    limit = total_bytes - headroom_bytes
+    return (
+        f"mem_guard: limit {limit / _GIB:.2f} GiB "
+        f"(total {total_bytes / _GIB:.2f}, headroom {headroom_bytes / _GIB:.2f})"
+    )
+
+
 def is_breach(wired: int, total: int, headroom: int) -> bool:
     """Return whether system wired memory reached the safe limit."""
     return wired >= total - headroom

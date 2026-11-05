@@ -3,11 +3,14 @@
 Fixture layout (little-endian): int32 rows, cols, bits, group_size; then uint32 w[], uint16 scales[],
 uint16 biases[], float32 x[cols], float32 y[rows].
 """
+import os
 import sys
 from pathlib import Path
 
 import mlx.core as mx
 import numpy as np
+
+import mem_guard
 
 CASES = ((64, 256, 4, 64), (64, 256, 8, 64), (512, 2048, 4, 64), (256, 2048, 8, 64), (96, 384, 4, 32))
 
@@ -33,6 +36,10 @@ def write_case(out_dir: Path, rows: int, cols: int, bits: int, group_size: int) 
 
 
 if __name__ == "__main__":
+    _total_memory = mem_guard.total_memory_bytes()
+    _headroom = mem_guard.headroom_bytes_from_env(os.environ)
+    print(mem_guard.startup_limit_message(_total_memory, _headroom), flush=True)
+    mem_guard.start(total_bytes=_total_memory, headroom_bytes=_headroom)
     out = Path(sys.argv[1] if len(sys.argv) > 1 else "engine/tests/fixtures")
     out.mkdir(parents=True, exist_ok=True)
     for case in CASES:

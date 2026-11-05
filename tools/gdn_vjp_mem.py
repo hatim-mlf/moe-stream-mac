@@ -1,6 +1,7 @@
 """Isolated GDN backward memory probe using the model's real head sizes."""
 
 import argparse
+import os
 import sys
 from collections.abc import Callable
 from functools import partial
@@ -9,6 +10,7 @@ import mlx.core as mx
 from mlx_lm.models import gated_delta
 
 import gdn_vjp
+import mem_guard
 
 
 BATCH = 1
@@ -55,6 +57,10 @@ def _loss(
 
 
 def main(argv: list[str] | None = None) -> int:
+    _total_memory = mem_guard.total_memory_bytes()
+    _headroom = mem_guard.headroom_bytes_from_env(os.environ)
+    print(mem_guard.startup_limit_message(_total_memory, _headroom), flush=True)
+    mem_guard.start(total_bytes=_total_memory, headroom_bytes=_headroom)
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("timesteps", type=int)
     parser.add_argument(

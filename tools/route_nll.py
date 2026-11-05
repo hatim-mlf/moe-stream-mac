@@ -1,5 +1,6 @@
 import argparse
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -9,6 +10,7 @@ import numpy as np
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import router_bias
+import mem_guard
 
 
 def split_ids(tokenizer, messages: list) -> tuple[list[int], list[int]]:
@@ -53,7 +55,11 @@ def score_file(model, tokenizer, path: Path) -> dict:
     return {"rows": rows, "total_nll": total_nll, "total_tokens": total_tokens, "nll_per_token": nll_per_token}
 
 
-def main(argv=None) -> int:
+def main(argv: list[str] | None = None) -> int:
+    _total_memory = mem_guard.total_memory_bytes()
+    _headroom = mem_guard.headroom_bytes_from_env(os.environ)
+    print(mem_guard.startup_limit_message(_total_memory, _headroom), flush=True)
+    mem_guard.start(total_bytes=_total_memory, headroom_bytes=_headroom)
     parser = argparse.ArgumentParser()
     parser.add_argument("--model", required=True)
     parser.add_argument("--data", required=True, action="append")

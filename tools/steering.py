@@ -5,11 +5,13 @@ from __future__ import annotations
 import argparse
 import json
 import math
+import os
 import sys
 from pathlib import Path
 from typing import Any
 
 import numpy as np
+import mem_guard
 
 
 class MeanCapture(dict):
@@ -383,7 +385,11 @@ def _serve_cli(args, server_args):
     return 0
 
 
-def main(argv=None):
+def main(argv: list[str] | None = None) -> int:
+    _total_memory = mem_guard.total_memory_bytes()
+    _headroom = mem_guard.headroom_bytes_from_env(os.environ)
+    print(mem_guard.startup_limit_message(_total_memory, _headroom), flush=True)
+    mem_guard.start(total_bytes=_total_memory, headroom_bytes=_headroom)
     parser = argparse.ArgumentParser(description=__doc__)
     subparsers = parser.add_subparsers(dest="command", required=True)
     capture = subparsers.add_parser("capture")

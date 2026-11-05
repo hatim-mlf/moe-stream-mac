@@ -2,12 +2,15 @@
 
 File layout: int32 n_arrays, then per array: int32 length, float32 values.
 """
+import os
 import sys
 from pathlib import Path
 
 import mlx.core as mx
 import mlx.nn as nn
 import numpy as np
+
+import mem_guard
 
 OUT = Path(sys.argv[1] if len(sys.argv) > 1 else "engine/tests/fixtures")
 RNG = np.random.default_rng(7)
@@ -73,5 +76,9 @@ def rope() -> None:
 
 
 if __name__ == "__main__":
+    _total_memory = mem_guard.total_memory_bytes()
+    _headroom = mem_guard.headroom_bytes_from_env(os.environ)
+    print(mem_guard.startup_limit_message(_total_memory, _headroom), flush=True)
+    mem_guard.start(total_bytes=_total_memory, headroom_bytes=_headroom)
     OUT.mkdir(parents=True, exist_ok=True)
     rmsnorm(); silu_mul_sigmoid_softmax(); topk(); rope()

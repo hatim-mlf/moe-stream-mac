@@ -1,11 +1,14 @@
 import argparse
 import json
+import os
 import re
 from pathlib import Path
 
 import mlx.core as mx
 import mlx_lm
 import numpy as np
+
+import mem_guard
 
 
 def chat_ids(tokenizer, system: str | None, prompt: str) -> list[int]:
@@ -40,7 +43,11 @@ def load_prompts(path: Path) -> list[dict]:
     return data
 
 
-def main(argv=None) -> int:
+def main(argv: list[str] | None = None) -> int:
+    _total_memory = mem_guard.total_memory_bytes()
+    _headroom = mem_guard.headroom_bytes_from_env(os.environ)
+    print(mem_guard.startup_limit_message(_total_memory, _headroom), flush=True)
+    mem_guard.start(total_bytes=_total_memory, headroom_bytes=_headroom)
     parser = argparse.ArgumentParser()
     parser.add_argument("--model", required=True, type=str)
     parser.add_argument("--prompts", required=True, type=str)
