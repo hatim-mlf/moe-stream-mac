@@ -1,0 +1,50 @@
+{
+  "cap_hit_rate": 0.0,
+  "mean_completion_tokens": 523.1,
+  "median_completion_tokens": 454.5,
+  "n_calls": 150,
+  "p90_completion_tokens": 915,
+  "passed_vs_cap_hit_2x2": {
+    "failed": {
+      "cap_hit": 0,
+      "no_cap_hit": 104
+    },
+    "passed": {
+      "cap_hit": 0,
+      "no_cap_hit": 46
+    }
+  },
+  "per_task_cap_hit_fraction": {
+    "c_axis_record": 0.0,
+    "c_bits3_decode": 0.0,
+    "c_echo_ring": 0.0,
+    "c_group_lse": 0.0,
+    "c_rank_topk": 0.0,
+    "c_rms_gate": 0.0,
+    "c_sat8_pair": 0.0,
+    "c_scan_checked": 0.0,
+    "c_skeleton_clamp": 0.0,
+    "c_skeleton_pair": 0.0,
+    "c_skeleton_window": 0.0,
+    "c_span_alias": 0.0,
+    "c_stable_norm": 0.0,
+    "c_strided_proj": 0.0,
+    "c_u4_groupdot": 0.0,
+    "p_affine_groups": 0.0,
+    "p_axis_layout": 0.0,
+    "p_axis_take": 0.0,
+    "p_block_header": 0.0,
+    "p_bytes_lru": 0.0,
+    "p_chunk_plan": 0.0,
+    "p_dtype_blend": 0.0,
+    "p_lex_order": 0.0,
+    "p_mask_out": 0.0,
+    "p_runs_merge": 0.0,
+    "p_segment_pool": 0.0,
+    "p_skeleton_calibrate": 0.0,
+    "p_skeleton_delta": 0.0,
+    "p_skeleton_diags": 0.0,
+    "p_window_copy": 0.0
+  },
+  "repetition_gt_0_5_share": 0.0
+}
