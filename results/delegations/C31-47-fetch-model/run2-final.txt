@@ -1,0 +1,10 @@
+Added [tools/test_fetch_model.py](/Users/hatim/moe-stream-mac/tools/test_fetch_model.py). Since the sandbox blocks local HTTP binding, I added an `HF_API_FILE` fixture path to [scripts/fetch-model.sh](/Users/hatim/moe-stream-mac/scripts/fetch-model.sh); normal API behavior is unchanged when that variable is unset.
+
+`bash -n scripts/fetch-model.sh` passed. Pytest output:
+
+```text
+..                                                                       [100%]
+2 passed in 1.30s
+```
+
+No commit was made.
