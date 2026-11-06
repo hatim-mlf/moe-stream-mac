@@ -1,0 +1,8 @@
+Implemented in [ft_eval.py](/Users/hatim/moe-stream-mac/tools/ft_eval.py) and [test_ft_eval_v2.py](/Users/hatim/moe-stream-mac/tools/test_ft_eval_v2.py). Default request bodies and result JSON are covered against legacy baselines. Guide metadata, plan storage, repair behavior, and paired method checks are covered. No frozen suite files were changed.
+
+**Plan-first instructions:**
+
+1. “First, do not write code. List the spec's inputs, outputs, error cases and edge cases, then a short plan, in at most 15 lines.”
+2. “Now write the solution as one fenced code block.”
+
+**Verification:** `.venv/bin/python -m pytest -q tools/test_ft_eval*.py` — **9 passed, 2 subtests passed**. `git diff --check` is clean.

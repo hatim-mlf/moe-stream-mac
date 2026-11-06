@@ -22,6 +22,9 @@ SYSTEM = ("You are a senior software engineer (C and Python). Follow the brief e
           (ROOT / "tools/helper_rules.md").read_text())
 if hashlib.sha256(SYSTEM.encode()).hexdigest() != MANIFEST["system_sha256"]:
     raise RuntimeError("Frozen system prompt changed; create a new evaluation version intentionally")
+PLAN_INSTRUCTION = ("First, do not write code. List the spec's inputs, outputs, error cases and edge cases, "
+                    "then a short plan, in at most 15 lines.")
+CODE_INSTRUCTION = "Now write the solution as one fenced code block."
 FROZEN = [(t["id"], t["target"], t["first_attempt"], t["review_attempt"]) for t in MANIFEST["tasks"]]
 PUBLIC_TASKS = [
     {"id": "HumanEval/5", "entry": "intersperse", "prompt": "from typing import List\n\ndef intersperse(numbers: List[int], delimeter: int) -> List[int]:\n    \"\"\"Insert delimeter between every pair of consecutive values.\"\"\"\n", "tests": "from candidate import intersperse\nassert intersperse([], 7) == []\nassert intersperse([5], 7) == [5]\nassert intersperse([1, 2, 3], 9) == [1, 9, 2, 9, 3]\nassert intersperse([2, 2, 2], 2) == [2, 2, 2, 2, 2]\n"},
@@ -72,6 +75,10 @@ def arguments(argv=None):
     p.add_argument("--self-check", action="store_true", help="test accepted repository code without a model")
     p.add_argument("--mutant-check", action="store_true", help="require every heldout-v2 mutant to fail")
     p.add_argument("--paired", nargs=2, type=Path, metavar=("BASE.json", "ADAPTER.json"))
+    p.add_argument("--allow-method-diff", action="store_true",
+                   help="allow paired runs with different coding guides or plan-first mode")
+    p.add_argument("--guide", type=Path, help="append this coding guide to the system prompt")
+    p.add_argument("--plan-first", action="store_true", help="ask for a plan before each code response")
     args = p.parse_args(argv)
     if args.adapter and args.model == "default_model":
         # mlx_lm/server.py:478 maps "default_model" to the server's --adapter-path, which overrides the
@@ -86,10 +93,16 @@ def extract_code(reply):
     return match.group(1) if match else ""
 
 
-def request_model(prompt, endpoint, model, adapter, temperature=0.0, seed=None):
+def request_model(prompt, endpoint, model, adapter, temperature=0.0, seed=None,
+                  system_prompt=None, messages=None):
+    if system_prompt is None:
+        system_prompt = SYSTEM
+    if messages is None:
+        messages = [{"role": "system", "content": system_prompt}, {"role": "user", "content": prompt}]
+    elif not messages or messages[0].get("role") != "system":
+        messages = [{"role": "system", "content": system_prompt}, *messages]
     body = {"model": model, "temperature": temperature, "max_tokens": 8192,
-            "chat_template_kwargs": {"enable_thinking": False},
-            "messages": [{"role": "system", "content": SYSTEM}, {"role": "user", "content": prompt}]}
+            "chat_template_kwargs": {"enable_thinking": False}, "messages": messages}
     if adapter:
         body["adapters"] = adapter
     if seed is not None:
@@ -100,6 +113,29 @@ def request_model(prompt, endpoint, model, adapter, temperature=0.0, seed=None):
             return json.load(response)["choices"][0]["message"].get("content") or ""
     except OSError as error:
         raise RuntimeError(f"Cannot reach MLX server at {endpoint}: {error}") from error
+
+
+def configure_guide(args):
+    if args.guide is None or hasattr(args, "guide_system"):
+        return
+    contents = args.guide.read_bytes()
+    args.guide_text = contents.decode("utf-8")
+    args.guide_sha256 = hashlib.sha256(contents).hexdigest()
+    args.guide_system = SYSTEM.rstrip("\n") + "\n\n" + args.guide_text
+
+
+def request_for_task(prompt, args, sample_seed, messages=None):
+    configure_guide(args)
+    if args.guide is None and messages is None:
+        return request_model(prompt, args.endpoint, args.model, args.adapter,
+                             args.temperature, sample_seed)
+    options = {}
+    if args.guide is not None:
+        options["system_prompt"] = args.guide_system
+    if messages is not None:
+        options["messages"] = messages
+    return request_model(prompt, args.endpoint, args.model, args.adapter,
+                         args.temperature, sample_seed, **options)
 
 
 def checkout_tree(destination):
@@ -277,16 +313,26 @@ def task_records(split, review):
 
 
 def evaluate_one(task, args, sample_index=0):
+    configure_guide(args)
     public = args.split == "public"
     v2 = args.split == "heldout-v2"
     task_id = task["id"] if public or v2 else task[0]
     filename = "candidate.py" if public else (task["target"] if v2 else task[1])
     prompt = task["prompt"] if public else (task["_prompt"] if v2 else task_prompt(task, args.review_notes))
     last_code, last_output, attempts, status = "", "", 0, 1
+    plans = []
     for number in range(1, args.attempts + 1):
         attempts = number
         sample_seed = None if args.seed is None else args.seed + sample_index
-        reply = request_model(prompt, args.endpoint, args.model, args.adapter, args.temperature, sample_seed)
+        if args.plan_first:
+            plan = request_for_task(prompt + "\n\n" + PLAN_INSTRUCTION, args, sample_seed)
+            plans.append(plan[:2000])
+            messages = [{"role": "user", "content": prompt},
+                        {"role": "assistant", "content": plan},
+                        {"role": "user", "content": CODE_INSTRUCTION}]
+            reply = request_for_task(prompt, args, sample_seed, messages)
+        else:
+            reply = request_for_task(prompt, args, sample_seed)
         last_code = extract_code(reply)
         if not last_code:
             last_output = "No single fenced code block found in model response."
@@ -303,9 +349,12 @@ def evaluate_one(task, args, sample_index=0):
         prompt += (f"\n\n## Attempt {number} failed\n\nYour code:\n```\n{last_code}\n```"
                    f"\n\nTest output:\n```\n{last_output}\n```\n\nFix every reported issue; change nothing else.")
     passed = bool(last_code) and status == 0 if "status" in locals() else False
-    return {"task_id": task_id, "sample_index": sample_index, "passed": passed,
-            "first_pass": bool(passed and attempts == 1), "attempts": attempts,
-            "attempt_score": attempts if passed else args.attempts + 1, "output_tail": last_output}
+    result = {"task_id": task_id, "sample_index": sample_index, "passed": passed,
+              "first_pass": bool(passed and attempts == 1), "attempts": attempts,
+              "attempt_score": attempts if passed else args.attempts + 1, "output_tail": last_output}
+    if args.plan_first:
+        result["plans"] = plans
+    return result
 
 
 def load_accepted(path):
@@ -333,7 +382,7 @@ def bootstrap_ci(differences, seed=20261104, samples=10000):
     return percentile(means, 0.025), percentile(means, 0.975)
 
 
-def paired_report(paths):
+def paired_report(paths, allow_method_diff=False):
     base, adapter = [json.loads(path.read_text()) for path in paths]
     left = {r["task_id"]: r for r in base["results"]}
     right = {r["task_id"]: r for r in adapter["results"]}
@@ -352,6 +401,10 @@ def paired_report(paths):
         raise ValueError("paired files must use the same suite, frozen hashes, temperature, and sample count")
     if base["model"] != adapter["model"]:
         raise ValueError("paired files must use the same frozen suite and base model")
+    if not allow_method_diff and (
+            base.get("guide_sha256") != adapter.get("guide_sha256") or
+            base.get("plan_first", False) != adapter.get("plan_first", False)):
+        raise ValueError("paired files must use the same guide and plan-first settings; pass --allow-method-diff to override")
     if not common:
         raise ValueError("paired result files have no task ids in common")
     if left.keys() != right.keys():
@@ -383,6 +436,11 @@ def save_results(results, args):
                "review_notes": args.review_notes, "results": results}
     if suite_hash:
         payload["suite_sha256"] = suite_hash
+    if args.guide is not None:
+        payload["guide"] = str(args.guide)
+        payload["guide_sha256"] = args.guide_sha256
+    if args.plan_first:
+        payload["plan_first"] = True
     path.write_text(json.dumps(payload, indent=2) + "\n")
     return path
 
@@ -443,7 +501,7 @@ def run_live_evaluation(tasks, args):
 def main(argv=None):
     args = arguments(argv)
     if args.paired:
-        paired_report(args.paired)
+        paired_report(args.paired, args.allow_method_diff)
         return 0
     if args.attempts < 1:
         raise SystemExit("--attempts must be >= 1")
@@ -468,6 +526,11 @@ def main(argv=None):
         return self_check_tasks(tasks, args.split)
     if args.review_notes and args.attempts != 1:
         raise SystemExit("review-note compliance runs one response per frozen note")
+    if args.guide is not None:
+        try:
+            configure_guide(args)
+        except OSError as error:
+            raise SystemExit(f"Cannot read guide at {args.guide}: {error}") from error
     return run_live_evaluation(tasks, args)
 
 
