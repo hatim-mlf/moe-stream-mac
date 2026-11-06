@@ -22,6 +22,8 @@ def task_folders() -> list[Path]:
 def canned_reply(prompt: str) -> str:
     if "add_one" in prompt:
         return "```python\ndef add_one(value):\n    return value + 1\n```"
+    if ft_rft.HINT_PREFIX in prompt:
+        return "```python\ndef is_even(value):\n    return value % 2 == 0\n```"
     return "```python\ndef is_even(value):\n    return True\n```"
 
 
@@ -189,3 +191,72 @@ def test_build_fails_when_leak_check_fails(tmp_path: Path, monkeypatch: Any) -> 
     result = ft_rft.main(["build", "--samples", str(sample_file), "--tasks",
                           str(FIXTURES), "--out", str(tmp_path / "rejected")])
     assert result == 1
+
+
+def test_build_max_pass_fraction_drops_eight_of_eight_tasks(
+        tmp_path: Path, monkeypatch: Any) -> None:
+    rows = [build_sample(VALID_ID, index, True, "def add_one(x): return x + 1", 8)
+            for index in range(8)]
+    samples = tmp_path / "samples.jsonl"
+    samples.write_text("".join(json.dumps(row) + "\n" for row in rows))
+    monkeypatch.setattr(ft_rft, "run_leak_check", lambda: None)
+
+    result = ft_rft.main(["build", "--samples", str(samples), "--tasks", str(FIXTURES),
+                          "--out", str(tmp_path / "filtered"), "--max-pass-fraction", "0.875"])
+
+    assert result == 0
+    manifest = json.loads((tmp_path / "filtered" / "manifest.json").read_text())
+    assert VALID_ID not in manifest["task_ids"]
+    summary = json.loads((tmp_path / "filtered" / "summary.json").read_text())
+    assert summary["per_task"][VALID_ID]["passes"] == 8
+    assert summary["per_task"][VALID_ID]["pass@k"] is True
+
+
+def test_hint_sample_only_resamples_zero_pass_tasks_and_builds_original_prompt(
+        tmp_path: Path, monkeypatch: Any) -> None:
+    eval_mod = ft_rft.load_helpers()[0]
+    prompts: list[str] = []
+
+    def request_stub(prompt: str, _url: str, _model: str, _adapter: Any,
+                     _temperature: float, _seed: int) -> str:
+        prompts.append(prompt)
+        return canned_reply(prompt)
+
+    monkeypatch.setattr(eval_mod, "request_model", request_stub)
+    prior_rows = [build_sample(VALID_ID, 0, True, "def add_one(x): return x + 1", 1),
+                  build_sample(TRAIN_ID, 1, False, "", 2),
+                  build_sample(TRAIN_ID, 0, False, "", 2)]
+    prior_rows[1]["failure_tail"] = "later failure"
+    prior_rows[2]["failure_tail"] = "x" * 500
+    prior = tmp_path / "prior.jsonl"
+    prior.write_text("".join(json.dumps(row) + "\n" for row in prior_rows))
+    hinted = tmp_path / "hinted.jsonl"
+
+    result = ft_rft.main(["hint-sample", "--samples", str(prior), str(FIXTURES),
+                          "--k", "1", "--seed", "7", "--endpoint", "http://fake",
+                          "--out", str(hinted)])
+
+    assert result == 0
+    rows = sample_lines(hinted)
+    assert len(rows) == 1
+    assert rows[0]["task_id"] == TRAIN_ID and rows[0]["passed"] is True
+    assert rows[0]["hinted"] is True
+    assert len(prompts) == 1
+    original = ft_rft.load_helpers()[2].task_prompt(
+        FIXTURES / TRAIN_ID, json.loads((FIXTURES / TRAIN_ID / "meta.json").read_text()))
+    assert prompts[0].startswith(original)
+    assert prompts[0].endswith(ft_rft.HINT_PREFIX + "x" * 400 + ft_rft.HINT_SUFFIX)
+
+    monkeypatch.setattr(ft_rft, "run_leak_check", lambda: None)
+    out = tmp_path / "merged-build"
+    assert ft_rft.main(["build", "--samples", str(prior), "--samples", str(hinted), "--tasks",
+                        str(FIXTURES), "--out", str(out)]) == 0
+    built = [json.loads(line) for filename in ("train.jsonl", "valid.jsonl")
+             for line in (out / filename).read_text().splitlines()]
+    train_row = next(row for row in built
+                     if row["messages"][1]["content"] == original)
+    assert "A previous attempt failed the tests with:" not in train_row["messages"][1]["content"]
+    assert "def is_even(value):\n    return value % 2 == 0" in train_row["messages"][-1]["content"]
+    summary = json.loads((out / "summary.json").read_text())
+    assert summary["per_task"][TRAIN_ID]["passes"] == 1
+    assert summary["per_task"][TRAIN_ID]["k"] == 3

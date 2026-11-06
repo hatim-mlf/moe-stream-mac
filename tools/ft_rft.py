@@ -3,6 +3,7 @@
 import argparse
 import hashlib
 import json
+import math
 import subprocess
 import sys
 import time
@@ -18,6 +19,8 @@ DEFAULT_MODEL = "default_model"
 DEFAULT_PER_TASK = 2
 FAILURE_TAIL_CHARS = 400
 UNREACHABLE_REQUEST_LIMIT = 3
+HINT_PREFIX = "A previous attempt failed the tests with:\n"
+HINT_SUFFIX = "\nWrite a corrected solution."
 V5_MANIFESTS = ROOT / "data/finetune/v5"
 
 
@@ -48,11 +51,20 @@ def build_parser() -> argparse.ArgumentParser:
     sample.add_argument("--endpoint", default=None)
     sample.add_argument("--limit", type=int)
     sample.add_argument("--only", metavar="ID")
+    hinted = commands.add_parser("hint-sample", help="resample tasks with no passing samples")
+    hinted.add_argument("--samples", type=Path, required=True)
+    hinted.add_argument("directories", nargs="+", type=Path)
+    hinted.add_argument("--k", type=int, default=4)
+    hinted.add_argument("--temperature", type=float, default=DEFAULT_TEMPERATURE)
+    hinted.add_argument("--seed", type=int, default=DEFAULT_SEED)
+    hinted.add_argument("--out", type=Path, required=True)
+    hinted.add_argument("--endpoint", default=None)
     build = commands.add_parser("build", help="build SFT rows from passing samples")
-    build.add_argument("--samples", type=Path, required=True)
+    build.add_argument("--samples", type=Path, nargs="+", action="extend", required=True)
     build.add_argument("--tasks", nargs="+", type=Path, required=True)
     build.add_argument("--out", type=Path, required=True)
     build.add_argument("--per-task", type=int, default=DEFAULT_PER_TASK)
+    build.add_argument("--max-pass-fraction", type=float, default=1.0)
     return parser
 
 
@@ -122,7 +134,7 @@ def is_unreachable(error: Exception) -> bool:
 
 def sample_one(folder: Path, meta: dict, prompt: str, runner: dict, index: int,
                args: argparse.Namespace, endpoint: str, helpers: tuple[Any, ...],
-               test_python: Path | None) -> tuple[dict, bool]:
+               test_python: Path | None, hinted: bool = False) -> tuple[dict, bool]:
     ft_eval, checker, _, _ = helpers
     started = time.perf_counter()
     reply = ""
@@ -152,24 +164,30 @@ def sample_one(folder: Path, meta: dict, prompt: str, runner: dict, index: int,
               "k": args.k, "passed": passed, "failure_tail": failure,
               "reply_length": len(reply), "seconds": round(time.perf_counter() - started, 3),
               "code": code}
+    if hinted:
+        record["hinted"] = True
     return record, unreachable
 
 
-def setup_failure(folder: Path, meta: dict, index: int, k: int, error: Exception) -> dict:
-    return {"task_id": meta.get("id", folder.name), "batch": meta.get("source", ""),
-            "sample": index, "k": k, "passed": False,
-            "failure_tail": failure_text(error), "reply_length": 0, "seconds": 0.0,
-            "code": ""}
+def setup_failure(folder: Path, meta: dict, index: int, k: int, error: Exception,
+                  hinted: bool = False) -> dict:
+    record = {"task_id": meta.get("id", folder.name), "batch": meta.get("source", ""),
+              "sample": index, "k": k, "passed": False,
+              "failure_tail": failure_text(error), "reply_length": 0, "seconds": 0.0,
+              "code": ""}
+    if hinted:
+        record["hinted"] = True
+    return record
 
 
 def append_setup_failures(stream: Any, folder: Path, k: int, done: set[tuple[str, int]],
-                          error: Exception) -> int:
+                          error: Exception, hinted: bool = False) -> int:
     meta = json.loads((folder / "meta.json").read_text())
     written = 0
     for index in range(k):
         if (meta["id"], index) in done:
             continue
-        stream.write(json_line(setup_failure(folder, meta, index, k, error)))
+        stream.write(json_line(setup_failure(folder, meta, index, k, error, hinted)))
         stream.flush()
         done.add((meta["id"], index))
         written += 1
@@ -181,7 +199,20 @@ def json_line(row: dict) -> str:
     return json.dumps(row, ensure_ascii=False, separators=(",", ":")) + "\n"
 
 
-def sample_command(args: argparse.Namespace) -> int:
+def first_failure_hint(rows: list[dict]) -> str:
+    failures = sorted((row for row in rows if not row["passed"]),
+                      key=lambda row: row["sample"])
+    if not failures:
+        raise ValueError("hint task has no failing sample")
+    failure = str(failures[0].get("failure_tail", "")).strip()[-FAILURE_TAIL_CHARS:]
+    return failure or "No failure details were recorded."
+
+
+def hinted_prompt(prompt: str, rows: list[dict]) -> str:
+    return prompt + "\n\n" + HINT_PREFIX + first_failure_hint(rows) + HINT_SUFFIX
+
+
+def sampling_command(args: argparse.Namespace, hinted: bool = False) -> int:
     try:
         if args.k < 1:
             raise ValueError("--k must be at least 1")
@@ -189,7 +220,14 @@ def sample_command(args: argparse.Namespace) -> int:
             raise ValueError("--temperature must be nonnegative")
         helpers = load_helpers()
         ft_eval, checker, to_sft, _ = helpers
-        folders = collect_folders(args.directories, args.only, args.limit, checker)
+        folders = collect_folders(args.directories, getattr(args, "only", None),
+                                  getattr(args, "limit", None), checker)
+        prior_samples: dict[str, list[dict]] = {}
+        if hinted:
+            prior_samples = read_sample_rows(args.samples)
+            folders = [folder for folder in folders
+                       if folder.name in prior_samples and
+                       not any(row["passed"] for row in prior_samples[folder.name])]
         test_python = checker.python_with_test_dependencies(ft_eval)
         endpoint = args.endpoint or ft_eval.API
         output = rooted(args.out)
@@ -202,13 +240,15 @@ def sample_command(args: argparse.Namespace) -> int:
                 try:
                     meta, prompt, runner = task_inputs(folder, checker, to_sft)
                 except Exception as error:
-                    written += append_setup_failures(stream, folder, args.k, done, error)
+                    written += append_setup_failures(stream, folder, args.k, done, error, hinted)
                     continue
+                if hinted:
+                    prompt = hinted_prompt(prompt, prior_samples[meta["id"]])
                 for index in range(args.k):
                     if (meta["id"], index) in done:
                         continue
                     record, unreachable = sample_one(folder, meta, prompt, runner, index,
-                                                     args, endpoint, helpers, test_python)
+                                                     args, endpoint, helpers, test_python, hinted)
                     stream.write(json_line(record))
                     stream.flush()
                     done.add((meta["id"], index))
@@ -224,6 +264,17 @@ def sample_command(args: argparse.Namespace) -> int:
     except (OSError, ValueError, RuntimeError, json.JSONDecodeError) as error:
         print(f"RFT sampling failed: {error}", file=sys.stderr)
         return 1
+
+
+def sample_command(args: argparse.Namespace) -> int:
+    return sampling_command(args)
+
+
+def hint_sample_command(args: argparse.Namespace) -> int:
+    if args.k < 1:
+        print("RFT sampling failed: --k must be at least 1", file=sys.stderr)
+        return 1
+    return sampling_command(args, hinted=True)
 
 
 def read_sample_rows(path: Path) -> dict[str, list[dict]]:
@@ -248,6 +299,25 @@ def read_sample_rows(path: Path) -> dict[str, list[dict]]:
     for rows in grouped.values():
         rows.sort(key=lambda row: row["sample"])
     return grouped
+
+
+def read_sample_files(paths: list[Path]) -> dict[str, list[dict]]:
+    """Merge sample files, assigning each file a distinct sample-index range per task."""
+    merged: dict[str, list[dict]] = {}
+    offsets: dict[str, int] = {}
+    for path in paths:
+        grouped = read_sample_rows(path)
+        for task_id, rows in grouped.items():
+            offset = offsets.get(task_id, 0)
+            span = max(max(int(row.get("k", 0)), row["sample"] + 1) for row in rows)
+            total = offset + span
+            merged.setdefault(task_id, []).extend(
+                {**row, "sample": offset + row["sample"], "k": total} for row in rows
+            )
+            offsets[task_id] = total
+    for rows in merged.values():
+        rows.sort(key=lambda row: row["sample"])
+    return merged
 
 
 def selected_codes(rows: list[dict], per_task: int) -> list[tuple[int, str]]:
@@ -286,7 +356,9 @@ def row_for_sample(folder: Path, meta: dict, code: str, to_sft: Any,
 
 
 def build_rows(folders: list[Path], samples: dict[str, list[dict]], per_task: int,
-               helpers: tuple[Any, ...]) -> tuple[dict[str, list[dict]], dict[str, dict]]:
+               helpers: tuple[Any, ...],
+               selectable_samples: dict[str, list[dict]] | None = None
+               ) -> tuple[dict[str, list[dict]], dict[str, dict]]:
     ft_eval, checker, to_sft, dataset = helpers
     rows: dict[str, list[dict]] = {}
     stats: dict[str, dict] = {}
@@ -299,7 +371,9 @@ def build_rows(folders: list[Path], samples: dict[str, list[dict]], per_task: in
         stats[meta["id"]] = {"k": k, "passes": passes,
                               "pass@1": passes / k if k else None,
                               "pass@k": bool(passes) if k else None}
-        chosen = selected_codes(task_samples, per_task)
+        candidates = (selectable_samples.get(meta["id"], [])
+                      if selectable_samples is not None else task_samples)
+        chosen = selected_codes(candidates, per_task)
         if chosen:
             rows[meta["id"]] = [row_for_sample(folder, meta, code, to_sft, ft_eval, dataset)
                                 for _, code in chosen]
@@ -356,11 +430,16 @@ def build_command(args: argparse.Namespace) -> int:
     try:
         if args.per_task < 1:
             raise ValueError("--per-task must be at least 1")
+        if not math.isfinite(args.max_pass_fraction):
+            raise ValueError("--max-pass-fraction must be finite")
         helpers = load_helpers()
         _, checker, to_sft, _ = helpers
         folders = collect_folders(args.tasks, None, None, checker)
-        samples = read_sample_rows(args.samples)
-        rows, stats = build_rows(folders, samples, args.per_task, helpers)
+        samples = read_sample_files(args.samples)
+        from rft_filter import filter_by_pass_rate
+
+        eligible = filter_by_pass_rate(samples, args.max_pass_fraction)
+        rows, stats = build_rows(folders, samples, args.per_task, helpers, eligible)
         out = rooted(args.out)
         manifest = write_outputs(out, rows, valid_task_ids(), stats, to_sft)
         run_leak_check()
@@ -374,7 +453,11 @@ def build_command(args: argparse.Namespace) -> int:
 
 def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
-    return sample_command(args) if args.command == "sample" else build_command(args)
+    if args.command == "sample":
+        return sample_command(args)
+    if args.command == "hint-sample":
+        return hint_sample_command(args)
+    return build_command(args)
 
 
 if __name__ == "__main__":
