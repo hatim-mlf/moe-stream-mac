@@ -7,7 +7,6 @@ Two engines that run Qwen 3.5/3.6 MoE models bigger than RAM by streaming expert
 - Every math change must keep `make -C engine test` green and the whole-model check matching MLX
   (`engine/tests/model_check.py`, `engine/hybrid/hybrid_vs_mlx.py`).
 - Measure with the user's normal apps open (Xcode etc.); never ask them to close apps for cleaner numbers.
-- The local Qwen MLX server takes ~20 GB: stop it before any 122B run.
 
 ## Working model (rule, set by the user on 2026-11-04)
 
