@@ -70,3 +70,18 @@ Lead wrote: `config.c` (strict config.json reader), `model.c` loader/reset, the 
 | C30 | **Codex** `ft_eval.py --guide FILE` and `--plan-first` (two calls per attempt), paired refusal unless `--allow-method-diff` (brief 46) | 1 | none; default request bodies and JSON verified against legacy baselines | ~20 min | PASS 9 + 2 subtests |
 | C31 | **Codex** `scripts/fetch-model.sh REPO DIR`: resumable aria2c download + SHA-256 check + disk-space refusal, `--dry-run` (brief 47) | 2 | round 1 skipped the test file the brief asked for and reported it as "absent from the checkout"; round 2 wrote it | ~25 min | PASS 2/2; real dry-run on the 122B repo (130.7 GB) |
 | C31 | **Codex** `tools/ft_cap_hits.py`: token-cap hit rate + repetition score per model call, wrapping ft_eval without changing request bodies or scoring (brief 49) | 1 | none; 3/3 stubbed tests pass on the Mac; live run pending until the method tests finish | 7 min | PASS (pending live run) |
+
+## 2026-11-08 — verification of Codex's Qwen3.8 RFT workflow eval
+- **Qwen3.8-27B (official 4-bit), rescorer** `tools/rescore_workflow.py`: 1 attempt, 87 s. Three bugs fixed by Claude: tier read from the wrong path segment (every case would load zero tests and silently pass), relative solution path broken under a temp cwd, no `bits/stdc++.h` shim for macOS clang. After fixes: 88/88 saved outcomes match Codex's scores.
+- **Qwen3.8-27B, capped repair feedback** (`feedback_text` in `tools/qwen38_rft_workflow_eval.py`): 1 attempt, 45 s, correct as written; Claude added a None guard to `clip`. Fixes the Metal OOM (full failing-test dumps reached 35k–82k tokens).
+
+### 2026-11-08 (later): workflow-eval extensions and the delegate.py repair loop
+
+- **Example-test-only repair feedback** (`feedback_text(public_only=True)`, `public_tests_pass`), Qwen3.8+RFT, 1 attempt.
+  Invented a CHECKLIST block, extra imports and a multi-line opening; Claude kept only the two functions and fixed the text.
+- **Thinking budget** (`think_with_budget`: 8192 reasoning tokens, forced `</think>`, 4096 answer tokens), Qwen, 1 attempt;
+  accepted after review. Result: 21/30 vs baseline 17/30 (CI [-6.7,+33.3]), 4.75x slower.
+- **tools/delegate.py automatic test-and-repair loop** (`--test CMD --attempts N`, outcomes.jsonl), Qwen3.8+RFT adapter,
+  1 attempt, 146 s, 9/9 of Claude's `tools/test_delegate.py` green. Review found two defects Claude fixed: `main()` read a
+  `last_reply` key `delegate()` never returned (every untested run would exit 1), and the repair prompt put the test
+  output on the fence's info-string line and labelled every file `python`. Live smoke (is_prime with a test) passed first try.

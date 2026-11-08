@@ -21,3 +21,4 @@ results/*/*adapter/
 results/*/*.log
 results/*/sample-output.txt
 *.gputrace
+adapters/

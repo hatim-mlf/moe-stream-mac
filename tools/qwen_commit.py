@@ -18,7 +18,7 @@ MAX_DIFF_CHARS = 14000
 TYPES = ("feat", "fix", "refactor", "docs", "test", "chore", "perf", "ci")
 SUBJECT = re.compile(rf"^({'|'.join(TYPES)}): \S.{{0,70}}$")
 TRAILER = ("Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\n"
-           "Claude-Session: https://claude.ai/code/session_01WmSoJ2A8P527GB6DM4hLdY")
+           "Claude-Session: https://claude.ai/code/session_01VhS5pDchcuVGwMR8hw6JxS")
 PROMPT = """Write a git commit message for the staged changes below.
 
 Format, exactly:
