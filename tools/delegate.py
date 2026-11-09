@@ -46,7 +46,7 @@ def ask(prompt: str, system: str = SYSTEM) -> tuple[str, dict, float]:
 def run_test(cmd: str) -> tuple[bool, str]:
     try:
         proc = subprocess.run(cmd, shell=True, capture_output=True, text=True,
-                              timeout=TEST_TIMEOUT_SECONDS, cwd=ROOT)
+                              timeout=TEST_TIMEOUT_SECONDS)  # runs in the caller's directory
     except subprocess.TimeoutExpired:
         return False, f"test command timed out after {TEST_TIMEOUT_SECONDS} s"
     output = proc.stdout + proc.stderr

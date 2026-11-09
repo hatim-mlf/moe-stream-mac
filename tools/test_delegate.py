@@ -154,3 +154,17 @@ def test_test_command_timeout_is_reported_as_failure(env, monkeypatch):
 
     assert result["passed_final"] is False
     assert "timed out" in model.prompts[1].lower()
+
+
+def test_test_command_runs_in_callers_directory(env, monkeypatch, tmp_path):
+    root, out, _ = env
+    project = tmp_path / "other-project"
+    project.mkdir()
+    (project / "marker.txt").write_text("here")
+    monkeypatch.chdir(project)
+    model = FakeModel([reply_with("GOOD = 1")])
+    monkeypatch.setattr(delegate, "ask", model)
+
+    result = delegate.delegate("brief", out, test_cmd="test -f marker.txt", attempts=1, name="t10")
+
+    assert result["passed_final"] is True
