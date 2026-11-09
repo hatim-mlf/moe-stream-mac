@@ -1,0 +1,17 @@
+{
+  "benchmark": "Aider Polyglot, python 34 + cpp 26 exercises, unit tests hidden, temp 0",
+  "runner": "tools/polyglot_eval.py",
+  "results": {
+    "kat_first_try": {"pass": 15, "python": 13, "cpp": 2},
+    "kat_3_tries": {"pass": 34, "python": 22, "cpp": 12, "model_calls": 139, "minutes": 70},
+    "kat_think": {"pass": 13, "python": 11, "cpp": 2, "minutes": 58, "forced_close": 11},
+    "rft_first_try": {"pass": 12, "python": 9, "cpp": 3},
+    "rft_3_tries": {"pass": 31, "python": 19, "cpp": 12, "model_calls": 143, "minutes": 135}
+  },
+  "paired_vs_rft_pts_95ci": {
+    "kat_first_try": [5.0, -6.7, 16.7, "8W/5L"],
+    "kat_3_tries": [5.0, -8.3, 16.7, "9W/6L"]
+  },
+  "repair_gain_pts_95ci": {"kat": [31.7, 20.0, 43.3], "rft": [31.7, 20.0, 43.3]},
+  "notes": "First-try C++ failures are mostly compile errors (tests hidden, stubs nearly empty); repair fixes them from compiler output. Qwen+RFT thinking run cancelled (too slow for the helper)."
+}
