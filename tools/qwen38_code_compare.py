@@ -27,8 +27,11 @@ ROOT = Path(__file__).resolve().parents[1]
 BASE_MODEL = Path("/Users/hatim/models/Qwen3.8-27B-official-mlx-4bit")
 RFT_RUN = ROOT / "results/20261107T141610Z-rft-qwen38-rft-k2"
 RFT_ADAPTER = RFT_RUN / "scale4/adapter"
-# Third candidate (2026-11-08): Solstice-AI TURBO Fable Cold Fusion, 4-bit oQ4e MLX, used as-is without adapter.
-TURBO_MODEL = Path("/Users/hatim/models/Qwen3.8-27B-TURBO-Fable-Cold-Fusion-MLX-oQ4e-1M")
+# Extra candidates run as-is (no adapter) with `add-model --name <key>`. TURBO was deleted after scoring 10/30.
+CANDIDATE_MODELS = {
+    "turbo": Path("/Users/hatim/models/Qwen3.8-27B-TURBO-Fable-Cold-Fusion-MLX-oQ4e-1M"),
+    "kat": Path("/Users/hatim/models/KAT-Coder-V2.5-Dev-OptiQ-4bit"),
+}
 BASE_MANIFEST = ROOT / "results/q38-official-manifest.json"
 SERVER = ROOT / ".venv/bin/mlx_lm.server"
 PY3 = Path("/opt/homebrew/bin/python3")
@@ -544,7 +547,7 @@ def generate(run_dir: Path, manifest: dict[str, Any], model: str) -> None:
     model_dir.mkdir(parents=True, exist_ok=True)
     log_path = model_dir / "server.log"
     args = [
-        str(SERVER), "--model", str(TURBO_MODEL if model == "turbo" else BASE_MODEL), "--host", "127.0.0.1",
+        str(SERVER), "--model", str(CANDIDATE_MODELS.get(model, BASE_MODEL)), "--host", "127.0.0.1",
         "--port", str(PORT), "--prompt-cache-size", "0", "--prompt-cache-bytes", "0",
         "--prompt-concurrency", "1", "--decode-concurrency", "1",
     ]
@@ -902,18 +905,19 @@ def run(run_dir: Path) -> None:
           f"change {result['delta']*100:+.1f} pp.", flush=True)
 
 
-def add_turbo(run_dir: Path) -> None:
+def add_model(run_dir: Path, name: str) -> None:
     run_dir = run_dir.resolve()
     manifest = load_json(run_dir / "manifest.json")
-    config = TURBO_MODEL / "config.json"
-    manifest["turbo_model"] = {"path": str(TURBO_MODEL), "config_sha256": sha(config.read_bytes()),
+    path = CANDIDATE_MODELS[name]
+    config = path / "config.json"
+    manifest[f"{name}_model"] = {"path": str(path), "config_sha256": sha(config.read_bytes()),
                                "added_utc": now()}
     write_json(run_dir / "manifest.json", manifest)
-    if not manifest["state"].get("turbo_generated"):
-        generate(run_dir, manifest, "turbo")
+    if not manifest["state"].get(f"{name}_generated"):
+        generate(run_dir, manifest, name)
         manifest = load_json(run_dir / "manifest.json")
-    if not manifest["state"].get("turbo_scored"):
-        score_model(run_dir, manifest, "turbo")
+    if not manifest["state"].get(f"{name}_scored"):
+        score_model(run_dir, manifest, name)
 
 
 def main() -> int:
@@ -923,8 +927,9 @@ def main() -> int:
     p.add_argument("--run-dir", type=Path, required=True)
     r = subs.add_parser("run")
     r.add_argument("--run-dir", type=Path, required=True)
-    t = subs.add_parser("add-turbo", help="generate and score the TURBO model on an existing run")
+    t = subs.add_parser("add-model", help="generate and score an extra candidate on an existing run")
     t.add_argument("--run-dir", type=Path, required=True)
+    t.add_argument("--name", choices=sorted(CANDIDATE_MODELS), required=True)
     args = parser.parse_args()
     try:
         if args.command == "prepare":
@@ -932,8 +937,8 @@ def main() -> int:
             print(f"Prepared {len(data['task_selection']['tasks'])} tasks and "
                   f"{sum(t['test_count'] for t in data['task_selection']['tasks'])} test inputs. "
                   f"Run folder: {data['run_dir']}", flush=True)
-        elif args.command == "add-turbo":
-            add_turbo(args.run_dir)
+        elif args.command == "add-model":
+            add_model(args.run_dir, args.name)
         else:
             run(args.run_dir)
         return 0

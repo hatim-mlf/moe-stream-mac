@@ -33,3 +33,18 @@ Run: `results/20261108T000646Z-qwen38-code-comparison` (`tools/qwen38_code_compa
 TURBO vs base -3.3 pts (CI [-23.3,+16.7], 3W/4L); vs RFT -13.3 pts (CI [-36.7,+6.7], 2W/6L).
 "Turbo" means ~3x shorter answers, not faster decoding (decode is ~17% slower: mixed 4/5/6-bit layers).
 Verdict: not adopted; the helper stays base + RFT adapter.
+
+## KAT-Coder-V2.5-Dev OptiQ 4-bit (2026-11-09, Claude)
+
+`add-model --name kat`, same 30 cases and protocol (thinking off, 4096 tokens, temp 0). qwen3_5_moe, 256 experts, ~4.5 bpw, 20 GB.
+
+| Model | Pass | Median reply | Decode | Hit cap |
+|---|---|---|---|---|
+| Base 4-bit | 11/30 | 96.6 s | 16.7 tok/s | 9 |
+| Base + RFT | 14/30 | 83.2 s | 16.5 tok/s | 5 |
+| TURBO (deleted) | 10/30 | 28.6 s | 13.8 tok/s | 1 |
+| KAT-Coder | 15/30 | 22.1 s | 47.8 tok/s | 8 |
+
+KAT vs base +13.3 pts (CI [0,+26.7], 5W/1L); vs RFT +3.3 pts (CI [-16.7,+20.0], 3W/2L). Hard tier: KAT 3/10, others 1-2.
+Same accuracy as base + RFT within noise, ~3x faster decode. 8 replies hit the 4096-token cap, so a larger budget may help.
+Decision deferred to the fresh 60-problem set (Aider Polyglot, with the repair loop) against base + RFT.
