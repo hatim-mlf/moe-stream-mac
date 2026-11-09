@@ -12,7 +12,7 @@ Two engines that run Qwen 3.5/3.6 MoE models bigger than RAM by streaming expert
 
 - **Claude is the orchestrator:** writes specs, interfaces, tests and skeletons; reviews every diff; runs the
   verification and measurements; decides. Claude does not write implementation code it can delegate.
-- **Implementation goes to the helpers:** the local Qwen (`tools/delegate.py`, needs `scripts/local/serve-mlx.sh`)
+- **Implementation goes to the helpers:** the local helper model, KAT-Coder by default (`tools/delegate.py --test CMD`, needs `scripts/local/serve-mlx.sh`; `HELPER=qwen-rft` switches back)
   for focused, well-specified pieces; **Codex** (GPT via the codex CLI) for larger or multi-file pieces and for
   independent review. Commit messages via `tools/qwen_commit.py`.
 - Log every delegation in `docs/delegation-log.md` (who, attempts, what went wrong).
