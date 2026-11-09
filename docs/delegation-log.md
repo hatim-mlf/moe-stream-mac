@@ -85,3 +85,13 @@ Lead wrote: `config.c` (strict config.json reader), `model.c` loader/reset, the 
   1 attempt, 146 s, 9/9 of Claude's `tools/test_delegate.py` green. Review found two defects Claude fixed: `main()` read a
   `last_reply` key `delegate()` never returned (every untested run would exit 1), and the repair prompt put the test
   output on the fence's info-string line and labelled every file `python`. Live smoke (is_prime with a test) passed first try.
+
+### 2026-11-09: Aider Polyglot harness (first jobs through the new delegate.py repair loop)
+
+- **tools/polyglot_bench.py** (exercise loading, prompt, reply parsing, cmake/pytest runner), Qwen3.8+RFT via
+  `delegate.py --test`: failed attempt 1 (reply parser assigned no blocks), passed 12/12 on attempt 2 from the test
+  output alone, 292 s. Claude's review fixes: stubs fenced as `python` for C++ too; a timeout killed only the shell
+  (now kills the process group); stubs without a final newline put the closing fence on the code line.
+- **tools/polyglot_eval.py** (server lifecycle, repair3/think conditions, resume, summary), Qwen, 1 attempt, 300 s,
+  8/8 tests. Review fix: progress lines not flushed. Smoke: KAT 3/3 on 2 exercises.
+- All 60 reference solutions (34 Python, 26 C++) pass through the harness.
