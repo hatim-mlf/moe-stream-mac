@@ -18,6 +18,7 @@ import os
 import random
 import shutil
 import signal
+import socket
 import statistics
 import subprocess
 import sys
@@ -50,11 +51,19 @@ KILL_GRACE_S = 10
 PROMPT_CACHE_BYTES = 4 * 1024**3
 # 2048-token prefill steps over a 45k-token context OOMed Metal (13:41 UTC); 512 cuts the attention scratch 4x.
 PREFILL_STEP_SIZE = 512
-SERVER_FATAL = ("ERROR", '" 404 -', '" 500 -')
+SERVER_FATAL = ("ERROR", '" 401 -', '" 403 -', '" 404 -', '" 500 -')
+PROXY_READY_S = 30
 KAT_MODEL = Path.home() / "models/KAT-Coder-V2.5-Dev-OptiQ-4bit"  # brief 52
-ARMS = ("pi", "base", "kat")
-ARM_MODELS = {"pi": cc.BASE_MODEL, "base": cc.BASE_MODEL, "kat": KAT_MODEL}
-PAIRS = (("pi", "base"), ("kat", "base"), ("kat", "pi"))
+ARMS = ("pi", "base", "kat", "opus")
+ARM_MODELS = {"pi": cc.BASE_MODEL, "base": cc.BASE_MODEL, "kat": KAT_MODEL}  # local arms served by mlx_lm
+PAIRS = (("pi", "base"), ("kat", "base"), ("kat", "pi"), ("opus", "base"), ("opus", "pi"), ("opus", "kat"))
+# Opus reference (brief 51 step 8): pi -> tools/anthropic_proxy.py on PROXY_PORT -> api.anthropic.com.
+# Opus 5.5 cannot disable thinking; "low" is its lowest effort.
+PROXY_PORT = 8091
+PROXY = ROOT / "tools/anthropic_proxy.py"
+API_ARMS = {"opus": {"provider": "anthropic", "model": "claude-opus-5-5", "thinking": "low"}}
+LOCAL_PI = {"provider": "local", "model": "default_model", "thinking": "off"}
+OPUS_BUDGET_USD = 25.0  # stop starting new cases once the arm has spent this much (pi-reported cost)
 STUBS = {"python3": "# TODO: read stdin, write stdout\n", "cpp17": "int main() { return 0; }\n"}
 SOURCES = {"python3": "solution.py", "cpp17": "solution.cpp"}
 RUN_TESTS = r"""#!/bin/bash
@@ -93,6 +102,22 @@ def pi_models_json(port: int) -> dict:
                                     "apiKey": "dummy", "models": [model]}}}
 
 
+def arm_port(arm: str) -> int:
+    return PROXY_PORT if arm in API_ARMS else PORT
+
+
+def arm_models_json(arm: str) -> dict:
+    if arm in API_ARMS:  # built-in provider, endpoint moved to the local proxy; the proxy adds the real key
+        return {"providers": {"anthropic": {"baseUrl": f"http://127.0.0.1:{PROXY_PORT}", "apiKey": "via-local-proxy"}}}
+    return pi_models_json(PORT)
+
+
+def pi_args(arm: str, lang: str) -> list[str]:
+    spec = API_ARMS.get(arm, LOCAL_PI)
+    return ["--offline", "--provider", spec["provider"], "--model", spec["model"], "--thinking", spec["thinking"],
+            "--mode", "json", "--print", task_message(lang)]
+
+
 def run_tests_script(lang: str, limit: float) -> str:
     if lang == "cpp17":
         build, run = BUILD_CPP.format(cpp=cc.CPP), ".build/solution"
@@ -101,7 +126,7 @@ def run_tests_script(lang: str, limit: float) -> str:
     return RUN_TESTS.format(lang=cc.LANGS[lang]["ext"][1:], limit=limit, build=build, run=run, py=cc.PY3)
 
 
-def build_workspace(run_dir: Path, task: dict, lang: str, root: Path) -> Case:
+def build_workspace(run_dir: Path, task: dict, lang: str, root: Path, arm: str = "base") -> Case:
     root = root.resolve()
     work, home = root / "work", root / "home"
     (work / "tests").mkdir(parents=True)
@@ -121,7 +146,7 @@ def build_workspace(run_dir: Path, task: dict, lang: str, root: Path) -> Case:
     script.write_text(run_tests_script(lang, float(meta["time_limit_seconds"]) * EXAMPLE_TIME_FACTOR))
     script.chmod(0o755)
     (home / ".pi/agent").mkdir(parents=True)
-    (home / ".pi/agent/models.json").write_text(json.dumps(pi_models_json(PORT), indent=2))
+    (home / ".pi/agent/models.json").write_text(json.dumps(arm_models_json(arm), indent=2))
     return Case(root=root, work=work, home=home, solution=solution)
 
 
@@ -168,6 +193,36 @@ def parse_events(lines: Iterable[str]) -> dict:
         stats["tokens_out"] += int(usage.get("output", 0))
         stats["cache_read"] += int(usage.get("cacheRead", 0))
     return stats
+
+
+def events_cost(lines: Iterable[str]) -> float:
+    """Sum of pi's own cost estimate (usage.cost.total) over assistant message_end events."""
+    total = 0.0
+    for line in lines:
+        try:
+            event = json.loads(line)
+        except json.JSONDecodeError:
+            continue
+        msg = event.get("message") or {}
+        if event.get("type") == "message_end" and msg.get("role") == "assistant":
+            total += float(((msg.get("usage") or {}).get("cost") or {}).get("total") or 0.0)
+    return total
+
+
+def api_error(lines: Iterable[str]) -> str | None:
+    """The error message if the session's last assistant message is an error (e.g. 400 from the API)."""
+    last = None
+    for line in lines:
+        try:
+            event = json.loads(line)
+        except json.JSONDecodeError:
+            continue
+        msg = event.get("message") or {}
+        if event.get("type") == "message_end" and msg.get("role") == "assistant":
+            last = msg
+    if last and last.get("stopReason") == "error":
+        return str(last.get("errorMessage") or "unknown error")
+    return None
 
 
 def paired_summary(cases: list[dict], a: str, b: str) -> dict:
@@ -235,11 +290,9 @@ def sha256_file(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def run_pi(case: Case, lang: str, case_out: Path) -> dict[str, Any]:
-    profile = pi_sandbox_profile(case.root, PORT)
-    cmd = ["/usr/bin/sandbox-exec", "-p", profile, str(NODE), str(PI.resolve()), "--offline",
-           "--provider", "local", "--model", "default_model", "--thinking", "off", "--mode", "json",
-           "--print", task_message(lang)]
+def run_pi(case: Case, lang: str, case_out: Path, arm: str) -> dict[str, Any]:
+    profile = pi_sandbox_profile(case.root, arm_port(arm))
+    cmd = ["/usr/bin/sandbox-exec", "-p", profile, str(NODE), str(PI.resolve()), *pi_args(arm, lang)]
     start = time.monotonic()
     with (case_out / "pi.err").open("wb") as err:
         proc = subprocess.Popen(cmd, cwd=case.work, env=pi_env(case), stdout=subprocess.PIPE, stderr=err,
@@ -258,11 +311,13 @@ def run_case(run_dir: Path, task: dict, lang: str, arm: str, out_dir: Path) -> d
     case_out.mkdir(parents=True, exist_ok=True)
     root = Path(tempfile.mkdtemp(prefix=f"pi-eval-{arm}-{task['task_id']}-{lang}-", dir="/private/tmp"))
     try:
-        case = build_workspace(run_dir, task, lang, root)
+        case = build_workspace(run_dir, task, lang, root, arm)
         record = {"arm": arm, "task_id": task["task_id"], "language": lang, "started_utc": cc.now(),
                   "memory_before": cc.memory_free()}
-        record.update(run_pi(case, lang, case_out))
-        record.update(parse_events((case_out / "events.jsonl").read_text(errors="replace").splitlines()))
+        record.update(run_pi(case, lang, case_out, arm))
+        events = (case_out / "events.jsonl").read_text(errors="replace").splitlines()
+        record.update(parse_events(events))
+        record["cost_usd"] = round(events_cost(events), 4)
         record.update({"finished_utc": cc.now(), "memory_after": cc.memory_free(),
                        "solution_sha256": sha256_file(case.solution)})
         dest = cc.result_dir(run_dir, task, f"agent-{arm}", lang)
@@ -314,8 +369,54 @@ def cases_in_order(manifest: dict) -> list[tuple[dict, str]]:
     return [(task, lang) for task in manifest["task_selection"]["tasks"] for lang in cc.LANGS]
 
 
+def backend_args(arm: str) -> list[str]:
+    """The process the arm's pi talks to: mlx_lm.server for local arms, the key-adding proxy for API arms."""
+    if arm in API_ARMS:
+        return [sys.executable, str(PROXY), "--port", str(PROXY_PORT)]
+    return server_args(arm)
+
+
+def wait_backend(proc: subprocess.Popen, arm: str) -> None:
+    if arm not in API_ARMS:
+        cc.wait_server(proc)
+        return
+    deadline = time.monotonic() + PROXY_READY_S
+    while time.monotonic() < deadline:
+        if proc.poll() is not None:
+            raise RuntimeError(f"anthropic_proxy exited with {proc.returncode} (see server.log)")
+        try:
+            socket.create_connection(("127.0.0.1", PROXY_PORT), 1).close()
+            return
+        except OSError:
+            time.sleep(0.5)
+    raise TimeoutError("anthropic_proxy did not start listening")
+
+
+def stop_backend(proc: subprocess.Popen, arm: str) -> None:
+    if arm not in API_ARMS:
+        cc.stop_server(proc)  # also asserts no model server is left
+        return
+    if proc.poll() is None:
+        os.killpg(proc.pid, signal.SIGTERM)
+        proc.wait(timeout=KILL_GRACE_S)
+
+
+def assert_no_api_error(case_out: Path) -> None:
+    """API arms: a session that ended in an API error (credit, auth, overload) is not a model result."""
+    error = api_error((case_out / "events.jsonl").read_text(errors="replace").splitlines())
+    if error is None:
+        return
+    (case_out / "record.json").rename(case_out / "record.invalid.json")
+    raise RuntimeError(f"API error during {case_out.name}, case invalidated: {error[:300]}")
+
+
+def arm_spent(out_dir: Path, arm: str) -> float:
+    return sum(cc.load_json(p).get("cost_usd", 0.0) for p in (out_dir / arm).glob("*/record.json"))
+
+
 def run(run_dir: Path, arm: str, out_dir: Path, limit: int | None) -> None:
-    cc.assert_no_server()
+    if arm not in API_ARMS:  # an API arm loads no model, so it may run next to a local one
+        cc.assert_no_server()
     if not PI.exists():
         raise FileNotFoundError(f"pi not installed at {PI}")
     manifest = cc.load_json(run_dir / "manifest.json")
@@ -325,18 +426,25 @@ def run(run_dir: Path, arm: str, out_dir: Path, limit: int | None) -> None:
     todo = todo[:limit] if limit is not None else todo
     log_path = out_dir / arm / "server.log"
     with log_path.open("ab") as log:
-        proc = subprocess.Popen(server_args(arm), cwd=ROOT, stdout=log, stderr=subprocess.STDOUT,
+        proc = subprocess.Popen(backend_args(arm), cwd=ROOT, stdout=log, stderr=subprocess.STDOUT,
                                 start_new_session=True, env={**os.environ, "PYTHONUNBUFFERED": "1"})
         try:
-            cc.wait_server(proc)
+            wait_backend(proc, arm)
             for i, (task, lang) in enumerate(todo, 1):
+                if arm in API_ARMS and arm_spent(out_dir, arm) >= OPUS_BUDGET_USD:
+                    print(f"[{arm}] budget ${OPUS_BUDGET_USD} reached; stopping", flush=True)
+                    break
                 offset = log_path.stat().st_size
                 rec = run_case(run_dir, task, lang, arm, out_dir)
-                assert_server_healthy(proc, log_path, offset, out_dir / arm / f"{task['task_id']}-{lang}")
+                case_out = out_dir / arm / f"{task['task_id']}-{lang}"
+                assert_server_healthy(proc, log_path, offset, case_out)
+                if arm in API_ARMS:
+                    assert_no_api_error(case_out)
                 print(f"[{arm}] {i}/{len(todo)} {task['task_id']} {lang}: {rec['exit_reason']} "
-                      f"{rec['wall_s']}s {rec['tool_calls']} tools {rec['tokens_out']} out", flush=True)
+                      f"{rec['wall_s']}s {rec['tool_calls']} tools {rec['tokens_out']} out "
+                      f"${rec.get('cost_usd', 0):.3f}", flush=True)
         finally:
-            cc.stop_server(proc)
+            stop_backend(proc, arm)
     score_recorded(run_dir, manifest, arm, out_dir)
 
 

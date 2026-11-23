@@ -150,8 +150,8 @@ def test_server_errors_reports_only_new_fatal_lines(tmp_path: Path) -> None:
     assert len(errors) == 2 and "generation thread died" in errors[0] and "404" in errors[1]
 
 
-def test_server_args_cap_prompt_cache_for_both_arms() -> None:
-    for arm in pe.ARMS:
+def test_server_args_cap_prompt_cache_for_local_arms() -> None:
+    for arm in pe.ARM_MODELS:
         args = pe.server_args(arm)
         assert args[args.index("--prompt-cache-bytes") + 1] == str(pe.PROMPT_CACHE_BYTES)
         assert args[args.index("--prefill-step-size") + 1] == str(pe.PREFILL_STEP_SIZE)
@@ -182,3 +182,33 @@ def test_summarize_pairs_uses_only_cases_both_arms_ran() -> None:
     assert out["kat_vs_base"]["paired"]["n_cases"] == 2
     assert out["kat_vs_base"]["paired"]["kat_passed"] == 1
     assert out["kat_vs_base"]["arms"]["kat"]["passed"] == 1
+
+
+def test_opus_workspace_routes_anthropic_through_local_proxy(tmp_path: Path) -> None:
+    case = pe.build_workspace(RUN_DIR, task_entry(), "python3", tmp_path, arm="opus")
+    cfg = json.loads((case.home / ".pi/agent/models.json").read_text())
+    anthropic = cfg["providers"]["anthropic"]
+    assert anthropic["baseUrl"] == f"http://127.0.0.1:{pe.PROXY_PORT}"
+    assert "sk-" not in json.dumps(cfg)  # the real key never enters the workspace
+    cmd = pe.pi_args("opus", "python3")
+    assert cmd[cmd.index("--provider") + 1] == "anthropic"
+    assert cmd[cmd.index("--model") + 1] == "claude-opus-5-5"
+    assert cmd[cmd.index("--thinking") + 1] == "low"  # Opus 5.5 cannot turn thinking off
+    assert pe.arm_port("opus") == pe.PROXY_PORT and pe.arm_port("kat") == pe.PORT
+
+
+def test_events_cost_sums_pi_reported_cost() -> None:
+    lines = [json.dumps({"type": "message_end", "message": {"role": "assistant", "content": [],
+                                                            "usage": {"cost": {"total": c}}}}) for c in (0.5, 0.25)]
+    lines.append(json.dumps({"type": "turn_end", "message": {"role": "assistant", "usage": {"cost": {"total": 9}}}}))
+    assert pe.events_cost(lines) == pytest.approx(0.75)
+    assert pe.events_cost(FIXTURE.read_text().splitlines()) == 0
+
+
+def test_api_error_reports_a_session_that_ended_in_an_error() -> None:
+    def end(stop: str, err: str | None = None) -> str:
+        return json.dumps({"type": "message_end", "message": {"role": "assistant", "content": [],
+                                                              "stopReason": stop, "errorMessage": err}})
+    assert pe.api_error([end("toolUse"), end("stop")]) is None
+    assert "credit balance" in pe.api_error([end("error", "400 credit balance is too low")])
+    assert pe.api_error(FIXTURE.read_text().splitlines()) is None
