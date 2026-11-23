@@ -1,0 +1,79 @@
+{
+  "coverage": {
+    "file_tensors": 512,
+    "model_lora_params": 512,
+    "equal": true,
+    "layer0_has_lora": true
+  },
+  "numerics": [
+    {
+      "module": "0.mlp.down_proj",
+      "rel_err": 2.157975541194901e-05,
+      "ok": true
+    },
+    {
+      "module": "3.self_attn.q_proj",
+      "rel_err": 2.7503208912094124e-05,
+      "ok": true
+    },
+    {
+      "module": "63.mlp.up_proj",
+      "rel_err": 1.0407043191662524e-05,
+      "ok": true
+    }
+  ],
+  "generations": [
+    {
+      "prompt": "Write a Python function `is_palindrome(s: str) -> bool` that ignores case and non-alphanumeric characters.",
+      "base": "```python\ndef is_palindrome(s: str) -> bool:\n    \"\"\"\n    Check if a string is a palindrome, ignoring case and non-alphanumeric characters.\n    \n    Args:\n        s: The input string to check.\n        \n    Returns:\n        True if the string is a palindrome",
+      "pi": "```python\ndef is_palindrome(s: str) -> bool:\n    \"\"\"\n    Check if a string is a palindrome, ignoring case and non-alphanumeric characters.\n    \n    Args:\n        s: The input string to check.\n        \n    Returns:\n        True if the string is a palindrome",
+      "first_divergent_token": null,
+      "base_decode_tps": 15.225534929626134,
+      "pi_decode_tps": 11.075940513851656,
+      "pi_prompt_tps": 31.018401985842825,
+      "pi_peak_gb": 16.218204674
+    },
+    {
+      "prompt": "Fix the bug: `def mean(xs): return sum(xs) / len(xs) - 1`. Reply with the corrected function only.",
+      "base": "def mean(xs): return sum(xs) / len(xs)",
+      "pi": "def mean(xs): return sum(xs) / len(xs)",
+      "first_divergent_token": null,
+      "base_decode_tps": 20.124668448834036,
+      "pi_decode_tps": 11.51729127279962,
+      "pi_prompt_tps": 44.06285196761416,
+      "pi_peak_gb": 16.218204674
+    },
+    {
+      "prompt": "In C, write `int count_bits(unsigned x)` that returns the number of set bits.",
+      "base": "```c\nint count_bits(unsigned x) {\n    int count = 0;\n    while (x) {\n        count += x & 1;\n        x >>= 1;\n    }\n    return count;\n}\n```",
+      "pi": "```c\nint count_bits(unsigned x) {\n    int count = 0;\n    while (x) {\n        count += x & 1;\n        x >>= 1;\n    }\n    return count;\n}\n```",
+      "first_divergent_token": null,
+      "base_decode_tps": 18.837454083280914,
+      "pi_decode_tps": 10.999613562226854,
+      "pi_prompt_tps": 52.591896884239226,
+      "pi_peak_gb": 16.218204674
+    },
+    {
+      "prompt": "Explain in two sentences what a Python generator is, then show a 3-line example.",
+      "base": "A Python generator is a special type of iterator that allows you to iterate over a sequence of values without storing the entire sequence in memory. It uses the `yield` keyword to pause execution and return values one at a time, making it highly efficient for handling large datasets.\n\n```python\ndef count_up(n):\n",
+      "pi": "A Python generator is a special type of iterator that allows you to iterate over a sequence of values without storing the entire sequence in memory. It uses the `yield` keyword to pause execution and return values one at a time, making it highly efficient for handling large datasets.\n\n```python\ndef count_up(n):\n",
+      "first_divergent_token": null,
+      "base_decode_tps": 15.851532890223679,
+      "pi_decode_tps": 11.034333968191502,
+      "pi_prompt_tps": 53.72842410836689,
+      "pi_peak_gb": 16.218204674
+    },
+    {
+      "prompt": "Write a bash one-liner that prints the 5 largest files under the current directory.",
+      "base": "```bash\nfind . -type f -printf '%s %p\\n' | sort -rn | head -5\n```",
+      "pi": "```bash\nfind . -type f -printf '%s %p\\n' | sort -rn | head -5\n```",
+      "first_divergent_token": null,
+      "base_decode_tps": 17.10605648690325,
+      "pi_decode_tps": 11.36361145605915,
+      "pi_prompt_tps": 53.48666967318142,
+      "pi_peak_gb": 16.218204674
+    }
+  ],
+  "all_differ": false,
+  "wall_s": 49.6
+}

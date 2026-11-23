@@ -95,3 +95,13 @@ Lead wrote: `config.c` (strict config.json reader), `model.c` loader/reset, the 
 - **tools/polyglot_eval.py** (server lifecycle, repair3/think conditions, resume, summary), Qwen, 1 attempt, 300 s,
   8/8 tests. Review fix: progress lines not flushed. Smoke: KAT 3/3 on 2 exercises.
 - All 60 reference solutions (34 Python, 26 C++) pass through the harness.
+
+### 2026-11-23: brief 51, pi adapter conversion
+
+- **tools/peft_to_mlx.py** (PEFT LoRA -> mlx-lm adapter), KAT-Coder via `delegate.py --test`, 3 attempts, 279 s, FAIL
+  (11/17 of Claude's `tools/test_peft_to_mlx.py`). The user then asked to stop KAT; Claude fixed the last attempt
+  in review: read the adapter safetensors with `json.load` (the UTF-8 errors), lora_A/lora_B shape checks swapped,
+  module path kept the layer number (`3.self_attn.q_proj`), silent defaults for `r`/`lora_alpha`/quant bits
+  (rules forbid defaults), every shard reopened once per tensor. After fixes: 17/17.
+- `tools/check_peft_adapter.py` (real-weight check) and the `pi` candidate wiring in `tools/qwen38_code_compare.py`
+  were written by Claude directly (verification code and a 6-line wiring change; KAT stopped).

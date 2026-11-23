@@ -27,11 +27,15 @@ ROOT = Path(__file__).resolve().parents[1]
 BASE_MODEL = Path("/Users/hatim/models/Qwen3.8-27B-official-mlx-4bit")
 RFT_RUN = ROOT / "results/20261107T141610Z-rft-qwen38-rft-k2"
 RFT_ADAPTER = RFT_RUN / "scale4/adapter"
-# Extra candidates run as-is (no adapter) with `add-model --name <key>`. TURBO was deleted after scoring 10/30.
+# Extra candidates run with `add-model --name <key>`, with the adapter in CANDIDATE_ADAPTERS if any.
+# TURBO was deleted after scoring 10/30.
 CANDIDATE_MODELS = {
     "turbo": Path("/Users/hatim/models/Qwen3.8-27B-TURBO-Fable-Cold-Fusion-MLX-oQ4e-1M"),
     "kat": Path("/Users/hatim/models/KAT-Coder-V2.5-Dev-OptiQ-4bit"),
+    "pi": BASE_MODEL,
 }
+# Brief 51: harness-hub/Qwen3.8-27B-pi-adapted, converted by tools/peft_to_mlx.py.
+CANDIDATE_ADAPTERS = {"pi": ROOT / "adapters/qwen38-pi-v1"}
 BASE_MANIFEST = ROOT / "results/q38-official-manifest.json"
 SERVER = ROOT / ".venv/bin/mlx_lm.server"
 PY3 = Path("/opt/homebrew/bin/python3")
@@ -551,8 +555,9 @@ def generate(run_dir: Path, manifest: dict[str, Any], model: str) -> None:
         "--port", str(PORT), "--prompt-cache-size", "0", "--prompt-cache-bytes", "0",
         "--prompt-concurrency", "1", "--decode-concurrency", "1",
     ]
-    if model == "rft":
-        args.extend(["--adapter-path", str(RFT_ADAPTER)])
+    adapter = RFT_ADAPTER if model == "rft" else CANDIDATE_ADAPTERS.get(model)
+    if adapter is not None:
+        args.extend(["--adapter-path", str(adapter)])
     proc: subprocess.Popen[bytes] | None = None
     with log_path.open("ab") as log:
         log.write((f"\n[{now()}] starting {model}: {' '.join(args)}\n").encode())
@@ -912,6 +917,10 @@ def add_model(run_dir: Path, name: str) -> None:
     config = path / "config.json"
     manifest[f"{name}_model"] = {"path": str(path), "config_sha256": sha(config.read_bytes()),
                                "added_utc": now()}
+    adapter = CANDIDATE_ADAPTERS.get(name)
+    if adapter is not None:
+        manifest[f"{name}_model"]["adapter_path"] = str(adapter)
+        manifest[f"{name}_model"]["adapter_sha256"] = sha((adapter / "adapters.safetensors").read_bytes())
     write_json(run_dir / "manifest.json", manifest)
     if not manifest["state"].get(f"{name}_generated"):
         generate(run_dir, manifest, name)

@@ -4,6 +4,9 @@
 #   HELPER=kat       (default) KAT-Coder-V2.5-Dev OptiQ 4-bit: Polyglot 34/60 with 3-try repair in 70 min.
 #   HELPER=qwen-rft  Qwen3.8-27B official 4-bit + RFT adapter: Polyglot 31/60 in 135 min (results/20261109T013000Z-polyglot).
 #   HELPER=qwen      Qwen3.8-27B official 4-bit, no adapter.
+#   HELPER=qwen-pi   Qwen3.8-27B official 4-bit + harness-hub pi adapter (brief 51, tools/peft_to_mlx.py).
+#                    mlx_lm.server only maps the request model "default_model" to --model/--adapter-path:
+#                    clients (pi) must send model "default_model", any other name is fetched as an HF repo.
 # Other overrides: PORT=...
 # The served model is recorded in results/delegations/current-adapter.txt (read by tools/delegate.py).
 set -euo pipefail
@@ -17,7 +20,8 @@ case "$HELPER" in
   kat)      model="$HOME/models/KAT-Coder-V2.5-Dev-OptiQ-4bit"; adapter="" ;;
   qwen-rft) model="$QWEN"; adapter="$ROOT/adapters/qwen38-rft-v1" ;;
   qwen)     model="$QWEN"; adapter="" ;;
-  *) echo "Unknown HELPER=$HELPER (use kat, qwen-rft or qwen)" >&2; exit 1 ;;
+  qwen-pi)  model="$QWEN"; adapter="$ROOT/adapters/qwen38-pi-v1" ;;
+  *) echo "Unknown HELPER=$HELPER (use kat, qwen-rft, qwen-pi or qwen)" >&2; exit 1 ;;
 esac
 
 if [[ ! -f "$model/config.json" ]]; then
