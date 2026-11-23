@@ -105,3 +105,7 @@ Lead wrote: `config.c` (strict config.json reader), `model.c` loader/reset, the 
   (rules forbid defaults), every shard reopened once per tensor. After fixes: 17/17.
 - `tools/check_peft_adapter.py` (real-weight check) and the `pi` candidate wiring in `tools/qwen38_code_compare.py`
   were written by Claude directly (verification code and a 6-line wiring change; KAT stopped).
+- **tools/pi_agent_eval.py** (Eval B runner: pi in sandbox-exec per case, scoring via the code-compare scorer):
+  Codex got the brief but failed at once on its usage limit (resets 2026-11-24 00:04); KAT stopped. The user chose
+  "Claude writes it" — a one-off exception to the working model. Tests (`tools/test_pi_agent_eval.py`, 10) written
+  first by Claude, all green; sandbox smoke: reference solutions pass `run_tests.sh` and pi starts inside the profile.
