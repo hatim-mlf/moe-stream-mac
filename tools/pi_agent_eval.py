@@ -51,7 +51,10 @@ PROMPT_CACHE_BYTES = 4 * 1024**3
 # 2048-token prefill steps over a 45k-token context OOMed Metal (13:41 UTC); 512 cuts the attention scratch 4x.
 PREFILL_STEP_SIZE = 512
 SERVER_FATAL = ("ERROR", '" 404 -', '" 500 -')
-ARMS = ("pi", "base")
+KAT_MODEL = Path.home() / "models/KAT-Coder-V2.5-Dev-OptiQ-4bit"  # brief 52
+ARMS = ("pi", "base", "kat")
+ARM_MODELS = {"pi": cc.BASE_MODEL, "base": cc.BASE_MODEL, "kat": KAT_MODEL}
+PAIRS = (("pi", "base"), ("kat", "base"), ("kat", "pi"))
 STUBS = {"python3": "# TODO: read stdin, write stdout\n", "cpp17": "int main() { return 0; }\n"}
 SOURCES = {"python3": "solution.py", "cpp17": "solution.cpp"}
 RUN_TESTS = r"""#!/bin/bash
@@ -275,7 +278,7 @@ def run_case(run_dir: Path, task: dict, lang: str, arm: str, out_dir: Path) -> d
 
 
 def server_args(arm: str) -> list[str]:
-    args = [str(cc.SERVER), "--model", str(cc.BASE_MODEL), "--host", "127.0.0.1", "--port", str(PORT),
+    args = [str(cc.SERVER), "--model", str(ARM_MODELS[arm]), "--host", "127.0.0.1", "--port", str(PORT),
             "--temp", str(TEMPERATURE), "--top-p", str(TOP_P), "--chat-template-args",
             json.dumps({"enable_thinking": False}), "--prompt-concurrency", "1", "--decode-concurrency", "1",
             "--prompt-cache-bytes", str(PROMPT_CACHE_BYTES),
@@ -361,7 +364,8 @@ def arm_stats(rows: list[dict], arm: str) -> dict:
             "exit_reasons": sorted({r[f"{arm}_record"]["exit_reason"] for r in rows})}
 
 
-def summary(run_dir: Path, out_dir: Path) -> dict:
+def collect_rows(run_dir: Path, out_dir: Path) -> list[dict]:
+    """One row per case with pass + record for every arm that has a scored record."""
     manifest = cc.load_json(run_dir / "manifest.json")
     rows = []
     for task, lang in cases_in_order(manifest):
@@ -369,21 +373,36 @@ def summary(run_dir: Path, out_dir: Path) -> dict:
         for arm in ARMS:
             rec_path = out_dir / arm / f"{task['task_id']}-{lang}" / "record.json"
             score_path = cc.result_dir(run_dir, task, f"agent-{arm}", lang) / "summary.json"
-            if not (rec_path.exists() and score_path.exists()):
-                break
-            row[arm] = bool(cc.load_json(score_path)["task_pass"])
-            row[f"{arm}_record"] = cc.load_json(rec_path)
-        else:
-            rows.append(row)
-    if not rows:
-        raise SystemExit("No case has scored records for both arms yet.")
-    result = {"created_utc": cc.now(), "paired": paired_summary(rows, "pi", "base"),
-              "arms": {arm: arm_stats(rows, arm) for arm in ARMS}, "cases": rows}
-    cc.write_json(out_dir / "eval-b.json", result)
-    p = result["paired"]
-    print(f"pi {p['pi_passed']}/{p['n_cases']} vs base {p['base_passed']}/{p['n_cases']}: "
-          f"{p['delta'] * 100:+.1f} pp, 95% CI [{p['bootstrap_95'][0] * 100:+.1f}, "
-          f"{p['bootstrap_95'][1] * 100:+.1f}]", flush=True)
+            if rec_path.exists() and score_path.exists():
+                row[arm] = bool(cc.load_json(score_path)["task_pass"])
+                row[f"{arm}_record"] = cc.load_json(rec_path)
+        rows.append(row)
+    return rows
+
+
+def summarize_pairs(rows: list[dict], pairs: Iterable[tuple[str, str]]) -> dict:
+    """Paired comparison per (a, b) over the cases both arms ran; pairs with no shared case are left out."""
+    out = {}
+    for a, b in pairs:
+        shared = [r for r in rows if a in r and b in r]
+        if shared:
+            out[f"{a}_vs_{b}"] = {"paired": paired_summary(shared, a, b),
+                                  "arms": {arm: arm_stats(shared, arm) for arm in (a, b)}}
+    return out
+
+
+def summary(run_dir: Path, out_dir: Path, dest: Path | None = None) -> dict:
+    pairs = summarize_pairs(collect_rows(run_dir, out_dir), PAIRS)
+    if not pairs:
+        raise SystemExit("No case has scored records for two arms yet.")
+    rows = [r for r in collect_rows(run_dir, out_dir) if any(arm in r for arm in ARMS)]
+    result = {"created_utc": cc.now(), "pairs": pairs, "cases": rows}
+    cc.write_json(dest or out_dir / "eval-b.json", result)
+    for name, pair in pairs.items():
+        p, (a, b) = pair["paired"], name.split("_vs_")
+        print(f"{a} {p[f'{a}_passed']}/{p['n_cases']} vs {b} {p[f'{b}_passed']}/{p['n_cases']}: "
+              f"{p['delta'] * 100:+.1f} pp, 95% CI [{p['bootstrap_95'][0] * 100:+.1f}, "
+              f"{p['bootstrap_95'][1] * 100:+.1f}]", flush=True)
     return result
 
 
@@ -393,7 +412,8 @@ def main() -> int:
     r = subs.add_parser("run", help="run one arm (resumable)")
     r.add_argument("--arm", choices=ARMS, required=True)
     r.add_argument("--limit", type=int, default=None, help="at most N new cases")
-    s = subs.add_parser("summary", help="pair the two arms and write eval-b.json")
+    s = subs.add_parser("summary", help="pair the arms and write eval-b.json (or --dest)")
+    s.add_argument("--dest", type=Path, default=None, help="output JSON (default OUT/eval-b.json)")
     for p in (r, s):
         p.add_argument("--out", type=Path, required=True)
         p.add_argument("--run-dir", type=Path, default=DEFAULT_RUN_DIR)
@@ -401,7 +421,7 @@ def main() -> int:
     if args.command == "run":
         run(args.run_dir.resolve(), args.arm, args.out.resolve(), args.limit)
     else:
-        summary(args.run_dir.resolve(), args.out.resolve())
+        summary(args.run_dir.resolve(), args.out.resolve(), args.dest)
     return 0
 
 

@@ -155,3 +155,30 @@ def test_server_args_cap_prompt_cache_for_both_arms() -> None:
         args = pe.server_args(arm)
         assert args[args.index("--prompt-cache-bytes") + 1] == str(pe.PROMPT_CACHE_BYTES)
         assert args[args.index("--prefill-step-size") + 1] == str(pe.PREFILL_STEP_SIZE)
+
+
+def test_kat_arm_serves_kat_without_adapter() -> None:
+    args = pe.server_args("kat")
+    assert args[args.index("--model") + 1] == str(pe.KAT_MODEL)
+    assert "--adapter-path" not in args
+    assert pe.server_args("base")[pe.server_args("base").index("--model") + 1] == str(pe.ARM_MODELS["base"])
+
+
+def _row(task: str, lang: str, **passes: bool) -> dict:
+    row = {"task_id": task, "language": lang}
+    for arm, ok in passes.items():
+        row[arm] = ok
+        row[f"{arm}_record"] = {"wall_s": 10.0, "tool_calls": 3, "tokens_in": 5, "tokens_out": 7,
+                                "exit_reason": "done"}
+    return row
+
+
+def test_summarize_pairs_uses_only_cases_both_arms_ran() -> None:
+    rows = [_row("P1", "python3", pi=True, base=False, kat=True),
+            _row("P1", "cpp17", pi=True, base=True, kat=False),
+            _row("P2", "python3", pi=False, base=False)]  # kat not run yet
+    out = pe.summarize_pairs(rows, (("pi", "base"), ("kat", "base")))
+    assert out["pi_vs_base"]["paired"]["n_cases"] == 3
+    assert out["kat_vs_base"]["paired"]["n_cases"] == 2
+    assert out["kat_vs_base"]["paired"]["kat_passed"] == 1
+    assert out["kat_vs_base"]["arms"]["kat"]["passed"] == 1
