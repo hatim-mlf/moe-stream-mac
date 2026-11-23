@@ -212,3 +212,20 @@ def test_api_error_reports_a_session_that_ended_in_an_error() -> None:
     assert pe.api_error([end("toolUse"), end("stop")]) is None
     assert "credit balance" in pe.api_error([end("error", "400 credit balance is too low")])
     assert pe.api_error(FIXTURE.read_text().splitlines()) is None
+
+
+def test_reply_cap_variant_gets_its_own_label_and_models_json(tmp_path: Path) -> None:
+    assert pe.arm_label("kat", pe.MAX_TOKENS) == "kat"  # the main run keeps its names
+    assert pe.arm_label("kat", 32768) == "kat-mt32768"
+    case = pe.build_workspace(RUN_DIR, task_entry(), "python3", tmp_path, arm="kat", max_tokens=32768)
+    cfg = json.loads((case.home / ".pi/agent/models.json").read_text())
+    assert cfg["providers"]["local"]["models"][0]["maxTokens"] == 32768
+
+
+def test_select_cases_keeps_manifest_order_and_refuses_unknown_ids() -> None:
+    manifest = json.loads((RUN_DIR / "manifest.json").read_text())
+    picked = pe.select_cases(manifest, ["1579_A-python3", "1579_A-cpp17"])
+    assert [(t["task_id"], l) for t, l in picked] == [("1579_A", "cpp17"), ("1579_A", "python3")]
+    assert len(pe.select_cases(manifest, None)) == 30
+    with pytest.raises(ValueError, match="9999_Z-python3"):
+        pe.select_cases(manifest, ["9999_Z-python3"])

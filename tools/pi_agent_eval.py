@@ -96,8 +96,8 @@ class Case:
     solution: Path
 
 
-def pi_models_json(port: int) -> dict:
-    model = {"id": "default_model", "contextWindow": CONTEXT_WINDOW, "maxTokens": MAX_TOKENS}
+def pi_models_json(port: int, max_tokens: int = MAX_TOKENS) -> dict:
+    model = {"id": "default_model", "contextWindow": CONTEXT_WINDOW, "maxTokens": max_tokens}
     return {"providers": {"local": {"baseUrl": f"http://127.0.0.1:{port}/v1", "api": "openai-completions",
                                     "apiKey": "dummy", "models": [model]}}}
 
@@ -106,10 +106,15 @@ def arm_port(arm: str) -> int:
     return PROXY_PORT if arm in API_ARMS else PORT
 
 
-def arm_models_json(arm: str) -> dict:
+def arm_label(arm: str, max_tokens: int) -> str:
+    """Directory / scoring name of a run: the arm, plus the reply cap when it differs from the default."""
+    return arm if max_tokens == MAX_TOKENS else f"{arm}-mt{max_tokens}"
+
+
+def arm_models_json(arm: str, max_tokens: int = MAX_TOKENS) -> dict:
     if arm in API_ARMS:  # built-in provider, endpoint moved to the local proxy; the proxy adds the real key
         return {"providers": {"anthropic": {"baseUrl": f"http://127.0.0.1:{PROXY_PORT}", "apiKey": "via-local-proxy"}}}
-    return pi_models_json(PORT)
+    return pi_models_json(PORT, max_tokens)
 
 
 def pi_args(arm: str, lang: str) -> list[str]:
@@ -126,7 +131,8 @@ def run_tests_script(lang: str, limit: float) -> str:
     return RUN_TESTS.format(lang=cc.LANGS[lang]["ext"][1:], limit=limit, build=build, run=run, py=cc.PY3)
 
 
-def build_workspace(run_dir: Path, task: dict, lang: str, root: Path, arm: str = "base") -> Case:
+def build_workspace(run_dir: Path, task: dict, lang: str, root: Path, arm: str = "base",
+                    max_tokens: int = MAX_TOKENS) -> Case:
     root = root.resolve()
     work, home = root / "work", root / "home"
     (work / "tests").mkdir(parents=True)
@@ -146,7 +152,7 @@ def build_workspace(run_dir: Path, task: dict, lang: str, root: Path, arm: str =
     script.write_text(run_tests_script(lang, float(meta["time_limit_seconds"]) * EXAMPLE_TIME_FACTOR))
     script.chmod(0o755)
     (home / ".pi/agent").mkdir(parents=True)
-    (home / ".pi/agent/models.json").write_text(json.dumps(arm_models_json(arm), indent=2))
+    (home / ".pi/agent/models.json").write_text(json.dumps(arm_models_json(arm, max_tokens), indent=2))
     return Case(root=root, work=work, home=home, solution=solution)
 
 
@@ -304,15 +310,17 @@ def run_pi(case: Case, lang: str, case_out: Path, arm: str) -> dict[str, Any]:
     return {"exit_reason": reason, "wall_s": round(time.monotonic() - start, 1)}
 
 
-def run_case(run_dir: Path, task: dict, lang: str, arm: str, out_dir: Path) -> dict:
-    case_out = out_dir / arm / f"{task['task_id']}-{lang}"
+def run_case(run_dir: Path, task: dict, lang: str, arm: str, out_dir: Path, max_tokens: int = MAX_TOKENS) -> dict:
+    label = arm_label(arm, max_tokens)
+    case_out = out_dir / label / f"{task['task_id']}-{lang}"
     if (case_out / "record.json").exists():
         return cc.load_json(case_out / "record.json")
     case_out.mkdir(parents=True, exist_ok=True)
-    root = Path(tempfile.mkdtemp(prefix=f"pi-eval-{arm}-{task['task_id']}-{lang}-", dir="/private/tmp"))
+    root = Path(tempfile.mkdtemp(prefix=f"pi-eval-{label}-{task['task_id']}-{lang}-", dir="/private/tmp"))
     try:
-        case = build_workspace(run_dir, task, lang, root, arm)
-        record = {"arm": arm, "task_id": task["task_id"], "language": lang, "started_utc": cc.now(),
+        case = build_workspace(run_dir, task, lang, root, arm, max_tokens)
+        record = {"arm": arm, "label": label, "max_tokens": max_tokens, "task_id": task["task_id"],
+                  "language": lang, "started_utc": cc.now(),
                   "memory_before": cc.memory_free()}
         record.update(run_pi(case, lang, case_out, arm))
         events = (case_out / "events.jsonl").read_text(errors="replace").splitlines()
@@ -320,10 +328,10 @@ def run_case(run_dir: Path, task: dict, lang: str, arm: str, out_dir: Path) -> d
         record["cost_usd"] = round(events_cost(events), 4)
         record.update({"finished_utc": cc.now(), "memory_after": cc.memory_free(),
                        "solution_sha256": sha256_file(case.solution)})
-        dest = cc.result_dir(run_dir, task, f"agent-{arm}", lang)
+        dest = cc.result_dir(run_dir, task, f"agent-{label}", lang)
         dest.mkdir(parents=True, exist_ok=True)
         shutil.copy(case.solution, dest / f"solution{cc.LANGS[lang]['ext']}")
-        cc.write_json(dest / "generation.json", {"status": "complete", "model": f"agent-{arm}",
+        cc.write_json(dest / "generation.json", {"status": "complete", "model": f"agent-{label}",
                                                  "task_id": task["task_id"], "language": lang,
                                                  "record": str(case_out / "record.json")})
         cc.write_json(case_out / "record.json", record)
@@ -367,6 +375,17 @@ def assert_server_healthy(proc: subprocess.Popen, log_path: Path, offset: int, c
 
 def cases_in_order(manifest: dict) -> list[tuple[dict, str]]:
     return [(task, lang) for task in manifest["task_selection"]["tasks"] for lang in cc.LANGS]
+
+
+def select_cases(manifest: dict, ids: list[str] | None) -> list[tuple[dict, str]]:
+    """All cases in manifest order, or only those named '<task_id>-<lang>'; unknown names are an error."""
+    cases = cases_in_order(manifest)
+    if ids is None:
+        return cases
+    unknown = set(ids) - {f"{t['task_id']}-{l}" for t, l in cases}
+    if unknown:
+        raise ValueError(f"Unknown cases: {sorted(unknown)}")
+    return [(t, l) for t, l in cases if f"{t['task_id']}-{l}" in ids]
 
 
 def backend_args(arm: str) -> list[str]:
@@ -414,38 +433,40 @@ def arm_spent(out_dir: Path, arm: str) -> float:
     return sum(cc.load_json(p).get("cost_usd", 0.0) for p in (out_dir / arm).glob("*/record.json"))
 
 
-def run(run_dir: Path, arm: str, out_dir: Path, limit: int | None) -> None:
+def run(run_dir: Path, arm: str, out_dir: Path, limit: int | None, max_tokens: int = MAX_TOKENS,
+        case_ids: list[str] | None = None) -> None:
     if arm not in API_ARMS:  # an API arm loads no model, so it may run next to a local one
         cc.assert_no_server()
     if not PI.exists():
         raise FileNotFoundError(f"pi not installed at {PI}")
     manifest = cc.load_json(run_dir / "manifest.json")
-    (out_dir / arm).mkdir(parents=True, exist_ok=True)
-    todo = [(t, l) for t, l in cases_in_order(manifest)
-            if not (out_dir / arm / f"{t['task_id']}-{l}" / "record.json").exists()]
+    label = arm_label(arm, max_tokens)
+    (out_dir / label).mkdir(parents=True, exist_ok=True)
+    todo = [(t, l) for t, l in select_cases(manifest, case_ids)
+            if not (out_dir / label / f"{t['task_id']}-{l}" / "record.json").exists()]
     todo = todo[:limit] if limit is not None else todo
-    log_path = out_dir / arm / "server.log"
+    log_path = out_dir / label / "server.log"
     with log_path.open("ab") as log:
         proc = subprocess.Popen(backend_args(arm), cwd=ROOT, stdout=log, stderr=subprocess.STDOUT,
                                 start_new_session=True, env={**os.environ, "PYTHONUNBUFFERED": "1"})
         try:
             wait_backend(proc, arm)
             for i, (task, lang) in enumerate(todo, 1):
-                if arm in API_ARMS and arm_spent(out_dir, arm) >= OPUS_BUDGET_USD:
+                if arm in API_ARMS and arm_spent(out_dir, label) >= OPUS_BUDGET_USD:
                     print(f"[{arm}] budget ${OPUS_BUDGET_USD} reached; stopping", flush=True)
                     break
                 offset = log_path.stat().st_size
-                rec = run_case(run_dir, task, lang, arm, out_dir)
-                case_out = out_dir / arm / f"{task['task_id']}-{lang}"
+                rec = run_case(run_dir, task, lang, arm, out_dir, max_tokens)
+                case_out = out_dir / label / f"{task['task_id']}-{lang}"
                 assert_server_healthy(proc, log_path, offset, case_out)
                 if arm in API_ARMS:
                     assert_no_api_error(case_out)
-                print(f"[{arm}] {i}/{len(todo)} {task['task_id']} {lang}: {rec['exit_reason']} "
+                print(f"[{label}] {i}/{len(todo)} {task['task_id']} {lang}: {rec['exit_reason']} "
                       f"{rec['wall_s']}s {rec['tool_calls']} tools {rec['tokens_out']} out "
                       f"${rec.get('cost_usd', 0):.3f}", flush=True)
         finally:
             stop_backend(proc, arm)
-    score_recorded(run_dir, manifest, arm, out_dir)
+    score_recorded(run_dir, manifest, label, out_dir)
 
 
 def score_recorded(run_dir: Path, manifest: dict, arm: str, out_dir: Path) -> None:
@@ -520,6 +541,9 @@ def main() -> int:
     r = subs.add_parser("run", help="run one arm (resumable)")
     r.add_argument("--arm", choices=ARMS, required=True)
     r.add_argument("--limit", type=int, default=None, help="at most N new cases")
+    r.add_argument("--max-tokens", type=int, default=MAX_TOKENS,
+                   help="pi's per-reply cap; a non-default value runs as '<arm>-mt<N>' (own dirs and scores)")
+    r.add_argument("--cases", default=None, help="comma-separated '<task_id>-<lang>' to run (default: all 30)")
     s = subs.add_parser("summary", help="pair the arms and write eval-b.json (or --dest)")
     s.add_argument("--dest", type=Path, default=None, help="output JSON (default OUT/eval-b.json)")
     for p in (r, s):
@@ -527,7 +551,8 @@ def main() -> int:
         p.add_argument("--run-dir", type=Path, default=DEFAULT_RUN_DIR)
     args = parser.parse_args()
     if args.command == "run":
-        run(args.run_dir.resolve(), args.arm, args.out.resolve(), args.limit)
+        ids = args.cases.split(",") if args.cases else None
+        run(args.run_dir.resolve(), args.arm, args.out.resolve(), args.limit, args.max_tokens, ids)
     else:
         summary(args.run_dir.resolve(), args.out.resolve(), args.dest)
     return 0
