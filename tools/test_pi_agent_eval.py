@@ -154,3 +154,4 @@ def test_server_args_cap_prompt_cache_for_both_arms() -> None:
     for arm in pe.ARMS:
         args = pe.server_args(arm)
         assert args[args.index("--prompt-cache-bytes") + 1] == str(pe.PROMPT_CACHE_BYTES)
+        assert args[args.index("--prefill-step-size") + 1] == str(pe.PREFILL_STEP_SIZE)

@@ -48,6 +48,8 @@ KILL_GRACE_S = 10
 # Caps the server's cross-request KV cache (eviction only; outputs unchanged). Without it the base arm's cache
 # grew to 8.9 GB and Metal ran out of memory on the 32 GB Mac (brief 51, 2026-11-23 10:05 UTC).
 PROMPT_CACHE_BYTES = 4 * 1024**3
+# 2048-token prefill steps over a 45k-token context OOMed Metal (13:41 UTC); 512 cuts the attention scratch 4x.
+PREFILL_STEP_SIZE = 512
 SERVER_FATAL = ("ERROR", '" 404 -', '" 500 -')
 ARMS = ("pi", "base")
 STUBS = {"python3": "# TODO: read stdin, write stdout\n", "cpp17": "int main() { return 0; }\n"}
@@ -276,7 +278,8 @@ def server_args(arm: str) -> list[str]:
     args = [str(cc.SERVER), "--model", str(cc.BASE_MODEL), "--host", "127.0.0.1", "--port", str(PORT),
             "--temp", str(TEMPERATURE), "--top-p", str(TOP_P), "--chat-template-args",
             json.dumps({"enable_thinking": False}), "--prompt-concurrency", "1", "--decode-concurrency", "1",
-            "--prompt-cache-bytes", str(PROMPT_CACHE_BYTES)]
+            "--prompt-cache-bytes", str(PROMPT_CACHE_BYTES),
+            "--prefill-step-size", str(PREFILL_STEP_SIZE)]
     if arm == "pi":
         if not (ADAPTER / "adapters.safetensors").exists():
             raise FileNotFoundError(f"No converted adapter at {ADAPTER} (run tools/peft_to_mlx.py)")
