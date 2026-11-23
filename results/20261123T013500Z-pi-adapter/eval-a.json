@@ -1,0 +1,288 @@
+{
+ "cases": [
+  {
+   "task_id": "1579_A",
+   "language": "cpp17",
+   "pi": true,
+   "base": true,
+   "rft": true,
+   "kat": true
+  },
+  {
+   "task_id": "1579_A",
+   "language": "python3",
+   "pi": true,
+   "base": true,
+   "rft": true,
+   "kat": true
+  },
+  {
+   "task_id": "1581_A",
+   "language": "cpp17",
+   "pi": false,
+   "base": false,
+   "rft": false,
+   "kat": false
+  },
+  {
+   "task_id": "1581_A",
+   "language": "python3",
+   "pi": false,
+   "base": false,
+   "rft": true,
+   "kat": true
+  },
+  {
+   "task_id": "1582_A",
+   "language": "cpp17",
+   "pi": true,
+   "base": true,
+   "rft": true,
+   "kat": true
+  },
+  {
+   "task_id": "1582_A",
+   "language": "python3",
+   "pi": true,
+   "base": true,
+   "rft": true,
+   "kat": true
+  },
+  {
+   "task_id": "1607_C",
+   "language": "cpp17",
+   "pi": true,
+   "base": true,
+   "rft": true,
+   "kat": true
+  },
+  {
+   "task_id": "1607_C",
+   "language": "python3",
+   "pi": true,
+   "base": true,
+   "rft": true,
+   "kat": true
+  },
+  {
+   "task_id": "1619_B",
+   "language": "cpp17",
+   "pi": true,
+   "base": true,
+   "rft": true,
+   "kat": true
+  },
+  {
+   "task_id": "1619_B",
+   "language": "python3",
+   "pi": true,
+   "base": true,
+   "rft": true,
+   "kat": true
+  },
+  {
+   "task_id": "1575_D",
+   "language": "cpp17",
+   "pi": false,
+   "base": false,
+   "rft": false,
+   "kat": false
+  },
+  {
+   "task_id": "1575_D",
+   "language": "python3",
+   "pi": false,
+   "base": false,
+   "rft": false,
+   "kat": false
+  },
+  {
+   "task_id": "1580_A",
+   "language": "cpp17",
+   "pi": true,
+   "base": false,
+   "rft": true,
+   "kat": false
+  },
+  {
+   "task_id": "1580_A",
+   "language": "python3",
+   "pi": false,
+   "base": true,
+   "rft": true,
+   "kat": false
+  },
+  {
+   "task_id": "1594_D",
+   "language": "cpp17",
+   "pi": false,
+   "base": false,
+   "rft": true,
+   "kat": true
+  },
+  {
+   "task_id": "1594_D",
+   "language": "python3",
+   "pi": true,
+   "base": true,
+   "rft": true,
+   "kat": true
+  },
+  {
+   "task_id": "1604_D",
+   "language": "cpp17",
+   "pi": false,
+   "base": false,
+   "rft": false,
+   "kat": false
+  },
+  {
+   "task_id": "1604_D",
+   "language": "python3",
+   "pi": false,
+   "base": false,
+   "rft": false,
+   "kat": false
+  },
+  {
+   "task_id": "1622_C",
+   "language": "cpp17",
+   "pi": false,
+   "base": false,
+   "rft": false,
+   "kat": true
+  },
+  {
+   "task_id": "1622_C",
+   "language": "python3",
+   "pi": false,
+   "base": false,
+   "rft": false,
+   "kat": false
+  },
+  {
+   "task_id": "1591_D",
+   "language": "cpp17",
+   "pi": false,
+   "base": false,
+   "rft": false,
+   "kat": true
+  },
+  {
+   "task_id": "1591_D",
+   "language": "python3",
+   "pi": true,
+   "base": true,
+   "rft": true,
+   "kat": true
+  },
+  {
+   "task_id": "1598_E",
+   "language": "cpp17",
+   "pi": true,
+   "base": false,
+   "rft": false,
+   "kat": false
+  },
+  {
+   "task_id": "1598_E",
+   "language": "python3",
+   "pi": false,
+   "base": false,
+   "rft": false,
+   "kat": false
+  },
+  {
+   "task_id": "1600_E",
+   "language": "cpp17",
+   "pi": false,
+   "base": false,
+   "rft": false,
+   "kat": false
+  },
+  {
+   "task_id": "1600_E",
+   "language": "python3",
+   "pi": false,
+   "base": false,
+   "rft": false,
+   "kat": false
+  },
+  {
+   "task_id": "1613_D",
+   "language": "cpp17",
+   "pi": false,
+   "base": false,
+   "rft": false,
+   "kat": false
+  },
+  {
+   "task_id": "1613_D",
+   "language": "python3",
+   "pi": false,
+   "base": false,
+   "rft": false,
+   "kat": false
+  },
+  {
+   "task_id": "1620_E",
+   "language": "cpp17",
+   "pi": false,
+   "base": false,
+   "rft": false,
+   "kat": true
+  },
+  {
+   "task_id": "1620_E",
+   "language": "python3",
+   "pi": false,
+   "base": false,
+   "rft": false,
+   "kat": false
+  }
+ ],
+ "paired": {
+  "base": {
+   "n_cases": 30,
+   "pi_passed": 12,
+   "base_passed": 11,
+   "pi_only": 2,
+   "base_only": 1,
+   "delta": 0.03333333333333333,
+   "bootstrap_95": [
+    0.0,
+    0.1
+   ],
+   "bootstrap_samples": 10000,
+   "bootstrap_seed": 20261107
+  },
+  "rft": {
+   "n_cases": 30,
+   "pi_passed": 12,
+   "rft_passed": 14,
+   "pi_only": 1,
+   "rft_only": 3,
+   "delta": -0.06666666666666667,
+   "bootstrap_95": [
+    -0.2,
+    0.06666666666666667
+   ],
+   "bootstrap_samples": 10000,
+   "bootstrap_seed": 20261107
+  },
+  "kat": {
+   "n_cases": 30,
+   "pi_passed": 12,
+   "kat_passed": 15,
+   "pi_only": 2,
+   "kat_only": 5,
+   "delta": -0.1,
+   "bootstrap_95": [
+    -0.26666666666666666,
+    0.06666666666666667
+   ],
+   "bootstrap_samples": 10000,
+   "bootstrap_seed": 20261107
+  }
+ }
+}
