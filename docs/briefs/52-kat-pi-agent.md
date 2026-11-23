@@ -1,4 +1,4 @@
-# Brief 52: KAT-Coder through pi, then maybe a home-made pi adapter for KAT
+# Brief 52: KAT-Coder through pi, KAT + own RFT, then maybe a home-made pi adapter for KAT
 
 Status: planned (2026-11-23). Runs on the Mac (Phase 3). **Starts only after brief 51's full Eval B (Qwen base
 vs Qwen + pi adapter) has finished**: KAT and Qwen don't fit in memory together.
@@ -21,6 +21,24 @@ and `tools/peft_to_mlx.py` refuses it, as it should.
 3. Pilot 2 cases, project the duration, then run all 30. Record per case: pass, wall time, tool calls,
    tokens in/out; per arm: decode and prompt tok/s, peak memory, swap.
 4. Report `kat` vs `base`, `kat` vs `pi` with paired CIs, next to KAT's one-shot score on the same 30 cases.
+
+## Phase A2: KAT + RFT on its own solutions, one-shot (independent of pi; can run before or after Phase A)
+
+KAT has never been fine-tuned by us. The Qwen3.8 RFT adapter can't load on it (dense 27B shapes), but the
+RFT pipeline already works on KAT's architecture: `results/20261106T011305Z-rft-base-k8` trained a LoRA on
+Qwen3.6-35B-A3B (KAT's base, same `qwen3_5_moe` layout per brief 29) in 390 s for 202 rows. Do not reuse that
+adapter on KAT: it was trained on Qwen3.6's answers and made Qwen3.6 worse (first-pass 32.0% -> 28.7%).
+
+1. Data: KAT's own verified passing solutions, same task pool and k as `data/finetune/qwen38-rft-k2`
+   (the run that gave Qwen3.8 11 -> 14/30), via `tools/ft_rft.py` / `scripts/rft_round.sh`. None of the
+   heldout-v2 or the 30 code-compare problems in training (check ids and description hashes).
+2. Train: same keys as rft-base-k8 (`linear_attn.*`, `self_attn.*`, `mlp.shared_expert.*`,
+   `mlp.shared_expert_gate`), rank 8, scale 4 (and 20 if 4 is flat), `tools/mem_guard.py` running.
+   KAT's OptiQ checkpoint is mixed 4/8-bit: check mlx-lm LoRA trains on it before the full run.
+3. Eval: heldout-v2 first-pass and repair-3 vs plain KAT, and `qwen38_code_compare.py add-model` arm
+   `kat-rft` (adapter support exists since brief 51) paired against KAT's 15/30. Say plainly if it's flat or worse.
+4. If it helps, it becomes a candidate default helper (`HELPER=kat-rft` in `serve-mlx.sh`), and Phase B can
+   start from it.
 
 ## Phase B: RFT pi adapter for KAT (only if Phase A says it's worth it)
 
