@@ -1,0 +1,214 @@
+{
+  "brief": "docs/briefs/51-pi-adapter-test.md",
+  "created_utc": "2026-11-23T17:00:00Z",
+  "machine": "M1 Max 32 GB, user's normal apps open",
+  "adapter": {
+    "repo": "harness-hub/Qwen3.8-27B-pi-adapted",
+    "revision": "7d42b119e2d4d475fa11270634b1ef98d1cd5aee",
+    "type": "LoRA r=32 alpha=64 (scale 2.0), 7 modules x 64 layers, no DoRA",
+    "base": "Qwen/Qwen3.8-27B",
+    "mlx_base": "~/models/Qwen3.8-27B-official-mlx-4bit",
+    "converted": "adapters/qwen38-pi-v1 (tools/peft_to_mlx.py)",
+    "converted_sha256": "a6e1a0ee91bdb42c74d8fd6880162eeb15a9af61ffaf85b99ad8db1a952c9817"
+  },
+  "conversion_check": {
+    "coverage": {
+      "file_tensors": 512,
+      "model_lora_params": 512,
+      "equal": true,
+      "layer0_has_lora": true
+    },
+    "numerics": [
+      {
+        "module": "0.mlp.down_proj",
+        "rel_err": 2.157975541194901e-05,
+        "ok": true
+      },
+      {
+        "module": "3.self_attn.q_proj",
+        "rel_err": 2.7503208912094124e-05,
+        "ok": true
+      },
+      {
+        "module": "63.mlp.up_proj",
+        "rel_err": 1.0407043191662524e-05,
+        "ok": true
+      }
+    ],
+    "plain_prompts_greedy_identical_to_base": true,
+    "note": "adapter changes weights ~0.1-0.2%; identical greedy output on 5 plain prompts, diverges on all replayed agentic turns",
+    "details": "results/20261123T013500Z-pi-adapter/conversion-check.json"
+  },
+  "speed": {
+    "decode_tps_base": [
+      15.2,
+      20.1,
+      18.8,
+      15.9,
+      17.1
+    ],
+    "decode_tps_pi_unfused": [
+      11.1,
+      11.5,
+      11.0,
+      11.0,
+      11.4
+    ],
+    "prompt_tps_pi_short_prompts": [
+      31.0,
+      44.1,
+      52.6,
+      53.7,
+      53.5
+    ],
+    "peak_memory_gb_pi": 16.22,
+    "note": "unfused LoRA decodes ~11 tok/s vs 15-20 for base (slower). Cold prompt processing ~80 tok/s in the pi probe.",
+    "llama_cpp_baseline": "not measured: 19 GB free disk, no room for the base GGUF"
+  },
+  "memory": {
+    "swap_used_gb_observed": [
+      11.5,
+      16.0
+    ],
+    "server_prompt_cache_peak_gb": {
+      "pi": 6.22,
+      "base_before_cap": 8.89
+    },
+    "metal_oom": [
+      "10:05 UTC base arm, prompt cache 8.9 GB -> 26 cases recorded as instant failures, discarded and rerun",
+      "13:41 UTC base arm, 45k-token prefill in 2048-token steps -> 1 case discarded and rerun"
+    ],
+    "fixes": "runner stops on server errors (533b400); base arm reran with --prompt-cache-bytes 4 GiB and --prefill-step-size 512 (7549cb7). Speed/memory only; outputs unchanged in kind."
+  },
+  "eval_a_one_shot": {
+    "setup": "qwen38_code_compare add-model pi, 30 cases, thinking off, 4096 tokens, temp 0",
+    "pi_passed": 12,
+    "n": 30,
+    "paired": {
+      "base": {
+        "n_cases": 30,
+        "pi_passed": 12,
+        "base_passed": 11,
+        "pi_only": 2,
+        "base_only": 1,
+        "delta": 0.03333333333333333,
+        "bootstrap_95": [
+          0.0,
+          0.1
+        ],
+        "bootstrap_samples": 10000,
+        "bootstrap_seed": 20261107
+      },
+      "rft": {
+        "n_cases": 30,
+        "pi_passed": 12,
+        "rft_passed": 14,
+        "pi_only": 1,
+        "rft_only": 3,
+        "delta": -0.06666666666666667,
+        "bootstrap_95": [
+          -0.2,
+          0.06666666666666667
+        ],
+        "bootstrap_samples": 10000,
+        "bootstrap_seed": 20261107
+      },
+      "kat": {
+        "n_cases": 30,
+        "pi_passed": 12,
+        "kat_passed": 15,
+        "pi_only": 2,
+        "kat_only": 5,
+        "delta": -0.1,
+        "bootstrap_95": [
+          -0.26666666666666666,
+          0.06666666666666667
+        ],
+        "bootstrap_samples": 10000,
+        "bootstrap_seed": 20261107
+      }
+    },
+    "baselines": {
+      "base": 11,
+      "rft": 14,
+      "kat": 15
+    }
+  },
+  "eval_b_agentic_pi": {
+    "setup": "pi 1.6.0 -> mlx_lm.server, sandboxed workspace with public examples + run_tests.sh, hidden tests scored after; 30 min / 40 tool calls per case, temp 0.8 top-p 1.0 (card's eval sampling), thinking off, single sample",
+    "paired_pi_vs_base": {
+      "base_only": 2,
+      "base_passed": 11,
+      "bootstrap_95": [
+        0.0,
+        0.4
+      ],
+      "bootstrap_samples": 10000,
+      "bootstrap_seed": 20261107,
+      "delta": 0.2,
+      "n_cases": 30,
+      "pi_only": 8,
+      "pi_passed": 17
+    },
+    "pi": {
+      "exit_reasons": [
+        "done",
+        "timeout"
+      ],
+      "median_tool_calls": 4.5,
+      "median_wall_s": 465.4,
+      "n": 30,
+      "passed": 17,
+      "tokens_in": 117384,
+      "tokens_out": 176355,
+      "exit_reason_counts": {
+        "done": 26,
+        "timeout": 4
+      },
+      "median_tokens_out": 3815.0,
+      "median_wall_s_passed_cases": 168.8,
+      "total_wall_h": 5.82
+    },
+    "base": {
+      "exit_reasons": [
+        "done",
+        "timeout",
+        "tool_limit"
+      ],
+      "median_tool_calls": 41.0,
+      "median_wall_s": 662.15,
+      "n": 30,
+      "passed": 11,
+      "tokens_in": 229321,
+      "tokens_out": 240556,
+      "exit_reason_counts": {
+        "done": 12,
+        "tool_limit": 16,
+        "timeout": 2
+      },
+      "median_tokens_out": 7985.0,
+      "median_wall_s_passed_cases": 658.2,
+      "total_wall_h": 6.57
+    },
+    "cases_both_passed": {
+      "n": 9,
+      "median_wall_s": {
+        "pi": 144.3,
+        "base": 630.9
+      },
+      "median_tool_calls": {
+        "pi": 5,
+        "base": 20
+      }
+    },
+    "details": "results/20261123T013500Z-pi-adapter/eval-b/eval-b.json"
+  },
+  "deviations": [
+    "pi model id is default_model (mlx_lm.server only maps that name), not qwen3.8-pi",
+    "Eval B single sample at temp 0.8: per-case outcomes are noisy",
+    "base arm ran with a 4 GiB prompt-cache cap and 512-token prefill steps, pi arm with defaults (2048, uncapped); affects wall time only",
+    "no llama.cpp baseline (disk)",
+    "step 8 (Opus reference) not run: needs the user's OK on cost"
+  ],
+  "verdict": "Agentic through pi the adapter passes 17/30 vs base 11/30 (+20 pp, 95% CI [0, +40], 8 pi-only vs 2 base-only), at median 4.5 vs 41 tool calls; base hit the 40-call limit on 16/30. One-shot it is flat (12 vs 11). Its decode is slower unfused (~11 vs 15-20 tok/s)."
+}
