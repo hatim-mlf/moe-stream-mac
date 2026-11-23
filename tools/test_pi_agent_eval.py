@@ -135,3 +135,22 @@ def test_paired_summary_counts_and_clusters_by_problem() -> None:
     lo, hi = s["bootstrap_95"]
     assert lo <= s["delta"] <= hi
     assert pe.paired_summary(cases, "a", "b") == s  # seeded, deterministic
+
+
+def test_server_errors_reports_only_new_fatal_lines(tmp_path: Path) -> None:
+    log = tmp_path / "server.log"
+    log.write_text("2026 - ERROR - old failure from an earlier run\n")
+    offset = log.stat().st_size
+    assert pe.server_errors(log, offset) == []
+    with log.open("a") as f:
+        f.write("INFO - Prompt processing progress: 1/2\n"
+                "2026 - ERROR - mlx_lm.server generation thread died: [METAL] Insufficient Memory\n"
+                '127.0.0.1 - - [x] "POST /v1/chat/completions HTTP/1.1" 404 -\n')
+    errors = pe.server_errors(log, offset)
+    assert len(errors) == 2 and "generation thread died" in errors[0] and "404" in errors[1]
+
+
+def test_server_args_cap_prompt_cache_for_both_arms() -> None:
+    for arm in pe.ARMS:
+        args = pe.server_args(arm)
+        assert args[args.index("--prompt-cache-bytes") + 1] == str(pe.PROMPT_CACHE_BYTES)

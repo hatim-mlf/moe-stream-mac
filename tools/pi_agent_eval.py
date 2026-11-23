@@ -45,6 +45,10 @@ MAX_TOKENS = 8192
 CONTEXT_WINDOW = 131072
 EXAMPLE_TIME_FACTOR = 2  # visible examples get 2x the judge's time limit
 KILL_GRACE_S = 10
+# Caps the server's cross-request KV cache (eviction only; outputs unchanged). Without it the base arm's cache
+# grew to 8.9 GB and Metal ran out of memory on the 32 GB Mac (brief 51, 2026-11-23 10:05 UTC).
+PROMPT_CACHE_BYTES = 4 * 1024**3
+SERVER_FATAL = ("ERROR", '" 404 -', '" 500 -')
 ARMS = ("pi", "base")
 STUBS = {"python3": "# TODO: read stdin, write stdout\n", "cpp17": "int main() { return 0; }\n"}
 SOURCES = {"python3": "solution.py", "cpp17": "solution.cpp"}
@@ -271,12 +275,33 @@ def run_case(run_dir: Path, task: dict, lang: str, arm: str, out_dir: Path) -> d
 def server_args(arm: str) -> list[str]:
     args = [str(cc.SERVER), "--model", str(cc.BASE_MODEL), "--host", "127.0.0.1", "--port", str(PORT),
             "--temp", str(TEMPERATURE), "--top-p", str(TOP_P), "--chat-template-args",
-            json.dumps({"enable_thinking": False}), "--prompt-concurrency", "1", "--decode-concurrency", "1"]
+            json.dumps({"enable_thinking": False}), "--prompt-concurrency", "1", "--decode-concurrency", "1",
+            "--prompt-cache-bytes", str(PROMPT_CACHE_BYTES)]
     if arm == "pi":
         if not (ADAPTER / "adapters.safetensors").exists():
             raise FileNotFoundError(f"No converted adapter at {ADAPTER} (run tools/peft_to_mlx.py)")
         args += ["--adapter-path", str(ADAPTER)]
     return args
+
+
+def server_errors(log_path: Path, offset: int) -> list[str]:
+    """Fatal server log lines written after byte `offset` (a dead generation thread, then 404s)."""
+    with log_path.open("rb") as f:
+        f.seek(offset)
+        new = f.read().decode(errors="replace")
+    return [line for line in new.splitlines() if any(m in line for m in SERVER_FATAL)]
+
+
+def assert_server_healthy(proc: subprocess.Popen, log_path: Path, offset: int, case_out: Path) -> None:
+    """After a case: if the server died or logged a fatal error, invalidate that case and stop the run."""
+    errors = server_errors(log_path, offset)
+    if proc.poll() is None and not errors:
+        return
+    record = case_out / "record.json"
+    if record.exists():
+        record.rename(case_out / "record.invalid.json")
+    raise RuntimeError(f"mlx_lm.server unhealthy during {case_out.name} (exit {proc.poll()}): "
+                       f"{errors[:2]}; case invalidated, see {log_path}")
 
 
 def cases_in_order(manifest: dict) -> list[tuple[dict, str]]:
@@ -292,13 +317,16 @@ def run(run_dir: Path, arm: str, out_dir: Path, limit: int | None) -> None:
     todo = [(t, l) for t, l in cases_in_order(manifest)
             if not (out_dir / arm / f"{t['task_id']}-{l}" / "record.json").exists()]
     todo = todo[:limit] if limit is not None else todo
-    with (out_dir / arm / "server.log").open("ab") as log:
+    log_path = out_dir / arm / "server.log"
+    with log_path.open("ab") as log:
         proc = subprocess.Popen(server_args(arm), cwd=ROOT, stdout=log, stderr=subprocess.STDOUT,
                                 start_new_session=True, env={**os.environ, "PYTHONUNBUFFERED": "1"})
         try:
             cc.wait_server(proc)
             for i, (task, lang) in enumerate(todo, 1):
+                offset = log_path.stat().st_size
                 rec = run_case(run_dir, task, lang, arm, out_dir)
+                assert_server_healthy(proc, log_path, offset, out_dir / arm / f"{task['task_id']}-{lang}")
                 print(f"[{arm}] {i}/{len(todo)} {task['task_id']} {lang}: {rec['exit_reason']} "
                       f"{rec['wall_s']}s {rec['tool_calls']} tools {rec['tokens_out']} out", flush=True)
         finally:
