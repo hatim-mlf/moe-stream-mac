@@ -1,0 +1,16 @@
+{
+  "brief": "docs/briefs/52-kat-pi-agent.md, Phase B step 4 feasibility: can mlx-lm LoRA train KAT-Coder-V2.5-Dev OptiQ (mixed 4/8-bit) on whole pi sessions in 32 GB?",
+  "created_utc": "2026-11-24T00:00:00Z",
+  "machine": "M1 Max 32 GB, user's normal apps open (swap 13-15 GB in use), mem_guard limit 29.5 GiB",
+  "data": "one real pi request from the KAT toy probe (system + tools + 16 messages), rendered exactly as mlx_lm.server renders it (process_message_content, enable_thinking false); padded in a tool result to the target length. Served prompt is a prefix of the training render (checked).",
+  "longest_passing_kat_session_tokens": 13718,
+  "passing_kat_session_tokens": [2925, 3078, 3512, 3577, 3751, 3869, 3936, 4007, 4924, 5184, 5655, 7386, 8499, 8864, 10781, 11942, 13718],
+  "runs": [
+    {"name": "L1-16k-refused", "layers": 1, "keys": "all (linear_attn, self_attn, shared_expert)", "tokens": 16000, "result": "refused by preflight: largest fitting row at L=1 is 14208 tokens"},
+    {"name": "L1", "layers": 1, "keys": "all", "tokens": 14000, "result": "ok", "peak_gib": 24.138, "s_per_step": 35.186, "trainable_params": 250000, "adapter_saved": true},
+    {"name": "L4", "layers": 4, "keys": "all", "tokens": 14000, "result": "refused by preflight: largest fitting row at L=4 is 480 tokens (adapted GDN backward ~7 MiB/token, docs/finetune/MEMORY_MODEL.md)"},
+    {"name": "nogdn-L4", "layers": 4, "keys": "self_attn + shared_expert only (GDN frozen, FROZEN_GDN_KERNEL=1), preflight off", "tokens": 14000, "result": "Metal OOM on the first training step", "trainable_params": 483000},
+    {"name": "nogdn-L4-4k", "layers": 4, "keys": "self_attn + shared_expert only, preflight off", "tokens": 4096, "result": "Metal OOM on the first training step"}
+  ],
+  "verdict": "Trainable only as a 1-layer LoRA (last layer, full attention, 0.25M parameters) on sessions up to ~14k tokens. Every 4-layer variant fails, even at 4k tokens. The one earlier 1-layer RFT on this architecture (Qwen3.6, results/20261106T011305Z-rft-base-k8) made the model worse. A home-made pi adapter for KAT is technically possible but very low capacity on this Mac; not recommended without more memory (e.g. closing apps, or a larger machine)."
+}
