@@ -1,0 +1,27 @@
+{
+  "brief": "docs/briefs/52-kat-pi-agent.md follow-up: does a larger per-reply cap (32768 vs 8192 tokens) rescue KAT's Eval B cases that ended on the cap?",
+  "created_utc": "2026-11-24T02:00:00Z",
+  "machine": "M1 Max 32 GB, user's normal apps open (swap 13-15 GB in use)",
+  "setup": "tools/pi_agent_eval.py run --arm kat --max-tokens 32768 --cases <KAT's 11 cap cases from results/20261123T174500Z-kat-pi>; same sandbox, 30 min / 40 tool-call limits, temp 0.8, top-p 1.0, thinking off. Label kat-mt32768.",
+  "cases_run": 10,
+  "not_run": {"1598_E-python3": "Metal OOM three times (contexts >31k tokens next to the user's apps); counted as a fail below"},
+  "passed": ["1575_D-python3", "1580_A-cpp17", "1604_D-python3", "1622_C-python3"],
+  "failed": ["1580_A-python3", "1622_C-cpp17", "1598_E-cpp17", "1600_E-python3", "1613_D-cpp17", "1613_D-python3", "1598_E-python3 (OOM)"],
+  "per_case": {
+    "1575_D-python3": {"pass": true, "exit": "timeout", "max_reply_tokens": 1923},
+    "1580_A-cpp17": {"pass": true, "exit": "done", "max_reply_tokens": 5123},
+    "1604_D-python3": {"pass": true, "exit": "done", "max_reply_tokens": 9930},
+    "1622_C-python3": {"pass": true, "exit": "done", "max_reply_tokens": 16148},
+    "1580_A-python3": {"pass": false, "exit": "done", "max_reply_tokens": 32768, "ended_on_cap": true},
+    "1622_C-cpp17": {"pass": false, "exit": "done", "max_reply_tokens": 8116},
+    "1598_E-cpp17": {"pass": false, "exit": "done", "max_reply_tokens": 32768, "ended_on_cap": true},
+    "1600_E-python3": {"pass": false, "exit": "done", "max_reply_tokens": 27994},
+    "1613_D-cpp17": {"pass": false, "exit": "done", "max_reply_tokens": 32768, "ended_on_cap": true},
+    "1613_D-python3": {"pass": false, "exit": "done", "max_reply_tokens": 32768, "ended_on_cap": true}
+  },
+  "attribution": "Only 2 of the 4 passes used a reply over 8192 tokens (1604_D-python3 9.9k, 1622_C-python3 16.1k): those are real cap rescues. The other 2 passed with short replies, i.e. a different sample at temperature 0.8, which the 8192 run could also have drawn; no 8192 control rerun was done.",
+  "estimate": "KAT through pi with a 32k cap: 17/30 + 2 cap rescues = 19/30 attributable (21/30 counting the 2 resample passes, which overstates it: only failed cases were rerun). 4 cases still ran into even the 32k cap: on hard problems KAT reasons without stopping.",
+  "costs": "rescued cases took 320-534 s; 32k runaway replies take 13-15 min each and drove the three OOMs",
+  "qwen_pi_adapter_cap_rerun": "stopped by the user's choice after 3 of 7 cases (focus on KAT); not scored",
+  "recommendation": "Raise KAT's reply cap to 16384, not 32768: it covers both real rescues (9.9k, 16.1k) and halves the time and memory a runaway reply can take. Applied in tools/delegate.py (one-shot helper, was 8192)."
+}

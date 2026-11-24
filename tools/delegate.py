@@ -33,7 +33,7 @@ def system_prompt(use_rules: bool = True) -> str:
 
 
 def ask(prompt: str, system: str = SYSTEM) -> tuple[str, dict, float]:
-    body = {"model": "default_model", "max_tokens": 8192, "temperature": 0.2,
+    body = {"model": "default_model", "max_tokens": 16384, "temperature": 0.2,
             "messages": [{"role": "system", "content": system}, {"role": "user", "content": prompt}],
             "chat_template_kwargs": {"enable_thinking": False}}
     req = urllib.request.Request(API, data=json.dumps(body).encode(), headers={"Content-Type": "application/json"})
