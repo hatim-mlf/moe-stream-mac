@@ -168,3 +168,12 @@ def test_test_command_runs_in_callers_directory(env, monkeypatch, tmp_path):
     result = delegate.delegate("brief", out, test_cmd="test -f marker.txt", attempts=1, name="t10")
 
     assert result["passed_final"] is True
+
+
+def test_outcome_records_task_size_for_tracking(env, monkeypatch):
+    root, out, test_cmd = env
+    monkeypatch.setattr(delegate, "ask", FakeModel([reply_with("A = 2\nGOOD = 1")]))
+    delegate.delegate("one\ntwo\nthree", out, test_cmd=test_cmd, attempts=3, name="sized")
+    row = outcomes(root)[0]
+    assert row["brief_lines"] == 3
+    assert row["output_lines"] == 2  # lines of the last code written

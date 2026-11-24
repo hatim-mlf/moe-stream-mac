@@ -132,6 +132,8 @@ def delegate(brief: str, output: Path, test_cmd: str | None = None, attempts: in
         "log_dir": str(log_dir),
         "adapter": current_adapter(),
         "output": str(output),
+        "brief_lines": len(brief.splitlines()),
+        "output_lines": len(code.splitlines()),
     }
     (log_dir / "stats.json").write_text(json.dumps(result, indent=2))
     outcomes_path = ROOT / "results" / "delegations" / "outcomes.jsonl"
